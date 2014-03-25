@@ -5,7 +5,11 @@ import javax.swing.JToolBar;
 /**
  * This is the toolbar for the PostBoard module
  * 
+ * 
  * @author Batyrlan Nurbekov
+ * @author Sam Mailand
+ * @author Zachary Zapatka
+ * @author Miguel Mora
  * 
  */
 @SuppressWarnings("serial")
