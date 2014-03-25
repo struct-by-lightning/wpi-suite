@@ -43,8 +43,8 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  */
 public class ManagerLayerTest {
 
-	public String[] testUserArgs = {"core","user",""};
-	public String[] testUserArgsFake = {"core","user","fake"};
+	public String[] testUserArgs = {"core","user", ""};
+	public String[] testUserArgsFake = {"core","user", "fake"};
 	public String[] testUserArgsFakeDNE = {"core","user","steve"};
 	@SuppressWarnings("rawtypes")
 	public Map<String, EntityManager> testMap = new HashMap<String, EntityManager>();

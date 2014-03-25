@@ -37,7 +37,7 @@ public class Db4oDatabaseTest {
 		User firstUser = new User("Ryan", "rchamer", "r@r.com", "password", 0);
 		db.save(firstUser);
 		User me = db.retrieve(User.class, "username", "rchamer").toArray(arr)[0];
-		assertEquals(me, firstUser);
+		assertEquals(firstUser, me);
 		db.delete(me);
 	}
 	
@@ -49,7 +49,7 @@ public class Db4oDatabaseTest {
 		db.save(firstUser);
 		db.delete(firstUser);
 		User me = db.retrieve(User.class, "username", "rchamer").toArray(arr)[0];
-		assertEquals(me, null);
+		assertEquals(null, me);
 	}
 	
 	@Test

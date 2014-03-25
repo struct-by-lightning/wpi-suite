@@ -45,7 +45,7 @@ public class CommentManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		mockSsid = "abc123";
-		bob = new User("bob", "bob", "1234", 1);
+		bob = new User("bob", "bob", "bob@test.com", "1234", 1);
 		testProject = new Project("test", "1");
 		defaultSession = new Session(bob, testProject, mockSsid);
 		defect = new Defect(1, "title", "description", bob);
