@@ -33,16 +33,16 @@ public class UserTest {
 	@Before
 	public void setUp()
 	{
-		u1 = new User("James Bond", "jbond", null, 7);
-		u2 = new User("Money Penny", "mpenny", null, 2);
-		u3 = new User("Q", "q", "secret", 1);
-		u4 = new User("M", "m", null, 0);
+		u1 = new User("James Bond", "jbond", "jbond@test.com", null, 7);
+		u2 = new User("Money Penny", "mpenny", "mpenny@test.com", null, 2);
+		u3 = new User("Q", "q", "q@q.com", "secret", 1);
+		u4 = new User("M", "m", "m@m.com", null, 0);
 	}
 	
 	@Test
 	public void testEquals()
 	{
-		User dup3 = new User("Q", "q", "secret", 1);
+		User dup3 = new User("Q", "q", "q@q.com", "secret", 1);
 		
 		assertTrue(u3.equals(dup3));
 		assertFalse(u3.equals(u1));
@@ -137,6 +137,20 @@ public class UserTest {
 	}
 	
 	@Test
+	public void testSetEmail()
+	{
+		String newEmail = "new@gmail.com";
+		
+		assertFalse(u1.getEmail().equals(newEmail));
+		assertTrue(u1.getEmail().equals("jbond@test.com"));
+		
+		u1.setEmail(newEmail);
+		
+		assertTrue(u1.getEmail().equals(newEmail));
+		assertFalse(u1.getEmail().equals("jbond@test.com"));
+	}
+	
+	@Test
 	public void testSerialize()
 	{
 		String serialized = u3.toJSON();
@@ -151,5 +165,7 @@ public class UserTest {
 		assertTrue(serialized.contains("q"));
 		assertTrue(serialized.contains("name"));
 		assertTrue(serialized.contains("Q"));
+		assertTrue(serialized.contains("email"));
+		assertTrue(serialized.contains("q@q.com"));
 	}
 }

@@ -25,12 +25,13 @@ public class UserSerializer implements JsonSerializer<User> {
 	public JsonElement serialize(User u, Type t,
 			JsonSerializationContext context) {
 		JsonObject deflated = new JsonObject();
-		
+
 		deflated.addProperty("idNum", u.getIdNum());
 		deflated.addProperty("username", u.getUsername());
 		deflated.addProperty("name", u.getName());
 		deflated.addProperty("role", u.getRole().toString());
-		
+		deflated.addProperty("email", u.getEmail());
+
 		return deflated;
 	}
 
