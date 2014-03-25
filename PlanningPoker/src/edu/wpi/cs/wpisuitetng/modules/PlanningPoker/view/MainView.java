@@ -2,12 +2,18 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+
 import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextPane;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
@@ -75,7 +81,8 @@ public class MainView extends JPanel {
     	lblEstimate.setBounds(511, 223, 89, 25);
     	add(lblEstimate);
     	
-    	JComboBox comboBox = new JComboBox();
+    	//Changed to final because I couldn't grab the data otherwise
+    	final JComboBox comboBox = new JComboBox();
     	comboBox.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "5", "8", "13", "20", "40", "100"}));
     	comboBox.setBounds(511, 259, 77, 20);
     	add(comboBox);
@@ -84,15 +91,29 @@ public class MainView extends JPanel {
     	btnSubmit.setBounds(623, 227, 127, 52);
     	add(btnSubmit);
     	
+    	
     	JLabel lblStatistics = new JLabel("Statistics");
     	lblStatistics.setFont(new Font("Arial", Font.PLAIN, 20));
     	lblStatistics.setBounds(586, 301, 89, 25);
     	add(lblStatistics);
     	
-    	JTextArea textArea_1 = new JTextArea();
-    	textArea_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-    	textArea_1.setEditable(false);
-    	textArea_1.setBounds(511, 338, 239, 161);
-    	add(textArea_1);
+    	final JTextArea statistics_text = new JTextArea();
+    	statistics_text.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+    	statistics_text.setEditable(false);
+    	statistics_text.setBounds(511, 338, 239, 161);
+    	add(statistics_text);
+    	
+    	
+    	
+    	//When the "Submit button is pushed"
+    	btnSubmit.addActionListener(new ActionListener() {
+    		  public void actionPerformed(ActionEvent evt) {
+    			//Grabs the selected answer from the drop down and prints them out in the console
+    		    String selectedValue = (String)comboBox.getSelectedItem();
+    		    System.out.println("SELECTED: " + selectedValue);
+    		    statistics_text.append(selectedValue);
+    		  }
+    		});
     }
+
 }
