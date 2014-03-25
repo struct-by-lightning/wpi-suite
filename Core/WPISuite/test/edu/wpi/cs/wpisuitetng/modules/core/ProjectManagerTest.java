@@ -53,7 +53,7 @@ public class ProjectManagerTest {
 		add1 = new Project("add1", "11");
 		add2 = new Project("add2", "12");
 		temp = new Project("test","8");
-		tempUser = new User("name", "username", "password", 1);
+		tempUser = new User("name", "username", "generic@.com","password", 1);
 		tempUser.setRole(Role.ADMIN);
 		temp.setPermission(Permission.WRITE, tempUser);
 		updateTemp = new Project("0", "proj0");

@@ -43,8 +43,8 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  */
 public class ManagerLayerTest {
 
-	public String[] testUserArgs = {"core","user",""};
-	public String[] testUserArgsFake = {"core","user","fake"};
+	public String[] testUserArgs = {"core","user", ""};
+	public String[] testUserArgsFake = {"core","user", "fake"};
 	public String[] testUserArgsFakeDNE = {"core","user","steve"};
 	@SuppressWarnings("rawtypes")
 	public Map<String, EntityManager> testMap = new HashMap<String, EntityManager>();
@@ -62,8 +62,8 @@ public class ManagerLayerTest {
 	@Before
 	public void setUp() throws Exception 
 	{
-		fake = new User("fake","fake","fake", 0);
-		uniqueFake = new User("asdf","asdf","asdf", 0);
+		fake = new User("fake","fake","fake@email.com","fake", 0);
+		uniqueFake = new User("asdf","asdf","asdf@asdf.com","asdf", 0);
 		fakeList = new User[1];
 		doubleFakeList = new User[2];
 		fakeList[0] = fake;
@@ -321,7 +321,7 @@ public class ManagerLayerTest {
 	{
 		Data db = DataStore.getDataStore();
 		User[] arr = new User[1];
-		db.save(new User("andrew", "ahurle", "p", 0));
+		db.save(new User("andrew", "ahurle", "ahurle@test.com", "p", 0));
 		User me = db.retrieve(User.class, "username", "ahurle").toArray(arr)[0];
 		User me2 = db.retrieve(User.class, "username", "ahurle").toArray(arr)[0];
 		db.delete(me);

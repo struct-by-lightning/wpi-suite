@@ -41,10 +41,10 @@ public class SessionTest {
 	@Before
 	public void setUp()
 	{
-		this.u1 = new User("Prometheus", "twack", null, 0);
+		this.u1 = new User("Prometheus", "twack", "twack@twack.com", null, 0);
 		this.ses1 = new Session(u1, ssid1);
 		
-		this.u2 = new User("Bob", "caveman", null, 1);
+		this.u2 = new User("Bob", "caveman", "caveman@cave.com", null, 1);
 		this.ses2 = new Session(u2, ssid2);
 	}
 	

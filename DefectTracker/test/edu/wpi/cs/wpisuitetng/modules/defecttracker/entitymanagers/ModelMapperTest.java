@@ -36,7 +36,7 @@ public class ModelMapperTest {
 	@Before
 	public void setUp() {
 		mapper = new ModelMapper();
-		user = new User("a", "a", "a", 1);
+		user = new User("a", "a", "a", "a@test.com", 1);
 		a = new Defect(1, "a", "a", user);
 		b = new Defect(2, "b", "b", null);
 	}

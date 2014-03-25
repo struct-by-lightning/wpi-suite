@@ -32,7 +32,7 @@ public abstract class DefectEvent extends AbstractModel {
 	};
 	
 	protected Date date = new Date();
-	protected User user = new User("", "", "", -1);
+	protected User user = new User("", "", "","", -1);
 	
 	/**
 	 * The type of event this is.  Subclasses must specify this in order to be deserialized properly.

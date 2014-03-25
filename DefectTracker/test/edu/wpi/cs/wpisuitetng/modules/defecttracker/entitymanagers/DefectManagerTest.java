@@ -60,14 +60,14 @@ public class DefectManagerTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		User admin = new User("admin", "admin", "1234", 27);
+		User admin = new User("admin", "admin", "admin@test.com", "1234", 27);
 		admin.setRole(Role.ADMIN);
 		testProject = new Project("test", "1");
 		otherProject = new Project("other", "2");
 		mockSsid = "abc123";
 		adminSession = new Session(admin, testProject, mockSsid);
 		
-		existingUser = new User("joe", "joe", "1234", 2);
+		existingUser = new User("joe", "joe", "joe@test.com", "1234", 2);
 		existingDefect = new Defect(1, "An existing defect", "", existingUser);
 		existingDefect.setCreationDate(new Date(0));
 		existingDefect.setLastModifiedDate(new Date(0));

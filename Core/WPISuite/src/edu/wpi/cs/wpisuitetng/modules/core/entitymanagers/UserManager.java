@@ -161,7 +161,7 @@ public class UserManager implements EntityManager<User> {
 	@Override
 	public User[] getAll(Session s) {
 		User[] ret = new User[1];
-		ret = data.retrieveAll(new User("","","",0)).toArray(ret);
+		ret = data.retrieveAll(new User("","","","",0)).toArray(ret);
 		return ret;
 	}
 
@@ -204,7 +204,7 @@ public class UserManager implements EntityManager<User> {
 	@Override
 	public void deleteAll(Session s) {
 		logger.log(Level.INFO, "UserManager invoking DeleteAll...");
-		data.deleteAll(new User("","","",0));
+		data.deleteAll(new User("","","","",0));
 	}
 
 	@Override
@@ -346,7 +346,7 @@ public class UserManager implements EntityManager<User> {
 	{
 		logger.log(Level.INFO, "Adding an admin");
 
-		User p = new User("Admin", "admin", "password", 0);
+		User p = new User("Admin", "admin", "struct.by.lightning@gmail.com", "password", 0);
 
 		try {
 			if(getEntity(null,p.getUsername())[0] == null)

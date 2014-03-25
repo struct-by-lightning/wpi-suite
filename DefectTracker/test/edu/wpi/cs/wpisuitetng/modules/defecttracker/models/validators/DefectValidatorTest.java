@@ -61,11 +61,11 @@ public class DefectValidatorTest {
 		
 	@Before
 	public void setUp() {
-		invalidUser = new User("idontexist", "blah", "1234", 99);
+		invalidUser = new User("idontexist", "blah", "blah@test.com", "1234", 99);
 		
 		tag = new Tag("tag");
-		bob = new User("bob", "bob", "1234", 1);
-		existingUser = new User("joe", "joe", "1234", 2);
+		bob = new User("bob", "bob", "bob@test.com", "1234", 1);
+		existingUser = new User("joe", "joe", "joe@test.com", "1234", 2);
 		existingDefect = new Defect(1, "An existing defect", "", bob);
 		existingDefect.setCreationDate(new Date(0));
 		existingDefect.setLastModifiedDate(new Date(0));
@@ -80,7 +80,7 @@ public class DefectValidatorTest {
 		
 		//need copies to simulate db4o cross-container problem
 		tagCopy = new Tag("tag");
-		bobCopy = new User(null, "bob", null, -1);
+		bobCopy = new User(null, "bob", null, null, -1);
 		goodNewDefect = new Defect(-1, "This is a good title", "", bobCopy);
 		goodNewDefect.setAssignee(bobCopy);
 		goodNewDefect.getTags().add(tagCopy);
@@ -88,7 +88,7 @@ public class DefectValidatorTest {
 		ignoredEvents = new ArrayList<DefectEvent>();
 		goodNewDefect.setEvents(ignoredEvents); // ignored
 		
-		existingUserCopy = new User(null, "joe", null, -1);
+		existingUserCopy = new User(null, "joe", null, null, -1);
 		goodUpdatedDefect = new Defect(1, "A changed title", "A changed description", bobCopy);
 		goodUpdatedDefect.setAssignee(existingUserCopy);
 		goodUpdatedDefect.setEvents(new ArrayList<DefectEvent>());
@@ -291,7 +291,7 @@ public class DefectValidatorTest {
 	@Test
 	public void testGoodUpdatedDefect() {
 		// make sure users other than creator can update
-		checkNoIssues(new Session(new User(null, "someguy", null, 50), testProject, mockSsid), goodUpdatedDefect,
+		checkNoIssues(new Session(new User(null, "someguy", null, null, 50), testProject, mockSsid), goodUpdatedDefect,
 				Mode.EDIT);
 		assertEquals("A changed title", goodUpdatedDefect.getTitle());
 		assertEquals("A changed description", goodUpdatedDefect.getDescription());
