@@ -436,10 +436,10 @@ public class DefectPanel extends JPanel {
 		defect.setDescription(txtDescription.getText());
 		defect.setStatus(DefectStatus.valueOf((String) cmbStatus.getSelectedItem()));
 		if (!(txtAssignee.getText().equals(""))) {
-			defect.setAssignee(new User("", txtAssignee.getText(), "", -1));
+			defect.setAssignee(new User("", txtAssignee.getText(), "", "", -1));
 		}
 		if (!(txtCreator.getText().equals(""))) {
-			defect.setCreator(new User("", txtCreator.getText(), "", -1));
+			defect.setCreator(new User("", txtCreator.getText(), "", "", -1));
 		}
 		HashSet<Tag> tags = new HashSet<Tag>();
 		for (int i = 0; i < tagPanel.lmTags.getSize(); i++) {

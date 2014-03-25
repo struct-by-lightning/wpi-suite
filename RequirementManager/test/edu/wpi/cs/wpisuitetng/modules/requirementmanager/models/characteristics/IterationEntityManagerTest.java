@@ -43,7 +43,7 @@ public class IterationEntityManagerTest {
 	@Before
 	public void setUp() {
 		db = new MockData(new HashSet<Object>());
-		testUser = new User("joe", "joe", "1234", 2);
+		testUser = new User("joe", "joe", "joe@joe.com", "1234", 2);
 		testUser.setRole(Role.ADMIN);
 		testProject = new Project("test", "1");
 		mockSsid = "abc123";

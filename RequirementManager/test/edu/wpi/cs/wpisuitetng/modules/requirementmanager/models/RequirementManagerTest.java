@@ -57,14 +57,14 @@ public class RequirementManagerTest {
 	 * @throws Exception */
 	@Before
 	public void setUp() throws Exception {
-		User admin = new User("admin", "admin", "1234", 27);
+		User admin = new User("admin", "admin", "admin@test.com", "1234", 27);
 		admin.setRole(Role.ADMIN);
 		testProject = new Project("test", "1");
 		otherProject = new Project("other", "2");
 		mockSsid = "abc123";
 		adminSession = new Session(admin, testProject, mockSsid);
 		
-		existingUser = new User("joe", "joe", "1234", 2);
+		existingUser = new User("joe", "joe", "joe@test.com", "1234", 2);
 		req1 = new Requirement(1, "Bob", "1.0", RequirementStatus.NEW, RequirementPriority.BLANK, "Desc", 1, 1);
 		
 		req2 = new Requirement(2, "Joe", "2.0", RequirementStatus.NEW, RequirementPriority.LOW, "Description", 2, 2);

@@ -22,7 +22,7 @@ public class MockUserManager extends UserManager {
 
 	@Override
 	public User update(Session s, String content) throws WPISuiteException {
-		return new User("asdf","asdf","asdf", 0);
+		return new User("asdf","asdf","asdf@com.com","asdf", 0);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class MockUserManager extends UserManager {
 
 	@Override
 	public User makeEntity(Session s, String content) throws WPISuiteException {
-		return new User("asdf","asdf","asdf", 0);
+		return new User("asdf","asdf","asdf@com.com","asdf", 0);
 	}
 
 	User fake;
@@ -81,7 +81,7 @@ public class MockUserManager extends UserManager {
 		}
 		
 		if(id.equalsIgnoreCase("asdf"))
-			u[0] = new User("asdf","asdf","asdf", 0);
+			u[0] = new User("asdf","asdf","asdf@com.com","asdf", 0);
 		
 		if(!(id.equalsIgnoreCase(fake.getUsername()) || id.equalsIgnoreCase("") || id.equalsIgnoreCase("asdf")))
 			return null;

@@ -42,8 +42,8 @@ public class SessionManagerTest {
 	@Before
 	public void setUp()
 	{
-		this.u1 = new User("Tyler", "twack", "jayms", 2);
-		this.u2 = new User("Mike", "mpdelladonna", "yams", 3);
+		this.u1 = new User("Tyler", "twack", "tw@ck.com", "jayms", 2);
+		this.u2 = new User("Mike", "mpdelladonna", "mike@test.com", "yams", 3);
 		this.u2.setRole(Role.ADMIN);
 		
 		this.man = new SessionManager();

@@ -34,7 +34,7 @@ public class Db4oDatabaseTest {
 	public void testSaveandRetrieve() throws WPISuiteException {
 		Data db = DataStore.getDataStore();
 		User[] arr = new User[1];
-		User firstUser = new User("Ryan", "rchamer", "password", 0);
+		User firstUser = new User("Ryan", "rchamer", "r@r.com", "password", 0);
 		db.save(firstUser);
 		User me = db.retrieve(User.class, "username", "rchamer").toArray(arr)[0];
 		assertEquals(me, firstUser);
@@ -45,7 +45,7 @@ public class Db4oDatabaseTest {
 	public void testDelete() throws WPISuiteException{
 		Data db = DataStore.getDataStore();
 		User[] arr = new User[1];
-		User firstUser = new User("Ryan", "rchamer", "password", 0);
+		User firstUser = new User("Ryan", "rchamer", "r@r.com", "password", 0);
 		db.save(firstUser);
 		db.delete(firstUser);
 		User me = db.retrieve(User.class, "username", "rchamer").toArray(arr)[0];
@@ -56,7 +56,7 @@ public class Db4oDatabaseTest {
 	public void testUpdate() throws WPISuiteException{
 		Data db = DataStore.getDataStore();
 		User[] arr = new User[2];
-		User firstUser = new User("Ryan", "rchamer", "password", 0);
+		User firstUser = new User("Ryan", "rchamer", "r@r.com", "password", 0);
 		db.save(firstUser);
 		db.update(User.class, "username", "rchamer", "name", "Mjolnir");
 		User Mjolnir = db.retrieve(User.class, "username", "rchamer").toArray(arr)[0];
@@ -69,9 +69,9 @@ public class Db4oDatabaseTest {
 	@Test
 	public void testRetrieveAll(){
 		Data db = DataStore.getDataStore();
-		User firstUser = new User("Brian", "bgaffey", "password", 0);
+		User firstUser = new User("Brian", "bgaffey", "bgaffey@test.com", "password", 0);
 		db.save(firstUser);
-		User secondUser = new User("Gaffey", "gafftron", "password", 0);
+		User secondUser = new User("Gaffey", "gafftron", "gafftron@test.com", "password", 0);
 		db.save(secondUser);
 		List<User> retrievedList = db.retrieveAll(firstUser);
 		
@@ -93,9 +93,9 @@ public class Db4oDatabaseTest {
 	public void testDeleteAll() throws WPISuiteException{
 		Data db = DataStore.getDataStore();
 		User[] arr = new User[2];
-		User firstUser = new User("Brian", "bgaffey", "password", 0);
+		User firstUser = new User("Brian", "bgaffey", "bgaffey@test.com", "password", 0);
 		db.save(firstUser);
-		User secondUser = new User("Gaffey", "gafftron", "password", 0);
+		User secondUser = new User("Gaffey", "gafftron", "gafftron@test.com", "password", 0);
 		db.save(secondUser);
 		List<User> retrievedList = db.retrieveAll(firstUser);
 		
@@ -115,8 +115,8 @@ public class Db4oDatabaseTest {
 	public void testRetrieveWithProjects() throws WPISuiteException{
 		Data db = DataStore.getDataStore();
 		User[] arr = new User[2];
-		User firstUser = new User("Brian", "bgaffey", "password", 0);
-		User secondUser = new User("Alex", "alex", "password1", 1);
+		User firstUser = new User("Brian", "bgaffey", "bgaffey@test.com", "password", 0);
+		User secondUser = new User("Alex", "alex", "alex@test.com", "password1", 1);
 		Project myProject = new Project("myProject", "0");
 		Project notMyProject = new Project("notMyProject", "1");
 		db.save(firstUser);
@@ -132,8 +132,8 @@ public class Db4oDatabaseTest {
 		Data db = DataStore.getDataStore();
 		
 		User[] arr = new User[2];
-		User firstUser = new User("Ryan", "rchamer", "password", 0);
-		User secondUser = new User("Bryan", "bgaffey", "pword", 1);
+		User firstUser = new User("Ryan", "rchamer", "r@r.com","password", 0);
+		User secondUser = new User("Bryan", "bgaffey", "bgaffey@test.com", "pword", 1);
 		List<User> both = new ArrayList<User>();
 		both.add(firstUser);
 		both.add(secondUser);
@@ -156,8 +156,8 @@ public class Db4oDatabaseTest {
 		Data db = DataStore.getDataStore();
 		
 		User[] arr = new User[2];
-		User firstUser = new User("Ryan", "rchamer", "password", 0);
-		User secondUser = new User("Bryan", "rchamer", "pword", 1);
+		User firstUser = new User("Ryan", "rchamer", "r@r.com", "password", 0);
+		User secondUser = new User("Bryan", "rchamer", "test@test3.com", "pword", 1);
 		List<User> first = new ArrayList<User>();
 		first.add(firstUser);
 		db.deleteAll(firstUser);
@@ -179,9 +179,9 @@ Data db = DataStore.getDataStore();
 		
 		
 		User[] arr = new User[2];
-		User firstUser = new User("Ryan", "rchamer", "password", 0);
-		User secondUser = new User("Bryan", "rchamer", "pword", 1);
-		User thirdUser = new User("Tyler", "twack", "word", 2);
+		User firstUser = new User("Ryan", "rchamer", "rchamer@test.com", "password", 0);
+		User secondUser = new User("Bryan", "rchamer", "rchamer@test.com", "pword", 1);
+		User thirdUser = new User("Tyler", "twack", "tw@ck.com", "word", 2);
 		List<User> first = new ArrayList<User>();
 		db.deleteAll(firstUser);
 		first.add(firstUser);

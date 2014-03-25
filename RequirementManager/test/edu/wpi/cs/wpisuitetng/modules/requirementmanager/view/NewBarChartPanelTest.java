@@ -64,8 +64,8 @@ public class NewBarChartPanelTest {
 		vec.setOverviewTable(new OverviewTable(exData, exData[0]));
 		vec.setToolBar(new ToolbarView(true));
 		
-		bob = new User("bob", "bob", "1234", 27);
-		sue = new User("sue", "sue", "4321", 26);
+		bob = new User("bob", "bob", "bob@test.com", "1234", 27);
+		sue = new User("sue", "sue", "sue@test.com", "4321", 26);
 	
 		req1 = new Requirement(1,  "reqName", "The description");
 		req2 = new Requirement(2, "anotherReq", "another description");
