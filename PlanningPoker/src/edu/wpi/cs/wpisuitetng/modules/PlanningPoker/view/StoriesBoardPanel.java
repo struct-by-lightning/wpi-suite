@@ -19,7 +19,12 @@ import javax.swing.JTextField;
  * for entering a new message, and a submit button for submitting
  * a new message.
  * 
+ * 
  * @author Batyrlan Nurbekov
+ * @author Sam Mailand
+ * @author Zachary Zapatka
+ * @author Miguel Mora
+ * 
  *
  */
 @SuppressWarnings({"serial", "rawtypes", "unchecked" })
@@ -39,6 +44,7 @@ public class StoriesBoardPanel extends JPanel {
      * contains the data to be displayed in the list box.
      */
     private final DefaultListModel lstBoardModel;
+    private JList list;
 
     /**
      * Construct the panel, the three components, and add the
@@ -61,7 +67,7 @@ public class StoriesBoardPanel extends JPanel {
 
         // Put the listbox in a scroll pane
         JScrollPane lstScrollPane = new JScrollPane(lstBoard);
-        lstScrollPane.setPreferredSize(new Dimension(300,300));
+        lstScrollPane.setPreferredSize(new Dimension(150,400));
 
         // Clear the contents of the text field when the user clicks on it
         txtNewMessage.addMouseListener(new MouseAdapter() {
@@ -76,6 +82,9 @@ public class StoriesBoardPanel extends JPanel {
         // Add the components to the panel
         add(Box.createVerticalStrut(20)); // leave a 20 pixel gap
         add(lstScrollPane);
+        
+        list = new JList();
+        lstScrollPane.setRowHeaderView(list);
         add(Box.createVerticalStrut(20));
         add(txtNewMessage);
         add(Box.createVerticalStrut(20));
