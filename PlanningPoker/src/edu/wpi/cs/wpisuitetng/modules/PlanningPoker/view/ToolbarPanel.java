@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.Janeway;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 
 /**
  * This panel contains the refresh button
