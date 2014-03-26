@@ -23,13 +23,14 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import edu.wpi.cs.wpisuitetng.janeway.email.Mailer;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.JanewayFrame;
 import edu.wpi.cs.wpisuitetng.janeway.gui.login.LoginController;
 import edu.wpi.cs.wpisuitetng.janeway.gui.login.LoginFrame;
 import edu.wpi.cs.wpisuitetng.janeway.modules.DummyModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.ModuleLoader;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
+//import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 
 /**
  * The client launcher class, contains the main method that

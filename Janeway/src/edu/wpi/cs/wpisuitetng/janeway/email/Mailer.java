@@ -1,4 +1,4 @@
-package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email;
+package edu.wpi.cs.wpisuitetng.janeway.email;
 
 /**
  * This class creates a mailer object.  This object has functions for adding 
