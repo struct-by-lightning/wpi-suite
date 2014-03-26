@@ -1,17 +1,18 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.model;
 
-import com.google.gson.*;
+import java.util.Date;
+import java.util.HashMap;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
- * This is the DB4O model/schema for a game of planning poker, which tracks
- * user estimates for one user story.
- *
+ * This is the DB4O model/schema for a game of planning poker, which tracks user
+ * estimates for one user story.
+ * 
  * @author atrose
  */
-public class PlanningPokerSession extends AbstractModel
-{
+public class PlanningPokerSession extends AbstractModel {
 	// A primary key given uniquely to each session.
 	private int id;
 
@@ -66,7 +67,6 @@ public class PlanningPokerSession extends AbstractModel
 	// Send a notification email to each user.
 	// private void send_email_notification(){};
 
-
 	/**
 	 * The primary constructor for a PlanningPokerSession.
 	 */
@@ -78,70 +78,67 @@ public class PlanningPokerSession extends AbstractModel
 	/**
 	 * TODO: Right now this is a copy of the same method from the `User` model.
 	 */
-	// public String toJSON()
-	// {
-	// 	String json;
-
-	// 	Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new UserSerializer()).create();
-
-	// 	json = gson.toJson(this, User.class);
-
-	// 	return json;
-	// }
+	public String toJSON() {
+		// String json;
+		//
+		// Gson gson = new GsonBuilder().registerTypeAdapter(User.class, new
+		// UserSerializer()).create();
+		//
+		// json = gson.toJson(this, User.class);
+		//
+		// return json;
+		return null;
+	}
 
 	/**
 	 * TODO: Right now this is a copy of the same method from the `User` model.
 	 */
 	// public static User fromJSON(String json) {
-	// 	// build the custom serializer/deserializer
-	// 	Gson gson;
-	// 	GsonBuilder builder = new GsonBuilder();
-	// 	builder.registerTypeAdapter(User.class, new UserDeserializer());
+	// // build the custom serializer/deserializer
+	// Gson gson;
+	// GsonBuilder builder = new GsonBuilder();
+	// builder.registerTypeAdapter(User.class, new UserDeserializer());
 
-	// 	gson = builder.create();
+	// gson = builder.create();
 
-	// 	return gson.fromJson(json, User.class);
+	// return gson.fromJson(json, User.class);
 	// }
-
 
 	/* Built-in overrides/overloads */
 
 	/**
 	 * Override of toString() to return a JSON string.
 	 */
-	public String toString()
-	{
+	public String toString() {
 		return this.toJSON();
 	}
 
-	// NOTE: I'm unclear on why we need an `identify()` method in addition to
-	// the `equals()` method.
-	//
-	// @Override
-	// public Boolean identify(Object o)
-	// {
-	// 	Boolean b  = false;
-
-	// 	if(o instanceof User)
-	// 		if(((User) o).username.equalsIgnoreCase(this.username))
-	// 			b = true;
-
-	// 	if(o instanceof String)
-	// 		if(((String) o).equalsIgnoreCase(this.username))
-	// 			b = true;
-	// 	return b;
-	// }
-
 	@Override
 	public boolean equals(Object other) {
-		if(other instanceof User)
-		{
-			if( ((PlanningPokerSession)other).id == this.id)
-			{
+		if (other instanceof User) {
+			if (((PlanningPokerSession) other).id == this.id) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void save() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Boolean identify(Object o) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
