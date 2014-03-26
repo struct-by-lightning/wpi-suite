@@ -78,7 +78,7 @@ public class DefectView extends JPanel implements IToolbarGroupProvider {
 		
 		// If this is a new defect, set the creator
 		if (editMode == Mode.CREATE) {
-			defect.setCreator(new User("", ConfigManager.getConfig().getUserName(), "", -1));
+			defect.setCreator(new User("", ConfigManager.getConfig().getUserName(), "", "", -1));
 		}
 		
 		// Instantiate the main create defect panel

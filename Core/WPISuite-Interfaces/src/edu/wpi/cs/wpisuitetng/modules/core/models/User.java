@@ -27,6 +27,7 @@ public class User extends AbstractModel
 
 	private String name;
 	private String username;
+	private String email;
 	private int idNum;
 	private Role role;
 	
@@ -36,13 +37,16 @@ public class User extends AbstractModel
 	 * The primary constructor for a User
 	 * @param name	User's full name
 	 * @param username	User's username (nickname)
+	 * @param email User's email address
+	 * @param password User's password
 	 * @param idNum	User's ID number
 	 */
-	public User(String name, String username, String password, int idNum)
+	public User(String name, String username, String email, String password, int idNum)
 	{
 		this.name = name;
 		this.username = username;
 		this.password = password;
+		this.email = email;
 		this.idNum = idNum;
 		this.role = Role.USER;
 	}
@@ -66,6 +70,10 @@ public class User extends AbstractModel
 				
 				if(this.password != null && !this.password.equals(((User)other).password))
 				{
+					return false;
+				}
+				
+				if(this.email != null && !this.email.equals(((User)other).email)) {
 					return false;
 				}
 				
@@ -119,6 +127,11 @@ public class User extends AbstractModel
 	public String getUsername()
 	{
 		return username;
+	}
+	
+	public String getEmail()
+	{
+		return email;
 	}
 	
 	/* database interaction */
@@ -215,6 +228,12 @@ public class User extends AbstractModel
 	
 	public User setUserName(String newUserName){
 		this.username = newUserName;
+		return this;
+	}
+	
+	public User setEmail(String newEmail)
+	{
+		this.email = newEmail;
 		return this;
 	}
 	

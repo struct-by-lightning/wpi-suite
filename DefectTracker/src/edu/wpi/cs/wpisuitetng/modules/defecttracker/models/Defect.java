@@ -47,7 +47,7 @@ public class Defect extends AbstractModel {
 		id = -1;
 		title = description = "";
 		status = NEW;
-		creator = new User("", "", "", -1);
+		creator = new User("", "", "", "", -1);
 		tags = new HashSet<Tag>();
 		creationDate = new Date();
 		lastModifiedDate = new Date();

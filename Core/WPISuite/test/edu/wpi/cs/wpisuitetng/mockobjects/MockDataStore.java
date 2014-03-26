@@ -41,10 +41,10 @@ public class MockDataStore implements Data {
 	{
 		models = new ArrayList<Model>();
 		models.add(new Project("test", "5"));
-		models.add(new User("steve", "steve",null, 0));
-		models.add(new User("fred","fred",null, 1));
-		models.add(new User("jeff","jeff",null, 2));
-		models.add(new User("tyler","tyler",null, 3));
+		models.add(new User("steve","steve","steve@steve.com",null, 0));
+		models.add(new User("fred","fred","fred@fred.com",null, 1));
+		models.add(new User("jeff","jeff","jeff@jeff.com",null, 2));
+		models.add(new User("tyler","tyler","tyler@tyler.com",null, 3));
 		models.add(new Project("WPISUITE","0"));
 		models.add(new Project("ANDROID:BEARCLAW","1"));
 		models.add(new Project("WINDOWS9","2"));

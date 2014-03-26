@@ -49,7 +49,7 @@ public class AuthenticatorTest {
 		// add the test user to the database
 		DataStore db = DataStore.getDataStore();
 		String hashedPassword = new Sha256Password().generateHash("jayms");
-		this.u = new User("Tyler", "twack", hashedPassword, 5);
+		this.u = new User("Tyler", "twack", "tw@ck.com", hashedPassword, 5);
 		db.save(this.u);
 	}
 	
