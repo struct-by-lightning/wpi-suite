@@ -2,13 +2,19 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JLabel;
+
 import java.awt.Component;
+
 import javax.swing.Box;
+
 import java.awt.Dimension;
 import java.awt.Font;
+
 import javax.swing.SwingConstants;
 
 /**
@@ -25,7 +31,7 @@ import javax.swing.SwingConstants;
 public class ToolbarPanel extends JPanel {
 
     /** The refresh button */
-    private final JButton btnRefresh;
+    private final JButton startTimer;
 
 
     /**
@@ -37,13 +43,15 @@ public class ToolbarPanel extends JPanel {
         this.setOpaque(false);
 
         // Construct the refresh button and add it to this panel
-        btnRefresh = new JButton("Start Timer");
-        btnRefresh.setHorizontalAlignment(SwingConstants.RIGHT);
-        btnRefresh.setFont(new Font("Arial", Font.PLAIN, 15));
-        btnRefresh.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
+        startTimer = new JButton("Start Timer");
+        startTimer.setHorizontalAlignment(SwingConstants.RIGHT);
+        startTimer.setFont(new Font("Arial", Font.PLAIN, 15));
+        startTimer.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent clicked) {
+                System.out.println("Timer Started");
         	}
         });
+        
         
         JLabel lblPlanningPoker = new JLabel("Planning Poker");
         lblPlanningPoker.setHorizontalAlignment(SwingConstants.LEFT);
@@ -52,6 +60,8 @@ public class ToolbarPanel extends JPanel {
         
         Component rigidArea = Box.createRigidArea(new Dimension(500, 20));
         add(rigidArea);
-        add(btnRefresh);
+        add(startTimer);
+        
+
     }
 }
