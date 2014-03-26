@@ -31,7 +31,7 @@ import javax.swing.SwingConstants;
 public class ToolbarPanel extends JPanel {
 
     /** The refresh button */
-    private final JButton btnRefresh;
+    private final JButton startTimer;
 
 
     /**
@@ -43,10 +43,10 @@ public class ToolbarPanel extends JPanel {
         this.setOpaque(false);
 
         // Construct the refresh button and add it to this panel
-        btnRefresh = new JButton("Start Timer");
-        btnRefresh.setHorizontalAlignment(SwingConstants.RIGHT);
-        btnRefresh.setFont(new Font("Arial", Font.PLAIN, 15));
-        btnRefresh.addActionListener(new ActionListener() {
+        startTimer = new JButton("Start Timer");
+        startTimer.setHorizontalAlignment(SwingConstants.RIGHT);
+        startTimer.setFont(new Font("Arial", Font.PLAIN, 15));
+        startTimer.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent clicked) {
                 System.out.println("Timer Started");
         	}
@@ -60,7 +60,7 @@ public class ToolbarPanel extends JPanel {
         
         Component rigidArea = Box.createRigidArea(new Dimension(500, 20));
         add(rigidArea);
-        add(btnRefresh);
+        add(startTimer);
         
 
     }
