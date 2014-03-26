@@ -1,21 +1,18 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JLabel;
-
 import java.awt.Component;
-
-import javax.swing.Box;
-
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import edu.wpi.cs.wpisuitetng.janeway.Janeway;
 
 /**
  * This panel contains the refresh button
@@ -33,12 +30,11 @@ public class ToolbarPanel extends JPanel {
     /** The refresh button */
     private final JButton startTimer;
 
-
     /**
      * Construct the panel.
      */
     public ToolbarPanel() {
-
+    	
         // Make this panel transparent, we want to see the JToolbar gradient beneath it
         this.setOpaque(false);
 
@@ -48,7 +44,7 @@ public class ToolbarPanel extends JPanel {
         startTimer.setFont(new Font("Arial", Font.PLAIN, 15));
         startTimer.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent clicked) {
-                System.out.println("Timer Started");
+                	Janeway.send_email();                
         	}
         });
         

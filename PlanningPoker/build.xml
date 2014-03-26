@@ -8,7 +8,7 @@
 	  
 	
        <path id="classpath">
-       		  <pathelement path="./lib/mail.jar"/>
+              <pathelement path="../PlanningPoker/lib/mail.jar"/>
               <pathelement path="../Janeway/build"/>
               <pathelement path="../Network/build"/>
               <pathelement path="../Core/WPISuite-Interfaces/build"/>

@@ -23,6 +23,7 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import edu.wpi.cs.wpisuitetng.janeway.email.Mailer;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.JanewayFrame;
 import edu.wpi.cs.wpisuitetng.janeway.gui.login.LoginController;
 import edu.wpi.cs.wpisuitetng.janeway.gui.login.LoginFrame;
@@ -39,6 +40,11 @@ public class Janeway {
 	
 	/** List containing all modules */
 	protected static List<IJanewayModule> modules;
+
+	public static void send_email() {
+        Mailer mailer = new Mailer("software-team6@wpi.edu");
+        mailer.send();
+	}
 
 	/**
 	 * Instantiate the main GUI frame

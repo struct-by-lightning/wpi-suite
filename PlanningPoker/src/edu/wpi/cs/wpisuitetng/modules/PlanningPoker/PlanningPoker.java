@@ -8,20 +8,16 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker;
 
-import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
-
-import java.util.ArrayList;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 public class PlanningPoker implements IJanewayModule {
 	
