@@ -8,11 +8,15 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email;
  * Contents: A Planning Poker session has begun.
  */
 
-import java.util.*;
+import java.util.Properties;
 
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  * @author Alec Thompson
@@ -23,7 +27,7 @@ public class Mailer {
 	Session session;
 	MimeMessage message;
 
-	Mailer() {
+	public Mailer() {
 		session = createSmtpSession();
 		session.setDebug(true);
 		message = new MimeMessage(session);
@@ -37,6 +41,31 @@ public class Mailer {
 			// set the header line
 			message.setSubject("WPI-Suite: Planning Poker");
 			message.setText("A Planning Poker session has begun.");
+		} catch (MessagingException mex) {
+			System.out.println("Message creation failed");
+			mex.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Alternate constructor that takes an email as a parameter
+	 * @param emailAddress Hard-coded email address
+	 */
+	public Mailer(String emailAddress) {
+		session = createSmtpSession();
+		session.setDebug(true);
+		message = new MimeMessage(session);
+
+		try {
+			String from = "struct.by.lightning@gmail.com";
+
+			// set the message to be from struct by lightning
+			message.setFrom(new InternetAddress(from));
+
+			// set the header line
+			message.setSubject("WPI-Suite: Planning Poker");
+			message.setText("A Planning Poker session has begun.");
+			this.addEmail(emailAddress);
 		} catch (MessagingException mex) {
 			System.out.println("Message creation failed");
 			mex.printStackTrace();

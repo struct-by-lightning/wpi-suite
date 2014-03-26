@@ -29,6 +29,7 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.login.LoginFrame;
 import edu.wpi.cs.wpisuitetng.janeway.modules.DummyModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.ModuleLoader;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 
 /**
  * The client launcher class, contains the main method that
@@ -39,6 +40,11 @@ public class Janeway {
 	
 	/** List containing all modules */
 	protected static List<IJanewayModule> modules;
+
+	public static void send_email() {
+        Mailer mailer = new Mailer("software-team6@wpi.edu");
+        mailer.send();
+	}
 
 	/**
 	 * Instantiate the main GUI frame

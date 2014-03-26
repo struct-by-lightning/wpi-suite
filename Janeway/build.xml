@@ -2,6 +2,8 @@
 <project name="Janeway" default="compile.deps">
 	<import file="../build-common.xml" />
 	<path id="classpath">
+		<pathelement path="../PlanningPoker/lib/mail.jar"/>
+		<pathelement path="../PlanningPoker/build"/>
 		<pathelement path="../Network/build" />
 		<pathelement path="../Core/WPISuite-Interfaces/build" />
 		<fileset dir="${core-lib}">
