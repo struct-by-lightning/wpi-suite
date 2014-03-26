@@ -9,7 +9,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 /**
  * This is the DB4O model/schema for a game of planning poker, which tracks user
  * estimates for one user story.
- * 
+ *
  * @author atrose
  */
 public class PlanningPokerSession extends AbstractModel {
@@ -54,6 +54,17 @@ public class PlanningPokerSession extends AbstractModel {
 	// Indicates whether this session is still open for users to create/modify
 	// their estimates.
 	private boolean is_active;
+
+	// Statistics about a session once it is complete.
+	private double mean;
+	private int mode;
+	private int median;
+	private int max;
+	private int min;
+
+	// The 'official' estimate to record on the user story, based on the
+	// moderator's disgression after this session has ended.
+	private int official_estimate;
 
 	// TODO
 	// Change `is_active` to false, and generate statistics.
