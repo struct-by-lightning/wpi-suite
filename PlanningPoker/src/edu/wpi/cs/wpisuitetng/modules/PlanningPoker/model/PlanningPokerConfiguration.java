@@ -1,7 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.model;
 
 public class PlanningPokerConfiguration {
-	private int[] users_participating;
+	private int[] usersParticipating;
 	private PlanningPokerGameTypes gameType;
 	private int timeLimit;
 	private int userStoryId;
@@ -12,7 +12,7 @@ public class PlanningPokerConfiguration {
 	/**
 	 * Constructs the Planning Poker configuration for the session
 	 * 
-	 * @param users_participating
+	 * @param usersParticipating
 	 * @param gameType
 	 * @param timeLimit
 	 * @param userStoryId
@@ -20,10 +20,10 @@ public class PlanningPokerConfiguration {
 	 * @param moderator
 	 * @param isActive
 	 */
-	public PlanningPokerConfiguration(int[] users_participating,
+	public PlanningPokerConfiguration(int[] usersParticipating,
 			PlanningPokerGameTypes gameType, int timeLimit, int userStoryId,
 			int[] estimationOptions, int moderator, boolean isActive) {
-		this.users_participating = users_participating;
+		this.usersParticipating = usersParticipating;
 		this.gameType = gameType;
 		this.timeLimit = timeLimit;
 		this.userStoryId = userStoryId;
@@ -32,8 +32,8 @@ public class PlanningPokerConfiguration {
 		this.isActive = isActive;
 	}
 	
-	public int[] getUsers_participating() {
-		return users_participating;
+	public int[] getusersParticipating() {
+		return usersParticipating;
 	}
 	public PlanningPokerGameTypes getGameType() {
 		return gameType;
@@ -53,8 +53,8 @@ public class PlanningPokerConfiguration {
 	public boolean isActive() {
 		return isActive;
 	}
-	public void setUsers_participating(int[] users_participating) {
-		this.users_participating = users_participating;
+	public void setusersParticipating(int[] usersParticipating) {
+		this.usersParticipating = usersParticipating;
 	}
 	public void setGameType(PlanningPokerGameTypes gameType) {
 		this.gameType = gameType;

@@ -43,8 +43,8 @@ public class PlanningPokerResults {
 		return mode;
 	}
 
-	public double getStandard_deviation() {
-		return standard_deviation;
+	public double getStandaDeviation() {
+		return standardDeviation;
 	}
 
 	public int getMax() {
@@ -55,7 +55,7 @@ public class PlanningPokerResults {
 		return min;
 	}
 
-	public int getOfficial_estimation() {
-		return official_estimation;
+	public int getOfficialEstimation() {
+		return officialEstimation;
 	}
 }
