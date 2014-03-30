@@ -13,6 +13,9 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -27,9 +30,11 @@ public class GameSettingsWindow extends JPanel {
 	private JTable requiermentsToSelect;
 	private JTable selectedRequirements;
 	
+	DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+	Date date = new Date();
 	
-	JComboBox endMonth = new JComboBox();
-	JComboBox endDay = new JComboBox();
+	JComboBox<Months> endMonth = new JComboBox<Months>();
+	JComboBox<Integer> endDay = new JComboBox<Integer>();
 	
 	
 	public GameSettingsWindow() {
@@ -43,8 +48,8 @@ public class GameSettingsWindow extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
-		//The label before the text entry field for name "DEFAULT NAME:"
-		JLabel lblGameName = new JLabel("DEFAULT NAME");
+		
+		JLabel lblGameName = new JLabel("Session Name");
 		GridBagConstraints gbc_lblGameName = new GridBagConstraints();
 		gbc_lblGameName.anchor = GridBagConstraints.EAST;
 		gbc_lblGameName.insets = new Insets(0, 0, 5, 5);
@@ -60,7 +65,10 @@ public class GameSettingsWindow extends JPanel {
 		gbc_nameOfGameTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_nameOfGameTextField.gridx = 1;
 		gbc_nameOfGameTextField.gridy = 3;
-		nameOfGameTextField.setText("DEFAULT TEXT");
+		
+		//Puts current date and time into poker session name
+		nameOfGameTextField.setText(dateFormat.format(date));
+		
 		add(nameOfGameTextField, gbc_nameOfGameTextField);
 		nameOfGameTextField.setColumns(10);
 		
@@ -89,7 +97,7 @@ public class GameSettingsWindow extends JPanel {
 		add(gameType, gbc_gameType);
 		
 
-		endMonth.setModel(new DefaultComboBoxModel(Months.values()));
+		endMonth.setModel(new DefaultComboBoxModel<Months>(Months.values()));
 		GridBagConstraints gbc_endMonth = new GridBagConstraints();
 		gbc_endMonth.gridwidth = 3;
 		gbc_endMonth.insets = new Insets(0, 0, 5, 5);
@@ -100,13 +108,14 @@ public class GameSettingsWindow extends JPanel {
 		
 
 
-		endDay.setModel(new DefaultComboBoxModel(new String[] {}));
+		endDay.setModel(new DefaultComboBoxModel<Integer>(new Integer[] {}));
 		GridBagConstraints gbc_endDay = new GridBagConstraints();
 		gbc_endDay.gridwidth = 3;
 		gbc_endDay.insets = new Insets(0, 0, 5, 5);
 		gbc_endDay.fill = GridBagConstraints.HORIZONTAL;
 		gbc_endDay.gridx = 4;
 		gbc_endDay.gridy = 6;
+		set31Days();
 		add(endDay, gbc_endDay);
 		
 		
@@ -189,9 +198,32 @@ public class GameSettingsWindow extends JPanel {
 		endMonth.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 				switch((Months)endMonth.getSelectedItem()){
-				case JANUARY: endDay.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
-							break;
-				default: endDay.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6"}));
+				case JANUARY: set31Days();
+								break;
+				case FEBRUARY: set28Days();
+								break;
+				case MARCH: set31Days();
+								break;
+				case APRIL: set30Days();
+								break;
+				case MAY: set31Days();
+								break;
+				case JUNE: set30Days();
+								break;
+				case JULY: set31Days();
+								break;
+				case AUGUST: set31Days();
+								break;
+				case SEPTEMBER: set30Days();
+								break;
+				case OCTOBER: set31Days();
+								break;
+				case NOVEMBER: set30Days();
+								break;
+				case DECEMBER: set31Days();
+								break;
+				default: set31Days();
+							  
 				}
 		    }
 		});
@@ -200,4 +232,15 @@ public class GameSettingsWindow extends JPanel {
 		
 	}
 	
+	public void set28Days(){
+		endDay.setModel(new DefaultComboBoxModel<Integer>(new Integer[] {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28}));
+	}
+
+	public void set30Days(){
+		endDay.setModel(new DefaultComboBoxModel<Integer>(new Integer[] {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30}));
+	}
+	
+	public void set31Days(){
+		endDay.setModel(new DefaultComboBoxModel<Integer>(new Integer[] {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31}));
+	}
 }
