@@ -11,6 +11,8 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 /**
@@ -24,6 +26,11 @@ public class GameSettingsWindow extends JPanel {
 	private JTextField nameOfGameTextField;
 	private JTable requiermentsToSelect;
 	private JTable selectedRequirements;
+	
+	
+	JComboBox endMonth = new JComboBox();
+	JComboBox endDay = new JComboBox();
+	
 	
 	public GameSettingsWindow() {
 		
@@ -53,6 +60,7 @@ public class GameSettingsWindow extends JPanel {
 		gbc_nameOfGameTextField.insets = new Insets(0, 0, 5, 5);
 		gbc_nameOfGameTextField.gridx = 1;
 		gbc_nameOfGameTextField.gridy = 3;
+		nameOfGameTextField.setText("DEFAULT TEXT");
 		add(nameOfGameTextField, gbc_nameOfGameTextField);
 		nameOfGameTextField.setColumns(10);
 		
@@ -79,6 +87,29 @@ public class GameSettingsWindow extends JPanel {
 		gbc_gameType.gridx = 1;
 		gbc_gameType.gridy = 5;
 		add(gameType, gbc_gameType);
+		
+
+		endMonth.setModel(new DefaultComboBoxModel(Months.values()));
+		GridBagConstraints gbc_endMonth = new GridBagConstraints();
+		gbc_endMonth.gridwidth = 3;
+		gbc_endMonth.insets = new Insets(0, 0, 5, 5);
+		gbc_endMonth.fill = GridBagConstraints.HORIZONTAL;
+		gbc_endMonth.gridx = 4;
+		gbc_endMonth.gridy = 5;
+		add(endMonth, gbc_endMonth);
+		
+
+
+		endDay.setModel(new DefaultComboBoxModel(new String[] {}));
+		GridBagConstraints gbc_endDay = new GridBagConstraints();
+		gbc_endDay.gridwidth = 3;
+		gbc_endDay.insets = new Insets(0, 0, 5, 5);
+		gbc_endDay.fill = GridBagConstraints.HORIZONTAL;
+		gbc_endDay.gridx = 4;
+		gbc_endDay.gridy = 6;
+		add(endDay, gbc_endDay);
+		
+		
 		
 		JLabel lblDeckType = new JLabel("Deck Type:");
 		GridBagConstraints gbc_lblDeckType = new GridBagConstraints();
@@ -134,10 +165,18 @@ public class GameSettingsWindow extends JPanel {
 		
 		JButton btnAddReq = new JButton("Add");
 		GridBagConstraints gbc_btnAddReq = new GridBagConstraints();
+		gbc_btnAddReq.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnAddReq.insets = new Insets(0, 0, 5, 5);
 		gbc_btnAddReq.gridx = 3;
 		gbc_btnAddReq.gridy = 12;
 		add(btnAddReq, gbc_btnAddReq);
+		
+		JButton btnRemoveReq = new JButton("Remove");
+		GridBagConstraints gbc_btnRemoveReq = new GridBagConstraints();
+		gbc_btnRemoveReq.insets = new Insets(0, 0, 5, 5);
+		gbc_btnRemoveReq.gridx = 3;
+		gbc_btnRemoveReq.gridy = 13;
+		add(btnRemoveReq, gbc_btnRemoveReq);
 		
 		JButton submitButton = new JButton("Submit");
 		GridBagConstraints gbc_submitButton = new GridBagConstraints();
@@ -146,5 +185,19 @@ public class GameSettingsWindow extends JPanel {
 		add(submitButton, gbc_submitButton);
 		
 		
+		
+		endMonth.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+				switch((Months)endMonth.getSelectedItem()){
+				case JANUARY: endDay.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+							break;
+				default: endDay.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6"}));
+				}
+		    }
+		});
+		
+		
+		
 	}
+	
 }
