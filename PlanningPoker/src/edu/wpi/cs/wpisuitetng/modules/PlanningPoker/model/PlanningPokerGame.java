@@ -1,9 +1,12 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.model;
 
-import com.google.gson.*;
+import java.util.Date;
+import java.util.HashMap;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+//import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+
 
 /**
  * @author atrose
@@ -20,14 +23,14 @@ public class PlanningPokerGame extends AbstractModel
 	private User[] players;
 
 	// The requirements this planning poker game is estimating for.
-	private Requirement requirements;
+//	private Requirement requirements;
 
 	// The values each player is allowed to choose from for their estimate.
 	private int[] default_deck;
 
 	// A mapping of individual players to their estimations, all mapped to each
 	// different requirement the team estimates on.
-	private HashMap<Requirement, HashMap<User, Integer>> estimates;
+//	private HashMap<Requirement, HashMap<User, Integer>> estimates;
 
 	// A time limit for this session - after which player will be unable to
 	// modify their estimates. A null `time_limit` means the session will run
@@ -58,11 +61,11 @@ public class PlanningPokerGame extends AbstractModel
 	/**
 	 * Save a new estimate from someone to the game.
 	 **/
-	public void add_new_estimate(Requirement requirement, User user, int new_estimate) {
-		HashMap inner_map = new HashMap<User, Integer>();
-		inner_map.put(user, new Integer(new_estimate));
-		this.estimates.put(requirement, inner_map)
-	}
+//	public void add_new_estimate(Requirement requirement, User user, int new_estimate) {
+//		HashMap inner_map = new HashMap<User, Integer>();
+//		inner_map.put(user, new Integer(new_estimate));
+//		this.estimates.put(requirement, inner_map);
+//	}
 
 	/**
 	 * TODO
@@ -138,6 +141,30 @@ public class PlanningPokerGame extends AbstractModel
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void save() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String toJSON() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean identify(Object o) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
