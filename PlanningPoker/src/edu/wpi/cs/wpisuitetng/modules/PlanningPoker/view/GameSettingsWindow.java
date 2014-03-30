@@ -30,6 +30,8 @@ public class GameSettingsWindow extends JPanel {
 	private JTable requiermentsToSelect;
 	private JTable selectedRequirements;
 	
+	
+	//To be used to make sure the date is printed in the proper format
 	DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	Date date = new Date();
 	
@@ -38,160 +40,116 @@ public class GameSettingsWindow extends JPanel {
 	
 	
 	public GameSettingsWindow() {
-		
-		
-		//Just used to make sure that the whole GUI of the window scales properly
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{98, 127, 0, 0, 53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		setLayout(gridBagLayout);
+		SpringLayout springLayout = new SpringLayout();
+		springLayout.putConstraint(SpringLayout.NORTH, endDay, 186, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, endDay, 368, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, endDay, 482, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.NORTH, endMonth, 154, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, endMonth, 368, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, endMonth, 482, SpringLayout.WEST, this);
+		setLayout(springLayout);
 		
 		
 		JLabel lblGameName = new JLabel("Session Name");
-		GridBagConstraints gbc_lblGameName = new GridBagConstraints();
-		gbc_lblGameName.anchor = GridBagConstraints.EAST;
-		gbc_lblGameName.insets = new Insets(0, 0, 5, 5);
-		gbc_lblGameName.gridx = 0;
-		gbc_lblGameName.gridy = 3;
-		add(lblGameName, gbc_lblGameName);
+		springLayout.putConstraint(SpringLayout.NORTH, lblGameName, 96, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, lblGameName, 28, SpringLayout.WEST, this);
+		add(lblGameName);
 		
 		
 		
 		nameOfGameTextField = new JTextField();
-		GridBagConstraints gbc_nameOfGameTextField = new GridBagConstraints();
-		gbc_nameOfGameTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_nameOfGameTextField.insets = new Insets(0, 0, 5, 5);
-		gbc_nameOfGameTextField.gridx = 1;
-		gbc_nameOfGameTextField.gridy = 3;
+		springLayout.putConstraint(SpringLayout.NORTH, nameOfGameTextField, 90, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, nameOfGameTextField, 121, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, nameOfGameTextField, 235, SpringLayout.WEST, this);
 		
 		//Puts current date and time into poker session name
 		nameOfGameTextField.setText(dateFormat.format(date));
 		
-		add(nameOfGameTextField, gbc_nameOfGameTextField);
+		add(nameOfGameTextField);
 		nameOfGameTextField.setColumns(10);
 		
 		JButton endGameButton = new JButton("END Game");
-		GridBagConstraints gbc_endGameButton = new GridBagConstraints();
-		gbc_endGameButton.insets = new Insets(0, 0, 5, 0);
-		gbc_endGameButton.gridx = 13;
-		gbc_endGameButton.gridy = 3;
-		add(endGameButton, gbc_endGameButton);
+		springLayout.putConstraint(SpringLayout.NORTH, endGameButton, 90, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, endGameButton, 667, SpringLayout.WEST, this);
+		add(endGameButton);
 		
 		JLabel lblSelectGameMode = new JLabel("Select Game Mode:");
-		GridBagConstraints gbc_lblSelectGameMode = new GridBagConstraints();
-		gbc_lblSelectGameMode.anchor = GridBagConstraints.EAST;
-		gbc_lblSelectGameMode.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSelectGameMode.gridx = 0;
-		gbc_lblSelectGameMode.gridy = 5;
-		add(lblSelectGameMode, gbc_lblSelectGameMode);
+		springLayout.putConstraint(SpringLayout.NORTH, lblSelectGameMode, 159, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, lblSelectGameMode, 0, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, lblSelectGameMode, 116, SpringLayout.WEST, this);
+		add(lblSelectGameMode);
 		
 		JComboBox<String> gameType = new JComboBox<String>();
+		springLayout.putConstraint(SpringLayout.NORTH, gameType, 154, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, gameType, 121, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, gameType, 235, SpringLayout.WEST, this);
 		gameType.setModel(new DefaultComboBoxModel<String>(new String[] {"Long Term", "Short Term"}));
-		GridBagConstraints gbc_gameType = new GridBagConstraints();
-		gbc_gameType.fill = GridBagConstraints.HORIZONTAL;
-		gbc_gameType.insets = new Insets(0, 0, 5, 5);
-		gbc_gameType.gridx = 1;
-		gbc_gameType.gridy = 5;
-		add(gameType, gbc_gameType);
+		add(gameType);
 		
 
 		endMonth.setModel(new DefaultComboBoxModel<Months>(Months.values()));
-		GridBagConstraints gbc_endMonth = new GridBagConstraints();
-		gbc_endMonth.gridwidth = 3;
-		gbc_endMonth.insets = new Insets(0, 0, 5, 5);
-		gbc_endMonth.fill = GridBagConstraints.HORIZONTAL;
-		gbc_endMonth.gridx = 4;
-		gbc_endMonth.gridy = 5;
-		add(endMonth, gbc_endMonth);
+		add(endMonth);
 		
 
 
 		endDay.setModel(new DefaultComboBoxModel<Integer>(new Integer[] {}));
-		GridBagConstraints gbc_endDay = new GridBagConstraints();
-		gbc_endDay.gridwidth = 3;
-		gbc_endDay.insets = new Insets(0, 0, 5, 5);
-		gbc_endDay.fill = GridBagConstraints.HORIZONTAL;
-		gbc_endDay.gridx = 4;
-		gbc_endDay.gridy = 6;
 		set31Days();
-		add(endDay, gbc_endDay);
+		add(endDay);
 		
 		
 		
 		JLabel lblDeckType = new JLabel("Deck Type:");
-		GridBagConstraints gbc_lblDeckType = new GridBagConstraints();
-		gbc_lblDeckType.insets = new Insets(0, 0, 5, 5);
-		gbc_lblDeckType.anchor = GridBagConstraints.EAST;
-		gbc_lblDeckType.gridx = 0;
-		gbc_lblDeckType.gridy = 7;
-		add(lblDeckType, gbc_lblDeckType);
+		springLayout.putConstraint(SpringLayout.NORTH, lblDeckType, 223, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, lblDeckType, 46, SpringLayout.WEST, this);
+		add(lblDeckType);
 		
 		JComboBox<String> deckType = new JComboBox<String>();
+		springLayout.putConstraint(SpringLayout.NORTH, deckType, 218, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, deckType, 121, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, deckType, 235, SpringLayout.WEST, this);
 		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"DEFAULT"}));
-		GridBagConstraints gbc_deckType = new GridBagConstraints();
-		gbc_deckType.insets = new Insets(0, 0, 5, 5);
-		gbc_deckType.fill = GridBagConstraints.HORIZONTAL;
-		gbc_deckType.gridx = 1;
-		gbc_deckType.gridy = 7;
-		add(deckType, gbc_deckType);
+		add(deckType);
 		
 		JLabel lblSelectRequirements = new JLabel("Select Requirements");
-		GridBagConstraints gbc_lblSelectRequirements = new GridBagConstraints();
-		gbc_lblSelectRequirements.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSelectRequirements.gridx = 0;
-		gbc_lblSelectRequirements.gridy = 10;
-		add(lblSelectRequirements, gbc_lblSelectRequirements);
+		springLayout.putConstraint(SpringLayout.NORTH, lblSelectRequirements, 310, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, lblSelectRequirements, 0, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, lblSelectRequirements, 116, SpringLayout.WEST, this);
+		add(lblSelectRequirements);
 		
 		JLabel lblRequirementsToBe = new JLabel("Requirements to be Estimated");
-		GridBagConstraints gbc_lblRequirementsToBe = new GridBagConstraints();
-		gbc_lblRequirementsToBe.gridwidth = 7;
-		gbc_lblRequirementsToBe.insets = new Insets(0, 0, 5, 5);
-		gbc_lblRequirementsToBe.gridx = 4;
-		gbc_lblRequirementsToBe.gridy = 10;
-		add(lblRequirementsToBe, gbc_lblRequirementsToBe);
+		springLayout.putConstraint(SpringLayout.NORTH, lblRequirementsToBe, 310, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, lblRequirementsToBe, 391, SpringLayout.WEST, this);
+		add(lblRequirementsToBe);
 		
 		requiermentsToSelect = new JTable();
-		GridBagConstraints gbc_requiermentsToSelect = new GridBagConstraints();
-		gbc_requiermentsToSelect.gridheight = 5;
-		gbc_requiermentsToSelect.gridwidth = 3;
-		gbc_requiermentsToSelect.insets = new Insets(0, 0, 5, 5);
-		gbc_requiermentsToSelect.fill = GridBagConstraints.BOTH;
-		gbc_requiermentsToSelect.gridx = 0;
-		gbc_requiermentsToSelect.gridy = 11;
-		add(requiermentsToSelect, gbc_requiermentsToSelect);
+		springLayout.putConstraint(SpringLayout.NORTH, requiermentsToSelect, 331, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, requiermentsToSelect, 0, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, requiermentsToSelect, 570, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.EAST, requiermentsToSelect, 265, SpringLayout.WEST, this);
+		add(requiermentsToSelect);
 		
 		selectedRequirements = new JTable();
-		GridBagConstraints gbc_selectedRequirements = new GridBagConstraints();
-		gbc_selectedRequirements.gridheight = 5;
-		gbc_selectedRequirements.gridwidth = 8;
-		gbc_selectedRequirements.insets = new Insets(0, 0, 5, 5);
-		gbc_selectedRequirements.fill = GridBagConstraints.BOTH;
-		gbc_selectedRequirements.gridx = 4;
-		gbc_selectedRequirements.gridy = 11;
-		add(selectedRequirements, gbc_selectedRequirements);
+		springLayout.putConstraint(SpringLayout.NORTH, selectedRequirements, 331, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, selectedRequirements, 368, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, selectedRequirements, 570, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.EAST, selectedRequirements, 632, SpringLayout.WEST, this);
+		add(selectedRequirements);
 		
 		JButton btnAddReq = new JButton("Add");
-		GridBagConstraints gbc_btnAddReq = new GridBagConstraints();
-		gbc_btnAddReq.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnAddReq.insets = new Insets(0, 0, 5, 5);
-		gbc_btnAddReq.gridx = 3;
-		gbc_btnAddReq.gridy = 12;
-		add(btnAddReq, gbc_btnAddReq);
+		springLayout.putConstraint(SpringLayout.NORTH, btnAddReq, 447, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, btnAddReq, 270, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.EAST, btnAddReq, 363, SpringLayout.WEST, this);
+		add(btnAddReq);
 		
 		JButton btnRemoveReq = new JButton("Remove");
-		GridBagConstraints gbc_btnRemoveReq = new GridBagConstraints();
-		gbc_btnRemoveReq.insets = new Insets(0, 0, 5, 5);
-		gbc_btnRemoveReq.gridx = 3;
-		gbc_btnRemoveReq.gridy = 13;
-		add(btnRemoveReq, gbc_btnRemoveReq);
+		springLayout.putConstraint(SpringLayout.NORTH, btnRemoveReq, 481, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, btnRemoveReq, 270, SpringLayout.WEST, this);
+		add(btnRemoveReq);
 		
 		JButton submitButton = new JButton("Submit");
-		GridBagConstraints gbc_submitButton = new GridBagConstraints();
-		gbc_submitButton.gridx = 13;
-		gbc_submitButton.gridy = 16;
-		add(submitButton, gbc_submitButton);
+		springLayout.putConstraint(SpringLayout.NORTH, submitButton, 575, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, submitButton, 678, SpringLayout.WEST, this);
+		add(submitButton);
 		
 		
 		
