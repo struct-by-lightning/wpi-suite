@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import edu.wpi.cs.wpisuitetng.janeway.Janeway;
+import edu.wpi.cs.wpisuitetng.janeway.email.Mailer;
 
 /**
  * This panel contains the refresh button
@@ -29,11 +29,13 @@ public class ToolbarPanel extends JPanel {
 
     /** The refresh button */
     private final JButton startTimer;
+    private final Mailer mailer;
 
     /**
      * Construct the panel.
      */
     public ToolbarPanel() {
+    	mailer = new Mailer("software-team6@wpi.edu");
     	
         // Make this panel transparent, we want to see the JToolbar gradient beneath it
         this.setOpaque(false);
@@ -44,7 +46,7 @@ public class ToolbarPanel extends JPanel {
         startTimer.setFont(new Font("Arial", Font.PLAIN, 15));
         startTimer.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent clicked) {
-                	Janeway.send_email();                
+        		mailer.send();
         	}
         });
         

@@ -41,11 +41,6 @@ public class Janeway {
 	/** List containing all modules */
 	protected static List<IJanewayModule> modules;
 
-	public static void send_email() {
-        Mailer mailer = new Mailer("software-team6@wpi.edu");
-        mailer.send();
-	}
-
 	/**
 	 * Instantiate the main GUI frame
 	 */
