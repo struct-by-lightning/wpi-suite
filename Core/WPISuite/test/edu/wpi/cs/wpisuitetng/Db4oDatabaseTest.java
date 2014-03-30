@@ -41,6 +41,28 @@ public class Db4oDatabaseTest {
 		db.delete(me);
 	}
 	
+	public void testSaveandRetrieveByEmail() throws WPISuiteException {
+		Data db = DataStore.getDataStore();
+		User[] arr = new User[1];
+		User firstUser = new User("Ryan", "rchamer", "r@r.com", "password", 0);
+		db.save(firstUser);
+		User me = db.retrieve(User.class, "email", "r@r.com").toArray(arr)[0];
+		assertEquals(firstUser, me);
+		db.delete(me);
+	}
+	
+	public void testGetEmail() throws WPISuiteException {
+		Data db = DataStore.getDataStore();
+		User[] arr = new User[1];
+		String testEmail = "test@test.com";
+		User firstUser = new User("Ryan", "rchamer", testEmail, "password", 0);
+		db.save(firstUser);
+		User me = db.retrieve(User.class, "username", "rchamer").toArray(arr)[0];
+		String retEmail = me.getEmail();
+		assertEquals(testEmail, retEmail);
+		db.delete(me);
+	}
+	
 	@Test
 	public void testDelete() throws WPISuiteException{
 		Data db = DataStore.getDataStore();
