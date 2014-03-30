@@ -16,8 +16,10 @@ import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.GameSettingsWindow;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.OverviewPanel;
 
 public class PlanningPoker implements IJanewayModule {
 	
@@ -34,7 +36,8 @@ public class PlanningPoker implements IJanewayModule {
 	    ToolbarView toolbarView = new ToolbarView();
 
 	    // Create a JPanel to hold the main contents of the tab
-	    JPanel mainPanel = new MainView();
+	    JPanel mainPanel = new OverviewPanel();
+	    
 
 	    // Create a tab model that contains the toolbar panel and the main content panel
 	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, mainPanel);
