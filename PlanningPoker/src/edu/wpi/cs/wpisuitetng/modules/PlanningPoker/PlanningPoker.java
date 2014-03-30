@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
@@ -36,11 +37,16 @@ public class PlanningPoker implements IJanewayModule {
 	    ToolbarView toolbarView = new ToolbarView();
 
 	    // Create a JPanel to hold the main contents of the tab
-	    JPanel mainPanel = new OverviewPanel();
+	    JPanel overviewPanel = new OverviewPanel();
 	    
 
+	    
+	    JTabbedPane overviewTab = new JTabbedPane();
+	    overviewTab.addTab( "Overview", overviewPanel );
+	    
+	    
 	    // Create a tab model that contains the toolbar panel and the main content panel
-	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, mainPanel);
+	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, overviewTab);
 
 	    // Add the tab to the list of tabs owned by this module
 	    tabs.add(tab1);
