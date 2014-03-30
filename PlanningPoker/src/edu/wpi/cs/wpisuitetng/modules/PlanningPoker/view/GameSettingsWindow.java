@@ -147,8 +147,8 @@ public class GameSettingsWindow extends JPanel {
 		add(btnRemoveReq);
 		
 		JButton submitButton = new JButton("Submit");
-		springLayout.putConstraint(SpringLayout.NORTH, submitButton, 575, SpringLayout.NORTH, this);
-		springLayout.putConstraint(SpringLayout.WEST, submitButton, 678, SpringLayout.WEST, this);
+		springLayout.putConstraint(SpringLayout.WEST, submitButton, 0, SpringLayout.WEST, endGameButton);
+		springLayout.putConstraint(SpringLayout.SOUTH, submitButton, 0, SpringLayout.SOUTH, requiermentsToSelect);
 		add(submitButton);
 		
 		
