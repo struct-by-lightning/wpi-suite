@@ -27,6 +27,8 @@ public class GameSettingsWindow extends JPanel {
 	
 	public GameSettingsWindow() {
 		
+		
+		//Just used to make sure that the whole GUI of the window scales properly
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{98, 127, 0, 0, 53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -34,6 +36,7 @@ public class GameSettingsWindow extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
+		//The label before the text entry field for name "DEFAULT NAME:"
 		JLabel lblGameName = new JLabel("DEFAULT NAME");
 		GridBagConstraints gbc_lblGameName = new GridBagConstraints();
 		gbc_lblGameName.anchor = GridBagConstraints.EAST;
@@ -41,6 +44,8 @@ public class GameSettingsWindow extends JPanel {
 		gbc_lblGameName.gridx = 0;
 		gbc_lblGameName.gridy = 3;
 		add(lblGameName, gbc_lblGameName);
+		
+		
 		
 		nameOfGameTextField = new JTextField();
 		GridBagConstraints gbc_nameOfGameTextField = new GridBagConstraints();
