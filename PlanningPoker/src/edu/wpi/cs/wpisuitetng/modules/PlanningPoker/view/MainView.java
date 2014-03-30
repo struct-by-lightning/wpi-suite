@@ -14,6 +14,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JTabbedPane;
 import javax.swing.JTextPane;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
@@ -55,6 +56,7 @@ public class MainView extends JPanel {
 	private JTable userStoryTable;
 	private JTable usersTable;
     public MainView() {
+    	
     	setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
     	setLayout(null);
     	

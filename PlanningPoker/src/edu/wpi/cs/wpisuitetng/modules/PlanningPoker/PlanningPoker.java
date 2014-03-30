@@ -22,9 +22,9 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 public class PlanningPoker implements IJanewayModule {
-	
 	/**
 	 * A list of tabs owned by this module
 	 */
@@ -38,10 +38,10 @@ public class PlanningPoker implements IJanewayModule {
 	    ToolbarView toolbarView = new ToolbarView();
 
 	    // Create a JPanel to hold the main contents of the tab
-	    JPanel mainPanel = new MainView();
+	    JPanel mainPane = new MainView();
 
 	    // Create a tab model that contains the toolbar panel and the main content panel
-	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, mainPanel);
+	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, mainPane);
 
 	    // Add the tab to the list of tabs owned by this module
 	    tabs.add(tab1);

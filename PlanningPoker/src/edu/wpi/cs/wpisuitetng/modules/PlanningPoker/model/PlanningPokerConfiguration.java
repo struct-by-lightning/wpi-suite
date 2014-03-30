@@ -32,7 +32,7 @@ public class PlanningPokerConfiguration {
 		this.isActive = isActive;
 	}
 	
-	public int[] getusersParticipating() {
+	public int[] getUsersParticipating() {
 		return usersParticipating;
 	}
 	public PlanningPokerGameTypes getGameType() {
