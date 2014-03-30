@@ -19,11 +19,13 @@ public abstract class RegularAbstractModel<CRTP extends RegularAbstractModel<CRT
 		CRTP crtpo;
 		try {
 			crtpo = (CRTP) o;
-		} catch (ClassCastException e) {
+		} catch(ClassCastException e) {
 			return false;
 		}
 		return this.identify(crtpo);
 	}
 
 	public abstract Boolean identify(CRTP curious);
+	public abstract String getID();
+	public static String primaryKey;
 }
