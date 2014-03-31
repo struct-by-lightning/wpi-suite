@@ -23,12 +23,20 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
+
 import java.awt.FlowLayout;
 import java.awt.Font;
+
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.JTextField;
 
 import java.awt.GridLayout;
+
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -37,6 +45,17 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+import javax.swing.JButton;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerDateModel;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.util.Calendar;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -104,17 +123,159 @@ public class NewGameTab extends JPanel {
 		JPanel panel_15 = new JPanel();
 		panel_15.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		footer_panel.add(panel_15, BorderLayout.CENTER);
-		panel_15.setLayout(new GridLayout(2, 3, 0, 0));
+		panel_15.setLayout(new GridLayout(1, 3, 0, 0));
 
 		JPanel panel_18 = new JPanel();
 		panel_15.add(panel_18);
+		
+		SpinnerDateModel model = new SpinnerDateModel();
+		model.setCalendarField(Calendar.MINUTE);
+		
+		JLabel lblStart = new JLabel("Start Date:");
+		
+		final JTextField startDateText = new JTextField(13);
+		startDateText.setMinimumSize(new Dimension (startDateText.getPreferredSize().width, startDateText.getPreferredSize().height));
+		JButton calendarButton = new JButton("Calendar");
+		final JPanel startPanel = new JPanel(new GridBagLayout());
+		startPanel.setPreferredSize(new Dimension(350, 220));
+		final GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.anchor = GridBagConstraints.LINE_START;
+		startPanel.add(new JLabel("Start Time:"), constraints);
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.gridx = 1;
+		constraints.gridy = 0;
+		JSpinner startTime= new JSpinner();
+		startTime.setModel(model);
+		startTime.setEditor(new JSpinner.DateEditor(startTime, "h:mm a"));
+		startPanel.add(startTime, constraints);
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		constraints.weightx = 0;
+		constraints.anchor = GridBagConstraints.LINE_START;
+		startPanel.add(lblStart, constraints);
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weightx = 1;
+		constraints.gridx = 1;
+		constraints.gridy = 1;
+		startPanel.add(startDateText, constraints);
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.weightx = 0;
+		constraints.gridx = 2;
+		constraints.gridy = 1;
+		startPanel.add(calendarButton, constraints);
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		startPanel.add(new JLabel(), constraints);
+		constraints.gridx = 0;
+		constraints.gridy = 3;
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		startPanel.add(new JLabel(), constraints);
+		constraints.weightx = 0;
+		constraints.weighty = 0;
+//		final JFrame f = new JFrame();
+//		f.getContentPane().add(p);
+//		f.pack();
+//		f.setVisible(true);
+		calendarButton.addActionListener(new ActionListener() {
+			boolean open = false;
+			DatePicker dp;
+			public void actionPerformed(ActionEvent ae) {
+				if(!open) {
+					dp = new DatePicker(startPanel, constraints, startDateText);
+					open = true;
+				}
+				else {
+					dp.close();
+					open = false;					
+				}
+			}
+		});
+		
+		panel_18.add(startPanel);
 
-		JLabel lblStart = new JLabel("Start date/time:");
-		panel_18.add(lblStart);
+//		textField = new JTextField();
+//		panel_18.add(textField);
+//		textField.setColumns(10);
+		
+		JPanel panel_21 = new JPanel();
+		panel_15.add(panel_21);
 
-		textField = new JTextField();
-		panel_18.add(textField);
-		textField.setColumns(10);
+		JLabel lblEndDate = new JLabel("End Date:");
+		
+		final JTextField endDateText = new JTextField(13);
+		endDateText.setMinimumSize(new Dimension (endDateText.getPreferredSize().width, endDateText.getPreferredSize().height));
+		JButton calendarButton_2 = new JButton("Calendar");
+		final JPanel endPanel = new JPanel(new GridBagLayout());
+		endPanel.setPreferredSize(new Dimension(350, 220));
+		final GridBagConstraints constraints_2 = new GridBagConstraints();
+		constraints_2.fill = GridBagConstraints.HORIZONTAL;
+		constraints_2.gridx = 0;
+		constraints_2.gridy = 0;
+		constraints_2.anchor = GridBagConstraints.LINE_START;
+		endPanel.add(new JLabel("End Time:"), constraints_2);
+		constraints_2.fill = GridBagConstraints.HORIZONTAL;
+		constraints_2.gridx = 1;
+		constraints_2.gridy = 0;
+		constraints_2.weightx = 1;
+		JSpinner endTime= new JSpinner();
+		endTime.setModel(model);
+		endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
+		endPanel.add(endTime, constraints_2);
+		constraints_2.fill = GridBagConstraints.HORIZONTAL;
+		constraints_2.gridx = 0;
+		constraints_2.gridy = 1;
+		constraints_2.weightx = 0;
+		constraints_2.anchor = GridBagConstraints.LINE_START;
+		endPanel.add(lblEndDate, constraints_2);
+		constraints_2.fill = GridBagConstraints.HORIZONTAL;
+		constraints_2.weightx = 1;
+		constraints_2.gridx = 1;
+		constraints_2.gridy = 1;
+		endPanel.add(endDateText, constraints_2);
+		constraints_2.fill = GridBagConstraints.HORIZONTAL;
+		constraints_2.weightx = 0;
+		constraints_2.gridx = 2;
+		constraints_2.gridy = 1;
+		endPanel.add(calendarButton_2, constraints_2);
+		constraints_2.gridx = 0;
+		constraints_2.gridy = 2;
+		constraints_2.weightx = 1;
+		constraints_2.weighty = 1;
+		endPanel.add(new JLabel(), constraints_2);
+		constraints_2.gridx = 0;
+		constraints_2.gridy = 3;
+		constraints_2.weightx = 1;
+		constraints_2.weighty = 1;
+		endPanel.add(new JLabel(), constraints_2);
+		constraints_2.weightx = 0;
+		constraints_2.weighty = 0;
+//		final JFrame f = new JFrame();
+//		f.getContentPane().add(p);
+//		f.pack();
+//		f.setVisible(true);
+		calendarButton_2.addActionListener(new ActionListener() {
+			boolean open = false;
+			DatePicker dp;
+			public void actionPerformed(ActionEvent ae) {
+				if(!open) {
+					dp = new DatePicker(endPanel, constraints_2, endDateText);
+					open = true;
+				}
+				else {
+					dp.close();
+					open = false;					
+				}
+			}
+		});
+		
+		panel_21.add(endPanel);
 
 		JPanel panel_19 = new JPanel();
 		panel_15.add(panel_19);
@@ -126,24 +287,20 @@ public class NewGameTab extends JPanel {
 		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"default", "other"}));
 		panel_19.add(deckType);
 
-		JPanel panel_20 = new JPanel();
-		panel_15.add(panel_20);
-
-		JPanel panel_21 = new JPanel();
-		panel_15.add(panel_21);
-
-		JLabel lblEndDatetime = new JLabel("End date/time:");
-		panel_21.add(lblEndDatetime);
-
-		textField_1 = new JTextField();
-		panel_21.add(textField_1);
-		textField_1.setColumns(10);
-
-		JPanel panel_22 = new JPanel();
-		panel_15.add(panel_22);
-
-		JPanel panel_23 = new JPanel();
-		panel_15.add(panel_23);
+//		JPanel panel_20 = new JPanel();
+//		panel_15.add(panel_20);
+//
+//		
+//
+////		textField_1 = new JTextField();
+////		panel_21.add(textField_1);
+////		textField_1.setColumns(10);
+//
+//		JPanel panel_22 = new JPanel();
+//		panel_15.add(panel_22);
+//
+//		JPanel panel_23 = new JPanel();
+//		panel_15.add(panel_23);
 
 		JPanel requirements_panel = new JPanel();
 		requirements_panel.setBorder(new LineBorder(Color.LIGHT_GRAY));
