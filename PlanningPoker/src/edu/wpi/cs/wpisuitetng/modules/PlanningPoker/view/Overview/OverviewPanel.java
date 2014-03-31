@@ -20,7 +20,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class OverviewPanel extends JPanel {
-	private JTextField textField;
+	private JTextField estimateTextField;
 
 	/**
 	 * Create the panel.
@@ -32,14 +32,17 @@ public class OverviewPanel extends JPanel {
 		JSplitPane splitPane = new JSplitPane();
 		add(splitPane, BorderLayout.CENTER);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setMinimumSize(new Dimension(150, 10));
-		panel_1.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		splitPane.setLeftComponent(panel_1);
-		panel_1.setLayout(new BorderLayout(0, 0));
+		/**
+		 * panel that contains games in a tree structure
+		 */
+		JPanel yourGames = new JPanel();
+		yourGames.setMinimumSize(new Dimension(150, 10));
+		yourGames.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		splitPane.setLeftComponent(yourGames);
+		yourGames.setLayout(new BorderLayout(0, 0));
 		
-		JTree tree = new JTree();
-		tree.setModel(new DefaultTreeModel(
+		JTree gamesTree = new JTree();
+		gamesTree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("Your Games") {
 				{
 					DefaultMutableTreeNode node_1;
@@ -64,44 +67,50 @@ public class OverviewPanel extends JPanel {
 				}
 			}
 		));
-		panel_1.add(tree);
+		yourGames.add(gamesTree);
 		
-		JPanel panel_2 = new JPanel();
-		splitPane.setRightComponent(panel_2);
-		panel_2.setLayout(new BorderLayout(0, 0));
+		/**
+		 * panel that contains the information for a particular game
+		 */
+		JPanel gameContainer = new JPanel();
+		splitPane.setRightComponent(gameContainer);
+		gameContainer.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_2.add(panel_3, BorderLayout.NORTH);
+		JPanel gameName = new JPanel();
+		gameName.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		gameContainer.add(gameName, BorderLayout.NORTH);
 		
-		JLabel lblSessionnameCreatedBy = new JLabel("SESSION_NAME created by MODERATOR on DATE_CREATED");
-		lblSessionnameCreatedBy.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		panel_3.add(lblSessionnameCreatedBy);
+		JLabel lblSessionNameCreatedBy = new JLabel("SESSION_NAME created by MODERATOR on DATE_CREATED");
+		lblSessionNameCreatedBy.setFont(new Font("Lucida Grande", Font.BOLD, 15));
+		gameName.add(lblSessionNameCreatedBy);
 		
-		JPanel panel_4 = new JPanel();
-		panel_2.add(panel_4, BorderLayout.CENTER);
-		panel_4.setLayout(new GridLayout(2, 2, 5, 5));
+		JPanel infoContainer = new JPanel();
+		gameContainer.add(infoContainer, BorderLayout.CENTER);
+		infoContainer.setLayout(new GridLayout(2, 2, 5, 5));
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_4.add(panel_5);
-		panel_5.setLayout(new BorderLayout(0, 0));
+		/**
+		 * panel that contains the information for a game's requirements
+		 */
+		JPanel requirementsPane = new JPanel();
+		requirementsPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		infoContainer.add(requirementsPane);
+		requirementsPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_9 = new JPanel();
-		panel_9.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_5.add(panel_9, BorderLayout.NORTH);
+		JPanel requirementLabel = new JPanel();
+		requirementLabel.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		requirementsPane.add(requirementLabel, BorderLayout.NORTH);
 		
 		JLabel lblChooseARequirement = new JLabel("Choose a requirement to estimate");
 		lblChooseARequirement.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		panel_9.add(lblChooseARequirement);
+		requirementLabel.add(lblChooseARequirement);
 		
-		JPanel panel_10 = new JPanel();
-		panel_10.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_5.add(panel_10, BorderLayout.CENTER);
-		panel_10.setLayout(new BorderLayout(0, 0));
+		JPanel requirementSelector = new JPanel();
+		requirementSelector.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		requirementsPane.add(requirementSelector, BorderLayout.CENTER);
+		requirementSelector.setLayout(new BorderLayout(0, 0));
 		
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
+		JList requirementList = new JList();
+		requirementList.setModel(new AbstractListModel() {
 			String[] values = new String[] {"stuff", "stuff", "stuff", "stuff"};
 			public int getSize() {
 				return values.length;
@@ -110,82 +119,161 @@ public class OverviewPanel extends JPanel {
 				return values[index];
 			}
 		});
-		panel_10.add(list);
+		requirementSelector.add(requirementList);
 		
-		JPanel panel_6 = new JPanel();
-		panel_6.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_4.add(panel_6);
-		panel_6.setLayout(new BorderLayout(0, 0));
+		/**
+		 * panel that contains information for a user to submit an estimate
+		 */
+		JPanel submitPane = new JPanel();
+		submitPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		infoContainer.add(submitPane);
+		submitPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_11 = new JPanel();
-		panel_11.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_6.add(panel_11, BorderLayout.NORTH);
+		JPanel submitLabel = new JPanel();
+		submitLabel.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		submitPane.add(submitLabel, BorderLayout.NORTH);
 		
 		JLabel lblSubmitAnEstimate = new JLabel("Submit an estimate");
 		lblSubmitAnEstimate.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		panel_11.add(lblSubmitAnEstimate);
+		submitLabel.add(lblSubmitAnEstimate);
 		
-		JPanel panel_12 = new JPanel();
-		panel_12.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_6.add(panel_12, BorderLayout.SOUTH);
+		JPanel submitButton = new JPanel();
+		submitButton.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		submitPane.add(submitButton, BorderLayout.SOUTH);
 		
-		JButton btnSubmit = new JButton("Submit");
-		panel_12.add(btnSubmit);
+		JButton btnSubmitEstimate = new JButton("Submit");
+		submitButton.add(btnSubmitEstimate);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		panel_6.add(scrollPane, BorderLayout.CENTER);
+		JScrollPane estimateSelector = new JScrollPane();
+		submitPane.add(estimateSelector, BorderLayout.CENTER);
 		
-		JPanel panel_13 = new JPanel();
-		scrollPane.setViewportView(panel_13);
+		JPanel estimatePanel = new JPanel();
+		estimateSelector.setViewportView(estimatePanel);
 		
 		JButton btnNewButton_1 = new JButton("New button");
-		panel_13.add(btnNewButton_1);
+		estimatePanel.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("New button");
-		panel_13.add(btnNewButton_2);
+		estimatePanel.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("New button");
-		panel_13.add(btnNewButton_3);
+		estimatePanel.add(btnNewButton_3);
 		
 		JButton btnNewButton_5 = new JButton("New button");
-		panel_13.add(btnNewButton_5);
+		estimatePanel.add(btnNewButton_5);
 		
 		JButton btnNewButton_4 = new JButton("New button");
-		panel_13.add(btnNewButton_4);
+		estimatePanel.add(btnNewButton_4);
 		
-		JPanel panel_7 = new JPanel();
-		panel_7.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_4.add(panel_7);
-		panel_7.setLayout(new BorderLayout(0, 0));
+		/**
+		 * panel that contains that statistics of a session (if the session has ended)		
+		 */
+		JPanel resultPane = new JPanel();
+		resultPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		infoContainer.add(resultPane);
+		resultPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_14 = new JPanel();
-		panel_14.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_7.add(panel_14, BorderLayout.NORTH);
+		JPanel resultLabel = new JPanel();
+		resultLabel.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		resultPane.add(resultLabel, BorderLayout.NORTH);
+		
+		JLabel lblGameResults = new JLabel("Game results");
+		lblGameResults.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+		resultLabel.add(lblGameResults);
+		
+		JPanel finalEstimate = new JPanel();
+		finalEstimate.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		FlowLayout fl_finalEstimate = (FlowLayout) finalEstimate.getLayout();
+		fl_finalEstimate.setAlignment(FlowLayout.LEFT);
+		resultPane.add(finalEstimate, BorderLayout.SOUTH);
+		
+		JLabel lblFinalEstimate = new JLabel("Final estimate:");
+		finalEstimate.add(lblFinalEstimate);
+		
+		estimateTextField = new JTextField();
+		finalEstimate.add(estimateTextField);
+		estimateTextField.setColumns(10);
+		
+		JButton btnSubmitResults = new JButton("Submit");
+		finalEstimate.add(btnSubmitResults);
+		
+		JPanel statisticsPane = new JPanel();
+		statisticsPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		resultPane.add(statisticsPane, BorderLayout.CENTER);
+		statisticsPane.setLayout(new GridLayout(3, 2, 0, 0));
+		
+		JPanel meanPane = new JPanel();
+		statisticsPane.add(meanPane);
+		
+		JLabel lblMean = new JLabel("Mean:");
+		meanPane.add(lblMean);
+		
+		JPanel stdDevPane = new JPanel();
+		statisticsPane.add(stdDevPane);
+		
+		JLabel lblStdDev = new JLabel("Std Dev:");
+		stdDevPane.add(lblStdDev);
+		
+		JPanel minPane = new JPanel();
+		statisticsPane.add(minPane);
+		
+		JLabel lblMin = new JLabel("Min:");
+		minPane.add(lblMin);
+		
+		JPanel maxPane = new JPanel();
+		statisticsPane.add(maxPane);
+		
+		JLabel lblMax = new JLabel("Max:");
+		maxPane.add(lblMax);
+		
+		JPanel medianPane = new JPanel();
+		statisticsPane.add(medianPane);
+		
+		JLabel lblMedian = new JLabel("Median:");
+		medianPane.add(lblMedian);
+		
+		JPanel modePane = new JPanel();
+		statisticsPane.add(modePane);
+		
+		JLabel lblMode = new JLabel("Mode:");
+		modePane.add(lblMode);
+		
+		/**
+		 * panel that contains team estimates (if the session has ended)
+		 */
+		JPanel teamEstimates = new JPanel();
+		teamEstimates.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		infoContainer.add(teamEstimates);
+		teamEstimates.setLayout(new BorderLayout(0, 0));
+		
+		JPanel teamEstimatesLabel = new JPanel();
+		teamEstimatesLabel.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		teamEstimates.add(teamEstimatesLabel, BorderLayout.NORTH);
 		
 		JLabel lblTeamsEstimates = new JLabel("Team's estimates");
 		lblTeamsEstimates.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		panel_14.add(lblTeamsEstimates);
+		teamEstimatesLabel.add(lblTeamsEstimates);
 		
-		JPanel panel_15 = new JPanel();
-		panel_15.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_7.add(panel_15, BorderLayout.SOUTH);
-		panel_15.setLayout(new BorderLayout(0, 0));
+		JPanel timerPane = new JPanel();
+		timerPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		teamEstimates.add(timerPane, BorderLayout.SOUTH);
+		timerPane.setLayout(new BorderLayout(0, 0));
 		
 		JButton btnEndVoting = new JButton("End Voting");
-		panel_15.add(btnEndVoting, BorderLayout.EAST);
+		timerPane.add(btnEndVoting, BorderLayout.EAST);
 		
 		JLabel lblTimer = new JLabel("TIMER_MINS_LEFT");
-		panel_15.add(lblTimer, BorderLayout.WEST);
+		timerPane.add(lblTimer, BorderLayout.WEST);
 		
-		JPanel panel_16 = new JPanel();
-		panel_7.add(panel_16, BorderLayout.CENTER);
-		panel_16.setLayout(new BorderLayout(0, 0));
+		JPanel teamResults = new JPanel();
+		teamEstimates.add(teamResults, BorderLayout.CENTER);
+		teamResults.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		panel_16.add(scrollPane_1, BorderLayout.CENTER);
+		JScrollPane teamResultsPane = new JScrollPane();
+		teamResults.add(teamResultsPane, BorderLayout.CENTER);
 		
 		JPanel panel_17 = new JPanel();
-		scrollPane_1.setViewportView(panel_17);
+		teamResultsPane.setViewportView(panel_17);
 		
 		JButton btnSomeonesEstimate = new JButton("Someone's estimate");
 		panel_17.add(btnSomeonesEstimate);
@@ -198,76 +286,6 @@ public class OverviewPanel extends JPanel {
 		
 		JButton btnSomeonesEstimate_1 = new JButton("Someone's estimate");
 		panel_17.add(btnSomeonesEstimate_1);
-		
-		JPanel panel_8 = new JPanel();
-		panel_8.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_4.add(panel_8);
-		panel_8.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panel_18 = new JPanel();
-		panel_18.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_8.add(panel_18, BorderLayout.NORTH);
-		
-		JLabel lblGameResults = new JLabel("Game results");
-		lblGameResults.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-		panel_18.add(lblGameResults);
-		
-		JPanel panel_19 = new JPanel();
-		panel_19.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		FlowLayout flowLayout_1 = (FlowLayout) panel_19.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		panel_8.add(panel_19, BorderLayout.SOUTH);
-		
-		JLabel lblFinalEstimate = new JLabel("Final estimate:");
-		panel_19.add(lblFinalEstimate);
-		
-		textField = new JTextField();
-		panel_19.add(textField);
-		textField.setColumns(10);
-		
-		JButton btnSubmit_1 = new JButton("Submit");
-		panel_19.add(btnSubmit_1);
-		
-		JPanel panel_20 = new JPanel();
-		panel_20.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel_8.add(panel_20, BorderLayout.CENTER);
-		panel_20.setLayout(new GridLayout(3, 2, 0, 0));
-		
-		JPanel panel_22 = new JPanel();
-		panel_20.add(panel_22);
-		
-		JLabel lblMean = new JLabel("Mean:");
-		panel_22.add(lblMean);
-		
-		JPanel panel_23 = new JPanel();
-		panel_20.add(panel_23);
-		
-		JLabel lblStdDev = new JLabel("Std Dev:");
-		panel_23.add(lblStdDev);
-		
-		JPanel panel_25 = new JPanel();
-		panel_20.add(panel_25);
-		
-		JLabel lblMin = new JLabel("Min:");
-		panel_25.add(lblMin);
-		
-		JPanel panel_24 = new JPanel();
-		panel_20.add(panel_24);
-		
-		JLabel lblMax = new JLabel("Max:");
-		panel_24.add(lblMax);
-		
-		JPanel panel_21 = new JPanel();
-		panel_20.add(panel_21);
-		
-		JLabel lblMedian = new JLabel("Median:");
-		panel_21.add(lblMedian);
-		
-		JPanel panel_26 = new JPanel();
-		panel_20.add(panel_26);
-		
-		JLabel lblMode = new JLabel("Mode:");
-		panel_26.add(lblMode);
 
 	}
 
