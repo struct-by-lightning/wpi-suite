@@ -21,6 +21,7 @@ import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.GameSettingsWindow;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.MainView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.OverviewPanel;
 
@@ -31,7 +32,7 @@ public class PlanningPoker implements IJanewayModule {
 	 */
 	List<JanewayTabModel> tabs;
 	JTabbedPane pokerTabs;
-	GameSettingsWindow settingsWindow;
+	NewGameTab newGameWindow;
 	public PlanningPoker() {
 		// Initialize the list of tabs (however, this module has only one tab)
 	    tabs = new ArrayList<JanewayTabModel>();
@@ -49,7 +50,7 @@ public class PlanningPoker implements IJanewayModule {
 	    pokerTabs = new JTabbedPane();
 	    
 	    //Window to create/modify game
-	    settingsWindow = new GameSettingsWindow();
+	    newGameWindow = new NewGameTab();
 	   
 		
 		//Adds the Overview tab (permanent fixture of GUI)
@@ -63,7 +64,7 @@ public class PlanningPoker implements IJanewayModule {
 		toolbarView.getToolBarPanel().getButton().getnewGameButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pokerTabs.addTab("New Game", settingsWindow);
+				pokerTabs.addTab("New Game", newGameWindow);
 				pokerTabs.setSelectedIndex(1);
 			}
 		});	
