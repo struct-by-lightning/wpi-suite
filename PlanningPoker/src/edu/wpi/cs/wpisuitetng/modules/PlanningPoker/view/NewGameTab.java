@@ -14,19 +14,30 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
  *
  */
 import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
+
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
+
 import javax.swing.JLabel;
+
 import java.awt.FlowLayout;
 import java.awt.Font;
+
 import javax.swing.JTextField;
+
 import java.awt.GridLayout;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
@@ -34,8 +45,14 @@ public class NewGameTab extends JPanel {
 	private JTextField sessionName;
 	private JTextField textField;
 	private JTextField textField_1;
-	JComboBox deckType = new JComboBox();
+	JComboBox<String> deckType = new JComboBox<String>();
 	String selectedDeckType = new String();
+
+	JList<String> selectedRequirements = new JList<String>();
+	JList<String> allRequirements = new JList<String>();
+	
+	DefaultListModel<String> gameRequirementsModel = new DefaultListModel<String>();
+	DefaultListModel<String> everyRequirementModel = new DefaultListModel<String>();
 
 	
 	String enteredName = new String();
@@ -106,7 +123,7 @@ public class NewGameTab extends JPanel {
 		panel_19.add(lblCardDeck);
 
 
-		deckType.setModel(new DefaultComboBoxModel(new String[] {"default", "other"}));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"default", "other"}));
 		panel_19.add(deckType);
 
 		JPanel panel_20 = new JPanel();
@@ -162,17 +179,11 @@ public class NewGameTab extends JPanel {
 		panel_2.add(panel_7, BorderLayout.CENTER);
 		panel_7.setLayout(new BorderLayout(0, 0));
 
-		JList list = new JList();
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Requirement 1", "Another requirement", "Something else", "So many requirements"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		panel_7.add(list);
+		
+		
+
+		
+		panel_7.add(allRequirements);
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -190,19 +201,19 @@ public class NewGameTab extends JPanel {
 		panel_10.add(panel_12);
 		panel_12.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_addRequirement = new JButton("Add to game -->");
-		btn_addRequirement.addActionListener(new ActionListener() {
+		JButton btn_addToGame = new JButton("Add to game -->");
+		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		panel_12.add(btn_addRequirement, BorderLayout.CENTER);
+		panel_12.add(btn_addToGame, BorderLayout.CENTER);
 
 		JPanel panel_13 = new JPanel();
 		panel_10.add(panel_13);
 		panel_13.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_removeRequirement = new JButton("<-- Remove from game");
-		panel_13.add(btn_removeRequirement, BorderLayout.CENTER);
+		JButton btn_removeFromGame = new JButton("<-- Remove from game");
+		panel_13.add(btn_removeFromGame, BorderLayout.CENTER);
 
 		JPanel panel_11 = new JPanel();
 		panel_3.add(panel_11);
@@ -224,28 +235,64 @@ public class NewGameTab extends JPanel {
 		panel_4.add(panel_8, BorderLayout.CENTER);
 		panel_8.setLayout(new BorderLayout(0, 0));
 
-		JList list_1 = new JList();
-		list_1.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Let's estimate this one"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
-		panel_8.add(list_1);
+		
+		
+		gameRequirementsModel.addElement("Let's estimate this one");
+		
+		selectedRequirements.setModel(gameRequirementsModel);
+		
+		everyRequirementModel.addElement("Requirements");
+		everyRequirementModel.addElement("Something else");
+		everyRequirementModel.addElement("So many requirements");
+		
+		
+		allRequirements.setModel(everyRequirementModel);
+
+		panel_8.add(selectedRequirements);
 
 		
 		
 
-		
+		//Saves data entered about the game when 'Create Game' button is pressed
 		btnCreateGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 				enteredName = sessionName.getText();
 				selectedDeckType = (String)deckType.getSelectedItem();
 				System.out.println(enteredName);
 				System.out.println(selectedDeckType);
+		    }
+		});
+		
+		//Removes selected item from box of all requirements
+		//and adds it to the box of requirements that will be used in the session
+		btn_addToGame.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	if(allRequirements.getSelectedIndex() >=0){
+		    		
+		    		gameRequirementsModel.addElement(allRequirements.getSelectedValue());
+			    	selectedRequirements.setModel(gameRequirementsModel);
+
+			    	
+			    	everyRequirementModel.removeElementAt(allRequirements.getSelectedIndex());
+			    	allRequirements.setModel(everyRequirementModel);
+			    	
+		    	}
+		    }
+		});
+		
+		
+		//Removes selected item from box of selected requirements for session
+		//and adds it back to the total list of requirements
+		btn_removeFromGame.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	if(selectedRequirements.getSelectedIndex() >= 0){
+		    		everyRequirementModel.addElement(selectedRequirements.getSelectedValue());
+			    	allRequirements.setModel(everyRequirementModel);
+			    	
+			    	gameRequirementsModel.removeElementAt(selectedRequirements.getSelectedIndex());
+			    	selectedRequirements.setModel(gameRequirementsModel);
+		    	}
+		    	
 		    }
 		});
 		
