@@ -18,15 +18,15 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
 
-public class PlanningPokerEntityManager implements
+public class PlanningPokerTestEntityManager implements
 		EntityManager<PlanningPokerTestModel> {
 
 	Class<PlanningPokerTestModel> pptm = PlanningPokerTestModel.class;
 	Data data;
 
-	private static final Logger logger = Logger.getLogger(PlanningPokerEntityManager.class.getName());
+	private static final Logger logger = Logger.getLogger(PlanningPokerTestEntityManager.class.getName());
 
-	public PlanningPokerEntityManager(Data data) {
+	public PlanningPokerTestEntityManager(Data data) {
 		this.data = data;
 	}
 
@@ -50,7 +50,7 @@ public class PlanningPokerEntityManager implements
 	public PlanningPokerTestModel[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
 		PlanningPokerTestModel[] m = new PlanningPokerTestModel[1];
-		if(id.equalsIgnoreCase(""))
+		if(id.equals(""))
 		{
 			return getAll(s);
 		}

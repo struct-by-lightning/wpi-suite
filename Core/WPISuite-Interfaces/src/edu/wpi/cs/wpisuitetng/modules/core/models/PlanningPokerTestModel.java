@@ -4,6 +4,7 @@ import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 
 public class PlanningPokerTestModel extends RegularAbstractModel<PlanningPokerTestModel> {
 	String data;
+	public static String primaryKey = "data";
 	
 	public PlanningPokerTestModel(String data) {
 		this.data = data;
@@ -26,5 +27,17 @@ public class PlanningPokerTestModel extends RegularAbstractModel<PlanningPokerTe
 	public String getData()
 	{
 		return data;
+	}
+
+	@Override
+	public String getID() {
+		// TODO Auto-generated method stub
+		return data;
+	}
+
+	@Override
+	public void setID(String toSet) {
+		// TODO Auto-generated method stub
+		
 	}
 }
