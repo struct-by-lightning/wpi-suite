@@ -72,12 +72,12 @@ class DatePicker {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridwidth = 3;
 		c.gridx = 0;
-		c.gridy = 1;
+		c.gridy = 2;
 		top.add(p2, c);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridwidth = 3;
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = 3;
 		top.add(p1, c);
 		displayDate();
 	}
