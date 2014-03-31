@@ -30,4 +30,9 @@ public class ToolbarView extends JToolBar {
         toolbarPanel = new ToolbarPanel();
         add(toolbarPanel);
     }
+    
+    
+    public ToolbarPanel getToolBarPanel(){
+    	return toolbarPanel;
+    }
 }
