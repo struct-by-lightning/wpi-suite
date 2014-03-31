@@ -8,6 +8,8 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,25 +30,47 @@ public class PlanningPoker implements IJanewayModule {
 	 * A list of tabs owned by this module
 	 */
 	List<JanewayTabModel> tabs;
-	
+	JTabbedPane pokerTabs;
+	GameSettingsWindow settingsWindow;
 	public PlanningPoker() {
 		// Initialize the list of tabs (however, this module has only one tab)
 	    tabs = new ArrayList<JanewayTabModel>();
 
-	 // Create a JPanel to hold the toolbar for the tab
+	    //Create a JPanel to hold the toolbar for the tab
 	    ToolbarView toolbarView = new ToolbarView();
-
+	    
+		
 	    // Create a JPanel to hold the main contents of the tab
 	    JPanel overviewPanel = new OverviewPanel();
 	    
+	    
 
+	    //The inner tabs of the planning poker module in Janeway
+	    pokerTabs = new JTabbedPane();
 	    
-	    JTabbedPane overviewTab = new JTabbedPane();
-	    overviewTab.addTab( "Overview", overviewPanel );
+	    //Window to create/modify game
+	    settingsWindow = new GameSettingsWindow();
+	   
+		
+		//Adds the Overview tab (permanent fixture of GUI)
+	    pokerTabs.addTab( "Overview", overviewPanel );
 	    
+	    /**
+	     * Listens to check if the "New Game" button has been clicked and opens the 
+	     * new game window in a new tab when it is. It will automatically switch to 
+	     * the new tab. Currently only one new game tab can be open at at time
+	     */
+		toolbarView.getToolBarPanel().getButton().getnewGameButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pokerTabs.addTab("New Game", settingsWindow);
+				pokerTabs.setSelectedIndex(1);
+			}
+		});	
 	    
+		
 	    // Create a tab model that contains the toolbar panel and the main content panel
-	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, overviewTab);
+	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, pokerTabs);
 
 	    // Add the tab to the list of tabs owned by this module
 	    tabs.add(tab1);

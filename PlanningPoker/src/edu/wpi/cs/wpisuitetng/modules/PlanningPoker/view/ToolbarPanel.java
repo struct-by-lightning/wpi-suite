@@ -68,4 +68,8 @@ public class ToolbarPanel extends DefaultToolbarView {
         add(startTimer);*/
         addGroup(btnsPanel);
     }
+    
+    public PlanningPokerButtonsPanel getButton(){
+    	return btnsPanel;
+    }
 }
