@@ -31,10 +31,14 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 public class NewGameTab extends JPanel {
-	private JTextField txtPlanningPoker;
+	private JTextField sessionName;
 	private JTextField textField;
 	private JTextField textField_1;
+	JComboBox deckType = new JComboBox();
+	String selectedDeckType = new String();
 
+	
+	String enteredName = new String();
 	/**
 	 * Create the panel.
 	 */
@@ -55,11 +59,11 @@ public class NewGameTab extends JPanel {
 		panel_16.add(lblName);
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		txtPlanningPoker = new JTextField();
-		panel_16.add(txtPlanningPoker);
-		txtPlanningPoker.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtPlanningPoker.setText("03/25/2014 Planning Poker Game");
-		txtPlanningPoker.setColumns(50);
+		sessionName = new JTextField();
+		panel_16.add(sessionName);
+		sessionName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		sessionName.setText("03/25/2014 Planning Poker Game");
+		sessionName.setColumns(50);
 
 		JPanel panel_17 = new JPanel();
 		title_panel.add(panel_17);
@@ -101,9 +105,9 @@ public class NewGameTab extends JPanel {
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		panel_19.add(lblCardDeck);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"default", "other"}));
-		panel_19.add(comboBox);
+
+		deckType.setModel(new DefaultComboBoxModel(new String[] {"default", "other"}));
+		panel_19.add(deckType);
 
 		JPanel panel_20 = new JPanel();
 		panel_15.add(panel_20);
@@ -186,19 +190,19 @@ public class NewGameTab extends JPanel {
 		panel_10.add(panel_12);
 		panel_12.setLayout(new BorderLayout(0, 0));
 
-		JButton btnNewButton = new JButton("Add to game -->");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btn_addRequirement = new JButton("Add to game -->");
+		btn_addRequirement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		panel_12.add(btnNewButton, BorderLayout.CENTER);
+		panel_12.add(btn_addRequirement, BorderLayout.CENTER);
 
 		JPanel panel_13 = new JPanel();
 		panel_10.add(panel_13);
 		panel_13.setLayout(new BorderLayout(0, 0));
 
-		JButton btnNewButton_1 = new JButton("<-- Remove from game");
-		panel_13.add(btnNewButton_1, BorderLayout.CENTER);
+		JButton btn_removeRequirement = new JButton("<-- Remove from game");
+		panel_13.add(btn_removeRequirement, BorderLayout.CENTER);
 
 		JPanel panel_11 = new JPanel();
 		panel_3.add(panel_11);
@@ -232,6 +236,24 @@ public class NewGameTab extends JPanel {
 		});
 		panel_8.add(list_1);
 
+		
+		
+
+		
+		btnCreateGame.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+				enteredName = sessionName.getText();
+				selectedDeckType = (String)deckType.getSelectedItem();
+				System.out.println(enteredName);
+				System.out.println(selectedDeckType);
+		    }
+		});
+		
+		
+		
 	}
+	
+	
+	
 
 }
