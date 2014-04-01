@@ -1,19 +1,31 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import sun.util.calendar.Gregorian;
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 public class PlanningPokerModel extends RegularAbstractModel<PlanningPokerModel>{
 
         private String gameName, description, deckType;
+        private List<Requirement> requirements;
         private boolean isFinished, isLive;
         private Gregorian startDate, endDate;
         public PlanningPokerModel(String gameName, String description,
-                        boolean isFinished, boolean isLive, Gregorian startDate,
-                        Gregorian endDate) {
+        		String deckType, List<Requirement> requirements,
+        		boolean isFinished, boolean isLive, Gregorian startDate,
+        		Gregorian endDate) {
                 super();
+                this.requirements = new ArrayList<Requirement>();
+                
                 this.gameName = gameName;
                 this.setDescription(description);
+                this.setDeckType(deckType);
+                for(Requirement r : requirements) {
+                	this.addRequirement(r);
+                }
                 this.setFinished(isFinished);
                 this.setLive(isLive);
                 this.setStartDate(startDate);
@@ -56,6 +68,18 @@ public class PlanningPokerModel extends RegularAbstractModel<PlanningPokerModel>
 
 	public void setDeckType(String deckType) {
 		this.deckType = deckType;
+	}
+	
+	public List<Requirement> getRequirements() {
+		return this.requirements;
+	}
+	
+	public void addRequirement(Requirement requirement) {
+		this.requirements.add(requirement);
+	}
+	
+	public void removeRequirement(Requirement requirement) {
+		this.requirements.remove(requirement);
 	}
 
 	public boolean isFinished() {
