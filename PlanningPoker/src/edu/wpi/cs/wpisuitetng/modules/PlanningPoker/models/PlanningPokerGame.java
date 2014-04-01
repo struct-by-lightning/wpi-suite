@@ -7,13 +7,13 @@ import sun.util.calendar.Gregorian;
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
-public class PlanningPokerModel extends RegularAbstractModel<PlanningPokerModel>{
+public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
 
         private String gameName, description, deckType;
         private List<Requirement> requirements;
         private boolean isFinished, isLive;
         private Gregorian startDate, endDate;
-        public PlanningPokerModel(String gameName, String description,
+        public PlanningPokerGame(String gameName, String description,
         		String deckType, List<Requirement> requirements,
         		boolean isFinished, boolean isLive, Gregorian startDate,
         		Gregorian endDate) {

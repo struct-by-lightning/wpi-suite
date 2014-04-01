@@ -24,13 +24,13 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
-public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPokerModel> {
+public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPokerGame> {
 
 	private static final Logger logger = Logger
 			.getLogger(UserDeserializer.class.getName());
 
 	@Override
-	public PlanningPokerModel deserialize(JsonElement ppmElement, Type ppmType,
+	public PlanningPokerGame deserialize(JsonElement ppmElement, Type ppmType,
 			JsonDeserializationContext context) throws JsonParseException {
 		JsonObject deflated = ppmElement.getAsJsonObject();
 
@@ -121,7 +121,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 					"PlanningPokerModel transmitted with String in endDate field");
 		}
 
-		PlanningPokerModel inflated = new PlanningPokerModel(gameName, description,
+		PlanningPokerGame inflated = new PlanningPokerGame(gameName, description,
 				deckType, requirements, isFinished, isLive, startDate, endDate);
 
 		return inflated;
