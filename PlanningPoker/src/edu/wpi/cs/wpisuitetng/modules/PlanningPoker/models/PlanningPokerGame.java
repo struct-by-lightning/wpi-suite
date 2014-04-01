@@ -7,6 +7,10 @@ import sun.util.calendar.Gregorian;
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
 
         private String gameName, description, deckType;
@@ -36,6 +40,23 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
 	public String toJSON() {
 		PlanningPokerSerializer pps = new PlanningPokerSerializer();
 		return pps.serialize(this, null, null).getAsString();
+	}
+	
+	public static PlanningPokerGame fromJson(String json) {
+		PlanningPokerDeserializer ppd = new PlanningPokerDeserializer();
+		return ppd.deserialize(new JsonParser().parse(json), null, null);
+	}
+	
+	public static PlanningPokerGame[] fromJsonArray(String jsonArr) {
+		PlanningPokerDeserializer ppd = new PlanningPokerDeserializer();
+		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		List<PlanningPokerGame> ppgs = new ArrayList<PlanningPokerGame>();
+		
+		for(JsonElement json : array) {
+			ppgs.add(ppd.deserialize(json, null, null));
+		}
+		
+		return (PlanningPokerGame[]) ppgs.toArray();
 	}
 
 	@Override
