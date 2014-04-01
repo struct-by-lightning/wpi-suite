@@ -23,10 +23,8 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
-
 import java.awt.FlowLayout;
 import java.awt.Font;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -37,7 +35,6 @@ import javax.swing.JTextField;
 
 import java.awt.GridLayout;
 
-
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
@@ -45,7 +42,6 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
@@ -56,9 +52,14 @@ import javax.swing.SpinnerDateModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 public class NewGameTab extends JPanel {
 	private JTextField sessionName;
@@ -394,14 +395,28 @@ public class NewGameTab extends JPanel {
 
 		
 		
-		gameRequirementsModel.addElement("Let's estimate this one");
 		
 		selectedRequirements.setModel(gameRequirementsModel);
+
 		
-		everyRequirementModel.addElement("Requirements");
-		everyRequirementModel.addElement("Something else");
-		everyRequirementModel.addElement("So many requirements");
 		
+		
+		GetRequirementsController.getInstance().retrieveRequirements();
+		
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e1) {
+		}
+		
+		
+		//Adds list of current requirements in requirement model to the list that will be added to the JList
+		//that will hold the requirements to be added to the game
+		List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
+
+		for (int i = 0; i < requirements.size(); i++) {
+			Requirement req = requirements.get(i);
+			everyRequirementModel.addElement(req.getName());
+		}
 		
 		allRequirements.setModel(everyRequirementModel);
 
