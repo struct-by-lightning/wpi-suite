@@ -27,6 +27,20 @@ String[] coreproject = {
 };
 int coreprojectlength = 2;
 
+String planningpokertitle = "PlanningPokerSession";
+String planningpokerpath = "planningpoker/planningpokersession";
+String[] planningpoker = {
+		"gameName",
+		"description",
+		"deckType",
+		"requirements",
+		"isFinished",
+		"isLive",
+		"startDate",
+		"endDate"
+};
+int planningpokerlength = planningpoker.length;
+
 public String createModelField(String title, String path, String[] args, int length)
 {
 	String text = "<h3>"+title+"</h3>";
@@ -77,6 +91,7 @@ public String createModelScript(String title, String path, String[] args, int le
 %>
 <%= createModelScript(coreusertitle, coreuserpath, coreuser, coreuserlength) %>
 <%= createModelScript(coreprojecttitle, coreprojectpath, coreproject, coreprojectlength) %>
+<%= createModelScript(planningpokertitle, planningpokerpath, planningpoker, planningpokerlength) %>
 </head>
 <body>
 <h1>WPI Suite Admin Console</h1>
@@ -193,6 +208,8 @@ Role:<select id="roleselector"><option value="USER">User</option><option value="
 Project idNum:<input type="text" id="projectteamid"></input><br>
 Username:<input type="text" id="projectteamname"></input><br>
 <input type="button" value="Add Team Member" onclick="teamMember('add')"><input type="button" value="Remove Team Member" onclick="teamMember('remove')"><span id="projectteamresponse"></span>
+
+<%= createModelField(planningpokertitle, planningpokerpath, planningpoker, planningpokerlength) %>
 
 </body>
 </html>
