@@ -72,12 +72,9 @@ public class PlanningPoker implements IJanewayModule {
 			    newGameWindow = new NewGameTab();
 				pokerTabs.addTab("New Game", newGameWindow);
 				pokerTabs.setSelectedIndex(nextTab);
-				nextTab++;
-				
-				
+				nextTab++;		
 			}
-		});	
-	    
+		});	   
 		
 	    // Create a tab model that contains the toolbar panel and the main content panel
 	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, pokerTabs);
