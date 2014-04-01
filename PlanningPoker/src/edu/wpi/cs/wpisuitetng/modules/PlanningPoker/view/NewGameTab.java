@@ -51,6 +51,7 @@ import javax.swing.SpinnerDateModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -85,6 +86,8 @@ public class NewGameTab extends JPanel {
 
 	DefaultListModel<String> gameRequirementsModel = new DefaultListModel<String>();
 	DefaultListModel<String> everyRequirementModel = new DefaultListModel<String>();
+	
+	List<Requirement> savedRequirements = new ArrayList<Requirement>();
 
 	JSpinner startTime, endTime;
 	String enteredName = new String();
@@ -432,8 +435,7 @@ public class NewGameTab extends JPanel {
 		 * Adds list of current requirements in requirement model to the list that will be added to the JList
 		 * that will hold the requirements to be added to the game
 		 */
-		List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
-
+		final List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
 		// We iterate through the requirements list and add to that JList.
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);
@@ -460,6 +462,14 @@ public class NewGameTab extends JPanel {
 				System.out.println(startCal.toString()+"\n"+endCal.toString());
 				System.out.println(enteredName);
 				System.out.println(selectedDeckType);
+				
+				for(int i =0; i < everyRequirementModel.getSize(); i++){
+					for(int j = 0; j < requirements.size(); j++){
+						if((everyRequirementModel.get(i).toString()).equals(requirements.get(j).toString())){
+							savedRequirements.add(requirements.get(j));
+						}
+					}
+				}
 				Mailer m = new Mailer();
 				m.addEmail("software-team6@wpi.edu");
 				m.send();
