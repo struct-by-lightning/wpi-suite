@@ -52,6 +52,8 @@ import javax.swing.SpinnerDateModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -74,8 +76,11 @@ public class NewGameTab extends JPanel {
 	DefaultListModel<String> gameRequirementsModel = new DefaultListModel<String>();
 	DefaultListModel<String> everyRequirementModel = new DefaultListModel<String>();
 
-	
+	JSpinner startTime, endTime;
 	String enteredName = new String();
+	GregorianCalendar startCalendar;
+	GregorianCalendar endCalendar;
+	
 	/**
 	 * Create the panel.
 	 */
@@ -131,6 +136,8 @@ public class NewGameTab extends JPanel {
 		
 		SpinnerDateModel model = new SpinnerDateModel();
 		model.setCalendarField(Calendar.MINUTE);
+		SpinnerDateModel model_2 = new SpinnerDateModel();
+		model_2.setCalendarField(Calendar.MINUTE);
 		
 		JLabel lblStart = new JLabel("Start Date:");
 		
@@ -148,7 +155,7 @@ public class NewGameTab extends JPanel {
 		constraints.fill = GridBagConstraints.HORIZONTAL;
 		constraints.gridx = 1;
 		constraints.gridy = 0;
-		JSpinner startTime= new JSpinner();
+		startTime= new JSpinner();
 		startTime.setModel(model);
 		startTime.setEditor(new JSpinner.DateEditor(startTime, "h:mm a"));
 		startPanel.add(startTime, constraints);
@@ -225,8 +232,8 @@ public class NewGameTab extends JPanel {
 		constraints_2.gridx = 1;
 		constraints_2.gridy = 0;
 		constraints_2.weightx = 1;
-		JSpinner endTime= new JSpinner();
-		endTime.setModel(model);
+		endTime= new JSpinner();
+		endTime.setModel(model_2);
 		endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		endPanel.add(endTime, constraints_2);
 		constraints_2.fill = GridBagConstraints.HORIZONTAL;
@@ -430,6 +437,13 @@ public class NewGameTab extends JPanel {
 		    public void actionPerformed(ActionEvent e) {
 				enteredName = sessionName.getText();
 				selectedDeckType = (String)deckType.getSelectedItem();
+				String[] startDate = startDateText.getText().split("-");
+				String[] endDate = endDateText.getText().split("-");
+				Date startVal = (Date)startTime.getValue();
+				Date endVal = (Date)endTime.getValue();
+				GregorianCalendar startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
+				GregorianCalendar endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
+				System.out.println(startCal.toString()+"\n"+endCal.toString());
 				System.out.println(enteredName);
 				System.out.println(selectedDeckType);
 		    }
