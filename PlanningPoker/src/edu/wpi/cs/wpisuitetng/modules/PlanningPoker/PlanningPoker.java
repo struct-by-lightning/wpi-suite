@@ -19,6 +19,7 @@ import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.GameSettingsWindow;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
@@ -34,30 +35,28 @@ public class PlanningPoker implements IJanewayModule {
 	JTabbedPane pokerTabs;
 	NewGameTab newGameWindow;
     int nextTab = 1;
+    
+    ClosableTabComponent clsblTab;
+    
 	public PlanningPoker() {
-		
 		
 		// Initialize the list of tabs (however, this module has only one tab)
 	    tabs = new ArrayList<JanewayTabModel>();
 
 	    //Create a JPanel to hold the toolbar for the tab
 	    ToolbarView toolbarView = new ToolbarView();
-	    
 		
 	    // Create a JPanel to hold the main contents of the tab
 	    JPanel overviewPanel = new OverviewPanel();
 	    
-	    
-
 	    //The inner tabs of the planning poker module in Janeway
 	    pokerTabs = new JTabbedPane();
 	    
-
-	   
-		
 		//Adds the Overview tab (permanent fixture of GUI)
 	    pokerTabs.addTab( "Overview", overviewPanel );
 	    
+	    
+	    //pokerTabs.setTabComponentAt(0, new ClosableTabComponent(pokerTabs));
 	    /**
 	     * Listens to check if the "New Game" button has been clicked and opens the 
 	     * new game window in a new tab when it is. It will automatically switch to 
@@ -71,10 +70,10 @@ public class PlanningPoker implements IJanewayModule {
 			    //Window to create/modify game
 			    newGameWindow = new NewGameTab();
 				pokerTabs.addTab("New Game", newGameWindow);
-				pokerTabs.setSelectedIndex(nextTab);
-				nextTab++;		
-			} 
-		});	   
+				pokerTabs.setTabComponentAt(pokerTabs.indexOfComponent(newGameWindow), new ClosableTabComponent(pokerTabs));			
+			}
+		});	
+	    
 		
 	    // Create a tab model that contains the toolbar panel and the main content panel
 	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, pokerTabs);
