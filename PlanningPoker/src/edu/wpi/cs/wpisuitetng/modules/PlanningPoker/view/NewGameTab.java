@@ -395,7 +395,6 @@ public class NewGameTab extends JPanel {
 
 		
 		
-		gameRequirementsModel.addElement("Let's estimate this one");
 		
 		selectedRequirements.setModel(gameRequirementsModel);
 
