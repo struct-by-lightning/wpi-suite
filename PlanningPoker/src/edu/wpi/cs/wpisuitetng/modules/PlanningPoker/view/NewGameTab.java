@@ -51,6 +51,8 @@ import javax.swing.SpinnerDateModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -117,7 +119,9 @@ public class NewGameTab extends JPanel {
 		sessionName = new JTextField();
 		namePane.add(sessionName);
 		sessionName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		sessionName.setText("03/25/2014 Planning Poker Game");
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		Date date = new Date();
+		sessionName.setText(dateFormat.format(date));
 		sessionName.setColumns(50);
 
 		JPanel createGamePane = new JPanel();
