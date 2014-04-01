@@ -11,7 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
 /**
  * @author sfmailand
- *
+ * @author hlong290494
  */
 import javax.swing.JPanel;
 
@@ -65,10 +65,19 @@ public class NewGameTab extends JPanel {
 	private JTextField sessionName;
 	private JTextField textField;
 	private JTextField textField_1;
+	/**
+	 * A dropdown box that contains the default deck to choose.
+	 */
 	JComboBox<String> deckType = new JComboBox<String>();
 	String selectedDeckType = new String();
-
+	/**
+	 * A list contains of available requirements to add to the session
+	 */
 	JList<String> selectedRequirements = new JList<String>();
+	
+	/**
+	 * A list contains the requirements that are to be estimated in the current planning poker session
+	 */
 	JList<String> allRequirements = new JList<String>();
 	
 	DefaultListModel<String> gameRequirementsModel = new DefaultListModel<String>();
@@ -77,7 +86,7 @@ public class NewGameTab extends JPanel {
 	
 	String enteredName = new String();
 	/**
-	 * Create the panel.
+	 * Create the new game panel.
 	 */
 	public NewGameTab() {
 		setBorder(new LineBorder(Color.DARK_GRAY));
@@ -293,9 +302,9 @@ public class NewGameTab extends JPanel {
 //
 //		
 //
-////		textField_1 = new JTextField();
-////		panel_21.add(textField_1);
-////		textField_1.setColumns(10);
+//		textField_1 = new JTextField();
+//		panel_21.add(textField_1);
+//		textField_1.setColumns(10);
 //
 //		JPanel panel_22 = new JPanel();
 //		panel_15.add(panel_22);
@@ -337,10 +346,6 @@ public class NewGameTab extends JPanel {
 		panel_2.add(panel_7, BorderLayout.CENTER);
 		panel_7.setLayout(new BorderLayout(0, 0));
 
-		
-		
-
-		
 		panel_7.add(allRequirements);
 
 		JPanel panel_3 = new JPanel();
@@ -394,25 +399,23 @@ public class NewGameTab extends JPanel {
 		panel_8.setLayout(new BorderLayout(0, 0));
 
 		
-		
-		
 		selectedRequirements.setModel(gameRequirementsModel);
-
-		
-		
+	
+		// Get the instance of GetRequirementController to retrieve the requirement
+		// There is a small delay, we need to SLEEP!
 		
 		GetRequirementsController.getInstance().retrieveRequirements();
 		
-		try {
+		try {	// We need to sleep for the requirement request to be in
 			Thread.sleep(150);
 		} catch (InterruptedException e1) {
 		}
-		
 		
 		//Adds list of current requirements in requirement model to the list that will be added to the JList
 		//that will hold the requirements to be added to the game
 		List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
 
+		// We iterate through the requirements list and add to that JList.
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);
 			everyRequirementModel.addElement(req.getName());
@@ -421,9 +424,6 @@ public class NewGameTab extends JPanel {
 		allRequirements.setModel(everyRequirementModel);
 
 		panel_8.add(selectedRequirements);
-
-		
-		
 
 		//Saves data entered about the game when 'Create Game' button is pressed
 		btnCreateGame.addActionListener(new ActionListener () {
@@ -467,12 +467,5 @@ public class NewGameTab extends JPanel {
 		    	
 		    }
 		});
-		
-		
-		
 	}
-	
-	
-	
-
 }
