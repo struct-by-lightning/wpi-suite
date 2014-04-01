@@ -461,29 +461,36 @@ public class NewGameTab extends JPanel {
 		    public void actionPerformed(ActionEvent e) {
 				enteredName = sessionName.getText();
 				selectedDeckType = (String)deckType.getSelectedItem();
-				String[] startDate = startDateText.getText().split("-");
-				String[] endDate = endDateText.getText().split("-");
-				Date startVal = (Date)startTime.getValue();
-				Date endVal = (Date)endTime.getValue();
-				GregorianCalendar startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
-				GregorianCalendar endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
-				System.out.println(startCal.toString()+"\n"+endCal.toString());
-				System.out.println(enteredName);
-				System.out.println(selectedDeckType);
 				
-				for(int i =0; i < gameRequirementsModel.getSize(); i++){
-					for(int j = 0; j < requirements.size(); j++){
-						if((gameRequirementsModel.get(i).toString()).equals(requirements.get(j).toString())){
-							System.out.println(requirements.get(j).toString());
-							savedRequirements.add(requirements.get(j));
-							
+				//Checks to see if the user set the date to something other than default text
+				if(startDateText.getText().equals("Click Calendar to set date") & endDateText.getText().equals("Click Calendar to set date")){
+					System.out.println("Please enter a valid date");
+				}
+				else{
+					String[] startDate = startDateText.getText().split("-");
+					String[] endDate = endDateText.getText().split("-");
+					Date startVal = (Date)startTime.getValue();
+					Date endVal = (Date)endTime.getValue();
+					GregorianCalendar startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
+					GregorianCalendar endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
+					System.out.println(startCal.toString()+"\n"+endCal.toString());
+					System.out.println(enteredName);
+					System.out.println(selectedDeckType);
+					
+					for(int i =0; i < gameRequirementsModel.getSize(); i++){
+						for(int j = 0; j < requirements.size(); j++){
+							if((gameRequirementsModel.get(i).toString()).equals(requirements.get(j).toString())){
+								System.out.println(requirements.get(j).toString());
+								savedRequirements.add(requirements.get(j));
+								
+							}
 						}
 					}
+					System.out.println(savedRequirements.size());
+					Mailer m = new Mailer();
+					m.addEmail("software-team6@wpi.edu");
+					m.send();
 				}
-				System.out.println(savedRequirements.size());
-				Mailer m = new Mailer();
-				m.addEmail("software-team6@wpi.edu");
-				m.send();
 		    }
 		});
 
