@@ -463,7 +463,7 @@ public class NewGameTab extends JPanel {
 				selectedDeckType = (String)deckType.getSelectedItem();
 				
 				//Checks to see if the user set the date to something other than default text
-				if(startDateText.getText().equals("Click Calendar to set date") & endDateText.getText().equals("Click Calendar to set date")){
+				if(startDateText.getText().equals("Click Calendar to set date") || endDateText.getText().equals("Click Calendar to set date")){
 					System.out.println("Please enter a valid date");
 				}
 				else{
