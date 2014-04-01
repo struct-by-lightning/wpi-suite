@@ -59,6 +59,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import edu.wpi.cs.wpisuitetng.janeway.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -459,6 +460,9 @@ public class NewGameTab extends JPanel {
 				System.out.println(startCal.toString()+"\n"+endCal.toString());
 				System.out.println(enteredName);
 				System.out.println(selectedDeckType);
+				Mailer m = new Mailer();
+				m.addEmail("software-team6@wpi.edu");
+				m.send();
 		    }
 		});
 
