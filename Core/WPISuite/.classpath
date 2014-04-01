@@ -18,6 +18,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/DefectTracker"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/PostBoard"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/RequirementManager"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PlanningPoker"/>
 	<classpathentry kind="lib" path="/DefectTracker/src"/>
 	<classpathentry kind="lib" path="/PostBoard/src"/>
 	<classpathentry kind="lib" path="/RequirementManager/src"/>
