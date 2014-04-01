@@ -463,13 +463,16 @@ public class NewGameTab extends JPanel {
 				System.out.println(enteredName);
 				System.out.println(selectedDeckType);
 				
-				for(int i =0; i < everyRequirementModel.getSize(); i++){
+				for(int i =0; i < gameRequirementsModel.getSize(); i++){
 					for(int j = 0; j < requirements.size(); j++){
-						if((everyRequirementModel.get(i).toString()).equals(requirements.get(j).toString())){
+						if((gameRequirementsModel.get(i).toString()).equals(requirements.get(j).toString())){
+							System.out.println(requirements.get(j).toString());
 							savedRequirements.add(requirements.get(j));
+							
 						}
 					}
 				}
+				System.out.println(savedRequirements.size());
 				Mailer m = new Mailer();
 				m.addEmail("software-team6@wpi.edu");
 				m.send();
