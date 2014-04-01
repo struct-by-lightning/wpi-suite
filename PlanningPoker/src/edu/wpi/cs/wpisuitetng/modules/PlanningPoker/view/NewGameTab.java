@@ -159,6 +159,7 @@ public class NewGameTab extends JPanel {
 		JLabel lblStart = new JLabel("Start Date:");
 
 		final JTextField startDateText = new JTextField(13);
+		startDateText.setText("Click Calendar to set date");
 		startDateText.setEditable(false);
 		startDateText.setMinimumSize(new Dimension (startDateText.getPreferredSize().width, startDateText.getPreferredSize().height));
 		JButton calendarButton = new JButton("Calendar");
@@ -242,6 +243,7 @@ public class NewGameTab extends JPanel {
 		JLabel lblEndDate = new JLabel("End Date:");
 
 		final JTextField endDateText = new JTextField(13);
+		endDateText.setText("Click Calendar to set date");
 		endDateText.setEditable(false);
 		endDateText.setMinimumSize(new Dimension (endDateText.getPreferredSize().width, endDateText.getPreferredSize().height));
 		JButton calendarButton_2 = new JButton("Calendar");
