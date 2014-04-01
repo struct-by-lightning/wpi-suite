@@ -22,7 +22,6 @@ public class ToolbarView extends JToolBar {
      * Construct this view and all components in it.
      */
     public ToolbarView() {
-
         // Prevent this toolbar from being moved
         setFloatable(false);
 
