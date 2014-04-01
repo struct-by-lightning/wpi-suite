@@ -8,41 +8,41 @@ import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 
-public class PlanningPokerEntityManager implements EntityManager<PlanningPokerModel> {
+public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGame> {
 	Data data;
 	public PlanningPokerEntityManager(Data data) {
 		this.data = data;
 	}
 	
 	@Override
-	public PlanningPokerModel makeEntity(Session s, String content)
+	public PlanningPokerGame makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PlanningPokerModel[] getEntity(Session s, String id)
+	public PlanningPokerGame[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PlanningPokerModel[] getAll(Session s) throws WPISuiteException {
+	public PlanningPokerGame[] getAll(Session s) throws WPISuiteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public PlanningPokerModel update(Session s, String content)
+	public PlanningPokerGame update(Session s, String content)
 			throws WPISuiteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void save(Session s, PlanningPokerModel model)
+	public void save(Session s, PlanningPokerGame model)
 			throws WPISuiteException {
 		// TODO Auto-generated method stub
 		

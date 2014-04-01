@@ -13,10 +13,10 @@ import com.google.gson.JsonSerializer;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
-public class PlanningPokerSerializer implements JsonSerializer<PlanningPokerModel> {
+public class PlanningPokerSerializer implements JsonSerializer<PlanningPokerGame> {
 
 	@Override
-	public JsonElement serialize(PlanningPokerModel m, Type t, JsonSerializationContext context) {
+	public JsonElement serialize(PlanningPokerGame m, Type t, JsonSerializationContext context) {
 		DateFormat df = new SimpleDateFormat("dd MM yyyy");
 		JsonObject deflated = new JsonObject();
 		JsonArray deflatedReqs = new JsonArray();
