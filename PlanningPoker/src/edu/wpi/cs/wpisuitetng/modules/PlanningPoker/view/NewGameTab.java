@@ -358,15 +358,44 @@ public class NewGameTab extends JPanel {
 
 		calendarTwo.add(endPanel);
 
+		JPanel cardPanel = new JPanel(new GridBagLayout());
+		JPanel deckPanel = new JPanel();
 		JPanel cardDeckPane = new JPanel();
-		calendarOverview.add(cardDeckPane);
 
+		calendarOverview.add(deckPanel);
+		//JPanel deckDisplayPane = new JPanel();
+
+		//calendarOverview.add(deckDisplayPane);
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
-
-
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"default", "other"}));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"default", "Fibonacci"}));
+		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
+		
 		cardDeckPane.add(deckType);
+		JTextField deckOverview = new JTextField();
+		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 21");
+		deckOverview.setHorizontalAlignment(WIDTH/2);
+		deckOverview.setEditable(false);
+
+		cardPanel.setPreferredSize(new Dimension(350, 220));
+		final GridBagConstraints constraints15 = new GridBagConstraints();
+		constraints15.fill = GridBagConstraints.HORIZONTAL;
+		constraints15.gridx = 0;
+		constraints15.gridy = 0;
+		cardPanel.add(cardDeckPane,constraints15);
+		final GridBagConstraints constraints16 = new GridBagConstraints();
+		constraints16.fill = GridBagConstraints.HORIZONTAL;
+		constraints16.anchor = GridBagConstraints.LINE_END;
+		constraints16.gridx = 0;
+		constraints16.gridy = 1;
+		cardPanel.add(deckOverview, constraints16);
+		final GridBagConstraints constraints17 = new GridBagConstraints();
+		constraints17.gridx = 0;
+		constraints17.gridy = 2;
+		constraints17.weightx = 1;
+		constraints17.weighty = 1;
+		cardPanel.add(new JLabel(), constraints17);
+		deckPanel.add(cardPanel);
 
 //		JPanel panel_20 = new JPanel();
 //		panel_15.add(panel_20);
