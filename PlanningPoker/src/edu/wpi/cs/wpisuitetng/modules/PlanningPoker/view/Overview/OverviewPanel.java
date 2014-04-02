@@ -1,26 +1,44 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview;
 
 import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
+
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
+
 import java.awt.FlowLayout;
+
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+
 import java.awt.GridLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+
 import java.awt.Font;
+
 import javax.swing.JScrollPane;
+
 import java.awt.Dimension;
+
 import javax.swing.JTextField;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+
 public class OverviewPanel extends JPanel {
 	private JTextField estimateTextField;
+	
+	private DefaultMutableTreeNode unanswered;
 
 	/**
 	 * Create the panel.
@@ -46,12 +64,12 @@ public class OverviewPanel extends JPanel {
 			new DefaultMutableTreeNode("Your Games") {
 				{
 					DefaultMutableTreeNode node_1;
-					node_1 = new DefaultMutableTreeNode("Unanswered");
-						node_1.add(new DefaultMutableTreeNode("blue"));
-						node_1.add(new DefaultMutableTreeNode("violet"));
-						node_1.add(new DefaultMutableTreeNode("red"));
-						node_1.add(new DefaultMutableTreeNode("yellow"));
-					add(node_1);
+					unanswered = new DefaultMutableTreeNode("Unanswered");
+					unanswered.add(new DefaultMutableTreeNode("blue"));
+					unanswered.add(new DefaultMutableTreeNode("violet"));
+					unanswered.add(new DefaultMutableTreeNode("red"));
+					unanswered.add(new DefaultMutableTreeNode("yellow"));
+					add(unanswered);
 					node_1 = new DefaultMutableTreeNode("Answered");
 						node_1.add(new DefaultMutableTreeNode("basketball"));
 						node_1.add(new DefaultMutableTreeNode("soccer"));
@@ -287,6 +305,14 @@ public class OverviewPanel extends JPanel {
 		JButton btnSomeonesEstimate_1 = new JButton("Someone's estimate");
 		panel_17.add(btnSomeonesEstimate_1);
 
+	}
+	
+	public void fireRefresh() {
+		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
+		unanswered.removeAllChildren();
+		for(PlanningPokerGame game : PlanningPokerGameModel.getInstance().getPlanningPokerGames()) {
+			unanswered.add(new DefaultMutableTreeNode(game.getGameName()));
+		}
 	}
 
 }
