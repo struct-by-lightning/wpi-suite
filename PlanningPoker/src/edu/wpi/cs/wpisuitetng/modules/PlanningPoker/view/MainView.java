@@ -18,6 +18,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Icon;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -36,6 +37,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JTable;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.OverviewPanel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationOverviewPanel;
 
 /**
  * This panel fills the main content area of the tab for this module. It
