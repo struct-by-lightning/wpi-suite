@@ -61,6 +61,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -472,7 +474,11 @@ public class NewGameTab extends JPanel {
 						}
 					}
 				}
-				System.out.println(savedRequirements.size());
+				
+				PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
+						selectedDeckType, savedRequirements, false, false, startCal, endCal);
+				AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
+				
 				Mailer m = new Mailer();
 				m.addEmail("software-team6@wpi.edu");
 				m.send();
