@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -34,10 +35,14 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JTable;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.OverviewPanel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationOverviewPanel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.requirements.RequirementPanel;
 
 /**
  * This panel fills the main content area of the tab for this module. It
@@ -57,7 +62,6 @@ public class MainView extends JTabbedPane {
 	private Point currentMouseLocation = null;
 	private int draggedTabIndex = 0;
 	private OverviewPanel overview = new OverviewPanel();
-	private NewGameTab newGame = new NewGameTab();
 	private Component lastTab = null;
 	private final JPopupMenu popup = new JPopupMenu();
 	private JMenuItem closeAll = new JMenuItem("Close All Tabs");
@@ -71,9 +75,18 @@ public class MainView extends JTabbedPane {
 	public MainView() {
 		this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.addTab("Overview", overview);
-		//this.addTab("Iteration Overview", newGame);
-	}
+		// this.addTab("Iteration Overview", newGame);
+		this.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				JComponent selected = (JComponent) MainView.this
+						.getSelectedComponent();
 
+				if (selected == overview) {
+					overview.fireRefresh();
+				}
+			}
+		});
+	}
 		
 		
 
