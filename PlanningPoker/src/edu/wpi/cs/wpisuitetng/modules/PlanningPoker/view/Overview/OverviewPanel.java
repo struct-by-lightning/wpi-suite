@@ -1,20 +1,37 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+
 import java.awt.BorderLayout;
+import java.awt.Image;
+
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
+
 import javax.swing.JButton;
+
 import java.awt.FlowLayout;
+
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
+
 import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+
 import java.awt.Font;
+
 import javax.swing.JScrollPane;
+
 import java.awt.Dimension;
+import java.io.IOException;
+
 import javax.swing.JTextField;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -150,20 +167,82 @@ public class OverviewPanel extends JPanel {
 		JPanel estimatePanel = new JPanel();
 		estimateSelector.setViewportView(estimatePanel);
 		
-		JButton btnNewButton_1 = new JButton("New button");
+		JButton btnNewButton_1 = new JButton("1");
 		estimatePanel.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("New button");
+		JButton btnNewButton_2 = new JButton("5");
 		estimatePanel.add(btnNewButton_2);
 		
-		JButton btnNewButton_3 = new JButton("New button");
+		JButton btnNewButton_3 = new JButton("10");
 		estimatePanel.add(btnNewButton_3);
 		
-		JButton btnNewButton_5 = new JButton("New button");
+		JButton btnNewButton_4 = new JButton("20");
+		estimatePanel.add(btnNewButton_4);
+		
+		JButton btnNewButton_5 = new JButton("50");
 		estimatePanel.add(btnNewButton_5);
 		
-		JButton btnNewButton_4 = new JButton("New button");
-		estimatePanel.add(btnNewButton_4);
+		JButton btnNewButton_6 = new JButton("80");
+		estimatePanel.add(btnNewButton_6);
+		
+		JButton btnNewButton_7 = new JButton("100");
+		estimatePanel.add(btnNewButton_7);
+		
+		try {
+		    Image img = ImageIO.read(getClass().getResource("wpiCardFrontWPI_final.png"));
+		    
+		    btnNewButton_1.setIcon(new ImageIcon(img));
+		    btnNewButton_1.setBorder(BorderFactory.createEmptyBorder());
+		    btnNewButton_1.setContentAreaFilled(false);
+		    btnNewButton_1.setHorizontalTextPosition(JButton.CENTER);
+		    btnNewButton_1.setVerticalTextPosition(JButton.CENTER);
+		    btnNewButton_1.setFont(new Font("arial",Font.BOLD,23));
+		    
+		    btnNewButton_2.setIcon(new ImageIcon(img));
+		    btnNewButton_2.setBorder(BorderFactory.createEmptyBorder());
+		    btnNewButton_2.setContentAreaFilled(false);
+		    btnNewButton_2.setHorizontalTextPosition(JButton.CENTER);
+		    btnNewButton_2.setVerticalTextPosition(JButton.CENTER);
+		    btnNewButton_2.setFont(new Font("arial",Font.BOLD,23));
+		    
+		    btnNewButton_3.setIcon(new ImageIcon(img));
+		    btnNewButton_3.setBorder(BorderFactory.createEmptyBorder());
+		    btnNewButton_3.setContentAreaFilled(false);
+		    btnNewButton_3.setHorizontalTextPosition(JButton.CENTER);
+		    btnNewButton_3.setVerticalTextPosition(JButton.CENTER);
+		    btnNewButton_3.setFont(new Font("arial",Font.BOLD,23));
+		    
+		    btnNewButton_4.setIcon(new ImageIcon(img));
+		    btnNewButton_4.setBorder(BorderFactory.createEmptyBorder());
+		    btnNewButton_4.setContentAreaFilled(false);
+		    btnNewButton_4.setHorizontalTextPosition(JButton.CENTER);
+		    btnNewButton_4.setVerticalTextPosition(JButton.CENTER);
+		    btnNewButton_4.setFont(new Font("arial",Font.BOLD,23));
+		    
+		    btnNewButton_5.setIcon(new ImageIcon(img));
+		    btnNewButton_5.setBorder(BorderFactory.createEmptyBorder());
+		    btnNewButton_5.setContentAreaFilled(false);
+		    btnNewButton_5.setHorizontalTextPosition(JButton.CENTER);
+		    btnNewButton_5.setVerticalTextPosition(JButton.CENTER);
+		    btnNewButton_5.setFont(new Font("arial",Font.BOLD,23));
+		    
+		    btnNewButton_6.setIcon(new ImageIcon(img));
+		    btnNewButton_6.setBorder(BorderFactory.createEmptyBorder());
+		    btnNewButton_6.setContentAreaFilled(false);
+		    btnNewButton_6.setHorizontalTextPosition(JButton.CENTER);
+		    btnNewButton_6.setVerticalTextPosition(JButton.CENTER);
+		    btnNewButton_6.setFont(new Font("arial",Font.BOLD,23));
+		    
+		    btnNewButton_7.setIcon(new ImageIcon(img));
+		    btnNewButton_7.setBorder(BorderFactory.createEmptyBorder());
+		    btnNewButton_7.setContentAreaFilled(false);
+		    btnNewButton_7.setHorizontalTextPosition(JButton.CENTER);
+		    btnNewButton_7.setVerticalTextPosition(JButton.CENTER);
+		    btnNewButton_7.setFont(new Font("arial",Font.BOLD,23));
+		    
+		} catch (IOException ex) {
+			System.out.print(ex.getMessage());
+		}
 		
 		/**
 		 * panel that contains that statistics of a session (if the session has ended)		
