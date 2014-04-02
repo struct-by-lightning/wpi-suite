@@ -45,7 +45,7 @@ public class UpdatePlanningPokerGameRequestObserver implements RequestObserver {
 		final ResponseModel response = iReq.getResponse();
 		
 		// Parse the PlanningPokerGame out of the response body
-		final PlanningPokerGame planningPokerGame = PlanningPokerGame.fromJson(response.getBody());		
+		final PlanningPokerGame planningPokerGame = PlanningPokerGame.fromJSON(response.getBody());		
 	}
 	
 	/**

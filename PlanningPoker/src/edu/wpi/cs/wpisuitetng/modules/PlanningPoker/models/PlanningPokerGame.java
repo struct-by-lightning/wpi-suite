@@ -1,6 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import sun.util.calendar.Gregorian;
@@ -16,19 +17,22 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
         private String gameName, description, deckType;
         private List<Requirement> requirements;
         private boolean isFinished, isLive;
-        private Gregorian startDate, endDate;
+        private GregorianCalendar startDate, endDate;
         public PlanningPokerGame(String gameName, String description,
         		String deckType, List<Requirement> requirements,
-        		boolean isFinished, boolean isLive, Gregorian startDate,
-        		Gregorian endDate) {
+        		boolean isFinished, boolean isLive,
+        		GregorianCalendar startDate, GregorianCalendar endDate) {
                 super();
+                
                 this.requirements = new ArrayList<Requirement>();
                 
                 this.gameName = gameName;
                 this.setDescription(description);
                 this.setDeckType(deckType);
-                for(Requirement r : requirements) {
-                	this.addRequirement(r);
+                if(requirements != null) {
+	                for(Requirement r : requirements) {
+	                	this.addRequirement(r);
+	                }
                 }
                 this.setFinished(isFinished);
                 this.setLive(isLive);
@@ -39,10 +43,10 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
 	@Override
 	public String toJSON() {
 		PlanningPokerSerializer pps = new PlanningPokerSerializer();
-		return pps.serialize(this, null, null).getAsString();
+		return pps.serialize(this, null, null).toString();
 	}
 	
-	public static PlanningPokerGame fromJson(String json) {
+	public static PlanningPokerGame fromJSON(String json) {
 		PlanningPokerDeserializer ppd = new PlanningPokerDeserializer();
 		return ppd.deserialize(new JsonParser().parse(json), null, null);
 	}
@@ -56,17 +60,24 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
 			ppgs.add(ppd.deserialize(json, null, null));
 		}
 		
-		return (PlanningPokerGame[]) ppgs.toArray();
+		return ppgs.toArray(new PlanningPokerGame[0]);
 	}
 
 	@Override
 	public String getID() {
-		// TODO Auto-generated method stub
 		return this.gameName;
 	}
 
 	@Override
 	public void setID(String toSet) {
+		gameName = toSet;
+	}
+
+	public String getGameName() {
+		return this.gameName;
+	}
+
+	public void setGameName(String toSet) {
 		gameName = toSet;
 	}
 
@@ -119,19 +130,19 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
 		this.isLive = isLive;
 	}
 
-	public Gregorian getStartDate() {
+	public GregorianCalendar getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Gregorian startDate) {
+	public void setStartDate(GregorianCalendar startDate) {
 		this.startDate = startDate;
 	}
 
-	public Gregorian getEndDate() {
+	public GregorianCalendar getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Gregorian endDate) {
+	public void setEndDate(GregorianCalendar endDate) {
 		this.endDate = endDate;
 	}
 }
