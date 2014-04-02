@@ -565,6 +565,7 @@ public class NewGameTab extends JPanel {
 								selectedDeckType, savedRequirements, false, false, startCal, endCal);
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
+						btnCreateGame.setEnabled(false);
 						Mailer m = new Mailer();
 						m.addEmail("software-team6@wpi.edu");
 						m.send();
