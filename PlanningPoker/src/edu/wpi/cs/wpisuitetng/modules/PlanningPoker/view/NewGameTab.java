@@ -504,6 +504,7 @@ public class NewGameTab extends JPanel {
 					Date endVal = (Date)endTime.getValue();
 					GregorianCalendar startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
 					GregorianCalendar endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
+					
 					System.out.println(startCal.toString()+"\n"+endCal.toString());
 					System.out.println(enteredName);
 					System.out.println(selectedDeckType);
@@ -518,9 +519,16 @@ public class NewGameTab extends JPanel {
 						}
 					}
 					System.out.println(savedRequirements.size());
-					Mailer m = new Mailer();
-					m.addEmail("software-team6@wpi.edu");
-					m.send();
+					
+					if(startCal.before(endCal)){
+						//Save to database
+						Mailer m = new Mailer();
+						m.addEmail("software-team6@wpi.edu");
+						m.send();
+					}
+					else{
+						System.out.println("Start date is after the end date.");
+					}
 				}
 		    }
 		});
