@@ -71,6 +71,7 @@ public class PlanningPoker implements IJanewayModule {
 			    newGameWindow = new NewGameTab();
 				pokerTabs.addTab("New Game", newGameWindow);
 				pokerTabs.setTabComponentAt(pokerTabs.indexOfComponent(newGameWindow), new ClosableTabComponent(pokerTabs));			
+				pokerTabs.setSelectedComponent(newGameWindow);
 			}
 		});	
 	    
