@@ -9,6 +9,9 @@ Servers\.settings
 javadoc
 test-results
 dist
+# Server files #
+WPISuite_TNG_local_test
+WPISuite_TNG_local
 
 # Package Files #
 *.war
