@@ -98,6 +98,9 @@ public class NewGameTab extends JPanel {
 	String enteredName = new String();
 	GregorianCalendar startCalendar;
 	GregorianCalendar endCalendar;
+	
+	JButton btnCreateGame;
+	JLabel lblGameCreated;
 
 	/**
 	 * Create the new game panel.
@@ -131,8 +134,12 @@ public class NewGameTab extends JPanel {
 		titlePanel.add(createGamePane);
 		createGamePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
-		JButton btnCreateGame = new JButton("CREATE GAME");
+		btnCreateGame = new JButton("CREATE GAME");
 		createGamePane.add(btnCreateGame);
+		
+		lblGameCreated = new JLabel("Session Created!");
+		titlePanel.add(lblGameCreated);
+		lblGameCreated.setVisible(false);
 
 		JPanel settingsPanel = new JPanel();
 		settingsPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -528,7 +535,7 @@ public class NewGameTab extends JPanel {
 						PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
 								selectedDeckType, savedRequirements, false, false, startCal, endCal);
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
-						
+						lblGameCreated.setVisible(true);
 						Mailer m = new Mailer();
 						m.addEmail("software-team6@wpi.edu");
 						m.send();
