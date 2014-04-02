@@ -28,6 +28,8 @@ import javax.swing.border.EtchedBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 //import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 
 /**
  * @author Batyr, Christian, Francisco 
@@ -78,6 +80,13 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView{
 		modifyGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
+				
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e1) {}
+				
+				System.out.println(PlanningPokerGameModel.getInstance().getSize());
 				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
 					//ViewEventController.getInstance().createIteration();
 				}

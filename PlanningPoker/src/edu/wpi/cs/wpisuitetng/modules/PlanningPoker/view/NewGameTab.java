@@ -63,6 +63,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -493,6 +495,7 @@ public class NewGameTab extends JPanel {
 		    public void actionPerformed(ActionEvent e) {
 				enteredName = sessionName.getText();
 				selectedDeckType = (String)deckType.getSelectedItem();
+				GregorianCalendar startCal, endCal;
 				
 				//Checks to see if the user set the date to something other than default text
 				if(startDateText.getText().equals("Click Calendar to set date") || endDateText.getText().equals("Click Calendar to set date")){
@@ -503,8 +506,8 @@ public class NewGameTab extends JPanel {
 					String[] endDate = endDateText.getText().split("-");
 					Date startVal = (Date)startTime.getValue();
 					Date endVal = (Date)endTime.getValue();
-					GregorianCalendar startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
-					GregorianCalendar endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
+					startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
+					endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
 					
 					System.out.println(startCal.toString()+"\n"+endCal.toString());
 					System.out.println(enteredName);
@@ -522,7 +525,10 @@ public class NewGameTab extends JPanel {
 					System.out.println(savedRequirements.size());
 					
 					if(startCal.before(endCal)){
-						//Save to database
+						PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
+								selectedDeckType, savedRequirements, false, false, startCal, endCal);
+						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
+						
 						Mailer m = new Mailer();
 						m.addEmail("software-team6@wpi.edu");
 						m.send();
