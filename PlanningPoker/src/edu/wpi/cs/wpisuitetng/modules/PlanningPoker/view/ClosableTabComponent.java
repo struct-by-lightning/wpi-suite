@@ -17,7 +17,9 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -74,9 +76,21 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// close this tab when close button is clicked
 		final int index = tabbedPane.indexOfTabComponent(this);
-		if(index > -1) {
-			//remove tab at the specified index
-			tabbedPane.removeTabAt(index);
+		if(index > -1) { 
+			// Confirmation dialog
+			/*int dialogButton = JOptionPane.YES_NO_OPTION;
+			int dialogResult = JOptionPane.showConfirmDialog(this, "Close this game session?", "Confirmation",dialogButton);
+			*/
+			 JOptionPane pane = new JOptionPane("Click one:", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+			 JDialog d = pane.createDialog(null); // see mKorbel's post for better ways to do this
+			 d.setLocation(tabbedPane.getWidth() / 2, tabbedPane.getHeight() / 2);
+			 d.setVisible(true);
+			 
+			 System.out.println("Dialog was closed with button " + pane.getValue());
+			 if((int) pane.getValue()==0) { //remove tab at the specified index
+				tabbedPane.removeTabAt(index);
+			 }
+			 d.dispose();
 		}
 	}
 	
