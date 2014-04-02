@@ -274,11 +274,12 @@ public class NewGameTab extends JPanel {
 		endPanel.add(new JLabel("End Time:"), constraints8);
 		final GridBagConstraints constraints9 = new GridBagConstraints();
 		constraints9.insets = new Insets(0, 0, 5, 5);
+		constraints9.fill = GridBagConstraints.HORIZONTAL;
 		constraints9.gridx = 1;
 		constraints9.gridy = 0;
-		constraints9.weightx = 1;
+		//constraints9.weightx = 1;
 		endTime= new JSpinner();
-		endTime.setModel(model);
+		endTime.setModel(model_2);
 		endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		endPanel.add(endTime, constraints9);
 		
