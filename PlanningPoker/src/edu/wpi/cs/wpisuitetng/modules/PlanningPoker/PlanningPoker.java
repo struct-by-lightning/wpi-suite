@@ -50,10 +50,7 @@ public class PlanningPoker implements IJanewayModule {
 	    JPanel overviewPanel = new OverviewPanel();
 	    
 	    //The inner tabs of the planning poker module in Janeway
-	    pokerTabs = new JTabbedPane();
-	    
-		//Adds the Overview tab (permanent fixture of GUI)
-	    pokerTabs.addTab( "Overview", overviewPanel );
+	    pokerTabs = new MainView();
 	    
 	    
 	    //pokerTabs.setTabComponentAt(0, new ClosableTabComponent(pokerTabs));
