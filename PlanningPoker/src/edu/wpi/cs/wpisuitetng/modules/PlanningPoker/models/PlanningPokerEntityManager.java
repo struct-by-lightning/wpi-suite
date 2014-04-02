@@ -1,15 +1,25 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.database.Data;
 import edu.wpi.cs.wpisuitetng.exceptions.BadRequestException;
 import edu.wpi.cs.wpisuitetng.exceptions.ConflictException;
+import edu.wpi.cs.wpisuitetng.exceptions.DatabaseException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGame> {
+
+	Class<PlanningPokerGame> ppg = PlanningPokerGame.class;
 	Data data;
+
+	private static final Logger logger = Logger.getLogger(PlanningPokerEntityManager.class.getName());
+
 	public PlanningPokerEntityManager(Data data) {
 		this.data = data;
 	}
@@ -17,21 +27,37 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public PlanningPokerGame makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		PlanningPokerGame p;
+		p = PlanningPokerGame.fromJSON(content);
 
+		if (getEntity(s, p.getID())[0] == null) {
+			save(s, p);
+		} else {
+			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerGame creation.");
+			throw new ConflictException("A PlanningPokerGame with the given ID already exists. Entity String: " + content);
+		}
+
+		return p;
+	}
 	@Override
 	public PlanningPokerGame[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
-		// TODO Auto-generated method stub
-		return null;
+		PlanningPokerGame[] m = new PlanningPokerGame[1];
+		if(id.equals(""))
+		{
+			return getAll(s);
+		}
+		else
+		{
+			return data.retrieve(ppg, "gameName", id).toArray(m);
+		}
 	}
 
 	@Override
 	public PlanningPokerGame[] getAll(Session s) throws WPISuiteException {
-		// TODO Auto-generated method stub
-		return null;
+		PlanningPokerGame[] ret = new PlanningPokerGame[1];
+		ret = data.retrieveAll(new PlanningPokerGame(null, null, null, null, false, false, null, null)).toArray(ret);
+		return ret;
 	}
 
 	@Override
@@ -44,8 +70,17 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public void save(Session s, PlanningPokerGame model)
 			throws WPISuiteException {
-		// TODO Auto-generated method stub
-		
+		if(data.save(model))
+		{
+			logger.log(Level.FINE, "PlanningPokerGame Saved :" + model);
+
+			return ;
+		}
+		else
+		{
+			logger.log(Level.WARNING, "PlanningPokerGame Save Failure!");
+			throw new DatabaseException("Save failure for PlanningPokerGame.");
+		}
 	}
 
 	@Override
@@ -63,8 +98,8 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
-		// TODO Auto-generated method stub
-		
+		logger.log(Level.INFO, "PlanningPokerEntityManager invoking DeleteAll...");
+		data.deleteAll(new PlanningPokerGame(null, null, null, null, false, false, null, null));
 	}
 
 	@Override
