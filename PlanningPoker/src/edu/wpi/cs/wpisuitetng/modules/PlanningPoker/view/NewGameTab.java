@@ -372,8 +372,8 @@ public class NewGameTab extends JPanel {
 		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
 		
 		cardDeckPane.add(deckType);
-		JTextField deckOverview = new JTextField();
-		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 21");
+		final JTextField deckOverview = new JTextField();
+		deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100, ??");
 		deckOverview.setHorizontalAlignment(WIDTH/2);
 		deckOverview.setEditable(false);
 
@@ -396,6 +396,25 @@ public class NewGameTab extends JPanel {
 		constraints17.weighty = 1;
 		cardPanel.add(new JLabel(), constraints17);
 		deckPanel.add(cardPanel);
+		
+		/**
+		* Handles the combo box listener for deck selection and displays the deck type as a string
+		*/
+		deckType.addActionListener(new ActionListener () {
+		   public void actionPerformed(ActionEvent e) {
+		    JComboBox combo = (JComboBox)e.getSource();
+		                String selection = (String)combo.getSelectedItem();
+		                if(selection.contentEquals("default")) {
+		                // Replace this with button contents
+		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100, ??");
+		                System.out.print("default\n");
+		                } else if(selection.contentEquals("Fibonacci")) {
+		                // Replace this with button contents
+		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 21");
+		                System.out.print("Fibonacci\n");
+		                }
+		   }
+		});
 
 //		JPanel panel_20 = new JPanel();
 //		panel_15.add(panel_20);
