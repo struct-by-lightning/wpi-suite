@@ -50,14 +50,18 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView{
 		//this.modifyGameButton.setSize(200, 200);
 		//this.newGameButton.setPreferredSize(new Dimension(200, 200));
 		this.newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-		/*try {
+		
+		try {
 		    Image img = ImageIO.read(getClass().getResource("new_req.png"));
 		    this.newGameButton.setIcon(new ImageIcon(img));
 		    
-		    img = ImageIO.read(getClass().getResource("new_itt.png"));
+		    img = ImageIO.read(getClass().getResource("edit.png"));
 		    this.modifyGameButton.setIcon(new ImageIcon(img));
 		    
-		} catch (IOException ex) {}*/
+		} catch (IOException ex) {
+			System.out.print(ex.getMessage());
+			
+		}
 		
 		// the action listener for the Create Requirement Button
 		newGameButton.addActionListener(new ActionListener() {
