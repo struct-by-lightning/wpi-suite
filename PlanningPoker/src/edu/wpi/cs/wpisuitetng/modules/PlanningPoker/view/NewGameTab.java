@@ -526,6 +526,11 @@ public class NewGameTab extends JPanel {
 		gameList.setLayout(new BorderLayout(0, 0));
 
 		
+		/**
+		 * Listens to the session name field and
+		 * disables "Create Game" button if the
+		 * field is empty
+		 */
 		sessionName.addKeyListener(new KeyListener() {
 
 		    @Override
@@ -547,6 +552,7 @@ public class NewGameTab extends JPanel {
 
 		    }
 		});
+		
 		selectedRequirements.setModel(gameRequirementsModel);
 
 		GetRequirementsController.getInstance().retrieveRequirements();
