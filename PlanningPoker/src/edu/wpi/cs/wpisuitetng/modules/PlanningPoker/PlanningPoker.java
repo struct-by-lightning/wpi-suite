@@ -24,6 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.OverviewPanel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
 
 public class PlanningPoker implements IJanewayModule {
 	
@@ -50,6 +51,10 @@ public class PlanningPoker implements IJanewayModule {
 	    
 	    //The inner tabs of the planning poker module in Janeway
 	    pokerTabs = new MainView();
+
+		ViewEventController.getInstance().setMainView(pokerTabs);
+		ViewEventController.getInstance().setToolBarView(toolbarView);
+		ViewEventController.getInstance().setOverviewPanel(overviewPanel);
 	    
 	    
 	    //pokerTabs.setTabComponentAt(0, new ClosableTabComponent(pokerTabs));
@@ -58,19 +63,6 @@ public class PlanningPoker implements IJanewayModule {
 	     * new game window in a new tab when it is. It will automatically switch to 
 	     * the new tab. Currently only one new game tab can be open at at time
 	     */
-	    
-
-		toolbarView.getToolBarPanel().getButton().getnewGameButton().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			    //Window to create/modify game
-			    newGameWindow = new NewGameTab();
-				pokerTabs.addTab("New Game", newGameWindow);
-				pokerTabs.setTabComponentAt(pokerTabs.indexOfComponent(newGameWindow), new ClosableTabComponent(pokerTabs));			
-				pokerTabs.setSelectedComponent(newGameWindow);
-			}
-		});	
-	    
 		
 	    // Create a tab model that contains the toolbar panel and the main content panel
 	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, pokerTabs);
