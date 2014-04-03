@@ -373,12 +373,12 @@ public class NewGameTab extends JPanel {
 		//calendarOverview.add(deckDisplayPane);
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"default", "Fibonacci"}));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Fibonacci", "Other"}));
 		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
 		
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
-		deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100, ??");
+		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 21");
 		deckOverview.setHorizontalAlignment(WIDTH/2);
 		deckOverview.setEditable(false);
 
@@ -409,7 +409,7 @@ public class NewGameTab extends JPanel {
 		   public void actionPerformed(ActionEvent e) {
 		    JComboBox combo = (JComboBox)e.getSource();
 		                String selection = (String)combo.getSelectedItem();
-		                if(selection.contentEquals("default")) {
+		                if(selection.contentEquals("Other")) {
 		                // Replace this with button contents
 		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100, ??");
 		                System.out.print("default\n");

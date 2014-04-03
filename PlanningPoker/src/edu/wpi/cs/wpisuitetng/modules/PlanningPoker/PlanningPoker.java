@@ -20,7 +20,6 @@ import javax.swing.JTabbedPane;
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.GameSettingsWindow;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
