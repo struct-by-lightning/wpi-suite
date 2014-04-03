@@ -26,7 +26,7 @@ class DatePicker {
 		
 		top = box;
 		txt = text;
-		String[] header = { "S", "M", "T", "W", "R", "F", "S" }; // shorter version
+		String[] header = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" }; // shorter version
 
 		p1 = new JPanel(new GridLayout(7, 7));
 		p1.setPreferredSize(new Dimension(430, 120));
