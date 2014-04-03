@@ -599,8 +599,14 @@ public class NewGameTab extends JPanel {
 					Date startVal = (Date)startTime.getValue();
 					Date endVal = (Date)endTime.getValue();
 					
-					startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
-					endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
+					/**
+					 * Gregorian Calendars save month values starting at 0, so the months
+					 * in both of the below calendar has has 1 subtracted from it, as 
+					 * the values are being pulled from the text field, which does
+					 * not start at zero
+					 */
+					startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]) -1, Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
+					endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]) -1, Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
 					
 					System.out.println(startCal.toString()+"\n"+endCal.toString());
 					System.out.println(enteredName);
@@ -617,7 +623,10 @@ public class NewGameTab extends JPanel {
 					}
 					System.out.println(savedRequirements.size());
 					
-					if(startCal.before(endCal)){
+					
+					Calendar currentDate = Calendar.getInstance();
+					
+					if(startCal.before(endCal) && startCal.after(currentDate)){
 						PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
 								selectedDeckType, savedRequirements, false, false, startCal, endCal);
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
