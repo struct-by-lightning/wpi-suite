@@ -617,7 +617,11 @@ public class NewGameTab extends JPanel {
 					}
 					System.out.println(savedRequirements.size());
 					
-					if(startCal.before(endCal)){
+					
+					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+					Calendar currentTime = Calendar.getInstance();
+					
+					if(startCal.before(endCal) && startCal.before(currentTime)){
 						PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
 								selectedDeckType, savedRequirements, false, false, startCal, endCal);
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
