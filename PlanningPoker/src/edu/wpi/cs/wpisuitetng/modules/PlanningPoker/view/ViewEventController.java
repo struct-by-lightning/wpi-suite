@@ -109,68 +109,12 @@ public class ViewEventController {
 	 * This function create a new Planning Poker session game and push it into the database
 	 */
 	public void createGame() {
-			newGameTab.enteredName = newGameTab.sessionName.getText();
-			selectedDeckType = (String)deckType.getSelectedItem();
-			GregorianCalendar startCal, endCal;
 			
-			//Checks to see if the user set the date to something other than default text
-			if(startDateText.getText().equals("Click Calendar to set date") || endDateText.getText().equals("Click Calendar to set date")){
-				System.out.println("Please enter a valid date");
-			}
-			else{
-				String[] startDate = startDateText.getText().split("-");
-				String[] endDate = endDateText.getText().split("-");
-				
-				Date startVal = (Date)startTime.getValue();
-				Date endVal = (Date)endTime.getValue();
-				
-				/**
-				 * Gregorian Calendars save month values starting at 0, so the months
-				 * in both of the below calendar has has 1 subtracted from it, as 
-				 * the values are being pulled from the text field, which does
-				 * not start at zero
-				 */
-				startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]) -1, Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
-				endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]) -1, Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
-				
-				System.out.println(startCal.toString()+"\n"+endCal.toString());
-				System.out.println(enteredName);
-				System.out.println(selectedDeckType);
-				
-				for(int i =0; i < gameRequirementsModel.getSize(); i++){
-					for(int j = 0; j < requirements.size(); j++){
-						if((gameRequirementsModel.get(i).toString()).equals(requirements.get(j).toString())){
-							System.out.println(requirements.get(j).toString());
-							savedRequirements.add(requirements.get(j));
-							
-						}
-					}
-				}
-				System.out.println(savedRequirements.size());
-				
-				
-				Calendar currentDate = Calendar.getInstance();
-				
-				if(startCal.before(endCal) && startCal.after(currentDate)){
-					PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
-							selectedDeckType, savedRequirements, false, false, startCal, endCal);
-					AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
-					lblGameCreated.setVisible(true);
-					btnCreateGame.setEnabled(false);
-					Mailer m = new Mailer();
-					m.addEmail("software-team6@wpi.edu");
-					m.send();
-				}
-				else{
-					// Error message when the session name is empty
-					if (sessionName.getText().isEmpty()) {
-						JOptionPane emptyNameErrorPanel = new JOptionPane("You must enter the session name", JOptionPane.ERROR_MESSAGE);
-						JDialog errorDialog = emptyNameErrorPanel.createDialog(null); 
-						errorDialog.setLocation(thisPanel.getWidth() / 2, thisPanel.getHeight() / 2);
-						errorDialog.setVisible(true);
-					}
-					System.out.println("Start date is after the end date.");
-				}
-			}				
+	}
+	/**
+	 * This function removes the requirements in the right column
+	 */
+	public void removeFromGame() {
+		
 	}
 }
