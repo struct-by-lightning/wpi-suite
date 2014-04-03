@@ -42,6 +42,8 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JDialog;
 import javax.swing.JList;
@@ -523,6 +525,34 @@ public class NewGameTab extends JPanel {
 		gameRequirements.add(gameList, BorderLayout.CENTER);
 		gameList.setLayout(new BorderLayout(0, 0));
 
+		
+		/**
+		 * Listens to the session name field and
+		 * disables "Create Game" button if the
+		 * field is empty
+		 */
+		sessionName.addKeyListener(new KeyListener() {
+
+		    @Override
+		    public void keyTyped(KeyEvent arg0) {
+
+		    }
+
+		    @Override
+		    public void keyReleased(KeyEvent arg0) {
+		        String currentText = sessionName.getText();
+		        if (currentText.equals(""))
+		        	btnCreateGame.setEnabled(false);
+		        else
+		        	btnCreateGame.setEnabled(true);
+		    }
+
+		    @Override
+		    public void keyPressed(KeyEvent arg0) {
+
+		    }
+		});
+		
 		selectedRequirements.setModel(gameRequirementsModel);
 
 		GetRequirementsController.getInstance().retrieveRequirements();
@@ -587,7 +617,7 @@ public class NewGameTab extends JPanel {
 					}
 					System.out.println(savedRequirements.size());
 					
-					if(startCal.before(endCal) && !sessionName.getText().isEmpty()){
+					if(startCal.before(endCal)){
 						PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
 								selectedDeckType, savedRequirements, false, false, startCal, endCal);
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
