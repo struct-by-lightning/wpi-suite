@@ -43,9 +43,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
@@ -68,12 +70,14 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+
 import java.awt.Insets;
 
 public class NewGameTab extends JPanel {
 	private JTextField sessionName;
 	private JTextField textField;
 	private JTextField textField_1;
+	private NewGameTab thisPanel;
 	/**
 	 * A dropdown box that contains the default deck to choose.
 	 */
@@ -106,6 +110,7 @@ public class NewGameTab extends JPanel {
 	 * Create the new game panel.
 	 */
 	public NewGameTab() {
+		thisPanel = this;
 		setBorder(new LineBorder(Color.DARK_GRAY));
 		setLayout(new BorderLayout(0, 0));
 
@@ -548,6 +553,7 @@ public class NewGameTab extends JPanel {
 		 */
 		btnCreateGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
+		    
 				enteredName = sessionName.getText();
 				selectedDeckType = (String)deckType.getSelectedItem();
 				GregorianCalendar startCal, endCal;
@@ -559,8 +565,10 @@ public class NewGameTab extends JPanel {
 				else{
 					String[] startDate = startDateText.getText().split("-");
 					String[] endDate = endDateText.getText().split("-");
+					
 					Date startVal = (Date)startTime.getValue();
 					Date endVal = (Date)endTime.getValue();
+					
 					startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]), Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
 					endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]), Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
 					
@@ -579,7 +587,7 @@ public class NewGameTab extends JPanel {
 					}
 					System.out.println(savedRequirements.size());
 					
-					if(startCal.before(endCal)){
+					if(startCal.before(endCal) && !sessionName.getText().isEmpty()){
 						PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
 								selectedDeckType, savedRequirements, false, false, startCal, endCal);
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
@@ -590,6 +598,13 @@ public class NewGameTab extends JPanel {
 						m.send();
 					}
 					else{
+						// Error message when the session name is empty
+						if (sessionName.getText().isEmpty()) {
+							JOptionPane emptyNameErrorPanel = new JOptionPane("You must enter the session name", JOptionPane.ERROR_MESSAGE);
+							JDialog errorDialog = emptyNameErrorPanel.createDialog(null); 
+							errorDialog.setLocation(thisPanel.getWidth() / 2, thisPanel.getHeight() / 2);
+							errorDialog.setVisible(true);
+						}
 						System.out.println("Start date is after the end date.");
 					}
 				}
