@@ -80,6 +80,12 @@ public class NewGameTab extends JPanel {
 	private JTextField textField;
 	private JTextField textField_1;
 	private NewGameTab thisPanel;
+	
+	/**
+	 * Error label that will show the reason why a game cannot be created
+	 */
+	JLabel createGameErrorText;
+	
 	/**
 	 * A dropdown box that contains the default deck to choose.
 	 */
@@ -143,6 +149,12 @@ public class NewGameTab extends JPanel {
 
 		btnCreateGame = new JButton("CREATE GAME");
 		createGamePane.add(btnCreateGame);
+		
+		createGameErrorText = new JLabel("");
+		titlePanel.add(createGameErrorText);
+		
+		JLabel label = new JLabel("");
+		titlePanel.add(label);
 		
 		lblGameCreated = new JLabel("Session Created!");
 		titlePanel.add(lblGameCreated);
@@ -541,10 +553,14 @@ public class NewGameTab extends JPanel {
 		    @Override
 		    public void keyReleased(KeyEvent arg0) {
 		        String currentText = sessionName.getText();
-		        if (currentText.equals(""))
+		        if (currentText.equals("")){
 		        	btnCreateGame.setEnabled(false);
-		        else
+		        	createGameErrorText.setText("Session needs a name");
+		        }
+		        else{
 		        	btnCreateGame.setEnabled(true);
+		        	createGameErrorText.setText("");
+		        }
 		    }
 
 		    @Override
