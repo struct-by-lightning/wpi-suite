@@ -34,6 +34,7 @@ class DatePicker {
 		for (int x = 0; x < button.length; x++) {
 			final int selection = x;
 			button[x] = new JButton();
+			button[x].setMargin(new Insets(0,0,0,0));
 			button[x].setFocusPainted(false);
 			button[x].setBackground(Color.white);
 			if (x > 6)
@@ -45,14 +46,14 @@ class DatePicker {
 						}
 				});
 			if (x < 7) {
-				button[x].setFont(new Font("Default", Font.PLAIN, 8));
+				//button[x].setFont(new Font("Default", Font.PLAIN, 14));
 				button[x].setText(header[x]);
 				button[x].setForeground(Color.red);
 			}
 			p1.add(button[x]);
 		}
 		p2 = new JPanel(new GridLayout(1, 3));
-		
+		p1.setPreferredSize(new Dimension(430, 60));
 		JButton previous = new JButton("<< Previous");
 		previous.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -93,7 +94,7 @@ class DatePicker {
 		int dayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK);
 		int daysInMonth = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
 		for (int x = 6 + dayOfWeek, day = 1; day <= daysInMonth; x++, day++) {
-			button[x].setFont(new Font("Default", Font.PLAIN, 8));
+			//button[x].setFont(new Font("Default", Font.PLAIN, 12));
 			button[x].setText("" + day);
 		}
 		l.setText(sdf.format(cal.getTime()));
