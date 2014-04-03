@@ -40,7 +40,8 @@ class DatePicker {
 				button[x].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent ae) {
 						day = button[selection].getActionCommand();
-						txt.setText(setPickedDate());
+						if(!day.equals(""))
+								txt.setText(setPickedDate());
 						}
 				});
 			if (x < 7) {
