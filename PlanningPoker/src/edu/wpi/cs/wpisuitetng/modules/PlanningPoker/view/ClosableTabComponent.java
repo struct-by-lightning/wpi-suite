@@ -81,8 +81,8 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 			/*int dialogButton = JOptionPane.YES_NO_OPTION;
 			int dialogResult = JOptionPane.showConfirmDialog(this, "Close this game session?", "Confirmation",dialogButton);
 			*/
-			 JOptionPane pane = new JOptionPane("Click one:", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
-			 JDialog d = pane.createDialog(null); // see mKorbel's post for better ways to do this
+			 JOptionPane pane = new JOptionPane("Close this planning poker tab?", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+			 JDialog d = pane.createDialog(null); 
 			 d.setLocation(tabbedPane.getWidth() / 2, tabbedPane.getHeight() / 2);
 			 d.setVisible(true);
 			 
