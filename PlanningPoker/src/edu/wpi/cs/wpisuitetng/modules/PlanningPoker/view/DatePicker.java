@@ -85,17 +85,30 @@ class DatePicker {
 	}
 
 	public void displayDate() {
-		for (int x = 7; x < button.length; x++)
+		for (int x = 7; x < button.length; x++) {
 			button[x].setText("");
+			button[x].setEnabled(false);
+		}
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
 				"MMMM yyyy");
 		java.util.Calendar cal = java.util.Calendar.getInstance();
+		java.util.Calendar current = java.util.Calendar.getInstance();
 		cal.set(year, month, 1);
 		int dayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK);
 		int daysInMonth = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
 		for (int x = 6 + dayOfWeek, day = 1; day <= daysInMonth; x++, day++) {
 			//button[x].setFont(new Font("Default", Font.PLAIN, 12));
+			cal.set(year,  month, day);
+			if (cal.before(current))
+				button[x].setEnabled(false);
+			else
+				button[x].setEnabled(true);
 			button[x].setText("" + day);
+			if(day == daysInMonth) {
+				for(int y = x+1; x < button.length; y++) {
+					button[y].setEnabled(false);
+				}
+			}
 		}
 		l.setText(sdf.format(cal.getTime()));
 	}
