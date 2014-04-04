@@ -69,19 +69,19 @@ public class OverviewPanel extends JPanel {
 			new DefaultMutableTreeNode("Your Games") {
 				{
 					DefaultMutableTreeNode node_1;
-					unanswered = new DefaultMutableTreeNode("Unanswered");
+					unanswered = new DefaultMutableTreeNode("New");
 					unanswered.add(new DefaultMutableTreeNode("blue"));
 					unanswered.add(new DefaultMutableTreeNode("violet"));
 					unanswered.add(new DefaultMutableTreeNode("red"));
 					unanswered.add(new DefaultMutableTreeNode("yellow"));
 					add(unanswered);
-					node_1 = new DefaultMutableTreeNode("Answered");
+					node_1 = new DefaultMutableTreeNode("Open");
 						node_1.add(new DefaultMutableTreeNode("basketball"));
 						node_1.add(new DefaultMutableTreeNode("soccer"));
 						node_1.add(new DefaultMutableTreeNode("football"));
 						node_1.add(new DefaultMutableTreeNode("hockey"));
 					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Finished");
+					node_1 = new DefaultMutableTreeNode("Closed");
 						node_1.add(new DefaultMutableTreeNode("hot dogs"));
 						node_1.add(new DefaultMutableTreeNode("pizza"));
 						node_1.add(new DefaultMutableTreeNode("ravioli"));
