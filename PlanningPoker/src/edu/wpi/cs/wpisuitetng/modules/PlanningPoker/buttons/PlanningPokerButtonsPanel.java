@@ -30,6 +30,7 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 //import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
 
 /**
  * @author Batyr, Christian, Francisco 
@@ -45,6 +46,8 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView{
 	
 	public PlanningPokerButtonsPanel(){
 		super("");
+		
+		modifyGameButton.setEnabled(false);
 		
 		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredWidth(350);
@@ -65,32 +68,20 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView{
 			
 		}
 		
-		// the action listener for the Create Requirement Button
+		// the action listener for the New Game Button
 		newGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// bring up a create requirement pane if not in Multiple Requirement Editing Mode
-				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
-					//ViewEventController.getInstance().createRequirement();
-			//	}
+					ViewEventController.getInstance().createNewGame();
 			}
 		});		
 		
-		//action listener for the Create Iteration Button
+		//action listener for the Modify Game Button
 		modifyGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
-				
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {}
-				
-				System.out.println(PlanningPokerGameModel.getInstance().getSize());
-				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
-					//ViewEventController.getInstance().createIteration();
-				}
-		//	}
+				ViewEventController.getInstance().modifyGame();
+			}
 		});
 			
 		contentPanel.add(newGameButton);
