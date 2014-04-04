@@ -9,12 +9,14 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
+
 /**
  * @author sfmailand
  * @author hlong290494
  * 
  * This creates a tab for New games to be made. 
  */
+
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
@@ -77,11 +79,26 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 
 import java.awt.Insets;
 
+/**
+ * Implements the new game tab for planning poker module
+ * 
+ * @author Struct-by-lightning
+ */
 public class NewGameTab extends JPanel {
 	private JTextField sessionName;
-	private JTextField textField;
-	private JTextField textField_1;
 	private NewGameTab thisPanel;
+	final String defaultCalendarText = "Click Calendar to set date";
+	/**
+	 * Error label that will show the reason why a game cannot be created
+	 */
+	JLabel createGameErrorText;
+	//indicates whether the user edited the new game tab
+	/*
+	***THE FOLLOWING CODE NEEDS TO BE ADDED TO EVERY USER ACTION LISTENER:***
+	isTabEditedByUser = true;
+	*/
+	public boolean isTabEditedByUser; 
+	
 	/**
 	 * A dropdown box that contains the default deck to choose.
 	 */
@@ -114,6 +131,8 @@ public class NewGameTab extends JPanel {
 	 * Create the new game panel.
 	 */
 	public NewGameTab() {
+		isTabEditedByUser = false;
+		
 		thisPanel = this;
 		setBorder(new LineBorder(Color.DARK_GRAY));
 		setLayout(new BorderLayout(0, 0));
@@ -134,8 +153,8 @@ public class NewGameTab extends JPanel {
 		sessionName = new JTextField();
 		namePane.add(sessionName);
 		sessionName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		Date date = new Date();
+		final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		final Date date = new Date();
 		sessionName.setText(dateFormat.format(date));
 		sessionName.setColumns(50);
 
@@ -145,6 +164,15 @@ public class NewGameTab extends JPanel {
 
 		btnCreateGame = new JButton("CREATE GAME");
 		createGamePane.add(btnCreateGame);
+
+		JButton btnResetGame = new JButton("RESET GAME");
+		createGamePane.add(btnResetGame);
+		
+		createGameErrorText = new JLabel("");
+		titlePanel.add(createGameErrorText);
+		
+		JLabel label = new JLabel("");
+		titlePanel.add(label);
 		
 		lblGameCreated = new JLabel("Session Created!");
 		titlePanel.add(lblGameCreated);
@@ -178,7 +206,7 @@ public class NewGameTab extends JPanel {
 		JLabel lblStart = new JLabel("Start Date:");
 
 		final JTextField startDateText = new JTextField(13);
-		startDateText.setText("Click Calendar to set date");
+		startDateText.setText(defaultCalendarText);
 		startDateText.setEditable(false);
 		startDateText.setMinimumSize(new Dimension (startDateText.getPreferredSize().width, startDateText.getPreferredSize().height));
 		JButton calendarButton = new JButton("Calendar");
@@ -201,7 +229,7 @@ public class NewGameTab extends JPanel {
 		startTime.setEditor(new JSpinner.DateEditor(startTime, "h:mm a"));
 		startPanel.add(startTime, constraints2);
 		
-		JLabel lblrequired = new JLabel("*Required");
+		JLabel lblrequired = new JLabel("*");
 		lblrequired.setForeground(Color.RED);
 		GridBagConstraints gbc_lblrequired = new GridBagConstraints();
 		gbc_lblrequired.insets = new Insets(0, 0, 5, 0);
@@ -251,9 +279,12 @@ public class NewGameTab extends JPanel {
 //		f.pack();
 //		f.setVisible(true);
 		calendarButton.addActionListener(new ActionListener() {
+			
 			boolean open = false;
 			DatePicker dp;
 			public void actionPerformed(ActionEvent ae) {
+				isTabEditedByUser = true;
+				
 				if(!open) {
 					dp = new DatePicker(startPanel, constraints7, startDateText);
 					open = true;
@@ -277,7 +308,7 @@ public class NewGameTab extends JPanel {
 		JLabel lblEndDate = new JLabel("End Date:");
 
 		final JTextField endDateText = new JTextField(13);
-		endDateText.setText("Click Calendar to set date");
+		endDateText.setText(defaultCalendarText);
 		endDateText.setEditable(false);
 		endDateText.setMinimumSize(new Dimension (endDateText.getPreferredSize().width, endDateText.getPreferredSize().height));
 		JButton calendarButton_2 = new JButton("Calendar");
@@ -411,6 +442,7 @@ public class NewGameTab extends JPanel {
 		*/
 		deckType.addActionListener(new ActionListener () {
 		   public void actionPerformed(ActionEvent e) {
+			isTabEditedByUser = true;   
 		    JComboBox combo = (JComboBox)e.getSource();
 		                String selection = (String)combo.getSelectedItem();
 		                if(selection.contentEquals("Other")) {
@@ -496,6 +528,7 @@ public class NewGameTab extends JPanel {
 		JButton btn_addToGame = new JButton("Add to game -->");
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				isTabEditedByUser = true;
 			}
 		});
 		topButton.add(btn_addToGame, BorderLayout.CENTER);
@@ -542,11 +575,16 @@ public class NewGameTab extends JPanel {
 
 		    @Override
 		    public void keyReleased(KeyEvent arg0) {
+		    	isTabEditedByUser = true;
 		        String currentText = sessionName.getText();
-		        if (currentText.equals(""))
+		        if (currentText.equals("")){
 		        	btnCreateGame.setEnabled(false);
-		        else
+		        	createGameErrorText.setText("Session needs a name");
+		        }
+		        else{
 		        	btnCreateGame.setEnabled(true);
+		        	createGameErrorText.setText("");
+		        }
 		    }
 
 		    @Override
@@ -585,7 +623,6 @@ public class NewGameTab extends JPanel {
 		 */
 		btnCreateGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    
 				enteredName = sessionName.getText();
 				selectedDeckType = (String)deckType.getSelectedItem();
 				GregorianCalendar startCal, endCal;
@@ -658,6 +695,8 @@ public class NewGameTab extends JPanel {
 		 */
 		btn_addToGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
+		    	isTabEditedByUser = true;
+		    	
 		    	if(allRequirements.getSelectedIndex() >=0){
 
 		    		gameRequirementsModel.addElement(allRequirements.getSelectedValue());
@@ -678,6 +717,7 @@ public class NewGameTab extends JPanel {
 		 */
 		btn_removeFromGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
+		    	isTabEditedByUser = true;
 		    	if(selectedRequirements.getSelectedIndex() >= 0){
 		    		everyRequirementModel.addElement(selectedRequirements.getSelectedValue());
 			    	allRequirements.setModel(everyRequirementModel);
@@ -688,5 +728,22 @@ public class NewGameTab extends JPanel {
 
 		    }
 		});
+		
+		btnResetGame.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	// Reset game name
+		    	sessionName.setText(dateFormat.format(date));
+		    	
+		    	// Reset start and end date
+		    	startDateText.setText(defaultCalendarText);
+		    	endDateText.setText(defaultCalendarText);
+		    	btnCreateGame.setEnabled(true);
+	        	createGameErrorText.setText("");
+		    	// Reset start and end time
+		    	startTime.setEditor(new JSpinner.DateEditor(startTime, "h:mm a"));
+		    	// Reset the requirements boxes
+		    }
+		});		
+		
 	}
 }

@@ -3,10 +3,12 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
@@ -25,7 +27,7 @@ public class PlanningPokerSerializer implements JsonSerializer<PlanningPokerGame
 		deflated.addProperty("description", m.getDescription());
 		deflated.addProperty("deckType", m.getDeckType());
 		for(Requirement r : m.getRequirements()) {
-			deflatedReqs.add(jp.parse(r.toJSON()));
+			deflatedReqs.add(new JsonPrimitive(r.getId()));
 		}
 		deflated.add("requirements", deflatedReqs);
 		deflated.addProperty("isFinished", m.isFinished());
