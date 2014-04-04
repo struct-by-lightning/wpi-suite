@@ -70,7 +70,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-import edu.wpi.cs.wpisuitetng.janeway.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
