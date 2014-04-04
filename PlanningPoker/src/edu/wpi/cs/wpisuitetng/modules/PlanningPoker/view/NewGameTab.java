@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 /**
  * @author sfmailand
  * @author hlong290494
+ * 
+ * This creates a tab for New games to be made. 
  */
 import javax.swing.JPanel;
 

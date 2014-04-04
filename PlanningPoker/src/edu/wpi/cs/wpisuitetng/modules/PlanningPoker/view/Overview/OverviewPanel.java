@@ -194,6 +194,9 @@ public class OverviewPanel extends JPanel {
 		JButton btnNewButton_7 = new JButton("100");
 		estimatePanel.add(btnNewButton_7);
 
+		/**
+		 * Displays the cards on the overview page for a given game
+		 */
 		try {
 		    Image img = ImageIO.read(getClass().getResource("wpiCardFrontWPI_final.png"));
 
