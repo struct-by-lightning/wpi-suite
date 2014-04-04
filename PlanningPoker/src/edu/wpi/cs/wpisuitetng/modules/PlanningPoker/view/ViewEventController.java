@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import edu.wpi.cs.wpisuitetng.janeway.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
