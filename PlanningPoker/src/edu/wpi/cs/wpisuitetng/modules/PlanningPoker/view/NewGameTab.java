@@ -77,9 +77,8 @@ import java.awt.Insets;
 
 public class NewGameTab extends JPanel {
 	private JTextField sessionName;
-	private JTextField textField;
-	private JTextField textField_1;
 	private NewGameTab thisPanel;
+	final String defaultCalendarText = "Click Calendar to set date";
 	
 	/**
 	 * Error label that will show the reason why a game cannot be created
@@ -138,8 +137,8 @@ public class NewGameTab extends JPanel {
 		sessionName = new JTextField();
 		namePane.add(sessionName);
 		sessionName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		Date date = new Date();
+		final DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		final Date date = new Date();
 		sessionName.setText(dateFormat.format(date));
 		sessionName.setColumns(50);
 
@@ -149,6 +148,9 @@ public class NewGameTab extends JPanel {
 
 		btnCreateGame = new JButton("CREATE GAME");
 		createGamePane.add(btnCreateGame);
+
+		JButton btnResetGame = new JButton("RESET GAME");
+		createGamePane.add(btnResetGame);
 		
 		createGameErrorText = new JLabel("");
 		titlePanel.add(createGameErrorText);
@@ -188,7 +190,7 @@ public class NewGameTab extends JPanel {
 		JLabel lblStart = new JLabel("Start Date:");
 
 		final JTextField startDateText = new JTextField(13);
-		startDateText.setText("Click Calendar to set date");
+		startDateText.setText(defaultCalendarText);
 		startDateText.setEditable(false);
 		startDateText.setMinimumSize(new Dimension (startDateText.getPreferredSize().width, startDateText.getPreferredSize().height));
 		JButton calendarButton = new JButton("Calendar");
@@ -211,7 +213,7 @@ public class NewGameTab extends JPanel {
 		startTime.setEditor(new JSpinner.DateEditor(startTime, "h:mm a"));
 		startPanel.add(startTime, constraints2);
 		
-		JLabel lblrequired = new JLabel("*Required");
+		JLabel lblrequired = new JLabel("*");
 		lblrequired.setForeground(Color.RED);
 		GridBagConstraints gbc_lblrequired = new GridBagConstraints();
 		gbc_lblrequired.insets = new Insets(0, 0, 5, 0);
@@ -287,7 +289,7 @@ public class NewGameTab extends JPanel {
 		JLabel lblEndDate = new JLabel("End Date:");
 
 		final JTextField endDateText = new JTextField(13);
-		endDateText.setText("Click Calendar to set date");
+		endDateText.setText(defaultCalendarText);
 		endDateText.setEditable(false);
 		endDateText.setMinimumSize(new Dimension (endDateText.getPreferredSize().width, endDateText.getPreferredSize().height));
 		JButton calendarButton_2 = new JButton("Calendar");
@@ -701,5 +703,22 @@ public class NewGameTab extends JPanel {
 
 		    }
 		});
+		
+		btnResetGame.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	// Reset game name
+		    	sessionName.setText(dateFormat.format(date));
+		    	
+		    	// Reset start and end date
+		    	startDateText.setText(defaultCalendarText);
+		    	endDateText.setText(defaultCalendarText);
+		    	btnCreateGame.setEnabled(true);
+	        	createGameErrorText.setText("");
+		    	// Reset start and end time
+		    	startTime.setEditor(new JSpinner.DateEditor(startTime, "h:mm a"));
+		    	// Reset the requirements boxes
+		    }
+		});		
+		
 	}
 }
