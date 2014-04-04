@@ -47,6 +47,8 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView{
 	public PlanningPokerButtonsPanel(){
 		super("");
 		
+		modifyGameButton.setEnabled(false);
+		
 		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredWidth(350);
 		
