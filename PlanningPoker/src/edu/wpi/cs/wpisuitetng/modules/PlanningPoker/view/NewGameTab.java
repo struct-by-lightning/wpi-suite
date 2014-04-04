@@ -583,7 +583,6 @@ public class NewGameTab extends JPanel {
 		 */
 		btnCreateGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    
 				enteredName = sessionName.getText();
 				selectedDeckType = (String)deckType.getSelectedItem();
 				GregorianCalendar startCal, endCal;
