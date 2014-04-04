@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -17,7 +18,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPokerGame> {
 
@@ -75,13 +78,26 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 			deckType = deflated.get("deckType").getAsString();
 		}
 		
+		JsonArray jsonRequirements = null;
+		
 		try {
-			for(JsonElement jsonRequirement : deflated.get("requirements").getAsJsonArray()) {
-				requirements.add(Requirement.fromJson(jsonRequirement.toString()));
-			}
+			jsonRequirements = deflated.get("requirements").getAsJsonArray();
 		} catch (java.lang.ClassCastException e) {
 			logger.log(Level.FINER,
 					"PlanningPokerModel transmitted with non-array in requirements field");
+		}
+		
+		GetRequirementsController.getInstance().retrieveRequirements();
+
+		try {	// We need to sleep for the requirement request to be in
+			Thread.sleep(150);
+		} catch (InterruptedException e1) {}
+
+		for(JsonElement jsonRequirement : jsonRequirements) {
+			Requirement r = RequirementModel.getInstance().getRequirement(jsonRequirement.getAsInt());
+			if(r != null) {
+				requirements.add(r);
+			}
 		}
 		
 		try {
