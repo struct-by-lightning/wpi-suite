@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 /**
  * @author sfmailand
  * @author hlong290494
+ * @author austintrose
+ * @author ZPak
  */
 import javax.swing.JPanel;
 
@@ -74,6 +76,9 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 import java.awt.Insets;
+import javax.swing.SwingConstants;
+import java.awt.Rectangle;
+import javax.swing.BoxLayout;
 
 public class NewGameTab extends JPanel {
 	private JTextField sessionName;
@@ -95,8 +100,8 @@ public class NewGameTab extends JPanel {
 	 */
 	JList<String> allRequirements = new JList<String>();
 
-	DefaultListModel<String> gameRequirementsModel = new DefaultListModel<String>();
-	DefaultListModel<String> everyRequirementModel = new DefaultListModel<String>();
+	DefaultListModel<String> listOfAllRequirements = new DefaultListModel<String>();
+	DefaultListModel<String> listOfRequirementsToAdd = new DefaultListModel<String>();
 	
 	List<Requirement> savedRequirements = new ArrayList<Requirement>();
 
@@ -125,7 +130,7 @@ public class NewGameTab extends JPanel {
 		JPanel namePane = new JPanel();
 		titlePanel.add(namePane);
 
-		JLabel lblName = new JLabel("Name:");
+		JLabel lblName = new JLabel("Name: *");
 		namePane.add(lblName);
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 14));
 
@@ -163,107 +168,107 @@ public class NewGameTab extends JPanel {
 		JPanel calendarOverview = new JPanel();
 		calendarOverview.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		settingsPanel.add(calendarOverview, BorderLayout.CENTER);
-		calendarOverview.setLayout(new GridLayout(1, 3, 0, 0));
+		calendarOverview.setLayout(new GridLayout(1, 2, 0, 0));
 
-		JPanel calendarOne = new JPanel();
-		calendarOverview.add(calendarOne);
-
-		SpinnerDateModel model = new SpinnerDateModel();
-		model.setCalendarField(Calendar.MINUTE);
+//		JPanel calendarOne = new JPanel();
+//		calendarOverview.add(calendarOne);
+//
+//		SpinnerDateModel model = new SpinnerDateModel();
+//		model.setCalendarField(Calendar.MINUTE);
 		SpinnerDateModel model_2 = new SpinnerDateModel();
 		model_2.setCalendarField(Calendar.MINUTE);
 
-		JLabel lblStart = new JLabel("Start Date:");
-
-		final JTextField startDateText = new JTextField(13);
-		startDateText.setText("Click Calendar to set date");
-		startDateText.setEditable(false);
-		startDateText.setMinimumSize(new Dimension (startDateText.getPreferredSize().width, startDateText.getPreferredSize().height));
-		JButton calendarButton = new JButton("Calendar");
-		final JPanel startPanel = new JPanel(new GridBagLayout());
-		startPanel.setPreferredSize(new Dimension(350, 220));
-		final GridBagConstraints constraints = new GridBagConstraints();
-		constraints.insets = new Insets(0, 0, 5, 5);
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		constraints.anchor = GridBagConstraints.LINE_START;
-		startPanel.add(new JLabel("Start Time:"), constraints);
-		final GridBagConstraints constraints2 = new GridBagConstraints();
-		constraints2.insets = new Insets(0, 0, 5, 5);
-		constraints2.fill = GridBagConstraints.HORIZONTAL;
-		constraints2.gridx = 1;
-		constraints2.gridy = 0;
-		startTime= new JSpinner();
-		startTime.setModel(model);
-		startTime.setEditor(new JSpinner.DateEditor(startTime, "h:mm a"));
-		startPanel.add(startTime, constraints2);
-		
-		JLabel lblrequired = new JLabel("*Required");
-		lblrequired.setForeground(Color.RED);
-		GridBagConstraints gbc_lblrequired = new GridBagConstraints();
-		gbc_lblrequired.insets = new Insets(0, 0, 5, 0);
-		gbc_lblrequired.gridx = 2;
-		gbc_lblrequired.gridy = 0;
-		startPanel.add(lblrequired, gbc_lblrequired);
-		final GridBagConstraints constraints3 = new GridBagConstraints();
-		constraints3.insets = new Insets(0, 0, 5, 5);
-		constraints3.fill = GridBagConstraints.HORIZONTAL;
-		constraints3.gridx = 0;
-		constraints3.gridy = 1;
-		constraints3.weightx = 0;
-		constraints3.anchor = GridBagConstraints.LINE_START;
-		startPanel.add(lblStart, constraints3);
-		final GridBagConstraints constraints4 = new GridBagConstraints();
-		constraints4.insets = new Insets(0, 0, 5, 5);
-		constraints4.fill = GridBagConstraints.HORIZONTAL;
-		constraints4.weightx = 1;
-		constraints4.gridx = 1;
-		constraints4.gridy = 1;
-		startPanel.add(startDateText, constraints4);
-		final GridBagConstraints constraints5 = new GridBagConstraints();
-		constraints5.insets = new Insets(0, 0, 5, 0);
-		constraints5.fill = GridBagConstraints.HORIZONTAL;
-		constraints5.weightx = 0;
-		constraints5.gridx = 2;
-		constraints5.gridy = 1;
-		startPanel.add(calendarButton, constraints5);
-		final GridBagConstraints constraints6 = new GridBagConstraints();
-		constraints6.insets = new Insets(0, 0, 5, 5);
-		constraints6.gridx = 0;
-		constraints6.gridy = 2;
-		constraints6.weightx = 1;
-		constraints6.weighty = 1;
-		startPanel.add(new JLabel(), constraints6);
-		final GridBagConstraints constraints7 = new GridBagConstraints();
-		constraints7.insets = new Insets(0, 0, 0, 5);
-		constraints7.gridx = 0;
-		constraints7.gridy = 3;
-		constraints7.weightx = 1;
-		constraints7.weighty = 1;
-		startPanel.add(new JLabel(), constraints7);
-		constraints.weightx = 0;
-		constraints.weighty = 0;
-//		final JFrame f = new JFrame();
-//		f.getContentPane().add(p);
-//		f.pack();
-//		f.setVisible(true);
-		calendarButton.addActionListener(new ActionListener() {
-			boolean open = false;
-			DatePicker dp;
-			public void actionPerformed(ActionEvent ae) {
-				if(!open) {
-					dp = new DatePicker(startPanel, constraints7, startDateText);
-					open = true;
-				}
-				else {
-					dp.close();
-					open = false;
-				}
-			}
-		});
-
-		calendarOne.add(startPanel);
+//		JLabel lblStart = new JLabel("Start Date:");
+//
+//		final JTextField startDateText = new JTextField(13);
+//		startDateText.setText("Click Calendar to set date");
+//		startDateText.setEditable(false);
+//		startDateText.setMinimumSize(new Dimension (startDateText.getPreferredSize().width, startDateText.getPreferredSize().height));
+//		JButton calendarButton = new JButton("Calendar");
+//		final JPanel startPanel = new JPanel(new GridBagLayout());
+//		startPanel.setPreferredSize(new Dimension(350, 220));
+//		final GridBagConstraints constraints = new GridBagConstraints();
+//		constraints.insets = new Insets(0, 0, 5, 5);
+//		constraints.fill = GridBagConstraints.HORIZONTAL;
+//		constraints.gridx = 0;
+//		constraints.gridy = 0;
+//		constraints.anchor = GridBagConstraints.LINE_START;
+//		startPanel.add(new JLabel("Start Time:"), constraints);
+//		final GridBagConstraints constraints2 = new GridBagConstraints();
+//		constraints2.insets = new Insets(0, 0, 5, 5);
+//		constraints2.fill = GridBagConstraints.HORIZONTAL;
+//		constraints2.gridx = 1;
+//		constraints2.gridy = 0;
+//		startTime= new JSpinner();
+//		startTime.setModel(model);
+//		startTime.setEditor(new JSpinner.DateEditor(startTime, "h:mm a"));
+//		startPanel.add(startTime, constraints2);
+//		
+//		JLabel lblrequired = new JLabel("*Required");
+//		lblrequired.setForeground(Color.RED);
+//		GridBagConstraints gbc_lblrequired = new GridBagConstraints();
+//		gbc_lblrequired.insets = new Insets(0, 0, 5, 0);
+//		gbc_lblrequired.gridx = 2;
+//		gbc_lblrequired.gridy = 0;
+//		startPanel.add(lblrequired, gbc_lblrequired);
+//		final GridBagConstraints constraints3 = new GridBagConstraints();
+//		constraints3.insets = new Insets(0, 0, 5, 5);
+//		constraints3.fill = GridBagConstraints.HORIZONTAL;
+//		constraints3.gridx = 0;
+//		constraints3.gridy = 1;
+//		constraints3.weightx = 0;
+//		constraints3.anchor = GridBagConstraints.LINE_START;
+//		startPanel.add(lblStart, constraints3);
+//		final GridBagConstraints constraints4 = new GridBagConstraints();
+//		constraints4.insets = new Insets(0, 0, 5, 5);
+//		constraints4.fill = GridBagConstraints.HORIZONTAL;
+//		constraints4.weightx = 1;
+//		constraints4.gridx = 1;
+//		constraints4.gridy = 1;
+//		startPanel.add(startDateText, constraints4);
+//		final GridBagConstraints constraints5 = new GridBagConstraints();
+//		constraints5.insets = new Insets(0, 0, 5, 0);
+//		constraints5.fill = GridBagConstraints.HORIZONTAL;
+//		constraints5.weightx = 0;
+//		constraints5.gridx = 2;
+//		constraints5.gridy = 1;
+//		startPanel.add(calendarButton, constraints5);
+//		final GridBagConstraints constraints6 = new GridBagConstraints();
+//		constraints6.insets = new Insets(0, 0, 5, 5);
+//		constraints6.gridx = 0;
+//		constraints6.gridy = 2;
+//		constraints6.weightx = 1;
+//		constraints6.weighty = 1;
+//		startPanel.add(new JLabel(), constraints6);
+//		final GridBagConstraints constraints7 = new GridBagConstraints();
+//		constraints7.insets = new Insets(0, 0, 0, 5);
+//		constraints7.gridx = 0;
+//		constraints7.gridy = 3;
+//		constraints7.weightx = 1;
+//		constraints7.weighty = 1;
+//		startPanel.add(new JLabel(), constraints7);
+//		constraints.weightx = 0;
+//		constraints.weighty = 0;
+////		final JFrame f = new JFrame();
+////		f.getContentPane().add(p);
+////		f.pack();
+////		f.setVisible(true);
+//		calendarButton.addActionListener(new ActionListener() {
+//			boolean open = false;
+//			DatePicker dp;
+//			public void actionPerformed(ActionEvent ae) {
+//				if(!open) {
+//					dp = new DatePicker(startPanel, constraints7, startDateText);
+//					open = true;
+//				}
+//				else {
+//					dp.close();
+//					open = false;
+//				}
+//			}
+//		});
+//
+//		calendarOne.add(startPanel);
 
 //		textField = new JTextField();
 //		panel_18.add(textField);
@@ -299,8 +304,9 @@ public class NewGameTab extends JPanel {
 		endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		endPanel.add(endTime, constraints9);
 		
-		JLabel lblrequired2 = new JLabel("*Required");
-		lblrequired2.setForeground(Color.RED);
+		JLabel lblrequired2 = new JLabel("");
+		lblrequired2.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblrequired2.setForeground(Color.BLACK);
 		GridBagConstraints gbc_lblrequired2 = new GridBagConstraints();
 		gbc_lblrequired2.insets = new Insets(0, 0, 5, 0);
 		gbc_lblrequired2.gridx = 2;
@@ -453,7 +459,7 @@ public class NewGameTab extends JPanel {
 
 		JPanel requirementsSelector = new JPanel();
 		requirementsPanel.add(requirementsSelector, BorderLayout.CENTER);
-		requirementsSelector.setLayout(new GridLayout(1, 3, 3, 10));
+		requirementsSelector.setLayout(new BoxLayout(requirementsSelector, BoxLayout.X_AXIS));
 
 		JPanel projectRequirements = new JPanel();
 		projectRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -485,13 +491,20 @@ public class NewGameTab extends JPanel {
 
 		JPanel buttonsPanel = new JPanel();
 		addRemPanel.add(buttonsPanel);
-		buttonsPanel.setLayout(new GridLayout(2, 1, 0, 0));
+		buttonsPanel.setLayout(new GridLayout(4, 1, 4, 4));
+		
+		JPanel topmostButton = new JPanel();
+		buttonsPanel.add(topmostButton);
+		topmostButton.setLayout(new BorderLayout(0, 0));
+		
+		JButton btn_addAll = new JButton(">>");
+		topmostButton.add(btn_addAll, BorderLayout.CENTER);
 
 		JPanel topButton = new JPanel();
 		buttonsPanel.add(topButton);
 		topButton.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_addToGame = new JButton("Add to game -->");
+		JButton btn_addToGame = new JButton(">");
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -502,8 +515,15 @@ public class NewGameTab extends JPanel {
 		buttonsPanel.add(bottomButton);
 		bottomButton.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_removeFromGame = new JButton("<-- Remove from game");
+		JButton btn_removeFromGame = new JButton("<");
 		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
+		
+		JPanel bottommostButton = new JPanel();
+		buttonsPanel.add(bottommostButton);
+		bottommostButton.setLayout(new BorderLayout(0, 0));
+		
+		JButton btn_removeAll = new JButton("<<");
+		bottommostButton.add(btn_removeAll);
 
 		JPanel bottomSpacer = new JPanel();
 		addRemPanel.add(bottomSpacer);
@@ -553,7 +573,7 @@ public class NewGameTab extends JPanel {
 		    }
 		});
 		
-		selectedRequirements.setModel(gameRequirementsModel);
+		selectedRequirements.setModel(listOfAllRequirements);
 
 		GetRequirementsController.getInstance().retrieveRequirements();
 
@@ -571,10 +591,10 @@ public class NewGameTab extends JPanel {
 		// We iterate through the requirements list and add to that JList.
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);
-			everyRequirementModel.addElement(req.getName());
+			listOfRequirementsToAdd.addElement(req.getName());
 		}
 
-		allRequirements.setModel(everyRequirementModel);
+		allRequirements.setModel(listOfRequirementsToAdd);
 
 		gameList.add(selectedRequirements);
 
@@ -588,11 +608,11 @@ public class NewGameTab extends JPanel {
 				GregorianCalendar startCal, endCal;
 				
 				//Checks to see if the user set the date to something other than default text
-				if(startDateText.getText().equals("Click Calendar to set date") || endDateText.getText().equals("Click Calendar to set date")){
+				if(endDateText.getText().equals("Click Calendar to set date")){
 					System.out.println("Please enter a valid date");
 				}
 				else{
-					String[] startDate = startDateText.getText().split("-");
+					//String[] startDate = startDateText.getText().split("-");
 					String[] endDate = endDateText.getText().split("-");
 					
 					Date startVal = (Date)startTime.getValue();
@@ -604,16 +624,16 @@ public class NewGameTab extends JPanel {
 					 * the values are being pulled from the text field, which does
 					 * not start at zero
 					 */
-					startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]) -1, Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
+					startCal = new GregorianCalendar();
 					endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]) -1, Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
 					
 					System.out.println(startCal.toString()+"\n"+endCal.toString());
 					System.out.println(enteredName);
 					System.out.println(selectedDeckType);
 					
-					for(int i =0; i < gameRequirementsModel.getSize(); i++){
+					for(int i =0; i < listOfAllRequirements.getSize(); i++){
 						for(int j = 0; j < requirements.size(); j++){
-							if((gameRequirementsModel.get(i).toString()).equals(requirements.get(j).toString())){
+							if((listOfAllRequirements.get(i).toString()).equals(requirements.get(j).toString())){
 								System.out.println(requirements.get(j).toString());
 								savedRequirements.add(requirements.get(j));
 								
@@ -650,6 +670,20 @@ public class NewGameTab extends JPanel {
 		});
 
 		/**
+		 * Removes all items from box of all requirements
+		 * and adds them to the box of requirements that will be used in the session
+		 */
+		btn_addAll.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	while(listOfRequirementsToAdd.getSize() > 0)
+		    		listOfAllRequirements.addElement(listOfRequirementsToAdd.remove(0));
+		    	
+		    	selectedRequirements.setModel(listOfAllRequirements);
+		    	allRequirements.setModel(listOfRequirementsToAdd);
+		    }
+		});
+		
+		/**
 		 * Removes selected item from box of all requirements
 		 * and adds it to the box of requirements that will be used in the session
 		 */
@@ -657,12 +691,12 @@ public class NewGameTab extends JPanel {
 		    public void actionPerformed(ActionEvent e) {
 		    	if(allRequirements.getSelectedIndex() >=0){
 
-		    		gameRequirementsModel.addElement(allRequirements.getSelectedValue());
-			    	selectedRequirements.setModel(gameRequirementsModel);
+		    		listOfAllRequirements.addElement(allRequirements.getSelectedValue());
+			    	selectedRequirements.setModel(listOfAllRequirements);
 
 
-			    	everyRequirementModel.removeElementAt(allRequirements.getSelectedIndex());
-			    	allRequirements.setModel(everyRequirementModel);
+			    	listOfRequirementsToAdd.removeElementAt(allRequirements.getSelectedIndex());
+			    	allRequirements.setModel(listOfRequirementsToAdd);
 
 		    	}
 		    }
@@ -676,13 +710,27 @@ public class NewGameTab extends JPanel {
 		btn_removeFromGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	if(selectedRequirements.getSelectedIndex() >= 0){
-		    		everyRequirementModel.addElement(selectedRequirements.getSelectedValue());
-			    	allRequirements.setModel(everyRequirementModel);
+		    		listOfRequirementsToAdd.addElement(selectedRequirements.getSelectedValue());
+			    	allRequirements.setModel(listOfRequirementsToAdd);
 
-			    	gameRequirementsModel.removeElementAt(selectedRequirements.getSelectedIndex());
-			    	selectedRequirements.setModel(gameRequirementsModel);
+			    	listOfAllRequirements.removeElementAt(selectedRequirements.getSelectedIndex());
+			    	selectedRequirements.setModel(listOfAllRequirements);
 		    	}
 
+		    }
+		});
+		
+		/**
+		 * Removes selected item from box of selected requirements for session
+		 * and adds it back to the total list of requirements
+		 */
+		btn_removeAll.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	while(listOfAllRequirements.getSize() > 0)
+		    		listOfRequirementsToAdd.addElement(listOfAllRequirements.remove(0));
+		    	
+		    	selectedRequirements.setModel(listOfAllRequirements);
+		    	allRequirements.setModel(listOfRequirementsToAdd);
 		    }
 		});
 	}
