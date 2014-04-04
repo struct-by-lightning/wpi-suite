@@ -408,7 +408,7 @@ public class NewGameTab extends JPanel {
 		//calendarOverview.add(deckDisplayPane);
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Fibonacci", "Other"}));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Fibonacci", "Other", "No Deck"}));
 		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
 		
 		cardDeckPane.add(deckType);
@@ -445,14 +445,18 @@ public class NewGameTab extends JPanel {
 			isTabEditedByUser = true;   
 		    JComboBox combo = (JComboBox)e.getSource();
 		                String selection = (String)combo.getSelectedItem();
-		                if(selection.contentEquals("Other")) {
+		                if(selection.contentEquals("Other")) 
+		                {
 		                // Replace this with button contents
 		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100, ??");
-		                System.out.print("default\n");
-		                } else if(selection.contentEquals("Fibonacci")) {
+		                } 
+		                
+		                else if(selection.contentEquals("Fibonacci")) {
 		                // Replace this with button contents
 		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 21");
-		                System.out.print("Fibonacci\n");
+		                }
+		                else if(selection.contentEquals("No Deck")){
+		                	deckOverview.setText("User will be able to enter their own estimation");
 		                }
 		   }
 		});
