@@ -9,6 +9,14 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
+
+/**
+ * @author sfmailand
+ * @author hlong290494
+ * 
+ * This creates a tab for New games to be made. 
+ */
+
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
@@ -62,7 +70,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-import edu.wpi.cs.wpisuitetng.janeway.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
@@ -615,6 +623,8 @@ public class NewGameTab extends JPanel {
 		 */
 		btnCreateGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
+		    	isTabEditedByUser = false;
+		    	
 				enteredName = sessionName.getText();
 				selectedDeckType = (String)deckType.getSelectedItem();
 				GregorianCalendar startCal, endCal;
@@ -655,9 +665,11 @@ public class NewGameTab extends JPanel {
 					System.out.println(savedRequirements.size());
 					
 					
+
 					Calendar currentDate = Calendar.getInstance();
 					
 					if(startCal.before(endCal) && startCal.after(currentDate)){
+
 						PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
 								selectedDeckType, savedRequirements, false, false, startCal, endCal);
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);

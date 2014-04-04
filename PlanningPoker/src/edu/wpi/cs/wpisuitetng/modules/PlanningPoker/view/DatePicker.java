@@ -13,15 +13,31 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * @author Miguel (Code), Christian (Comments)
+ *
+ * This class contains an interactive calendar to select when a Planning Poker session is to begin and end.
+ */
+
 class DatePicker {
 	int month = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH);
-	int year = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);;
+	int year = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
 	JLabel l = new JLabel("", JLabel.CENTER);
 	String day = "";
 	JButton[] button = new JButton[49];
 	JPanel p1, p2, top;
 	JFrame f;
 	JTextField txt;
+	
+	/**
+	 * Sets up a blank calendar from today's current date.
+	 * Sets up action listeners that for a user to click one of the dates, and then displays it.
+	 *  Advances calendar pages by months with user input.
+	 * @param box The panel on which the calendar is displayed
+	 * @param c The set of constraints that define the layout of the calendar in a grid
+	 * @param text The text field for the date.
+	 */
+	
 	public DatePicker(JPanel box, GridBagConstraints c, JTextField text) {
 		
 		top = box;
@@ -83,7 +99,15 @@ class DatePicker {
 		top.add(p1, c);
 		displayDate();
 	}
+	/*
+	 * 
+	 */
 
+	/**
+	 * Displays a date on-screen corresponding to the date the user has selected. 
+	 * Ensures that the date of the planning poker session is in the future.
+	 */
+	
 	public void displayDate() {
 		for (int x = 7; x < button.length; x++) {
 			button[x].setText("");
@@ -112,6 +136,9 @@ class DatePicker {
 		}
 		l.setText(sdf.format(cal.getTime()));
 	}
+	/**
+	 * Formats the user picked date as Day/Month/Year with the time.
+	 */
 
 	public String setPickedDate() {
 		if (day.equals(""))
