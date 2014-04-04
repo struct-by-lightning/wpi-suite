@@ -195,7 +195,7 @@ public class OverviewPanel extends JPanel {
 		estimatePanel.add(btnNewButton_7);
 
 		try {
-		    Image img = ImageIO.read(getClass().getResource("wpiCardFrontWPI_final.png"));
+		    Image img = ImageIO.read(getClass().getResource("wpiCardFrontWPI.png"));
 
 		    btnNewButton_1.setIcon(new ImageIcon(img));
 		    btnNewButton_1.setBorder(BorderFactory.createEmptyBorder());
