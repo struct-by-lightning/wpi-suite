@@ -29,7 +29,7 @@ class DatePicker {
 		String[] header = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" }; // shorter version
 
 		p1 = new JPanel(new GridLayout(7, 7));
-		p1.setPreferredSize(new Dimension(430, 120));
+		p1.setPreferredSize(new Dimension(430, 400));
 
 		for (int x = 0; x < button.length; x++) {
 			final int selection = x;
@@ -46,7 +46,7 @@ class DatePicker {
 						}
 				});
 			if (x < 7) {
-				//button[x].setFont(new Font("Default", Font.PLAIN, 14));
+				button[x].setFont(new Font("Default", Font.PLAIN, 14));
 				button[x].setText(header[x]);
 				button[x].setForeground(Color.red);
 			}
@@ -74,12 +74,13 @@ class DatePicker {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridwidth = 3;
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = 0;
 		top.add(p2, c);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridwidth = 3;
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 1;
+		c.weighty = 1;
 		top.add(p1, c);
 		displayDate();
 	}
@@ -97,7 +98,7 @@ class DatePicker {
 		int dayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK);
 		int daysInMonth = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
 		for (int x = 6 + dayOfWeek, day = 1; day <= daysInMonth; x++, day++) {
-			//button[x].setFont(new Font("Default", Font.PLAIN, 12));
+			button[x].setFont(new Font("Default", Font.PLAIN, 14));
 			cal.set(year,  month, day);
 			if (cal.before(current))
 				button[x].setEnabled(false);
