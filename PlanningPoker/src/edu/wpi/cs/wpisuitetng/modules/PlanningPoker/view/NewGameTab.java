@@ -9,10 +9,6 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
-/**
- * @author sfmailand
- * @author hlong290494
- */
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
@@ -75,11 +71,24 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 
 import java.awt.Insets;
 
+/**
+ * Implements the new game tab for planning poker module
+ * 
+ * @author Struct-by-lightning
+ */
 public class NewGameTab extends JPanel {
 	private JTextField sessionName;
 	private JTextField textField;
 	private JTextField textField_1;
 	private NewGameTab thisPanel;
+	
+	//indicates whether the user edited the new game tab
+	/*
+	***THE FOLLOWING CODE NEEDS TO BE ADDED TO EVERY USER ACTION LISTENER:***
+	isTabEditedByUser = true;
+	*/
+	public boolean isTabEditedByUser; 
+	
 	/**
 	 * A dropdown box that contains the default deck to choose.
 	 */
@@ -112,6 +121,8 @@ public class NewGameTab extends JPanel {
 	 * Create the new game panel.
 	 */
 	public NewGameTab() {
+		isTabEditedByUser = false;
+		
 		thisPanel = this;
 		setBorder(new LineBorder(Color.DARK_GRAY));
 		setLayout(new BorderLayout(0, 0));
@@ -249,9 +260,12 @@ public class NewGameTab extends JPanel {
 //		f.pack();
 //		f.setVisible(true);
 		calendarButton.addActionListener(new ActionListener() {
+			
 			boolean open = false;
 			DatePicker dp;
 			public void actionPerformed(ActionEvent ae) {
+				isTabEditedByUser = true;
+				
 				if(!open) {
 					dp = new DatePicker(startPanel, constraints7, startDateText);
 					open = true;
@@ -409,6 +423,7 @@ public class NewGameTab extends JPanel {
 		*/
 		deckType.addActionListener(new ActionListener () {
 		   public void actionPerformed(ActionEvent e) {
+			isTabEditedByUser = true;   
 		    JComboBox combo = (JComboBox)e.getSource();
 		                String selection = (String)combo.getSelectedItem();
 		                if(selection.contentEquals("Other")) {
@@ -494,6 +509,7 @@ public class NewGameTab extends JPanel {
 		JButton btn_addToGame = new JButton("Add to game -->");
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				isTabEditedByUser = true;
 			}
 		});
 		topButton.add(btn_addToGame, BorderLayout.CENTER);
@@ -540,6 +556,7 @@ public class NewGameTab extends JPanel {
 
 		    @Override
 		    public void keyReleased(KeyEvent arg0) {
+		    	isTabEditedByUser = true;
 		        String currentText = sessionName.getText();
 		        if (currentText.equals(""))
 		        	btnCreateGame.setEnabled(false);
@@ -656,6 +673,8 @@ public class NewGameTab extends JPanel {
 		 */
 		btn_addToGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
+		    	isTabEditedByUser = true;
+		    	
 		    	if(allRequirements.getSelectedIndex() >=0){
 
 		    		gameRequirementsModel.addElement(allRequirements.getSelectedValue());
@@ -676,6 +695,7 @@ public class NewGameTab extends JPanel {
 		 */
 		btn_removeFromGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
+		    	isTabEditedByUser = true;
 		    	if(selectedRequirements.getSelectedIndex() >= 0){
 		    		everyRequirementModel.addElement(selectedRequirements.getSelectedValue());
 			    	allRequirements.setModel(everyRequirementModel);
