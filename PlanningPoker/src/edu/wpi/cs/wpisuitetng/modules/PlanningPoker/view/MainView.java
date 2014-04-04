@@ -92,8 +92,8 @@ public class MainView extends JTabbedPane {
 
 
 	/**
-	 * Method paintComponent.
-	 * @param g Graphics
+	 * Method paintComponent is an internal component part of window builder
+	 * @param g is referring to graphics
 	 */
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -107,11 +107,11 @@ public class MainView extends JTabbedPane {
 
 
 	/**
-	 * Overridden insertTab function to add the closable tab element.
+	 * Overridden insertTab function to allow tab to close.
 	 * 
 	 * @param title	Title of the tab
 	 * @param icon	Icon for the tab
-	 * @param component	The tab
+	 * @param component	the visible tab
 	 * @param tip	Showing mouse tip when hovering over tab
 	 * @param index	Location of the tab
 	 */
@@ -125,16 +125,16 @@ public class MainView extends JTabbedPane {
 	}
 	
 	/**
-	 * Method getOverview.
-	
+	 * Method getOverview allows you to view main planning poker screen.
 	 * @return OverviewPanel */
 	public OverviewPanel getOverview() {
 		return overview;
 	}
 	
 	/**
-	 * Method setSelectedComponent.
-	 * @param c Component
+	 * Method setSelectedComponent allows you to select tabs 
+	 * i.e. Main view or New Game.
+	 * @param c Component which is a tab
 	 */
 	@Override
 	public void setSelectedComponent(Component c){
@@ -143,8 +143,8 @@ public class MainView extends JTabbedPane {
 	}
 
 	/**
-	 * Method removeTabAt.
-	 * @param i int
+	 * Method removeTabAt will remove a tab.
+	 * @param i is the location
 	 */
 	@Override
 	public void removeTabAt(int i){
@@ -156,15 +156,15 @@ public class MainView extends JTabbedPane {
 	}
 	
 	/**
-	 * Method getPopup.
-	 * @return JPopupMenu
+	 * Method getPopup opens a window that asks if you want to close a tab.
+	 * @return JPopupMenu the popup window
 	 */
 	public JPopupMenu getPopup() {
 		return popup;
 	}
 	/**
-	 * Method getCloseAll.
-	 * @return JMenuItem
+	 * Method getCloseAll is an internal component part of window builder .
+	 * @return JMenuItem 
 	 */
 	public JMenuItem getCloseAll() {
 		return closeAll;
@@ -172,7 +172,7 @@ public class MainView extends JTabbedPane {
 
 
 	/**
-	 * Method getCloseOthers.
+	 * Method getCloseOthers is an internal component part of window builder .
 	 * @return JMenuItem
 	 */
 	public JMenuItem getCloseOthers() {
