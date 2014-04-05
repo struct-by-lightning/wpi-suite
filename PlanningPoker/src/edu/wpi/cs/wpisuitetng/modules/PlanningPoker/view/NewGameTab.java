@@ -55,6 +55,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.ListModel;
 import javax.swing.SpinnerDateModel;
 
 import java.awt.event.ActionListener;
@@ -107,15 +108,15 @@ public class NewGameTab extends JPanel {
 	/**
 	 * A list contains of available requirements to add to the session
 	 */
-	JList<String> selectedRequirements = new JList<String>();
+	JList<Requirement> selectedRequirements = new JList<Requirement>();
 
 	/**
 	 * A list contains the requirements that are to be estimated in the current planning poker session
 	 */
-	JList<String> allRequirements = new JList<String>();
+	JList<Requirement> allRequirements = new JList<Requirement>();
 
-	DefaultListModel<String> gameRequirementsModel = new DefaultListModel<String>();
-	DefaultListModel<String> everyRequirementModel = new DefaultListModel<String>();
+	DefaultListModel<Requirement> listOfRequirementsToAdd= new DefaultListModel<Requirement>();
+	DefaultListModel<Requirement> listOfAllRequirements= new DefaultListModel<Requirement>();
 	
 	List<Requirement> savedRequirements = new ArrayList<Requirement>();
 
@@ -597,7 +598,7 @@ public class NewGameTab extends JPanel {
 		    }
 		});
 		
-		selectedRequirements.setModel(gameRequirementsModel);
+		selectedRequirements.setModel(listOfRequirementsToAdd);
 
 		GetRequirementsController.getInstance().retrieveRequirements();
 
@@ -615,10 +616,10 @@ public class NewGameTab extends JPanel {
 		// We iterate through the requirements list and add to that JList.
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);
-			everyRequirementModel.addElement(req.getName());
+			listOfAllRequirements.addElement(req);
 		}
 
-		allRequirements.setModel(everyRequirementModel);
+		allRequirements.setModel(listOfAllRequirements);
 
 		gameList.add(selectedRequirements);
 
@@ -657,18 +658,14 @@ public class NewGameTab extends JPanel {
 					System.out.println(enteredName);
 					System.out.println(selectedDeckType);
 					
-					for(int i =0; i < gameRequirementsModel.getSize(); i++){
-						for(int j = 0; j < requirements.size(); j++){
-							if((gameRequirementsModel.get(i).toString()).equals(requirements.get(j).toString())){
-								System.out.println(requirements.get(j).toString());
-								savedRequirements.add(requirements.get(j));
-								
-							}
-						}
+					
+					for(int i =0; i < listOfRequirementsToAdd.size(); i++){
+						savedRequirements.add(listOfRequirementsToAdd.getElementAt(i));
+						System.out.println("Requirement Name: " + savedRequirements.get(i));
 					}
+
+					
 					System.out.println(savedRequirements.size());
-					
-					
 
 					Calendar currentDate = Calendar.getInstance();
 					
@@ -707,12 +704,14 @@ public class NewGameTab extends JPanel {
 		    	
 		    	if(allRequirements.getSelectedIndex() >=0){
 
-		    		gameRequirementsModel.addElement(allRequirements.getSelectedValue());
-			    	selectedRequirements.setModel(gameRequirementsModel);
+		    		System.out.println("Added " + allRequirements.getSelectedValue() + "to selected requirements");
+		    		
+		    		listOfRequirementsToAdd.addElement(allRequirements.getSelectedValue());
+			    	selectedRequirements.setModel(listOfRequirementsToAdd);
 
 
-			    	everyRequirementModel.removeElementAt(allRequirements.getSelectedIndex());
-			    	allRequirements.setModel(everyRequirementModel);
+			    	listOfAllRequirements.removeElementAt(allRequirements.getSelectedIndex());
+			    	allRequirements.setModel(listOfAllRequirements);
 
 		    	}
 		    }
@@ -727,11 +726,13 @@ public class NewGameTab extends JPanel {
 		    public void actionPerformed(ActionEvent e) {
 		    	isTabEditedByUser = true;
 		    	if(selectedRequirements.getSelectedIndex() >= 0){
-		    		everyRequirementModel.addElement(selectedRequirements.getSelectedValue());
-			    	allRequirements.setModel(everyRequirementModel);
+		    		
+		    		System.out.println("Removed " + selectedRequirements.getSelectedValue() + "to selected requirements");
+		    		listOfAllRequirements.addElement(selectedRequirements.getSelectedValue());
+			    	allRequirements.setModel(listOfAllRequirements);
 
-			    	gameRequirementsModel.removeElementAt(selectedRequirements.getSelectedIndex());
-			    	selectedRequirements.setModel(gameRequirementsModel);
+			    	listOfRequirementsToAdd.removeElementAt(selectedRequirements.getSelectedIndex());
+			    	selectedRequirements.setModel(listOfRequirementsToAdd);
 		    	}
 
 		    }
