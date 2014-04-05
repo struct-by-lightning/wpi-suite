@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
 /**
+ * The GUI where the user can cast his vote.
  * @author sfmailand
  *
  */

@@ -20,6 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 /**
+ * This contains the list of requirements that are currently
+ * in the specific planning poker session that the user can
+ * select from to then case their vote
  * @author sfmailand
  *
  */

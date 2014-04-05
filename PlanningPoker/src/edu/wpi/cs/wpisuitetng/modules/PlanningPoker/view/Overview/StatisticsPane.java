@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 /**
+ * Holds the results of a planning poker game, including:
+ * Mean, Standard Deviation, Minimum, maximum, median, mode
  * @author sfmailand
  *
  */
