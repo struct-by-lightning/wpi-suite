@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 /**
- * This class provides the closable tab component with the close button to the left of the tab title
+ * This class closes open tabs
  * @author bnurbekov
  */
 @SuppressWarnings("serial")

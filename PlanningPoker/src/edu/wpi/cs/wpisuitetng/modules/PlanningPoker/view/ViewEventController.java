@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import edu.wpi.cs.wpisuitetng.janeway.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
@@ -31,6 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameMode
 /**
  * Provides an interface for interaction with the main GUI elements
  * All actions on GUI elements should be conducted through this controller.
+ * Controls different interactions with the Planning Poker tab.
  * @version $Revision: 1.0 $
  * @author lhnguyenduc (hlong290494)
  */
@@ -64,28 +65,54 @@ public class ViewEventController {
 	 *  Setters
 	 */
 	
+	/**
+	 * 
+	 * @param main The JTabPane that is the core area of the planning poker tab.
+	 */
 	public void setMainView(JTabbedPane main) {
 		this.mainView = main;
 	}
 	
+	/**
+	 * 
+	 * @param overviewPanel The overview panel next to the core area of the planning poker tab.
+	 */
+	
 	public void setOverviewPanel(JPanel overviewPanel) {
 		this.overviewPanel = overviewPanel;
 	}
+	
+	/**
+	 * 
+	 * @param toolbarView The toolbar frame containing buttons controlling the planning poker session.
+	 */
 
 	public void setToolBarView(ToolbarView toolbarView) {
 		this.toolbarView = toolbarView;
 		toolbarView.repaint();
 	}
 	
+	/**
+	 * 
+	 * @param toolbarPanel The area inside the toolbar frame containing buttons controlling the planning poker session.
+	 */
+	
 	public void setToolbarPanel(ToolbarPanel toolbarPanel) {
 		this.toolbarPanel = toolbarPanel;
 	}
+	
+	/**
+	 * 
+	 * @param newGameTab The tab containing a new planning poker session.
+	 */
 
 	public void setNewGameTab(NewGameTab newGameTab) {
 		this.newGameTab = newGameTab;
 	}
 
-	
+	/**
+	 * Opens up a new game tab and adds the game window to it.
+	 */
 	public void createNewGame() {
 		NewGameTab newGameWindow = new NewGameTab();
 		mainView.addTab("New Game", newGameWindow);
@@ -93,6 +120,9 @@ public class ViewEventController {
 		mainView.setSelectedComponent(newGameWindow);
 	}
 	
+	/**
+	 * Retrieves all planning poker games with an HTTP request and then waits for a second.
+	 */
 	public void modifyGame() {
 		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
 		
@@ -100,13 +130,13 @@ public class ViewEventController {
 			Thread.sleep(1000);
 		} catch (InterruptedException e1) {}
 		
-		System.out.println(PlanningPokerGameModel.getInstance().getSize());
+		//System.out.println(PlanningPokerGameModel.getInstance().getSize());
 		//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
 			//ViewEventController.getInstance().createIteration();
 	}
 	
 	/**
-	 * This function create a new Planning Poker session game and push it into the database
+	 * This function creates a new Planning Poker session game and push it into the database
 	 */
 	public void createGame() {
 			
