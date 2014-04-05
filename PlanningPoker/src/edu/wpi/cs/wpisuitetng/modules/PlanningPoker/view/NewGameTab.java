@@ -93,6 +93,7 @@ public class NewGameTab extends JPanel {
 	 * Error label that will show the reason why a game cannot be created
 	 */
 	JLabel createGameErrorText;
+	
 	//indicates whether the user edited the new game tab
 	/*
 	***THE FOLLOWING CODE NEEDS TO BE ADDED TO EVERY USER ACTION LISTENER:***
@@ -111,14 +112,29 @@ public class NewGameTab extends JPanel {
 	JList<Requirement> selectedRequirements = new JList<Requirement>();
 
 	/**
-	 * A list contains the requirements that are to be estimated in the current planning poker session
+	 * A JList that contains the requirements that are to be estimated in the current planning poker session
 	 */
 	JList<Requirement> allRequirements = new JList<Requirement>();
 
+	/**
+	 * These two lists contain the lists representing what the user has selected
+	 * These lists are then put into the JList swing component, which uses them
+	 * to display what the user will see in the GUI
+	 * 
+	 * listOfRequirementsToAdd --> the list of requirements that the user wants added to the game
+	 * 
+	 * listOfAllRequirements -> the list of all the requirements in the requirement manager
+	 */
 	DefaultListModel<Requirement> listOfRequirementsToAdd= new DefaultListModel<Requirement>();
 	DefaultListModel<Requirement> listOfAllRequirements= new DefaultListModel<Requirement>();
 	
-	List<Requirement> savedRequirements = new ArrayList<Requirement>();
+	
+	/**
+	 * The list of requirements that will actually be saved to the game
+	 * will be the same as 'listOfRequirementsToAdd' once the game is
+	 * in the process of being created
+	 */
+	List<Requirement> gameRequirementsList = new ArrayList<Requirement>();
 
 	JSpinner startTime, endTime;
 	String enteredName = new String();
@@ -660,19 +676,19 @@ public class NewGameTab extends JPanel {
 					
 					
 					for(int i =0; i < listOfRequirementsToAdd.size(); i++){
-						savedRequirements.add(listOfRequirementsToAdd.getElementAt(i));
-						System.out.println("Requirement Name: " + savedRequirements.get(i));
+						gameRequirementsList.add(listOfRequirementsToAdd.getElementAt(i));
+						System.out.println("Requirement Name: " + gameRequirementsList.get(i));
 					}
 
 					
-					System.out.println(savedRequirements.size());
+					System.out.println(gameRequirementsList.size());
 
 					Calendar currentDate = Calendar.getInstance();
 					
 					if(startCal.before(endCal) && startCal.after(currentDate)){
 
 						PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
-								selectedDeckType, savedRequirements, false, false, startCal, endCal);
+								selectedDeckType, gameRequirementsList, false, false, startCal, endCal);
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
 						btnCreateGame.setEnabled(false);
@@ -694,6 +710,7 @@ public class NewGameTab extends JPanel {
 		    }
 		});
 
+		
 		/**
 		 * Removes selected item from box of all requirements
 		 * and adds it to the box of requirements that will be used in the session
