@@ -75,6 +75,7 @@ import java.util.ListIterator;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
@@ -641,12 +642,13 @@ public class NewGameTab extends JPanel {
 						PlanningPokerGame game;
 						if(startNow.isSelected()) {
 							game = new PlanningPokerGame(enteredName, "Default description",
-									selectedDeckType, gameRequirementsList, false, true, startCal, endCal);
+									selectedDeckType, gameRequirementsList, false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
 						}
 						else {
 							game= new PlanningPokerGame(enteredName, "Default description",
-									selectedDeckType, gameRequirementsList, false, false, startCal, endCal);
+									selectedDeckType, gameRequirementsList, false, false, startCal, endCal, ConfigManager.getConfig().getUserName());
 						}
+						System.out.println("User Moderator: "+ConfigManager.getConfig().getUserName());
 						System.out.println("Planning Poker Live: " + game.isLive());
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
