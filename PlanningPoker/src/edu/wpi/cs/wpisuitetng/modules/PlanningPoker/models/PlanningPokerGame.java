@@ -12,12 +12,19 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
+/**
+ * A model of a particular Planning Poker Session
+ *
+ */
 
+public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
+		
         private String gameName, description, deckType;
         private List<Requirement> requirements;
         private boolean isFinished, isLive;
         private GregorianCalendar startDate, endDate;
+        private String moderator; 
+        
         public PlanningPokerGame(String gameName, String description,
         		String deckType, List<Requirement> requirements,
         		boolean isFinished, boolean isLive,
@@ -72,6 +79,10 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
 	public void setID(String toSet) {
 		gameName = toSet;
 	}
+	
+	public String getModerator() {
+		return this.moderator;
+	}
 
 	public String getGameName() {
 		return this.gameName;
@@ -124,6 +135,10 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
 
 	public boolean isLive() {
 		return isLive;
+	}
+	
+	public void setModerator(String moderator) {
+		this.moderator = moderator;
 	}
 
 	public void setLive(boolean isLive) {
