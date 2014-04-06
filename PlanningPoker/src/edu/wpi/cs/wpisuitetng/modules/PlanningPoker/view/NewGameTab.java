@@ -18,50 +18,19 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
  * This creates a tab for New games to be made. 
  */
 
-import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
-
-import javax.swing.border.LineBorder;
-
 import java.awt.Color;
-
-import javax.swing.JLabel;
-
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
-import javax.swing.JTextField;
-
 import java.awt.GridLayout;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.ListModel;
-import javax.swing.SpinnerDateModel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,17 +39,27 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
+import javax.swing.border.LineBorder;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
-
-import java.awt.Insets;
 
 /**
  * Implements the new game tab for planning poker module
