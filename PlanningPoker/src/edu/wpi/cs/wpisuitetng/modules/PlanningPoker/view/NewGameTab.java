@@ -50,6 +50,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JList;
@@ -455,7 +456,8 @@ public class NewGameTab extends JPanel {
 
 		JPanel requirementsSelector = new JPanel();
 		requirementsPanel.add(requirementsSelector, BorderLayout.CENTER);
-		requirementsSelector.setLayout(new GridLayout(1, 3, 3, 10));
+		requirementsSelector.setLayout(new BoxLayout(requirementsSelector, BoxLayout.X_AXIS));
+
 
 		JPanel projectRequirements = new JPanel();
 		projectRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -487,16 +489,22 @@ public class NewGameTab extends JPanel {
 
 		JPanel buttonsPanel = new JPanel();
 		addRemPanel.add(buttonsPanel);
-		buttonsPanel.setLayout(new GridLayout(2, 1, 0, 0));
+		buttonsPanel.setLayout(new GridLayout(4, 1, 4, 4));
+		
+		JPanel topmostButton = new JPanel();
+		buttonsPanel.add(topmostButton);
+		topmostButton.setLayout(new BorderLayout(0, 0));
+		
+		final JButton btn_addAll = new JButton(">>");
+		topmostButton.add(btn_addAll, BorderLayout.CENTER);
 
 		JPanel topButton = new JPanel();
 		buttonsPanel.add(topButton);
 		topButton.setLayout(new BorderLayout(0, 0));
 
-		btn_addToGame = new JButton("Add to game -->");
+		final JButton btn_addToGame = new JButton(">");
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				isTabEditedByUser = true;
 			}
 		});
 		topButton.add(btn_addToGame, BorderLayout.CENTER);
@@ -505,9 +513,15 @@ public class NewGameTab extends JPanel {
 		buttonsPanel.add(bottomButton);
 		bottomButton.setLayout(new BorderLayout(0, 0));
 
-		btn_removeFromGame = new JButton("<-- Remove from game");
-		btn_removeFromGame.setEnabled(false);
+		final JButton btn_removeFromGame = new JButton("<");
 		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
+		
+		JPanel bottommostButton = new JPanel();
+		buttonsPanel.add(bottommostButton);
+		bottommostButton.setLayout(new BorderLayout(0, 0));
+		
+		final JButton btn_removeAll = new JButton("<<");
+		bottommostButton.add(btn_removeAll);
 
 		JPanel bottomSpacer = new JPanel();
 		addRemPanel.add(bottomSpacer);
@@ -669,7 +683,30 @@ public class NewGameTab extends JPanel {
 		    }
 		});
 
-		
+		/**
+		 * Removes all items from box of all requirements
+		 * and adds them to the box of requirements that will be used in the session
+		 */
+		btn_addAll.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	isTabEditedByUser = true;
+		    	
+		    	while(listOfAllRequirements.getSize() > 0){
+		    		System.out.println(listOfAllRequirements.elementAt(0));
+		    		listOfRequirementsToAdd.addElement(listOfAllRequirements.remove(0));
+		    	}
+		    	
+		    	selectedRequirements.setModel(listOfRequirementsToAdd);
+		    	allRequirements.setModel(listOfAllRequirements);
+		    	
+		    	btn_removeFromGame.setEnabled(true);	
+	    		btn_removeAll.setEnabled(true);
+		    	
+		    	btn_addToGame.setEnabled(false);
+		    	btn_addAll.setEnabled(false);
+		    }
+		});
+
 		/**
 		 * Removes selected item from box of all requirements
 		 * and adds it to the box of requirements that will be used in the session
@@ -682,18 +719,17 @@ public class NewGameTab extends JPanel {
 
 		    		System.out.println("Added " + allRequirements.getSelectedValue() + "to selected requirements");
 		    		
-		    		listOfRequirementsToAdd.addElement(allRequirements.getSelectedValue());
+		    		listOfRequirementsToAdd.addElement(listOfAllRequirements.remove(allRequirements.getSelectedIndex()));
 			    	selectedRequirements.setModel(listOfRequirementsToAdd);
-
-
-			    	listOfAllRequirements.removeElementAt(allRequirements.getSelectedIndex());
 			    	allRequirements.setModel(listOfAllRequirements);
 			    	
-			    	
 			    	btn_removeFromGame.setEnabled(true);
+			    	btn_removeAll.setEnabled(true);
 			    	
-			    	if(listOfAllRequirements.size() == 0)
+			    	if(listOfAllRequirements.size() == 0){
 			    		btn_addToGame.setEnabled(false);
+			    		btn_addAll.setEnabled(false);
+			    	}
 
 		    	}
 		    }
@@ -710,19 +746,47 @@ public class NewGameTab extends JPanel {
 		    	if(selectedRequirements.getSelectedIndex() >= 0){
 		    		
 		    		System.out.println("Removed " + selectedRequirements.getSelectedValue() + "to selected requirements");
-		    		listOfAllRequirements.addElement(selectedRequirements.getSelectedValue());
+		    		
+		    		listOfAllRequirements.addElement(listOfRequirementsToAdd.remove(selectedRequirements.getSelectedIndex()));
+		    		
 			    	allRequirements.setModel(listOfAllRequirements);
-
-			    	listOfRequirementsToAdd.removeElementAt(selectedRequirements.getSelectedIndex());
 			    	selectedRequirements.setModel(listOfRequirementsToAdd);
 			    	
 			    	
 			    	btn_addToGame.setEnabled(true);
+			    	btn_addAll.setEnabled(true);
 			    	
-			    	if(listOfRequirementsToAdd.size() == 0)
-			    		btn_removeFromGame.setEnabled(false);		
+			    	if(listOfRequirementsToAdd.size() == 0){
+			    		btn_removeFromGame.setEnabled(false);	
+			    		btn_removeAll.setEnabled(false);
+			    	}
 		    	}
 
+		    }
+		});
+
+		
+		/**
+		 * Removes selected item from box of selected requirements for session
+		 * and adds it back to the total list of requirements
+		 */
+		btn_removeAll.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	isTabEditedByUser = true;
+		    	
+		    	while(listOfRequirementsToAdd.getSize() > 0){
+		    		System.out.println(listOfRequirementsToAdd.elementAt(0));
+		    		listOfAllRequirements.addElement(listOfRequirementsToAdd.remove(0));
+		    	}
+		    	
+		    	selectedRequirements.setModel(listOfRequirementsToAdd);
+		    	allRequirements.setModel(listOfAllRequirements);
+		    	
+		    	btn_addToGame.setEnabled(true);
+		    	btn_addAll.setEnabled(true);
+		    	
+		    	btn_removeFromGame.setEnabled(false);	
+	    		btn_removeAll.setEnabled(false);
 		    }
 		});
 		
