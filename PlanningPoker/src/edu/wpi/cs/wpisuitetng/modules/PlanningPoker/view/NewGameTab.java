@@ -28,6 +28,7 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Dimension;
@@ -57,6 +58,8 @@ import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextPane;
+import javax.swing.JToolBar;
 import javax.swing.ListModel;
 import javax.swing.SpinnerDateModel;
 
@@ -530,6 +533,13 @@ public class NewGameTab extends JPanel {
 		gameRequirements.add(gameList, BorderLayout.CENTER);
 		gameList.setLayout(new BorderLayout(0, 0));
 
+		JToolBar toolBar = new JToolBar();
+		toolBar.setAlignmentY(Component.CENTER_ALIGNMENT);
+		settingsPanel.add(toolBar, BorderLayout.SOUTH);
+		
+		JTextPane txtpnLoggedInAs = new JTextPane();
+		txtpnLoggedInAs.setText("Logged in as: "+ConfigManager.getConfig().getUserName());
+		toolBar.add(txtpnLoggedInAs);
 		
 		/**
 		 * Listens to the session name field and
