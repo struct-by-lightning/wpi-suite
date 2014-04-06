@@ -25,8 +25,8 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	/** Selected deck */
 	private String deckType;
 
-	/** Requirements associated with this game */
-	private List<Requirement> requirements;
+	/** Requirement IDs associated with this game */
+	private List<Integer> requirements;
 
 	/** Whether the game is finished */
 	private boolean isFinished;
@@ -50,7 +50,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * @param deckType
 	 *            Selected deck
 	 * @param requirements
-	 *            Requirements associated with this game
+	 *            Requirement IDs associated with this game
 	 * @param isFinished
 	 *            Whether the game is finished
 	 * @param isLive
@@ -61,18 +61,18 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 *            The date the game was started
 	 */
 	public PlanningPokerGame(String gameName, String description,
-			String deckType, List<Requirement> requirements,
+			String deckType, List<Integer> requirements,
 			boolean isFinished, boolean isLive, GregorianCalendar startDate,
 			GregorianCalendar endDate) {
 		super();
 
-		this.requirements = new ArrayList<Requirement>();
+		this.requirements = new ArrayList<Integer>();
 
 		this.gameName = gameName;
 		this.setDescription(description);
 		this.setDeckType(deckType);
 		if (requirements != null) {
-			for (Requirement r : requirements) {
+			for (Integer r : requirements) {
 				this.addRequirement(r);
 			}
 		}
@@ -204,33 +204,33 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	}
 
 	/**
-	 * Get the game's associated requirements
+	 * Get the game's associated requirement IDs
 	 * 
-	 * @return A list of the game's requirements
+	 * @return A list of the game's requirement IDs
 	 */
-	public List<Requirement> getRequirements() {
+	public List<Integer> getRequirements() {
 		return this.requirements;
 	}
 
 	/**
 	 * Add a requirement to the game
 	 * 
-	 * @param requirement
+	 * @param requirementID
 	 *            The requirement to add
 	 */
-	public void addRequirement(Requirement requirement) {
-		this.requirements.add(requirement);
+	public void addRequirement(Integer requirementID) {
+		this.requirements.add(requirementID);
 	}
 
 	/**
 	 * Remove a requirement from the game
 	 * 
-	 * @param requirement
+	 * @param requirementID
 	 *            The requirement to remove
 	 * @return {@code true} if the game had the specified requirement
 	 */
-	public boolean removeRequirement(Requirement requirement) {
-		return this.requirements.remove(requirement);
+	public boolean removeRequirement(Integer requirementID) {
+		return this.requirements.remove(requirementID);
 	}
 
 	/**
