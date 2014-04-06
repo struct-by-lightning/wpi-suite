@@ -136,11 +136,11 @@ public class NewGameTab extends JPanel {
 	
 	
 	/**
-	 * The list of requirements that will actually be saved to the game
+	 * The list of requirement IDs that will actually be saved to the game
 	 * will be the same as 'listOfRequirementsToAdd' once the game is
 	 * in the process of being created
 	 */
-	List<Requirement> gameRequirementsList = new ArrayList<Requirement>();
+	List<Integer> gameRequirementIDsList = new ArrayList<Integer>();
 
 	final JSpinner endTime;
 	String enteredName = new String();
@@ -628,12 +628,12 @@ public class NewGameTab extends JPanel {
 					
 					
 					for(int i =0; i < listOfRequirementsToAdd.size(); i++){
-						gameRequirementsList.add(listOfRequirementsToAdd.getElementAt(i));
-						System.out.println("Requirement Name: " + gameRequirementsList.get(i));
+						gameRequirementIDsList.add(listOfRequirementsToAdd.getElementAt(i).getId());
+						System.out.println("Requirement Name: " + listOfRequirementsToAdd.get(i));
 					}
 
 					
-					System.out.println(gameRequirementsList.size());
+					System.out.println(gameRequirementIDsList.size());
 					
 					
 					if(startCal.before(endCal)){
@@ -641,11 +641,11 @@ public class NewGameTab extends JPanel {
 						PlanningPokerGame game;
 						if(startNow.isSelected()) {
 							game = new PlanningPokerGame(enteredName, "Default description",
-									selectedDeckType, gameRequirementsList, false, true, startCal, endCal);
+									selectedDeckType, gameRequirementIDsList, false, true, startCal, endCal);
 						}
 						else {
 							game= new PlanningPokerGame(enteredName, "Default description",
-									selectedDeckType, gameRequirementsList, false, false, startCal, endCal);
+									selectedDeckType, gameRequirementIDsList, false, false, startCal, endCal);
 						}
 						System.out.println("Planning Poker Live: " + game.isLive());
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);

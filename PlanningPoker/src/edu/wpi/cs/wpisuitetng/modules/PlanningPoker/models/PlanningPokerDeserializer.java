@@ -76,7 +76,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 		String gameName = deflated.get("gameName").getAsString();
 		String description = null;
 		String deckType = null;
-		List<Requirement> requirements = new ArrayList<Requirement>();
+		List<Integer> requirements = new ArrayList<Integer>();
 		boolean isFinished = false;
 		boolean isLive = false;
 		GregorianCalendar startDate = null;
@@ -103,10 +103,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 		} catch (InterruptedException e1) {}
 
 		for(JsonElement jsonRequirement : jsonRequirements) {
-			Requirement r = RequirementModel.getInstance().getRequirement(jsonRequirement.getAsInt());
-			if(r != null) {
-				requirements.add(r);
-			}
+			requirements.add(jsonRequirement.getAsInt());
 		}
 		
 		try {
