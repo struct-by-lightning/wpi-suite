@@ -70,6 +70,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
+
+import java.util.LinkedList;
 import java.util.ListIterator;
 
 import javax.swing.JComboBox;
@@ -190,16 +192,17 @@ public class NewGameTab extends JPanel {
 		titlePanel.add(createGamePane);
 		createGamePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
-		btnCreateGame = new JButton("CREATE GAME");
+		btnCreateGame = new JButton("Create");
 		createGamePane.add(btnCreateGame);
 
-		JButton btnResetGame = new JButton("RESET GAME");
+		JButton btnResetGame = new JButton("Reset");
 		createGamePane.add(btnResetGame);
+		
+		JButton btnExport = new JButton("Export requirements");
+		createGamePane.add(btnExport);
+
 		final JCheckBox startNow = new JCheckBox("Start Game Now?");
 		createGamePane.add(startNow);
-		
-		JButton btnExport = new JButton("EXPORT REQUIREMENTS");
-		createGamePane.add(btnExport);
 		
 		createGameErrorText = new JLabel("");
 		titlePanel.add(createGameErrorText);
@@ -726,6 +729,9 @@ public class NewGameTab extends JPanel {
 		    }
 		});
 		
+		/**
+		 * Reset the input field after the user changed the data.
+		 */
 		btnResetGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	// Reset game name
@@ -740,7 +746,6 @@ public class NewGameTab extends JPanel {
 		    	endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		    	// Reset the requirements boxes
 		    }
-<<<<<<< HEAD
 		});		
 		
 		/**
@@ -754,14 +759,23 @@ public class NewGameTab extends JPanel {
 		    	ex.export(listOfRequirementsToAdd);
 		    	System.out.println("Exported all selected requirements\n");
 		    }
-		});	
+		});
 		
-=======
+		/**
+		 * Exports the list of selected requirements to a file when btnExport is pressed
+		 */
+		btnExport.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	// Create exporter
+		    	Exporter ex = new Exporter();
+		    	// Export requirements
+		    	ex.export(listOfRequirementsToAdd);
+		    	System.out.println("Exported all selected requirements\n");
+		    }
 		});
 	}		
 	
 	public void calendarSetOpen(boolean open) {
 		calendarOpen = open;
->>>>>>> upstream/sbl-dev
 	}
 }
