@@ -1,3 +1,12 @@
+/*******************************************************************************
+* Copyright (c) 2012-2014 -- WPI Suite
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+* Contributor: team struct-by-lightning
+*******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.util.ArrayList;
@@ -12,16 +21,23 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
+/**
+ * A model of a particular Planning Poker Session
+ *
+ */
 
+public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
+		
         private String gameName, description, deckType;
         private List<Requirement> requirements;
         private boolean isFinished, isLive;
         private GregorianCalendar startDate, endDate;
+        private String moderator; 
+        
         public PlanningPokerGame(String gameName, String description,
         		String deckType, List<Requirement> requirements,
         		boolean isFinished, boolean isLive,
-        		GregorianCalendar startDate, GregorianCalendar endDate) {
+        		GregorianCalendar startDate, GregorianCalendar endDate, String moderator) {
                 super();
                 
                 this.requirements = new ArrayList<Requirement>();
@@ -38,6 +54,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
                 this.setLive(isLive);
                 this.setStartDate(startDate);
                 this.setEndDate(endDate);
+                this.moderator = moderator;
         }
 
 	@Override
@@ -71,6 +88,10 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
 	@Override
 	public void setID(String toSet) {
 		gameName = toSet;
+	}
+	
+	public String getModerator() {
+		return this.moderator;
 	}
 
 	public String getGameName() {
@@ -124,6 +145,10 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
 
 	public boolean isLive() {
 		return isLive;
+	}
+	
+	public void setModerator(String moderator) {
+		this.moderator = moderator;
 	}
 
 	public void setLive(boolean isLive) {
