@@ -146,9 +146,9 @@ public class OverviewPanel extends JPanel {
 	public void fireRefresh() {
 		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
 		unanswered.removeAllChildren();
-//		for(PlanningPokerGame game : PlanningPokerGameModel.getInstance().getPlanningPokerGames()) {
-//			unanswered.add(new DefaultMutableTreeNode(game.getGameName()));
-//		}
+		for(PlanningPokerGame game : PlanningPokerGameModel.getInstance().getPlanningPokerGames()) {
+			unanswered.add(new DefaultMutableTreeNode(game.getGameName()));
+		}
 	}
 
 }
