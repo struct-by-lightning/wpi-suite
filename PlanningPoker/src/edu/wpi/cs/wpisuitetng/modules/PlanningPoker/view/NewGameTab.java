@@ -66,7 +66,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -77,8 +79,12 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.Note;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.NoteList;
 
 import java.awt.Insets;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 /**
  * Implements the new game tab for planning poker module
@@ -184,6 +190,9 @@ public class NewGameTab extends JPanel {
 
 		JButton btnResetGame = new JButton("RESET GAME");
 		createGamePane.add(btnResetGame);
+		
+		JButton btnExport = new JButton("EXPORT REQUIREMENTS");
+		createGamePane.add(btnExport);
 		
 		createGameErrorText = new JLabel("");
 		titlePanel.add(createGameErrorText);
@@ -770,6 +779,19 @@ public class NewGameTab extends JPanel {
 		    	// Reset the requirements boxes
 		    }
 		});		
+		
+		/**
+		 * Exports the list of selected requirements to a file when btnExport is pressed
+		 */
+		btnExport.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	// Create exporter
+		    	Exporter ex = new Exporter();
+		    	// Export requirements
+		    	ex.export(listOfRequirementsToAdd);
+		    	System.out.println("Exported all selected requirements\n");
+		    }
+		});	
 		
 	}
 }
