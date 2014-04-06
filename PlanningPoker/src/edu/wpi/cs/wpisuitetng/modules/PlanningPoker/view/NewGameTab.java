@@ -55,6 +55,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.ListModel;
 import javax.swing.SpinnerDateModel;
 
 import java.awt.event.ActionListener;
@@ -92,6 +93,7 @@ public class NewGameTab extends JPanel {
 	 * Error label that will show the reason why a game cannot be created
 	 */
 	JLabel createGameErrorText;
+	
 	//indicates whether the user edited the new game tab
 	/*
 	***THE FOLLOWING CODE NEEDS TO BE ADDED TO EVERY USER ACTION LISTENER:***
@@ -107,17 +109,32 @@ public class NewGameTab extends JPanel {
 	/**
 	 * A list contains of available requirements to add to the session
 	 */
-	JList<String> selectedRequirements = new JList<String>();
+	JList<Requirement> selectedRequirements = new JList<Requirement>();
 
 	/**
-	 * A list contains the requirements that are to be estimated in the current planning poker session
+	 * A JList that contains the requirements that are to be estimated in the current planning poker session
 	 */
-	JList<String> allRequirements = new JList<String>();
+	JList<Requirement> allRequirements = new JList<Requirement>();
 
-	DefaultListModel<String> gameRequirementsModel = new DefaultListModel<String>();
-	DefaultListModel<String> everyRequirementModel = new DefaultListModel<String>();
+	/**
+	 * These two lists contain the lists representing what the user has selected
+	 * These lists are then put into the JList swing component, which uses them
+	 * to display what the user will see in the GUI
+	 * 
+	 * listOfRequirementsToAdd --> the list of requirements that the user wants added to the game
+	 * 
+	 * listOfAllRequirements -> the list of all the requirements in the requirement manager
+	 */
+	DefaultListModel<Requirement> listOfRequirementsToAdd= new DefaultListModel<Requirement>();
+	DefaultListModel<Requirement> listOfAllRequirements= new DefaultListModel<Requirement>();
 	
-	List<Requirement> savedRequirements = new ArrayList<Requirement>();
+	
+	/**
+	 * The list of requirements that will actually be saved to the game
+	 * will be the same as 'listOfRequirementsToAdd' once the game is
+	 * in the process of being created
+	 */
+	List<Requirement> gameRequirementsList = new ArrayList<Requirement>();
 
 	JSpinner startTime, endTime;
 	String enteredName = new String();
@@ -410,7 +427,7 @@ public class NewGameTab extends JPanel {
 		//calendarOverview.add(deckDisplayPane);
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Fibonacci", "Other"}));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Fibonacci", "Other", "No Deck"}));
 		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
 		
 		cardDeckPane.add(deckType);
@@ -447,14 +464,18 @@ public class NewGameTab extends JPanel {
 			isTabEditedByUser = true;   
 		    JComboBox combo = (JComboBox)e.getSource();
 		                String selection = (String)combo.getSelectedItem();
-		                if(selection.contentEquals("Other")) {
+		                if(selection.contentEquals("Other")) 
+		                {
 		                // Replace this with button contents
 		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100, ??");
-		                System.out.print("default\n");
-		                } else if(selection.contentEquals("Fibonacci")) {
+		                } 
+		                
+		                else if(selection.contentEquals("Fibonacci")) {
 		                // Replace this with button contents
 		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 21");
-		                System.out.print("Fibonacci\n");
+		                }
+		                else if(selection.contentEquals("No Deck")){
+		                	deckOverview.setText("User will be able to enter their own estimation");
 		                }
 		   }
 		});
@@ -595,7 +616,7 @@ public class NewGameTab extends JPanel {
 		    }
 		});
 		
-		selectedRequirements.setModel(gameRequirementsModel);
+		selectedRequirements.setModel(listOfRequirementsToAdd);
 
 		GetRequirementsController.getInstance().retrieveRequirements();
 
@@ -613,10 +634,10 @@ public class NewGameTab extends JPanel {
 		// We iterate through the requirements list and add to that JList.
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);
-			everyRequirementModel.addElement(req.getName());
+			listOfAllRequirements.addElement(req);
 		}
 
-		allRequirements.setModel(everyRequirementModel);
+		allRequirements.setModel(listOfAllRequirements);
 
 		gameList.add(selectedRequirements);
 
@@ -655,25 +676,21 @@ public class NewGameTab extends JPanel {
 					System.out.println(enteredName);
 					System.out.println(selectedDeckType);
 					
-					for(int i =0; i < gameRequirementsModel.getSize(); i++){
-						for(int j = 0; j < requirements.size(); j++){
-							if((gameRequirementsModel.get(i).toString()).equals(requirements.get(j).toString())){
-								System.out.println(requirements.get(j).toString());
-								savedRequirements.add(requirements.get(j));
-								
-							}
-						}
+					
+					for(int i =0; i < listOfRequirementsToAdd.size(); i++){
+						gameRequirementsList.add(listOfRequirementsToAdd.getElementAt(i));
+						System.out.println("Requirement Name: " + gameRequirementsList.get(i));
 					}
-					System.out.println(savedRequirements.size());
+
 					
-					
+					System.out.println(gameRequirementsList.size());
 
 					Calendar currentDate = Calendar.getInstance();
 					
 					if(startCal.before(endCal) && startCal.after(currentDate)){
 
 						PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
-								selectedDeckType, savedRequirements, false, false, startCal, endCal);
+								selectedDeckType, gameRequirementsList, false, false, startCal, endCal);
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
 						btnCreateGame.setEnabled(false);
@@ -695,6 +712,7 @@ public class NewGameTab extends JPanel {
 		    }
 		});
 
+		
 		/**
 		 * Removes selected item from box of all requirements
 		 * and adds it to the box of requirements that will be used in the session
@@ -705,12 +723,14 @@ public class NewGameTab extends JPanel {
 		    	
 		    	if(allRequirements.getSelectedIndex() >=0){
 
-		    		gameRequirementsModel.addElement(allRequirements.getSelectedValue());
-			    	selectedRequirements.setModel(gameRequirementsModel);
+		    		System.out.println("Added " + allRequirements.getSelectedValue() + "to selected requirements");
+		    		
+		    		listOfRequirementsToAdd.addElement(allRequirements.getSelectedValue());
+			    	selectedRequirements.setModel(listOfRequirementsToAdd);
 
 
-			    	everyRequirementModel.removeElementAt(allRequirements.getSelectedIndex());
-			    	allRequirements.setModel(everyRequirementModel);
+			    	listOfAllRequirements.removeElementAt(allRequirements.getSelectedIndex());
+			    	allRequirements.setModel(listOfAllRequirements);
 
 		    	}
 		    }
@@ -725,11 +745,13 @@ public class NewGameTab extends JPanel {
 		    public void actionPerformed(ActionEvent e) {
 		    	isTabEditedByUser = true;
 		    	if(selectedRequirements.getSelectedIndex() >= 0){
-		    		everyRequirementModel.addElement(selectedRequirements.getSelectedValue());
-			    	allRequirements.setModel(everyRequirementModel);
+		    		
+		    		System.out.println("Removed " + selectedRequirements.getSelectedValue() + "to selected requirements");
+		    		listOfAllRequirements.addElement(selectedRequirements.getSelectedValue());
+			    	allRequirements.setModel(listOfAllRequirements);
 
-			    	gameRequirementsModel.removeElementAt(selectedRequirements.getSelectedIndex());
-			    	selectedRequirements.setModel(gameRequirementsModel);
+			    	listOfRequirementsToAdd.removeElementAt(selectedRequirements.getSelectedIndex());
+			    	selectedRequirements.setModel(listOfRequirementsToAdd);
 		    	}
 
 		    }
