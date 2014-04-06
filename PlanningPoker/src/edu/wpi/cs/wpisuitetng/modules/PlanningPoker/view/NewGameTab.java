@@ -145,6 +145,8 @@ public class NewGameTab extends JPanel {
 	
 	JButton btnCreateGame;
 	JLabel lblGameCreated;
+	JButton btn_removeFromGame;
+	JButton btn_addToGame;
 	boolean calendarOpen = false;
 
 	/**
@@ -482,7 +484,7 @@ public class NewGameTab extends JPanel {
 		buttonsPanel.add(topButton);
 		topButton.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_addToGame = new JButton("Add to game -->");
+		btn_addToGame = new JButton("Add to game -->");
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				isTabEditedByUser = true;
@@ -494,7 +496,8 @@ public class NewGameTab extends JPanel {
 		buttonsPanel.add(bottomButton);
 		bottomButton.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_removeFromGame = new JButton("<-- Remove from game");
+		btn_removeFromGame = new JButton("<-- Remove from game");
+		btn_removeFromGame.setEnabled(false);
 		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
 
 		JPanel bottomSpacer = new JPanel();
@@ -676,6 +679,12 @@ public class NewGameTab extends JPanel {
 
 			    	listOfAllRequirements.removeElementAt(allRequirements.getSelectedIndex());
 			    	allRequirements.setModel(listOfAllRequirements);
+			    	
+			    	
+			    	btn_removeFromGame.setEnabled(true);
+			    	
+			    	if(listOfAllRequirements.size() == 0)
+			    		btn_addToGame.setEnabled(false);
 
 		    	}
 		    }
@@ -697,6 +706,12 @@ public class NewGameTab extends JPanel {
 
 			    	listOfRequirementsToAdd.removeElementAt(selectedRequirements.getSelectedIndex());
 			    	selectedRequirements.setModel(listOfRequirementsToAdd);
+			    	
+			    	
+			    	btn_addToGame.setEnabled(true);
+			    	
+			    	if(listOfRequirementsToAdd.size() == 0)
+			    		btn_removeFromGame.setEnabled(false);		
 		    	}
 
 		    }
