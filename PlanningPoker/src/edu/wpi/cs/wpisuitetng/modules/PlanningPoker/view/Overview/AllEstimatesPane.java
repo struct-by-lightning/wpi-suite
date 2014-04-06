@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 
 /**
@@ -56,23 +57,25 @@ public class AllEstimatesPane {
 		JPanel teamResults = new JPanel();
 		teamEstimates.add(teamResults, BorderLayout.CENTER);
 		teamResults.setLayout(new BorderLayout(0, 0));
-
-		JScrollPane teamResultsPane = new JScrollPane();
+		
+		/**
+		 * Table column 
+		 */
+		String[] columnNames = {"Username", "Estimation"};
+		
+		/**
+		 * Table data - contains team estimation
+		 */
+		Object[][] data = {
+				{"Long" , "1"},
+				{"Chris", "2"},
+				{"Ryan", "4"}	
+		};
+		
+		JTable table = new JTable(data, columnNames);
+		JScrollPane teamResultsPane = new JScrollPane(table);
+		table.setFillsViewportHeight(true);
+	
 		teamResults.add(teamResultsPane, BorderLayout.CENTER);
-
-		JPanel panel_17 = new JPanel();
-		teamResultsPane.setViewportView(panel_17);
-
-		JButton btnSomeonesEstimate = new JButton("Someone's estimate");
-		panel_17.add(btnSomeonesEstimate);
-
-		JButton btnSomeonesEstimate_3 = new JButton("Someone's estimate");
-		panel_17.add(btnSomeonesEstimate_3);
-
-		JButton btnSomeonesEstimate_2 = new JButton("Someone's estimate");
-		panel_17.add(btnSomeonesEstimate_2);
-
-		JButton btnSomeonesEstimate_1 = new JButton("Someone's estimate");
-		panel_17.add(btnSomeonesEstimate_1);
 	}
 }
