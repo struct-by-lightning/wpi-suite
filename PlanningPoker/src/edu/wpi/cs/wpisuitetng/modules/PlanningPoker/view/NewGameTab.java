@@ -785,49 +785,12 @@ public class NewGameTab extends JPanel {
 		 */
 		btnExport.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    		
-		    		System.out.println("Exported all selected requirements\n");
-
-		    		// Prepare file for exporting
-	    			PrintWriter out = null;
-					try {
-						// TODO Allow the user to select their file name/directory
-						out = new PrintWriter("requirements.txt");
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						return;
-					}
-					// Iterate over the list of requirements
-		    		for(int i = 0; i < listOfRequirementsToAdd.size(); i++) {
-						// Export the current requirement
-						out.println("Requirement: " + listOfRequirementsToAdd.get(i));
-						out.println("Type: " + listOfRequirementsToAdd.get(i).getType().toString());
-						out.println("Priority: " + listOfRequirementsToAdd.get(i).getPriority().toString());
-						out.println("");
-						out.println("Description:");
-						out.println(listOfRequirementsToAdd.get(i).getDescription());
-						out.println("");
-						out.println("Notes:");
-						// Iterate over notes and print all the notes
-						LinkedList<Note> notes = listOfRequirementsToAdd.get(i).getNotes().getNotes();
-						for(int j = 0; j < notes.size(); j++) {
-							out.println(notes.get(j).getMessage());
-						}
-						// TODO The rest of this stuff
-						out.println("");
-						out.println("Transaction History:");
-						//out.println(listOfRequirementsToAdd.get(i).get???;
-						out.println("");
-						out.println("Acceptance Tests:");
-						//out.println(listOfRequirementsToAdd.get(i).get???;
-						out.println("");
-						out.println("");
-		    		}
-		    		
-		    		// Close the file
-		    		out.close();
-		    	}
+		    	// Create exporter
+		    	Exporter ex = new Exporter();
+		    	// Export requirements
+		    	ex.export(listOfRequirementsToAdd);
+		    	System.out.println("Exported all selected requirements\n");
+		    }
 		});	
 		
 	}
