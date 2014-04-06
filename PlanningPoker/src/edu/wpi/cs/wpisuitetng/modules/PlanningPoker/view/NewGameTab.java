@@ -13,6 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 /**
  * @author sfmailand
  * @author hlong290494
+ * @author friscis
  * 
  * This creates a tab for New games to be made. 
  */
@@ -49,6 +50,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
@@ -142,13 +144,16 @@ public class NewGameTab extends JPanel {
 	 */
 	List<Requirement> gameRequirementsList = new ArrayList<Requirement>();
 
-	JSpinner startTime, endTime;
+	final JSpinner endTime;
 	String enteredName = new String();
 	GregorianCalendar startCalendar;
 	GregorianCalendar endCalendar;
 	
 	JButton btnCreateGame;
 	JLabel lblGameCreated;
+	JButton btn_removeFromGame;
+	JButton btn_addToGame;
+	boolean calendarOpen = false;
 
 	/**
 	 * Create the new game panel.
@@ -190,6 +195,8 @@ public class NewGameTab extends JPanel {
 
 		JButton btnResetGame = new JButton("RESET GAME");
 		createGamePane.add(btnResetGame);
+		final JCheckBox startNow = new JCheckBox("Start Game Now?");
+		createGamePane.add(startNow);
 		
 		JButton btnExport = new JButton("EXPORT REQUIREMENTS");
 		createGamePane.add(btnExport);
@@ -219,117 +226,14 @@ public class NewGameTab extends JPanel {
 		JPanel calendarOverview = new JPanel();
 		calendarOverview.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		settingsPanel.add(calendarOverview, BorderLayout.CENTER);
-		calendarOverview.setLayout(new GridLayout(1, 3, 0, 0));
-
-		JPanel calendarOne = new JPanel();
-		calendarOverview.add(calendarOne);
-
-		SpinnerDateModel model = new SpinnerDateModel();
-		model.setCalendarField(Calendar.MINUTE);
+		calendarOverview.setLayout(new GridLayout(1, 2, 0, 0));
+		
 		SpinnerDateModel model_2 = new SpinnerDateModel();
 		model_2.setCalendarField(Calendar.MINUTE);
 
-		JLabel lblStart = new JLabel("Start Date:");
 
-		final JTextField startDateText = new JTextField(13);
-		startDateText.setText(defaultCalendarText);
-		startDateText.setEditable(false);
-		startDateText.setMinimumSize(new Dimension (startDateText.getPreferredSize().width, startDateText.getPreferredSize().height));
-		JButton calendarButton = new JButton("Calendar");
-		final JPanel startPanel = new JPanel(new GridBagLayout());
-		startPanel.setPreferredSize(new Dimension(350, 220));
-		final GridBagConstraints constraints = new GridBagConstraints();
-		constraints.insets = new Insets(0, 0, 5, 5);
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		constraints.anchor = GridBagConstraints.LINE_START;
-		startPanel.add(new JLabel("Start Time:"), constraints);
-		final GridBagConstraints constraints2 = new GridBagConstraints();
-		constraints2.insets = new Insets(0, 0, 5, 5);
-		constraints2.fill = GridBagConstraints.HORIZONTAL;
-		constraints2.gridx = 1;
-		constraints2.gridy = 0;
-		startTime= new JSpinner();
-		startTime.setModel(model);
-		startTime.setEditor(new JSpinner.DateEditor(startTime, "h:mm a"));
-		startPanel.add(startTime, constraints2);
-		
-		JLabel lblrequired = new JLabel("*");
-		lblrequired.setForeground(Color.RED);
-		GridBagConstraints gbc_lblrequired = new GridBagConstraints();
-		gbc_lblrequired.insets = new Insets(0, 0, 5, 0);
-		gbc_lblrequired.gridx = 2;
-		gbc_lblrequired.gridy = 0;
-		startPanel.add(lblrequired, gbc_lblrequired);
-		final GridBagConstraints constraints3 = new GridBagConstraints();
-		constraints3.insets = new Insets(0, 0, 5, 5);
-		constraints3.fill = GridBagConstraints.HORIZONTAL;
-		constraints3.gridx = 0;
-		constraints3.gridy = 1;
-		constraints3.weightx = 0;
-		constraints3.anchor = GridBagConstraints.LINE_START;
-		startPanel.add(lblStart, constraints3);
-		final GridBagConstraints constraints4 = new GridBagConstraints();
-		constraints4.insets = new Insets(0, 0, 5, 5);
-		constraints4.fill = GridBagConstraints.HORIZONTAL;
-		constraints4.weightx = 1;
-		constraints4.gridx = 1;
-		constraints4.gridy = 1;
-		startPanel.add(startDateText, constraints4);
-		final GridBagConstraints constraints5 = new GridBagConstraints();
-		constraints5.insets = new Insets(0, 0, 5, 0);
-		constraints5.fill = GridBagConstraints.HORIZONTAL;
-		constraints5.weightx = 0;
-		constraints5.gridx = 2;
-		constraints5.gridy = 1;
-		startPanel.add(calendarButton, constraints5);
-		final GridBagConstraints constraints6 = new GridBagConstraints();
-		constraints6.insets = new Insets(0, 0, 5, 5);
-		constraints6.gridx = 0;
-		constraints6.gridy = 2;
-		constraints6.weightx = 1;
-		constraints6.weighty = 1;
-		startPanel.add(new JLabel(), constraints6);
-		final GridBagConstraints constraints7 = new GridBagConstraints();
-		constraints7.insets = new Insets(0, 0, 0, 5);
-		constraints7.gridx = 0;
-		constraints7.gridy = 3;
-		constraints7.weightx = 1;
-		constraints7.weighty = 1;
-		startPanel.add(new JLabel(), constraints7);
-		constraints.weightx = 0;
-		constraints.weighty = 0;
-//		final JFrame f = new JFrame();
-//		f.getContentPane().add(p);
-//		f.pack();
-//		f.setVisible(true);
-		calendarButton.addActionListener(new ActionListener() {
-			
-			boolean open = false;
-			DatePicker dp;
-			public void actionPerformed(ActionEvent ae) {
-				isTabEditedByUser = true;
-				
-				if(!open) {
-					dp = new DatePicker(startPanel, constraints7, startDateText);
-					open = true;
-				}
-				else {
-					dp.close();
-					open = false;
-				}
-			}
-		});
-
-		calendarOne.add(startPanel);
-
-//		textField = new JTextField();
-//		panel_18.add(textField);
-//		textField.setColumns(10);
-
-		JPanel calendarTwo = new JPanel();
-		calendarOverview.add(calendarTwo);
+		JPanel calendar = new JPanel();
+		calendarOverview.add(calendar);
 
 		JLabel lblEndDate = new JLabel("End Date:");
 
@@ -337,39 +241,69 @@ public class NewGameTab extends JPanel {
 		endDateText.setText(defaultCalendarText);
 		endDateText.setEditable(false);
 		endDateText.setMinimumSize(new Dimension (endDateText.getPreferredSize().width, endDateText.getPreferredSize().height));
-		JButton calendarButton_2 = new JButton("Calendar");
+		final JButton calendarButton_2 = new JButton("Calendar");
 		final JPanel endPanel = new JPanel(new GridBagLayout());
 		endPanel.setPreferredSize(new Dimension(350, 220));
+		
+		final GridBagConstraints constraints1 = new GridBagConstraints();
+		constraints1.insets = new Insets(0, 0, 5, 5);
+		constraints1.fill = GridBagConstraints.HORIZONTAL;
+		constraints1.gridx = 1;
+		constraints1.gridy = 0;
+		constraints1.gridwidth = 3;
+		constraints1.anchor = GridBagConstraints.LINE_START;
+		final JCheckBox deadline = new JCheckBox("Have a Deadline?");
+		endPanel.add(deadline, constraints1);
+		
+		deadline.addActionListener(new ActionListener() {
+			boolean checked = false;
+			public void actionPerformed(ActionEvent ae) {
+				if(!checked) {
+					calendarButton_2.setEnabled(true);
+					endTime.setEnabled(true);
+					checked = true;
+				}
+				else {
+					if(calendarOpen){
+						calendarButton_2.doClick();
+					}
+					calendarButton_2.setEnabled(false);
+					endTime.setEnabled(false);
+					checked = false;
+				}
+			}
+		});
+		
 		final GridBagConstraints constraints8 = new GridBagConstraints();
 		constraints8.insets = new Insets(0, 0, 5, 5);
 		constraints8.fill = GridBagConstraints.HORIZONTAL;
 		constraints8.gridx = 0;
-		constraints8.gridy = 0;
+		constraints8.gridy = 1;
 		constraints8.anchor = GridBagConstraints.LINE_START;
 		endPanel.add(new JLabel("End Time:"), constraints8);
 		final GridBagConstraints constraints9 = new GridBagConstraints();
 		constraints9.insets = new Insets(0, 0, 5, 5);
 		constraints9.fill = GridBagConstraints.HORIZONTAL;
 		constraints9.gridx = 1;
-		constraints9.gridy = 0;
-		//constraints9.weightx = 1;
+		constraints9.gridy = 1;
 		endTime= new JSpinner();
+		endTime.setEnabled(false);
 		endTime.setModel(model_2);
 		endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		endPanel.add(endTime, constraints9);
 		
-		JLabel lblrequired2 = new JLabel("*Required");
-		lblrequired2.setForeground(Color.RED);
+		JLabel lblrequired2 = new JLabel("*");
 		GridBagConstraints gbc_lblrequired2 = new GridBagConstraints();
 		gbc_lblrequired2.insets = new Insets(0, 0, 5, 0);
+		gbc_lblrequired2.anchor = GridBagConstraints.LINE_START;
 		gbc_lblrequired2.gridx = 2;
-		gbc_lblrequired2.gridy = 0;
+		gbc_lblrequired2.gridy = 1;
 		endPanel.add(lblrequired2, gbc_lblrequired2);
 		final GridBagConstraints constraints10 = new GridBagConstraints();
 		constraints10.insets = new Insets(0, 0, 5, 5);
 		constraints10.fill = GridBagConstraints.HORIZONTAL;
 		constraints10.gridx = 0;
-		constraints10.gridy = 1;
+		constraints10.gridy = 2;
 		constraints10.weightx = 0;
 		constraints10.anchor = GridBagConstraints.LINE_START;
 		endPanel.add(lblEndDate, constraints10);
@@ -378,51 +312,55 @@ public class NewGameTab extends JPanel {
 		constraints11.fill = GridBagConstraints.HORIZONTAL;
 		constraints11.weightx = 1;
 		constraints11.gridx = 1;
-		constraints11.gridy = 1;
+		constraints11.gridy = 2;
 		endPanel.add(endDateText, constraints11);
 		final GridBagConstraints constraints12 = new GridBagConstraints();
 		constraints12.insets = new Insets(0, 0, 5, 0);
 		constraints12.fill = GridBagConstraints.HORIZONTAL;
 		constraints12.weightx = 0;
 		constraints12.gridx = 2;
-		constraints12.gridy = 1;
+		constraints12.gridy = 2;
+		calendarButton_2.setEnabled(false);
 		endPanel.add(calendarButton_2, constraints12);
 		final GridBagConstraints constraints13 = new GridBagConstraints();
 		constraints13.insets = new Insets(0, 0, 5, 5);
 		constraints13.gridx = 0;
-		constraints13.gridy = 2;
+		constraints13.gridy = 3;
 		constraints13.weightx = 1;
 		constraints13.weighty = 1;
 		endPanel.add(new JLabel(), constraints13);
 		final GridBagConstraints constraints14 = new GridBagConstraints();
 		constraints14.insets = new Insets(0, 0, 0, 5);
 		constraints14.gridx = 0;
-		constraints14.gridy = 3;
+		constraints14.gridy = 4;
 		constraints14.weightx = 1;
 		constraints14.weighty = 1;
 		endPanel.add(new JLabel(), constraints14);
 		constraints14.weightx = 0;
 		constraints14.weighty = 0;
-//		final JFrame f = new JFrame();
-//		f.getContentPane().add(p);
-//		f.pack();
-//		f.setVisible(true);
+		
+		JPanel calendarHandler = new JPanel();
+		final JPanel calendarPanel = new JPanel(new GridBagLayout());
+		calendarPanel.setPreferredSize(new Dimension(350, 220));
+		calendarHandler.add(calendarPanel);
+		calendarOverview.add(calendarHandler);
 		calendarButton_2.addActionListener(new ActionListener() {
 			boolean open = false;
 			DatePicker dp;
 			public void actionPerformed(ActionEvent ae) {
 				if(!open) {
-					dp = new DatePicker(endPanel, constraints14, endDateText);
+					dp = new DatePicker(calendarPanel, constraints14, endDateText);
 					open = true;
 				}
 				else {
 					dp.close();
 					open = false;
 				}
+				calendarSetOpen(open);
 			}
 		});
 
-		calendarTwo.add(endPanel);
+		calendar.add(endPanel);
 
 		JPanel cardPanel = new JPanel(new GridBagLayout());
 		JPanel deckPanel = new JPanel();
@@ -555,7 +493,7 @@ public class NewGameTab extends JPanel {
 		buttonsPanel.add(topButton);
 		topButton.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_addToGame = new JButton("Add to game -->");
+		btn_addToGame = new JButton("Add to game -->");
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				isTabEditedByUser = true;
@@ -567,7 +505,8 @@ public class NewGameTab extends JPanel {
 		buttonsPanel.add(bottomButton);
 		bottomButton.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_removeFromGame = new JButton("<-- Remove from game");
+		btn_removeFromGame = new JButton("<-- Remove from game");
+		btn_removeFromGame.setEnabled(false);
 		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
 
 		JPanel bottomSpacer = new JPanel();
@@ -660,14 +599,14 @@ public class NewGameTab extends JPanel {
 				GregorianCalendar startCal, endCal;
 				
 				//Checks to see if the user set the date to something other than default text
-				if(startDateText.getText().equals("Click Calendar to set date") || endDateText.getText().equals("Click Calendar to set date")){
+				if(endDateText.getText().equals("Click Calendar to set date") && deadline.isSelected()){
 					System.out.println("Please enter a valid date");
 				}
 				else{
-					String[] startDate = startDateText.getText().split("-");
+					//String[] startDate = startDateText.getText().split("-");
 					String[] endDate = endDateText.getText().split("-");
 					
-					Date startVal = (Date)startTime.getValue();
+					
 					Date endVal = (Date)endTime.getValue();
 					
 					/**
@@ -676,9 +615,13 @@ public class NewGameTab extends JPanel {
 					 * the values are being pulled from the text field, which does
 					 * not start at zero
 					 */
-					startCal = new GregorianCalendar(Integer.parseInt(startDate[2]), Integer.parseInt(startDate[1]) -1, Integer.parseInt(startDate[0]), startVal.getHours(), startVal.getMinutes());
-					endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]) -1, Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
-					
+					startCal = new GregorianCalendar();
+					if(deadline.isSelected()) {
+						endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]) -1, Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
+					}
+					else {
+						endCal = new GregorianCalendar(9999, 11, 18);
+					}
 					System.out.println(startCal.toString()+"\n"+endCal.toString());
 					System.out.println(enteredName);
 					System.out.println(selectedDeckType);
@@ -691,13 +634,20 @@ public class NewGameTab extends JPanel {
 
 					
 					System.out.println(gameRequirementsList.size());
-
-					Calendar currentDate = Calendar.getInstance();
 					
-					if(startCal.before(endCal) && startCal.after(currentDate)){
+					
+					if(startCal.before(endCal)){
 
-						PlanningPokerGame game = new PlanningPokerGame(enteredName, "Default description",
-								selectedDeckType, gameRequirementsList, false, false, startCal, endCal);
+						PlanningPokerGame game;
+						if(startNow.isSelected()) {
+							game = new PlanningPokerGame(enteredName, "Default description",
+									selectedDeckType, gameRequirementsList, false, true, startCal, endCal);
+						}
+						else {
+							game= new PlanningPokerGame(enteredName, "Default description",
+									selectedDeckType, gameRequirementsList, false, false, startCal, endCal);
+						}
+						System.out.println("Planning Poker Live: " + game.isLive());
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
 						btnCreateGame.setEnabled(false);
@@ -738,6 +688,12 @@ public class NewGameTab extends JPanel {
 
 			    	listOfAllRequirements.removeElementAt(allRequirements.getSelectedIndex());
 			    	allRequirements.setModel(listOfAllRequirements);
+			    	
+			    	
+			    	btn_removeFromGame.setEnabled(true);
+			    	
+			    	if(listOfAllRequirements.size() == 0)
+			    		btn_addToGame.setEnabled(false);
 
 		    	}
 		    }
@@ -759,6 +715,12 @@ public class NewGameTab extends JPanel {
 
 			    	listOfRequirementsToAdd.removeElementAt(selectedRequirements.getSelectedIndex());
 			    	selectedRequirements.setModel(listOfRequirementsToAdd);
+			    	
+			    	
+			    	btn_addToGame.setEnabled(true);
+			    	
+			    	if(listOfRequirementsToAdd.size() == 0)
+			    		btn_removeFromGame.setEnabled(false);		
 		    	}
 
 		    }
@@ -770,14 +732,15 @@ public class NewGameTab extends JPanel {
 		    	sessionName.setText(dateFormat.format(date));
 		    	
 		    	// Reset start and end date
-		    	startDateText.setText(defaultCalendarText);
+		    	//startDateText.setText(defaultCalendarText);
 		    	endDateText.setText(defaultCalendarText);
 		    	btnCreateGame.setEnabled(true);
 	        	createGameErrorText.setText("");
 		    	// Reset start and end time
-		    	startTime.setEditor(new JSpinner.DateEditor(startTime, "h:mm a"));
+		    	endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		    	// Reset the requirements boxes
 		    }
+<<<<<<< HEAD
 		});		
 		
 		/**
@@ -793,5 +756,12 @@ public class NewGameTab extends JPanel {
 		    }
 		});	
 		
+=======
+		});
+	}		
+	
+	public void calendarSetOpen(boolean open) {
+		calendarOpen = open;
+>>>>>>> upstream/sbl-dev
 	}
 }
