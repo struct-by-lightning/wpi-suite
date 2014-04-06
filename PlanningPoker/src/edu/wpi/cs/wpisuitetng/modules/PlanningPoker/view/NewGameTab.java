@@ -756,26 +756,14 @@ public class NewGameTab extends JPanel {
 		    	// Create exporter
 		    	Exporter ex = new Exporter();
 		    	// Export requirements
-		    	ex.export(listOfRequirementsToAdd);
+		    	ex.exportAsJSON(listOfRequirementsToAdd, "filename.txt");
 		    	System.out.println("Exported all selected requirements\n");
 		    }
 		});
+	}
 		
-		/**
-		 * Exports the list of selected requirements to a file when btnExport is pressed
-		 */
-		btnExport.addActionListener(new ActionListener () {
-		    public void actionPerformed(ActionEvent e) {
-		    	// Create exporter
-		    	Exporter ex = new Exporter();
-		    	// Export requirements
-		    	ex.export(listOfRequirementsToAdd);
-		    	System.out.println("Exported all selected requirements\n");
-		    }
-		});
-	}		
-	
 	public void calendarSetOpen(boolean open) {
 		calendarOpen = open;
 	}
+		
 }
