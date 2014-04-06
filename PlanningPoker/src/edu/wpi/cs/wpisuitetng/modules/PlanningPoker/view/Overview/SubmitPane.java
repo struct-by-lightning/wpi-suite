@@ -13,6 +13,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -32,7 +34,7 @@ import javax.swing.border.LineBorder;
  */
 public class SubmitPane extends JPanel{
 
-	
+	static int selectedValue;
 	public SubmitPane(JPanel infoContainer){
 		JPanel submitPane = new JPanel();
 		submitPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -78,13 +80,19 @@ public class SubmitPane extends JPanel{
 		try {
 			Image img = ImageIO.read(getClass().getResource("wpiCardFrontWPI.png"));
 			
-			for (JButton btn : cardBtns) {
+			for (final JButton btn : cardBtns) {
 				btn.setIcon(new ImageIcon(img));
 				btn.setBorder(BorderFactory.createEmptyBorder());
 				btn.setContentAreaFilled(false);
 			    btn.setHorizontalTextPosition(JButton.CENTER);
 			    btn.setVerticalTextPosition(JButton.CENTER);
 			    btn.setFont(new Font("arial",Font.BOLD,23));
+			    btn.addActionListener(new ActionListener() {
+			    	public void actionPerformed(ActionEvent e) {
+			    		selectedValue = Integer.parseInt(btn.getText());
+			    		//System.out.println(selectedValue);
+			    	}
+			    });
 			    estimatePanel.add(btn);
 			}
 		} catch (IOException ex) {
