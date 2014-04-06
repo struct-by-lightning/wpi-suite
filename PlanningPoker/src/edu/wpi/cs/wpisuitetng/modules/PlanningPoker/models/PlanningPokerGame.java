@@ -37,7 +37,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
         public PlanningPokerGame(String gameName, String description,
         		String deckType, List<Requirement> requirements,
         		boolean isFinished, boolean isLive,
-        		GregorianCalendar startDate, GregorianCalendar endDate) {
+        		GregorianCalendar startDate, GregorianCalendar endDate, String moderator) {
                 super();
                 
                 this.requirements = new ArrayList<Requirement>();
@@ -54,6 +54,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame>{
                 this.setLive(isLive);
                 this.setStartDate(startDate);
                 this.setEndDate(endDate);
+                this.moderator = moderator;
         }
 
 	@Override
