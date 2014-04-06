@@ -30,14 +30,13 @@ public class PlanningPokerSerializer implements JsonSerializer<PlanningPokerGame
 		DateFormat df = new SimpleDateFormat("dd MM yyyy");
 		JsonObject deflated = new JsonObject();
 		JsonArray deflatedReqs = new JsonArray();
-		JsonParser jp = new JsonParser();
 		
 		deflated.addProperty("gameName", m.getID());
 		deflated.addProperty("moderator", m.getModerator());
 		deflated.addProperty("description", m.getDescription());
 		deflated.addProperty("deckType", m.getDeckType());
-		for(Requirement r : m.getRequirements()) {
-			deflatedReqs.add(new JsonPrimitive(r.getId()));
+		for(Integer id : m.getRequirements()) {
+			deflatedReqs.add(new JsonPrimitive(id));
 		}
 		deflated.add("requirements", deflatedReqs);
 		deflated.addProperty("isFinished", m.isFinished());
