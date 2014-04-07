@@ -549,15 +549,12 @@ public class NewGameTab extends JPanel {
 		gameList.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		gameRequirements.add(gameList, BorderLayout.CENTER);
 		gameList.setLayout(new BorderLayout(0, 0));
-
-		JToolBar toolBar = new JToolBar();
-		toolBar.setAlignmentY(Component.CENTER_ALIGNMENT);
-		settingsPanel.add(toolBar, BorderLayout.SOUTH);
 		
 		JTextPane txtpnLoggedInAs = new JTextPane();
 		txtpnLoggedInAs.setText("Logged in as: "+ConfigManager.getConfig().getUserName());
-		toolBar.add(txtpnLoggedInAs);
-		
+		txtpnLoggedInAs.setFocusable(false);
+		settingsPanel.add(txtpnLoggedInAs, BorderLayout.SOUTH);
+
 		/**
 		 * Listens to the session name field and
 		 * disables "Create Game" button if the
