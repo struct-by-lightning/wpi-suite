@@ -160,6 +160,7 @@ public class NewGameTab extends JPanel {
 	JLabel lblGameCreated;
 	JButton btn_removeFromGame;
 	JButton btn_addToGame;
+	JButton btn_removeAll;
 	boolean calendarOpen = false;
 
 	/**
@@ -522,13 +523,15 @@ public class NewGameTab extends JPanel {
 
 		final JButton btn_removeFromGame = new JButton("<");
 		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
+		btn_removeFromGame.setEnabled(false);
 		
 		JPanel bottommostButton = new JPanel();
 		buttonsPanel.add(bottommostButton);
 		bottommostButton.setLayout(new BorderLayout(0, 0));
 		
-		final JButton btn_removeAll = new JButton("<<");
+		btn_removeAll = new JButton("<<");
 		bottommostButton.add(btn_removeAll);
+		btn_removeAll.setEnabled(false);
 
 		JPanel bottomSpacer = new JPanel();
 		addRemPanel.add(bottomSpacer);
