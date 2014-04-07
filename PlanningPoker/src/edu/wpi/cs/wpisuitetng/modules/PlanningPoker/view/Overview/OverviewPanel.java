@@ -1,36 +1,29 @@
 /*******************************************************************************
-* Copyright (c) 2012-2014 -- WPI Suite
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-* Contributor: team struct-by-lightning
-*******************************************************************************/
+ * Copyright (c) 2012-2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * Contributor: team struct-by-lightning
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview;
 
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
-import java.awt.Image;
-
-import javax.swing.border.LineBorder;
-
 import java.awt.Color;
-
-import javax.swing.JButton;
-
-import java.awt.FlowLayout;
-
-import javax.swing.JSplitPane;
-import javax.swing.JTree;
-
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+<<<<<<< HEAD
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+import javax.swing.JTree;
+import javax.swing.border.LineBorder;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+=======
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JTextPane;
@@ -50,22 +43,20 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+>>>>>>> upstream/sbl-dev
 
 public class OverviewPanel extends JPanel {
-	private JTextField estimateTextField;
-
-	private DefaultMutableTreeNode unanswered;
 
 	/**
 	 * Create the panel.
 	 */
 	public OverviewPanel() {
-		setMinimumSize(new Dimension(800, 600));
-		setLayout(new BorderLayout(0, 0));
 
-		JSplitPane splitPane = new JSplitPane();
-		add(splitPane, BorderLayout.CENTER);
+		JTree gamesTree = new GameJTree(new DefaultTreeModel(
+				new DefaultMutableTreeNode("All")));
 
+<<<<<<< HEAD
+=======
 		JTextPane txtpnLoggedInAs = new JTextPane();
 		txtpnLoggedInAs.setText("Logged in as: "+ConfigManager.getConfig().getUserName());
 		txtpnLoggedInAs.setFocusable(false);
@@ -74,88 +65,58 @@ public class OverviewPanel extends JPanel {
 		/**
 		 * panel that contains games in a tree structure
 		 */
+>>>>>>> upstream/sbl-dev
 		JPanel yourGames = new JPanel();
 		yourGames.setMinimumSize(new Dimension(150, 10));
 		yourGames.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		splitPane.setLeftComponent(yourGames);
 		yourGames.setLayout(new BorderLayout(0, 0));
-
-		JTree gamesTree = new JTree();
-		gamesTree.setModel(new DefaultTreeModel(
-			new DefaultMutableTreeNode("Your Games") {
-				{
-					DefaultMutableTreeNode node_1;
-					unanswered = new DefaultMutableTreeNode("New");
-					unanswered.add(new DefaultMutableTreeNode("blue"));
-					unanswered.add(new DefaultMutableTreeNode("violet"));
-					unanswered.add(new DefaultMutableTreeNode("red"));
-					unanswered.add(new DefaultMutableTreeNode("yellow"));
-					add(unanswered);
-					node_1 = new DefaultMutableTreeNode("Open");
-						node_1.add(new DefaultMutableTreeNode("basketball"));
-						node_1.add(new DefaultMutableTreeNode("soccer"));
-						node_1.add(new DefaultMutableTreeNode("football"));
-						node_1.add(new DefaultMutableTreeNode("hockey"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Closed");
-						node_1.add(new DefaultMutableTreeNode("hot dogs"));
-						node_1.add(new DefaultMutableTreeNode("pizza"));
-						node_1.add(new DefaultMutableTreeNode("ravioli"));
-						node_1.add(new DefaultMutableTreeNode("bananas"));
-					add(node_1);
-				}
-			}
-		));
 		yourGames.add(gamesTree);
 
-		/**
-		 * panel that contains the information for a particular game
-		 */
-		JPanel gameContainer = new JPanel();
-		splitPane.setRightComponent(gameContainer);
-		gameContainer.setLayout(new BorderLayout(0, 0));
+		JLabel lblSessionNameCreatedBy = new JLabel(
+				"SESSION_NAME created by MODERATOR on DATE_CREATED");
+		lblSessionNameCreatedBy
+				.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 
 		JPanel gameName = new JPanel();
 		gameName.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		gameContainer.add(gameName, BorderLayout.NORTH);
-
-		JLabel lblSessionNameCreatedBy = new JLabel("SESSION_NAME created by MODERATOR on DATE_CREATED");
-		lblSessionNameCreatedBy.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		gameName.add(lblSessionNameCreatedBy);
 
 		JPanel infoContainer = new JPanel();
-		gameContainer.add(infoContainer, BorderLayout.CENTER);
 		infoContainer.setLayout(new GridLayout(2, 2, 5, 5));
 
-		
-		
+		JPanel gameContainer = new JPanel();
+		gameContainer.setLayout(new BorderLayout(0, 0));
+		gameContainer.add(gameName, BorderLayout.NORTH);
+		gameContainer.add(infoContainer, BorderLayout.CENTER);
+
+		JSplitPane splitPane = new JSplitPane();
+		splitPane.setLeftComponent(yourGames);
+		splitPane.setRightComponent(gameContainer);
+
+		this.setMinimumSize(new Dimension(800, 600));
+		this.setLayout(new BorderLayout(0, 0));
+		this.add(splitPane, BorderLayout.CENTER);
+
 		/**
 		 * panel that contains the information for a game's requirements
 		 */
-			RequirementsPane requirementsPane = new RequirementsPane(infoContainer);
+		RequirementsPane requirementsPane = new RequirementsPane(infoContainer);
 
 		/**
 		 * panel that contains information for a user to submit an estimate
 		 */
-			SubmitPane submitPane = new SubmitPane(infoContainer);
+		SubmitPane submitPane = new SubmitPane(infoContainer);
+
 		/**
-		 * panel that contains that statistics of a session (if the session has ended)
+		 * panel that contains that statistics of a session (if the session has
+		 * ended)
 		 */
-			StatisticsPane statisticsPane = new StatisticsPane(infoContainer);
-			
+		StatisticsPane statisticsPane = new StatisticsPane(infoContainer);
+
 		/**
 		 * panel that contains team estimates (if the session has ended)
 		 */
-			AllEstimatesPane allEstimatesPane = new AllEstimatesPane(infoContainer);
-
-	}
-
-	public void fireRefresh() {
-		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
-		unanswered.removeAllChildren();
-//		for(PlanningPokerGame game : PlanningPokerGameModel.getInstance().getPlanningPokerGames()) {
-//			unanswered.add(new DefaultMutableTreeNode(game.getGameName()));
-//		}
+		AllEstimatesPane allEstimatesPane = new AllEstimatesPane(infoContainer);
 	}
 
 }
