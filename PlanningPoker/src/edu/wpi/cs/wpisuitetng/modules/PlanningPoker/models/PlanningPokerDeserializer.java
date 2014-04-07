@@ -100,12 +100,6 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 			logger.log(Level.FINER,
 					"PlanningPokerModel transmitted with non-array in requirements field");
 		}
-		
-		GetRequirementsController.getInstance().retrieveRequirements();
-
-		try {	// We need to sleep for the requirement request to be in
-			Thread.sleep(150);
-		} catch (InterruptedException e1) {}
 
 		for(JsonElement jsonRequirement : jsonRequirements) {
 			requirements.add(jsonRequirement.getAsInt());

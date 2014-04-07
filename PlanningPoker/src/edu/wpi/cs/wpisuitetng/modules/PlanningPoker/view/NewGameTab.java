@@ -139,12 +139,18 @@ public class NewGameTab extends JPanel {
 	 * listOfRequirementsToAdd --> the list of requirements that the user wants
 	 * added to the game
 	 * 
-	 * listOfAllRequirements -> the list of all the requirements in the
-	 * requirement manager
+	 * listOfAllRequirements -> the list of all the requirements in the requirement manager
+	 * 
+	 * listOfRequirementsForReset --> the full list of requirements. This is never edited 
+	 * 								  and is only used for reseting the requirements when
+	 * 								  the reset button is pressed
 	 */
-	DefaultListModel<Requirement> listOfRequirementsToAdd = new DefaultListModel<Requirement>();
-	DefaultListModel<Requirement> listOfAllRequirements = new DefaultListModel<Requirement>();
+	
+	DefaultListModel<Requirement> listOfRequirementsToAdd= new DefaultListModel<Requirement>();
+	DefaultListModel<Requirement> listOfAllRequirements= new DefaultListModel<Requirement>();
+	DefaultListModel<Requirement> listOfRequirementsForReset = new DefaultListModel<Requirement>();
 
+	
 	/**
 	 * The list of requirement IDs that will actually be saved to the game will
 	 * be the same as 'listOfRequirementsToAdd' once the game is in the process
@@ -161,6 +167,7 @@ public class NewGameTab extends JPanel {
 	JLabel lblGameCreated;
 	JButton btn_removeFromGame;
 	JButton btn_addToGame;
+	JButton btn_removeAll;
 	boolean calendarOpen = false;
 
 	/**
@@ -532,12 +539,15 @@ public class NewGameTab extends JPanel {
 		final JButton btn_removeFromGame = new JButton("<");
 		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
 
+		btn_removeFromGame.setEnabled(false);
+		
 		JPanel bottommostButton = new JPanel();
 		buttonsPanel.add(bottommostButton);
 		bottommostButton.setLayout(new BorderLayout(0, 0));
-
-		final JButton btn_removeAll = new JButton("<<");
+		
+		btn_removeAll = new JButton("<<");
 		bottommostButton.add(btn_removeAll);
+		btn_removeAll.setEnabled(false);
 
 		JPanel bottomSpacer = new JPanel();
 		addRemPanel.add(bottomSpacer);
@@ -616,10 +626,12 @@ public class NewGameTab extends JPanel {
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);
 			listOfAllRequirements.addElement(req);
+			listOfRequirementsForReset.addElement(req);
 		}
 
 		allRequirements.setModel(listOfAllRequirements);
 
+		
 		gameList.add(selectedRequirements);
 
 		/**
@@ -835,22 +847,39 @@ public class NewGameTab extends JPanel {
 		/**
 		 * Reset the input field after the user changed the data.
 		 */
-		btnResetGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Reset game name
-				sessionName.setText(dateFormat.format(date));
 
-				// Reset start and end date
-				// startDateText.setText(defaultCalendarText);
-				endDateText.setText(defaultCalendarText);
-				btnCreateGame.setEnabled(true);
-				createGameErrorText.setText("");
-				// Reset start and end time
-				endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
-				// Reset the requirements boxes
-			}
-		});
-
+		btnResetGame.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	// Reset game name
+		    	sessionName.setText(dateFormat.format(date));
+		    	
+		    	// Reset start and end date
+		    	//startDateText.setText(defaultCalendarText);
+		    	endDateText.setText(defaultCalendarText);
+		    	btnCreateGame.setEnabled(true);
+	        	createGameErrorText.setText("");
+		    	// Reset start and end time
+		    	endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
+		    	// Reset the requirements boxes
+		    	
+		    	isTabEditedByUser = true;
+		    	
+		    	while(listOfRequirementsToAdd.getSize() > 0){
+		    		System.out.println(listOfRequirementsToAdd.elementAt(0));
+		    		listOfAllRequirements.addElement(listOfRequirementsToAdd.remove(0));
+		    	}
+		    	
+		    	selectedRequirements.setModel(listOfRequirementsToAdd);
+		    	allRequirements.setModel(listOfAllRequirements);
+		    	
+		    	btn_addToGame.setEnabled(true);
+		    	btn_addAll.setEnabled(true);
+		    	
+		    	btn_removeFromGame.setEnabled(false);	
+	    		btn_removeAll.setEnabled(false);
+		    }
+		});		
+		
 		/**
 		 * Exports the list of selected requirements to a file when btnExport is
 		 * pressed
