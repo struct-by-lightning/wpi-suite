@@ -142,7 +142,7 @@ public class NewGameTab extends JPanel {
 	 */
 	DefaultListModel<Requirement> listOfRequirementsToAdd= new DefaultListModel<Requirement>();
 	DefaultListModel<Requirement> listOfAllRequirements= new DefaultListModel<Requirement>();
-	
+	DefaultListModel<Requirement> listOfRequirementsForReset = new DefaultListModel<Requirement>();
 	
 	/**
 	 * The list of requirements that will actually be saved to the game
@@ -606,10 +606,12 @@ public class NewGameTab extends JPanel {
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);
 			listOfAllRequirements.addElement(req);
+			listOfRequirementsForReset.addElement(req);
 		}
 
 		allRequirements.setModel(listOfAllRequirements);
 
+		
 		gameList.add(selectedRequirements);
 
 		/**
@@ -818,6 +820,22 @@ public class NewGameTab extends JPanel {
 		    	// Reset start and end time
 		    	endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		    	// Reset the requirements boxes
+		    	
+		    	isTabEditedByUser = true;
+		    	
+		    	while(listOfRequirementsToAdd.getSize() > 0){
+		    		System.out.println(listOfRequirementsToAdd.elementAt(0));
+		    		listOfAllRequirements.addElement(listOfRequirementsToAdd.remove(0));
+		    	}
+		    	
+		    	selectedRequirements.setModel(listOfRequirementsToAdd);
+		    	allRequirements.setModel(listOfAllRequirements);
+		    	
+		    	btn_addToGame.setEnabled(true);
+		    	btn_addAll.setEnabled(true);
+		    	
+		    	btn_removeFromGame.setEnabled(false);	
+	    		btn_removeAll.setEnabled(false);
 		    }
 		});		
 		
