@@ -1,3 +1,12 @@
+/*******************************************************************************
+* Copyright (c) 2012-2014 -- WPI Suite
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+* Contributor: team struct-by-lightning
+*******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview;
 
 import javax.imageio.ImageIO;
@@ -24,6 +33,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+import javax.swing.JTextPane;
 
 import java.awt.Font;
 
@@ -36,6 +46,7 @@ import javax.swing.JTextField;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
@@ -55,6 +66,11 @@ public class OverviewPanel extends JPanel {
 		JSplitPane splitPane = new JSplitPane();
 		add(splitPane, BorderLayout.CENTER);
 
+		JTextPane txtpnLoggedInAs = new JTextPane();
+		txtpnLoggedInAs.setText("Logged in as: "+ConfigManager.getConfig().getUserName());
+		txtpnLoggedInAs.setFocusable(false);
+		add(txtpnLoggedInAs, BorderLayout.SOUTH);
+		
 		/**
 		 * panel that contains games in a tree structure
 		 */
@@ -137,9 +153,9 @@ public class OverviewPanel extends JPanel {
 	public void fireRefresh() {
 		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
 		unanswered.removeAllChildren();
-		for(PlanningPokerGame game : PlanningPokerGameModel.getInstance().getPlanningPokerGames()) {
-			unanswered.add(new DefaultMutableTreeNode(game.getGameName()));
-		}
+//		for(PlanningPokerGame game : PlanningPokerGameModel.getInstance().getPlanningPokerGames()) {
+//			unanswered.add(new DefaultMutableTreeNode(game.getGameName()));
+//		}
 	}
 
 }

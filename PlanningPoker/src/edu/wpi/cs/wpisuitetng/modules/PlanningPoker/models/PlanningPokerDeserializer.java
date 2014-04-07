@@ -1,3 +1,12 @@
+/*******************************************************************************
+* Copyright (c) 2012-2014 -- WPI Suite
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+* Contributor: team struct-by-lightning
+*******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.lang.reflect.Type;
@@ -61,7 +70,11 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 			throw new JsonParseException(
 					"The serialized PlanningPokerModel did not contain the required endData field.");
 		}
-
+		
+		if (!deflated.has("moderator")) {
+			throw new JsonParseException(
+					"The serialized PlanningPokerModel did not contain the required endData field.");
+		}
 		// for all other attributes: instantiate as null, fill in if given.
 
 		String gameName = deflated.get("gameName").getAsString();
@@ -72,6 +85,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 		boolean isLive = false;
 		GregorianCalendar startDate = null;
 		GregorianCalendar endDate = null;
+		String moderator = null;
 
 		if (deflated.has("deckType")
 				&& !deflated.get("deckType").getAsString().equals("")) {
@@ -135,9 +149,12 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 					"PlanningPokerModel transmitted with String in endDate field");
 			endDate = null;
 		}
-
+		
+		moderator = deflated.get("moderator").getAsString();
+		
+		
 		PlanningPokerGame inflated = new PlanningPokerGame(gameName, description,
-				deckType, requirements, isFinished, isLive, startDate, endDate);
+				deckType, requirements, isFinished, isLive, startDate, endDate, moderator);
 
 		return inflated;
 	}

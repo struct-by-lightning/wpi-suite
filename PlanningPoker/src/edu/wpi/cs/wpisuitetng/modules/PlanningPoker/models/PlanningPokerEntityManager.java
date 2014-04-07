@@ -1,3 +1,12 @@
+/*******************************************************************************
+* Copyright (c) 2012-2014 -- WPI Suite
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+* Contributor: team struct-by-lightning
+*******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.util.logging.Level;
@@ -56,7 +65,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public PlanningPokerGame[] getAll(Session s) throws WPISuiteException {
 		PlanningPokerGame[] ret = new PlanningPokerGame[1];
-		ret = data.retrieveAll(new PlanningPokerGame(null, null, null, null, false, false, null, null)).toArray(ret);
+		ret = data.retrieveAll(new PlanningPokerGame(null, null, null, null, false, false, null, null, null)).toArray(ret);
 		return ret;
 	}
 
@@ -99,7 +108,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
 		logger.log(Level.INFO, "PlanningPokerEntityManager invoking DeleteAll...");
-		data.deleteAll(new PlanningPokerGame(null, null, null, null, false, false, null, null));
+		data.deleteAll(new PlanningPokerGame(null, null, null, null, false, false, null, null, null));
 	}
 
 	@Override

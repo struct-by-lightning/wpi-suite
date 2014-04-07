@@ -28,6 +28,7 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Dimension;
@@ -50,6 +51,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JList;
@@ -57,6 +59,8 @@ import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.JTextPane;
+import javax.swing.JToolBar;
 import javax.swing.ListModel;
 import javax.swing.SpinnerDateModel;
 
@@ -68,19 +72,28 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.List;
+
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.Note;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.NoteList;
 
 import java.awt.Insets;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 /**
  * Implements the new game tab for planning poker module
@@ -145,6 +158,8 @@ public class NewGameTab extends JPanel {
 	
 	JButton btnCreateGame;
 	JLabel lblGameCreated;
+	JButton btn_removeFromGame;
+	JButton btn_addToGame;
 	boolean calendarOpen = false;
 
 	/**
@@ -182,11 +197,15 @@ public class NewGameTab extends JPanel {
 		titlePanel.add(createGamePane);
 		createGamePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
-		btnCreateGame = new JButton("CREATE GAME");
+		btnCreateGame = new JButton("Create");
 		createGamePane.add(btnCreateGame);
 
-		JButton btnResetGame = new JButton("RESET GAME");
+		JButton btnResetGame = new JButton("Reset");
 		createGamePane.add(btnResetGame);
+		
+		JButton btnExport = new JButton("Export requirements");
+		createGamePane.add(btnExport);
+
 		final JCheckBox startNow = new JCheckBox("Start Game Now?");
 		createGamePane.add(startNow);
 		
@@ -444,7 +463,8 @@ public class NewGameTab extends JPanel {
 
 		JPanel requirementsSelector = new JPanel();
 		requirementsPanel.add(requirementsSelector, BorderLayout.CENTER);
-		requirementsSelector.setLayout(new GridLayout(1, 3, 3, 10));
+		requirementsSelector.setLayout(new BoxLayout(requirementsSelector, BoxLayout.X_AXIS));
+
 
 		JPanel projectRequirements = new JPanel();
 		projectRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -476,16 +496,22 @@ public class NewGameTab extends JPanel {
 
 		JPanel buttonsPanel = new JPanel();
 		addRemPanel.add(buttonsPanel);
-		buttonsPanel.setLayout(new GridLayout(2, 1, 0, 0));
+		buttonsPanel.setLayout(new GridLayout(4, 1, 4, 4));
+		
+		JPanel topmostButton = new JPanel();
+		buttonsPanel.add(topmostButton);
+		topmostButton.setLayout(new BorderLayout(0, 0));
+		
+		final JButton btn_addAll = new JButton(">>");
+		topmostButton.add(btn_addAll, BorderLayout.CENTER);
 
 		JPanel topButton = new JPanel();
 		buttonsPanel.add(topButton);
 		topButton.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_addToGame = new JButton("Add to game -->");
+		final JButton btn_addToGame = new JButton(">");
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				isTabEditedByUser = true;
 			}
 		});
 		topButton.add(btn_addToGame, BorderLayout.CENTER);
@@ -494,8 +520,15 @@ public class NewGameTab extends JPanel {
 		buttonsPanel.add(bottomButton);
 		bottomButton.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_removeFromGame = new JButton("<-- Remove from game");
+		final JButton btn_removeFromGame = new JButton("<");
 		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
+		
+		JPanel bottommostButton = new JPanel();
+		buttonsPanel.add(bottommostButton);
+		bottommostButton.setLayout(new BorderLayout(0, 0));
+		
+		final JButton btn_removeAll = new JButton("<<");
+		bottommostButton.add(btn_removeAll);
 
 		JPanel bottomSpacer = new JPanel();
 		addRemPanel.add(bottomSpacer);
@@ -516,8 +549,12 @@ public class NewGameTab extends JPanel {
 		gameList.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		gameRequirements.add(gameList, BorderLayout.CENTER);
 		gameList.setLayout(new BorderLayout(0, 0));
-
 		
+		JTextPane txtpnLoggedInAs = new JTextPane();
+		txtpnLoggedInAs.setText("Logged in as: "+ConfigManager.getConfig().getUserName());
+		txtpnLoggedInAs.setFocusable(false);
+		settingsPanel.add(txtpnLoggedInAs, BorderLayout.SOUTH);
+
 		/**
 		 * Listens to the session name field and
 		 * disables "Create Game" button if the
@@ -629,12 +666,13 @@ public class NewGameTab extends JPanel {
 						PlanningPokerGame game;
 						if(startNow.isSelected()) {
 							game = new PlanningPokerGame(enteredName, "Default description",
-									selectedDeckType, gameRequirementsList, false, true, startCal, endCal);
+									selectedDeckType, gameRequirementsList, false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
 						}
 						else {
 							game= new PlanningPokerGame(enteredName, "Default description",
-									selectedDeckType, gameRequirementsList, false, false, startCal, endCal);
+									selectedDeckType, gameRequirementsList, false, false, startCal, endCal, ConfigManager.getConfig().getUserName());
 						}
+						System.out.println("User Moderator: "+ConfigManager.getConfig().getUserName());
 						System.out.println("Planning Poker Live: " + game.isLive());
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
@@ -657,7 +695,30 @@ public class NewGameTab extends JPanel {
 		    }
 		});
 
-		
+		/**
+		 * Removes all items from box of all requirements
+		 * and adds them to the box of requirements that will be used in the session
+		 */
+		btn_addAll.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	isTabEditedByUser = true;
+		    	
+		    	while(listOfAllRequirements.getSize() > 0){
+		    		System.out.println(listOfAllRequirements.elementAt(0));
+		    		listOfRequirementsToAdd.addElement(listOfAllRequirements.remove(0));
+		    	}
+		    	
+		    	selectedRequirements.setModel(listOfRequirementsToAdd);
+		    	allRequirements.setModel(listOfAllRequirements);
+		    	
+		    	btn_removeFromGame.setEnabled(true);	
+	    		btn_removeAll.setEnabled(true);
+		    	
+		    	btn_addToGame.setEnabled(false);
+		    	btn_addAll.setEnabled(false);
+		    }
+		});
+
 		/**
 		 * Removes selected item from box of all requirements
 		 * and adds it to the box of requirements that will be used in the session
@@ -670,12 +731,17 @@ public class NewGameTab extends JPanel {
 
 		    		System.out.println("Added " + allRequirements.getSelectedValue() + "to selected requirements");
 		    		
-		    		listOfRequirementsToAdd.addElement(allRequirements.getSelectedValue());
+		    		listOfRequirementsToAdd.addElement(listOfAllRequirements.remove(allRequirements.getSelectedIndex()));
 			    	selectedRequirements.setModel(listOfRequirementsToAdd);
-
-
-			    	listOfAllRequirements.removeElementAt(allRequirements.getSelectedIndex());
 			    	allRequirements.setModel(listOfAllRequirements);
+			    	
+			    	btn_removeFromGame.setEnabled(true);
+			    	btn_removeAll.setEnabled(true);
+			    	
+			    	if(listOfAllRequirements.size() == 0){
+			    		btn_addToGame.setEnabled(false);
+			    		btn_addAll.setEnabled(false);
+			    	}
 
 		    	}
 		    }
@@ -692,16 +758,53 @@ public class NewGameTab extends JPanel {
 		    	if(selectedRequirements.getSelectedIndex() >= 0){
 		    		
 		    		System.out.println("Removed " + selectedRequirements.getSelectedValue() + "to selected requirements");
-		    		listOfAllRequirements.addElement(selectedRequirements.getSelectedValue());
+		    		
+		    		listOfAllRequirements.addElement(listOfRequirementsToAdd.remove(selectedRequirements.getSelectedIndex()));
+		    		
 			    	allRequirements.setModel(listOfAllRequirements);
-
-			    	listOfRequirementsToAdd.removeElementAt(selectedRequirements.getSelectedIndex());
 			    	selectedRequirements.setModel(listOfRequirementsToAdd);
+			    	
+			    	
+			    	btn_addToGame.setEnabled(true);
+			    	btn_addAll.setEnabled(true);
+			    	
+			    	if(listOfRequirementsToAdd.size() == 0){
+			    		btn_removeFromGame.setEnabled(false);	
+			    		btn_removeAll.setEnabled(false);
+			    	}
 		    	}
 
 		    }
 		});
+
 		
+		/**
+		 * Removes selected item from box of selected requirements for session
+		 * and adds it back to the total list of requirements
+		 */
+		btn_removeAll.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	isTabEditedByUser = true;
+		    	
+		    	while(listOfRequirementsToAdd.getSize() > 0){
+		    		System.out.println(listOfRequirementsToAdd.elementAt(0));
+		    		listOfAllRequirements.addElement(listOfRequirementsToAdd.remove(0));
+		    	}
+		    	
+		    	selectedRequirements.setModel(listOfRequirementsToAdd);
+		    	allRequirements.setModel(listOfAllRequirements);
+		    	
+		    	btn_addToGame.setEnabled(true);
+		    	btn_addAll.setEnabled(true);
+		    	
+		    	btn_removeFromGame.setEnabled(false);	
+	    		btn_removeAll.setEnabled(false);
+		    }
+		});
+		
+		/**
+		 * Reset the input field after the user changed the data.
+		 */
 		btnResetGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	// Reset game name
@@ -716,10 +819,24 @@ public class NewGameTab extends JPanel {
 		    	endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		    	// Reset the requirements boxes
 		    }
+		});		
+		
+		/**
+		 * Exports the list of selected requirements to a file when btnExport is pressed
+		 */
+		btnExport.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	// Create exporter
+		    	Exporter ex = new Exporter();
+		    	// Export requirements
+		    	ex.exportAsJSON(listOfRequirementsToAdd, "filename.txt");
+		    	System.out.println("Exported all selected requirements\n");
+		    }
 		});
-	}		
-	
+	}
+		
 	public void calendarSetOpen(boolean open) {
 		calendarOpen = open;
 	}
+		
 }
