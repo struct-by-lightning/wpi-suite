@@ -66,7 +66,7 @@ public class GetUserController implements ActionListener {
 	 */
 	public void retrieveUser() {
 		final Request request = Network.getInstance().makeRequest(
-				"wpisuite-interfaces/user", HttpMethod.GET);
+				"planningpoker/user", HttpMethod.GET);
 		request.addObserver(observer);
 		request.send();
 	}
