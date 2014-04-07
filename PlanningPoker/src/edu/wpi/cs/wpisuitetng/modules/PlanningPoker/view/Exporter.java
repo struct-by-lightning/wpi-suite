@@ -1,6 +1,8 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -16,6 +18,9 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 public class Exporter {
 
 	public Exporter() {
@@ -23,14 +28,14 @@ public class Exporter {
 	}
 	
 	/**
-	 * Exports the input list of selected requirements to a file
+	 * Exports the input list of selected requirements to a file as a string
 	 */
-	public void export(DefaultListModel<Requirement> listOfRequirementsToAdd) {
+	public void exportAsString(DefaultListModel<Requirement> listOfRequirementsToAdd, String filename) {
 		// Prepare file for exporting
 		PrintWriter out = null;
 		try {
 			// TODO Allow the user to select their file name/directory
-			out = new PrintWriter("requirements.txt");
+			out = new PrintWriter(filename);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -71,6 +76,30 @@ public class Exporter {
 			}
 			out.println("");
 			out.println("");
+		}
+		
+		// Close the file
+		out.close();
+	}
+	
+	/**
+	 * Exports the input list of selected requirements to a file as a JSON
+	 */
+	public void exportAsJSON(DefaultListModel<Requirement> listOfRequirementsToAdd, String filename) {
+		// Prepare file for exporting
+		PrintWriter out = null;
+		try {
+			// TODO Allow the user to select their file name/directory
+			out = new PrintWriter(filename);
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return;
+		}
+		// Iterate over the list of requirements
+		for(int i = 0; i < listOfRequirementsToAdd.size(); i++) {
+			// Export the current requirement
+			out.println(listOfRequirementsToAdd.get(i).toJSON());
 		}
 		
 		// Close the file
