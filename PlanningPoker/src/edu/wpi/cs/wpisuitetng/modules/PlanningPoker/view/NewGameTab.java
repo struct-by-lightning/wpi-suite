@@ -141,10 +141,14 @@ public class NewGameTab extends JPanel {
 	 * listOfRequirementsToAdd --> the list of requirements that the user wants added to the game
 	 * 
 	 * listOfAllRequirements -> the list of all the requirements in the requirement manager
+	 * 
+	 * listOfRequirementsForReset --> the full list of requirements. This is never edited 
+	 * 								  and is only used for reseting the requirements when
+	 * 								  the reset button is pressed
 	 */
 	DefaultListModel<Requirement> listOfRequirementsToAdd= new DefaultListModel<Requirement>();
 	DefaultListModel<Requirement> listOfAllRequirements= new DefaultListModel<Requirement>();
-	
+	DefaultListModel<Requirement> listOfRequirementsForReset = new DefaultListModel<Requirement>();
 	
 	/**
 	 * The list of requirements that will actually be saved to the game
@@ -173,6 +177,7 @@ public class NewGameTab extends JPanel {
 	JLabel lblGameCreated;
 	JButton btn_removeFromGame;
 	JButton btn_addToGame;
+	JButton btn_removeAll;
 	boolean calendarOpen = false;
 
 	/**
@@ -535,13 +540,15 @@ public class NewGameTab extends JPanel {
 
 		final JButton btn_removeFromGame = new JButton("<");
 		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
+		btn_removeFromGame.setEnabled(false);
 		
 		JPanel bottommostButton = new JPanel();
 		buttonsPanel.add(bottommostButton);
 		bottommostButton.setLayout(new BorderLayout(0, 0));
 		
-		final JButton btn_removeAll = new JButton("<<");
+		btn_removeAll = new JButton("<<");
 		bottommostButton.add(btn_removeAll);
+		btn_removeAll.setEnabled(false);
 
 		JPanel bottomSpacer = new JPanel();
 		addRemPanel.add(bottomSpacer);
@@ -619,10 +626,12 @@ public class NewGameTab extends JPanel {
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);
 			listOfAllRequirements.addElement(req);
+			listOfRequirementsForReset.addElement(req);
 		}
 
 		allRequirements.setModel(listOfAllRequirements);
 
+		
 		gameList.add(selectedRequirements);
 		
 		// Get and add the list of emails to the mailer
@@ -840,6 +849,22 @@ public class NewGameTab extends JPanel {
 		    	// Reset start and end time
 		    	endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		    	// Reset the requirements boxes
+		    	
+		    	isTabEditedByUser = true;
+		    	
+		    	while(listOfRequirementsToAdd.getSize() > 0){
+		    		System.out.println(listOfRequirementsToAdd.elementAt(0));
+		    		listOfAllRequirements.addElement(listOfRequirementsToAdd.remove(0));
+		    	}
+		    	
+		    	selectedRequirements.setModel(listOfRequirementsToAdd);
+		    	allRequirements.setModel(listOfAllRequirements);
+		    	
+		    	btn_addToGame.setEnabled(true);
+		    	btn_addAll.setEnabled(true);
+		    	
+		    	btn_removeFromGame.setEnabled(false);	
+	    		btn_removeAll.setEnabled(false);
 		    }
 		});		
 		
