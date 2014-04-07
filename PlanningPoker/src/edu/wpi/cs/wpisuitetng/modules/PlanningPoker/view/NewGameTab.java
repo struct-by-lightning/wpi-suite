@@ -139,6 +139,10 @@ public class NewGameTab extends JPanel {
 	 * listOfRequirementsToAdd --> the list of requirements that the user wants added to the game
 	 * 
 	 * listOfAllRequirements -> the list of all the requirements in the requirement manager
+	 * 
+	 * listOfRequirementsForReset --> the full list of requirements. This is never edited 
+	 * 								  and is only used for reseting the requirements when
+	 * 								  the reset button is pressed
 	 */
 	DefaultListModel<Requirement> listOfRequirementsToAdd= new DefaultListModel<Requirement>();
 	DefaultListModel<Requirement> listOfAllRequirements= new DefaultListModel<Requirement>();
