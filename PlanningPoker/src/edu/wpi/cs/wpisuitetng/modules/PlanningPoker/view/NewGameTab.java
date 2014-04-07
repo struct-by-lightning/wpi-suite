@@ -38,6 +38,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -60,6 +62,8 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.Note;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.NoteList;
 
 /**
  * Implements the new game tab for planning poker module
@@ -124,6 +128,8 @@ public class NewGameTab extends JPanel {
 	
 	JButton btnCreateGame;
 	JLabel lblGameCreated;
+	JButton btn_removeFromGame;
+	JButton btn_addToGame;
 	boolean calendarOpen = false;
 
 	/**
@@ -161,14 +167,19 @@ public class NewGameTab extends JPanel {
 		titlePanel.add(createGamePane);
 		createGamePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
-		btnCreateGame = new JButton("CREATE GAME");
+		btnCreateGame = new JButton("Create");
 		createGamePane.add(btnCreateGame);
 
-		JButton btnResetGame = new JButton("RESET GAME");
+		JButton btnResetGame = new JButton("Reset");
 		createGamePane.add(btnResetGame);
+		
+		JButton btnExport = new JButton("Export requirements");
+		createGamePane.add(btnExport);
+
 		final JCheckBox startNow = new JCheckBox("Start Game Now?");
 		createGamePane.add(startNow);
 		
+
 		createGameErrorText = new JLabel("");
 		titlePanel.add(createGameErrorText);
 		
@@ -461,7 +472,7 @@ public class NewGameTab extends JPanel {
 		buttonsPanel.add(topButton);
 		topButton.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_addToGame = new JButton("Add to game -->");
+		btn_addToGame = new JButton("Add to game -->");
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				isTabEditedByUser = true;
@@ -473,7 +484,8 @@ public class NewGameTab extends JPanel {
 		buttonsPanel.add(bottomButton);
 		bottomButton.setLayout(new BorderLayout(0, 0));
 
-		JButton btn_removeFromGame = new JButton("<-- Remove from game");
+		btn_removeFromGame = new JButton("<-- Remove from game");
+		btn_removeFromGame.setEnabled(false);
 		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
 
 		JPanel bottomSpacer = new JPanel();
@@ -655,6 +667,12 @@ public class NewGameTab extends JPanel {
 
 			    	listOfAllRequirements.removeElementAt(allRequirements.getSelectedIndex());
 			    	allRequirements.setModel(listOfAllRequirements);
+			    	
+			    	
+			    	btn_removeFromGame.setEnabled(true);
+			    	
+			    	if(listOfAllRequirements.size() == 0)
+			    		btn_addToGame.setEnabled(false);
 
 		    	}
 		    }
@@ -676,11 +694,20 @@ public class NewGameTab extends JPanel {
 
 			    	listOfRequirementsToAdd.removeElementAt(selectedRequirements.getSelectedIndex());
 			    	selectedRequirements.setModel(listOfRequirementsToAdd);
+			    	
+			    	
+			    	btn_addToGame.setEnabled(true);
+			    	
+			    	if(listOfRequirementsToAdd.size() == 0)
+			    		btn_removeFromGame.setEnabled(false);		
 		    	}
 
 		    }
 		});
 		
+		/**
+		 * Reset the input field after the user changed the data.
+		 */
 		btnResetGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	// Reset game name
@@ -694,6 +721,19 @@ public class NewGameTab extends JPanel {
 		    	// Reset start and end time
 		    	endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		    	// Reset the requirements boxes
+		    }
+		});
+		
+		/**
+		 * Exports the list of selected requirements to a file when btnExport is pressed
+		 */
+		btnExport.addActionListener(new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	// Create exporter
+		    	Exporter ex = new Exporter();
+		    	// Export requirements
+		    	ex.export(listOfRequirementsToAdd);
+		    	System.out.println("Exported all selected requirements\n");
 		    }
 		});
 	}		
