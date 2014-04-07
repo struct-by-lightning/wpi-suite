@@ -72,7 +72,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.List;
+
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -90,6 +92,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.NoteList;
 
 import java.awt.Insets;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 /**
  * Implements the new game tab for planning poker module
@@ -205,7 +209,6 @@ public class NewGameTab extends JPanel {
 		final JCheckBox startNow = new JCheckBox("Start Game Now?");
 		createGamePane.add(startNow);
 		
-
 		createGameErrorText = new JLabel("");
 		titlePanel.add(createGameErrorText);
 		
@@ -819,7 +822,7 @@ public class NewGameTab extends JPanel {
 		    	endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		    	// Reset the requirements boxes
 		    }
-		});
+		});		
 		
 		/**
 		 * Exports the list of selected requirements to a file when btnExport is pressed
@@ -829,13 +832,14 @@ public class NewGameTab extends JPanel {
 		    	// Create exporter
 		    	Exporter ex = new Exporter();
 		    	// Export requirements
-		    	ex.export(listOfRequirementsToAdd);
+		    	ex.exportAsJSON(listOfRequirementsToAdd, "filename.txt");
 		    	System.out.println("Exported all selected requirements\n");
 		    }
 		});
-	}		
-	
+	}
+		
 	public void calendarSetOpen(boolean open) {
 		calendarOpen = open;
 	}
+		
 }
