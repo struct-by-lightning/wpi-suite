@@ -58,27 +58,22 @@ public class GameJTree extends JTree {
 						.getLastSelectedPathComponent();
 				String gameName = (String) selectedNode.getUserObject();
 
-				PlanningPokerGame game = PlanningPokerGameModel
-						.getPlanningPokerGame(gameName);
+				PlanningPokerGame game = PlanningPokerGameModel.getPlanningPokerGame(gameName);
 			}
 		});
 	}
 
 	public void fireRefresh() {
 
-		GetPlanningPokerGamesController.getInstance()
-				.retrievePlanningPokerGames();
+		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
 
 		DefaultMutableTreeNode allGames = new DefaultMutableTreeNode("All");
 		DefaultMutableTreeNode newGames = new DefaultMutableTreeNode("New");
 		DefaultMutableTreeNode openGames = new DefaultMutableTreeNode("Open");
-		DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode(
-				"Finished");
+		DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode("Finished");
 
-		for (PlanningPokerGame game : PlanningPokerGameModel
-				.getPlanningPokerGames()) {
-			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(
-					game.getGameName());
+		for (PlanningPokerGame game : PlanningPokerGameModel.getPlanningPokerGames()) {
+			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(game.getGameName());
 
 			// Has the game started voting?
 			if (game.isLive()) {
@@ -115,8 +110,6 @@ public class GameJTree extends JTree {
 		}
 
 		this.getParent().setMinimumSize(
-				new Dimension(this.getWidth() + 60, this.getParent()
-						.getMinimumSize().height));
-		;
+				new Dimension(this.getWidth() + 60, this.getParent().getMinimumSize().height));
 	}
 }

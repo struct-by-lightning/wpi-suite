@@ -19,8 +19,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.OverviewPanel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationOverviewPanel;
 
 /**
  * This panel fills the main content area of the tab for this module. It
@@ -39,7 +37,6 @@ public class MainView extends JTabbedPane {
 	private Image tabImage = null;
 	private Point currentMouseLocation = null;
 	private int draggedTabIndex = 0;
-	private OverviewPanel overview = new OverviewPanel();
 	private Component lastTab = null;
 	private final JPopupMenu popup = new JPopupMenu();
 	private JMenuItem closeAll = new JMenuItem("Close All Tabs");
@@ -50,10 +47,10 @@ public class MainView extends JTabbedPane {
 	/**
 	 * Adds main subtab when user goes to RequirementManager
 	 */
-	public MainView() {
-		this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		this.addTab("Overview", overview);
-	}
+//	public MainView() {
+//		this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+//		this.addTab("Overview", overview);
+//	}
 		
 		
 
@@ -82,21 +79,14 @@ public class MainView extends JTabbedPane {
 	 * @param tip	Showing mouse tip when hovering over tab
 	 * @param index	Location of the tab
 	 */
-	@Override
-	public void insertTab(String title, Icon icon, Component component,
-			String tip, int index) {
-		super.insertTab(title, icon, component, tip, index);
-		if (!(component instanceof OverviewPanel) && !(component instanceof IterationOverviewPanel)) {
-			setTabComponentAt(index, new ClosableTabComponent(this));
-		}
-	}
-	
-	/**
-	 * Method getOverview allows you to view main planning poker screen.
-	 * @return OverviewPanel */
-	public OverviewPanel getOverview() {
-		return overview;
-	}
+//	public void insertTab(String title, Icon icon, Component component,
+//			String tip, int index) {
+//		super.insertTab(title, icon, component, tip, index);
+//		if (!(component instanceof OverviewPanel) && !(component instanceof IterationOverviewPanel)) {
+//			setTabComponentAt(index, new ClosableTabComponent(this));
+//		}
+//	}
+
 	
 	/**
 	 * Method setSelectedComponent allows you to select tabs 

@@ -22,8 +22,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
 //import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 
 /**
  * @author Batyr, Christian, Francisco 
@@ -65,17 +67,17 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView{
 		newGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					ViewEventController.getInstance().createNewGame();
+				MainView.getController().createGameButtonClicked();
 			}
 		});		
 		
 		//action listener for the Modify Game Button
-		modifyGameButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ViewEventController.getInstance().modifyGame();
-			}
-		});
+//		modifyGameButton.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				ViewEventController.getInstance().modifyGame();
+//			}
+//		});
 			
 		contentPanel.add(newGameButton);
 		contentPanel.add(modifyGameButton);

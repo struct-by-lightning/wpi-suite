@@ -9,7 +9,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
@@ -91,10 +90,10 @@ public class ViewEventController {
 	 * Opens up a new game tab and adds the game window to it.
 	 */
 	public void createNewGame() {
-		NewGameTab newGameWindow = new NewGameTab();
-		mainView.addTab("New Game", newGameWindow);
-		mainView.setTabComponentAt(mainView.indexOfComponent(newGameWindow), new ClosableTabComponent(mainView));			
-		mainView.setSelectedComponent(newGameWindow);
+//		NewGameTab newGameWindow = new NewGameTab();
+//		mainView.addTab("New Game", newGameWindow);
+//		mainView.setTabComponentAt(mainView.indexOfComponent(newGameWindow), new ClosableTabComponent(mainView));			
+//		mainView.setSelectedComponent(newGameWindow);
 	}
 	
 	/**
