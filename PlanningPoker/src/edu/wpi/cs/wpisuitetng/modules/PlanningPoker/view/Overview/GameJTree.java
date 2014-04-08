@@ -20,6 +20,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
@@ -90,7 +91,7 @@ public class GameJTree extends JTree {
 			else if (game.isFinished()) {
 				finishedGames.add(nodeToAdd);
 			} 
-			else {
+			else if (game.getModerator().equals(ConfigManager.getConfig().getUserName())){
 				// The game must be new.
 				newGames.add(nodeToAdd);
 			}
