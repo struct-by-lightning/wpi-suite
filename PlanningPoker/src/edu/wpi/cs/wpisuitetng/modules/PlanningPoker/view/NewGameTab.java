@@ -52,6 +52,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -68,6 +69,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+
 
 /**
  * Implements the new game tab for planning poker module
@@ -483,11 +485,12 @@ public class NewGameTab extends JPanel {
 
 		JPanel projectList = new JPanel();
 		projectList.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		projectRequirements.add(projectList, BorderLayout.CENTER);
+		JScrollPane scroller = new JScrollPane(projectList);
+		projectRequirements.add(scroller, BorderLayout.CENTER);
 		projectList.setLayout(new BorderLayout(0, 0));
 
 		projectList.add(allRequirements);
-
+		
 		JPanel addRemPanel = new JPanel();
 		addRemPanel.setBorder(new LineBorder(new Color(192, 192, 192), 0));
 		requirementsSelector.add(addRemPanel);
@@ -566,7 +569,8 @@ public class NewGameTab extends JPanel {
 
 		JPanel gameList = new JPanel();
 		gameList.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		gameRequirements.add(gameList, BorderLayout.CENTER);
+		JScrollPane scroller_2 = new JScrollPane(gameList);
+		gameRequirements.add(scroller_2, BorderLayout.CENTER);
 		gameList.setLayout(new BorderLayout(0, 0));
 
 		JTextPane txtpnLoggedInAs = new JTextPane();
@@ -632,7 +636,6 @@ public class NewGameTab extends JPanel {
 
 		allRequirements.setModel(listOfAllRequirements);
 
-		
 		gameList.add(selectedRequirements);
 		
 		// Get and add the list of emails to the mailer
