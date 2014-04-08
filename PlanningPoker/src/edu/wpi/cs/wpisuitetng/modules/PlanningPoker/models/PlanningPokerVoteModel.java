@@ -15,6 +15,8 @@ import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 
 /**
  * @author rbkillea
+ * @author lhnguyenduc
+ * @author bbiletch
  */
 
 public class PlanningPokerVoteModel extends RegularAbstractModel<PlanningPokerVoteModel>{

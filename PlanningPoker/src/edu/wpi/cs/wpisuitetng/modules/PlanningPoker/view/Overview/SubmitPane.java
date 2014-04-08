@@ -27,6 +27,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
+
 /**
  * The GUI where the user can cast his vote.
  * @author sfmailand
@@ -75,6 +78,8 @@ public class SubmitPane extends JPanel{
 		LinkedList<JButton> cardBtns= new LinkedList<JButton>();
 		for (Integer value: cardFace) {
 			cardBtns.add(new JButton(value.toString()));
+			// Add a listener
+			
 		}
 		// Add the button to the panel
 		try {
@@ -87,12 +92,28 @@ public class SubmitPane extends JPanel{
 			    btn.setHorizontalTextPosition(JButton.CENTER);
 			    btn.setVerticalTextPosition(JButton.CENTER);
 			    btn.setFont(new Font("arial",Font.BOLD,23));
-			    btn.addActionListener(new ActionListener() {
-			    	public void actionPerformed(ActionEvent e) {
-			    		selectedValue = Integer.parseInt(btn.getText());
-			    		//System.out.println(selectedValue);
+			    // Add a listener
+				btn.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+			    		// Vote value
+			    		int selectedValue = Integer.parseInt(btn.getText());
+			    		
+			    		// Requirement ID
+			    		int requirementID = 1;
+			    		
+			    		// Game name
+			    		String gameName = "test";
+			    		
+			    		// User name
+			    		String username = ConfigManager.getConfig().getUserName();
+			    		
+			    		// Vote
+			    		
+			    		//Log
+			    		System.out.println("User " + username + " voted " + selectedValue + " for requirement" + requirementID + " in game " + gameName);
 			    	}
 			    });
+			    // Add the button to the panel
 			    estimatePanel.add(btn);
 			}
 		} catch (IOException ex) {
