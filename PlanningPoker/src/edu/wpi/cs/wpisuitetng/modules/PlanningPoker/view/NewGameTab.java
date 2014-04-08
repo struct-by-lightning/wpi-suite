@@ -57,6 +57,7 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
@@ -73,7 +74,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
-
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -93,6 +93,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.
 import java.awt.Insets;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
@@ -499,11 +500,12 @@ public class NewGameTab extends JPanel {
 
 		JPanel projectList = new JPanel();
 		projectList.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		projectRequirements.add(projectList, BorderLayout.CENTER);
+		JScrollPane scroller = new JScrollPane(projectList);
+		projectRequirements.add(scroller, BorderLayout.CENTER);
 		projectList.setLayout(new BorderLayout(0, 0));
 
 		projectList.add(allRequirements);
-
+		
 		JPanel addRemPanel = new JPanel();
 		addRemPanel.setBorder(new LineBorder(new Color(192, 192, 192), 0));
 		requirementsSelector.add(addRemPanel);
@@ -582,7 +584,8 @@ public class NewGameTab extends JPanel {
 
 		JPanel gameList = new JPanel();
 		gameList.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		gameRequirements.add(gameList, BorderLayout.CENTER);
+		JScrollPane scroller_2 = new JScrollPane(gameList);
+		gameRequirements.add(scroller_2, BorderLayout.CENTER);
 		gameList.setLayout(new BorderLayout(0, 0));
 
 		JTextPane txtpnLoggedInAs = new JTextPane();
@@ -648,7 +651,6 @@ public class NewGameTab extends JPanel {
 
 		allRequirements.setModel(listOfAllRequirements);
 
-		
 		gameList.add(selectedRequirements);
 
 		/**
