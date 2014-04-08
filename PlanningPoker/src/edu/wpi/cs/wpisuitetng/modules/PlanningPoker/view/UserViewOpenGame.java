@@ -28,11 +28,14 @@ import javax.swing.tree.DefaultTreeModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.SubmitPane;
 
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+
 import java.awt.FlowLayout;
 import java.awt.Component;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -149,15 +152,10 @@ public class UserViewOpenGame extends JPanel {
 		
 		JPanel estimate = new JPanel();
 		infoContainer.add(estimate);
+		SubmitPane submitPane = new SubmitPane(infoContainer);
 
 
 	}
 
-	public void fireRefresh() {
-		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
-		unanswered.removeAllChildren();
-//		for(PlanningPokerGame game : PlanningPokerGameModel.getInstance().getPlanningPokerGames()) {
-//			unanswered.add(new DefaultMutableTreeNode(game.getGameName()));
-//		}
-	}
+
 }
