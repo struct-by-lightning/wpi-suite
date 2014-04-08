@@ -15,12 +15,9 @@ import java.awt.Image;
 import java.awt.Point;
 
 import javax.swing.Icon;
-import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.OverviewPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationOverviewPanel;

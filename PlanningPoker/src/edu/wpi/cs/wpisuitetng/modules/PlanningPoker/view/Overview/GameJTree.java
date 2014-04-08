@@ -10,6 +10,8 @@
 
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview;
 
+import java.awt.Dimension;
+
 import javax.swing.JTree;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -31,47 +33,90 @@ public class GameJTree extends JTree {
 		this.model = model;
 
 		this.addAncestorListener(new AncestorListener() {
-			public void ancestorAdded(AncestorEvent event) {refresh(event);}
-			public void ancestorMoved(AncestorEvent event){refresh(event);};
-			public void ancestorRemoved(AncestorEvent event){refresh(event);};
+			public void ancestorAdded(AncestorEvent event) {
+				refresh(event);
+			}
+
+			public void ancestorMoved(AncestorEvent event) {
+				refresh(event);
+			}
+
+			public void ancestorRemoved(AncestorEvent event) {
+				refresh(event);
+			}
 
 			public void refresh(AncestorEvent event) {
-				GameJTree tree = (GameJTree)event.getComponent();
+				GameJTree tree = (GameJTree) event.getComponent();
 				tree.fireRefresh();
 			}
 		});
 
-		
 		this.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent event) {
-				JTree tree = (JTree)event.getSource();
-				DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
-				String gameName = (String)selectedNode.getUserObject();
+				JTree tree = (JTree) event.getSource();
+				DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree
+						.getLastSelectedPathComponent();
+				String gameName = (String) selectedNode.getUserObject();
 
-				PlanningPokerGame game = PlanningPokerGameModel.getPlanningPokerGame(gameName);
-				// DO SOMETHING WITH THIS GAME IF YOU WANNA!
+				PlanningPokerGame game = PlanningPokerGameModel
+						.getPlanningPokerGame(gameName);
 			}
 		});
 	}
 
 	public void fireRefresh() {
 
-		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
+		GetPlanningPokerGamesController.getInstance()
+				.retrievePlanningPokerGames();
 
 		DefaultMutableTreeNode allGames = new DefaultMutableTreeNode("All");
 		DefaultMutableTreeNode newGames = new DefaultMutableTreeNode("New");
 		DefaultMutableTreeNode openGames = new DefaultMutableTreeNode("Open");
-		DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode("Finished");
+		DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode(
+				"Finished");
 
-		for (PlanningPokerGame game : PlanningPokerGameModel.getPlanningPokerGames()) {
-			newGames.add(new DefaultMutableTreeNode(game.getGameName()));
+		for (PlanningPokerGame game : PlanningPokerGameModel
+				.getPlanningPokerGames()) {
+			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(
+					game.getGameName());
+
+			// Has the game started voting?
+			if (game.isLive()) {
+				openGames.add(nodeToAdd);
+				break;
+			}
+
+			// Has the game ended?
+			if (game.isFinished()) {
+				finishedGames.add(nodeToAdd);
+				break;
+			}
+
+			// The game must be new.
+			newGames.add(nodeToAdd);
 		}
 
-		allGames.add(newGames);
-		allGames.add(openGames);
-		allGames.add(finishedGames);
+		if (!newGames.isLeaf()) {
+			allGames.add(newGames);
+		}
+
+		if (!openGames.isLeaf()) {
+			allGames.add(openGames);
+		}
+
+		if (!finishedGames.isLeaf()) {
+			allGames.add(finishedGames);
+		}
 
 		this.model.setRoot(allGames);
-		this.model.reload();
+
+		for (int i = 0; i < this.getRowCount(); i++) {
+			this.expandRow(i);
+		}
+
+		this.getParent().setMinimumSize(
+				new Dimension(this.getWidth() + 60, this.getParent()
+						.getMinimumSize().height));
+		;
 	}
 }

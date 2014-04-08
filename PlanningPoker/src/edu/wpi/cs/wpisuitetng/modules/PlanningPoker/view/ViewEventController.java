@@ -28,7 +28,6 @@ public class ViewEventController {
 	private ToolbarView toolbarView = null;
 	private NewGameTab newGameTab = null;
 	private ToolbarPanel toolbarPanel = null;
-	private JPanel overviewPanel = null;
 	
 	/**
 	 * Default constructor for ViewEventController.  Is protected to prevent instantiation.
@@ -59,14 +58,6 @@ public class ViewEventController {
 		this.mainView = main;
 	}
 	
-	/**
-	 * 
-	 * @param overviewPanel The overview panel next to the core area of the planning poker tab.
-	 */
-	
-	public void setOverviewPanel(JPanel overviewPanel) {
-		this.overviewPanel = overviewPanel;
-	}
 	
 	/**
 	 * 
