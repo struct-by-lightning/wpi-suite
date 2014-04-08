@@ -48,6 +48,7 @@ public class GameJTree extends JTree {
 				String gameName = (String)selectedNode.getUserObject();
 
 				PlanningPokerGame game = PlanningPokerGameModel.getPlanningPokerGame(gameName);
+				// DO SOMETHING WITH THIS GAME IF YOU WANNA!
 			}
 		});
 	}
