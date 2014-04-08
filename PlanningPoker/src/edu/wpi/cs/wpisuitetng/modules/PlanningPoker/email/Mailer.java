@@ -1,22 +1,15 @@
 /*******************************************************************************
-* Copyright (c) 2012-2014 -- WPI Suite
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-* Contributor: team struct-by-lightning
-*******************************************************************************/
+ * Copyright (c) 2012-2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * Contributor: team struct-by-lightning
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email;
 
-/**
- * This class creates a mailer object.  This object has functions for adding 
- * recipients, and sending the email which consists of the following text:
- * 
- * Subject: WPI-Suite: Planning Poker
- * Contents: A Planning Poker session has begun.
- */
-
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -27,10 +20,24 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+
 /**
+ * A Mailer manages the sending of emails to email addresses added to the
+ * Mailer. The Mailer operates in two modes, normal and debug.
+ * 
+ * In normal mode, emails are routed through the Google SMTP server via the
+ * team's gmail account (struct.by.lightning@gmail.com), and the emails actually
+ * reach their recipient.
+ * 
+ * In debug mode, the emails are instead routed to the Mailtrap.io SMTP server,
+ * where they are placed into an inbox accessible accessible to the team. This
+ * prevents unnecessary spam during testing.
+ * 
+ * 
+ * 
  * @author Alec Thompson
  * @author Long Nguyen
- * 
  */
 public class Mailer {
 	private Session session;
@@ -41,6 +48,8 @@ public class Mailer {
 	private String host = "mailtrap.io";
 	private String login = "structbylightning-17dcc3f2b944376c";
 	private String pass = "ce1a24cb171342c3";
+	
+	// TODO: Create a wpi-suite email address and mailtrap account that we can give people access to in the documentation.
 
 	private final boolean DEBUG = true;
 
@@ -225,6 +234,15 @@ public class Mailer {
 		boolean isSuccess = true;
 		for (String s : recArr) {
 			isSuccess &= this.addEmail(s);
+		}
+		return isSuccess;
+	}
+
+	public boolean addEmailFromUsers(List<User> userList) {
+		boolean isSuccess = true;
+		for (User u : userList) {
+			if (u.getEmail() != null)
+				isSuccess &= this.addEmail(u.getEmail());
 		}
 		return isSuccess;
 	}

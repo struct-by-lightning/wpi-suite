@@ -59,8 +59,11 @@ import javax.swing.border.LineBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -128,6 +131,17 @@ public class NewGameTab extends JPanel {
 	 * of being created
 	 */
 	List<Integer> gameRequirementIDsList = new ArrayList<Integer>();
+	
+	/**
+	 * The list of users to whom emails will be sent (assuming their email
+	 * address has been added to the server)
+	 */
+	List<User> userList = new ArrayList<User>();
+	
+	/**
+	 * The mailer which will send emails to all users with emails in their account
+	 */
+	Mailer mailer = new Mailer();
 
 	final JSpinner endTime;
 	String enteredName = new String();
@@ -619,6 +633,17 @@ public class NewGameTab extends JPanel {
 
 		
 		gameList.add(selectedRequirements);
+		
+		// Get and add the list of emails to the mailer
+		GetUserController.getInstance().retrieveUser();
+		
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e2) {
+		}
+		
+		userList = UserModel.getInstance().getUsers();
+		mailer.addEmailFromUsers(userList);
 
 		/**
 		 * Saves data entered about the game when 'Create Game' button is
@@ -697,10 +722,9 @@ public class NewGameTab extends JPanel {
 								.addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
 						btnCreateGame.setEnabled(false);
-						Mailer m = new Mailer();
-						m.addEmail("software-team6@wpi.edu");
-						m.send();
-					} else {
+						mailer.send();
+					}
+					else{
 						// Error message when the session name is empty
 						if (sessionName.getText().isEmpty()) {
 							JOptionPane emptyNameErrorPanel = new JOptionPane(
