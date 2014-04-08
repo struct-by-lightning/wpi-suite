@@ -12,13 +12,18 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.List;
 
-import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 /**
  * This contains the list of requirements that are currently
  * in the specific planning poker session that the user can
@@ -27,7 +32,12 @@ import javax.swing.border.LineBorder;
  *
  */
 public class RequirementsPane extends JPanel {
+	
+	private JList <Requirement> requirementList;
 
+	/**A list of requirements from the planning poker games that will be put into the JList 'requirementList'*/
+	DefaultListModel<Requirement> listOfRequirements = new DefaultListModel<Requirement>();
+	
 	public RequirementsPane(JPanel infoContainer){
 		JPanel requirementsPane = new JPanel();
 		requirementsPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -47,17 +57,29 @@ public class RequirementsPane extends JPanel {
 		requirementsPane.add(requirementSelector, BorderLayout.CENTER);
 		requirementSelector.setLayout(new BorderLayout(0, 0));
 
-		JList requirementList = new JList();
-		requirementList.setModel(new AbstractListModel() {
-			String[] values = new String[] {"stuff", "stuff", "stuff", "stuff"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		
+			
+		requirementList = new JList<Requirement>();
 		requirementSelector.add(requirementList);
+		
+		
 
+	}
+	
+	public void newGameSelected(PlanningPokerGame ppg) {
+		
+		List<Integer> reqs = ppg.getRequirements();
+		GetRequirementsController.getInstance().retrieveRequirements();
+		
+		System.out.println(reqs);
+		
+		listOfRequirements.clear();
+		
+		for (int q : reqs) {
+			listOfRequirements.addElement(RequirementModel.getInstance().getRequirement(q));
+		}
+		
+		requirementList.setModel(listOfRequirements);		
+		
 	}
 }

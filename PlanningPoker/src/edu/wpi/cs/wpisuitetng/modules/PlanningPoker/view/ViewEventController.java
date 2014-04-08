@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.RequirementsPane;
 
 /**
  * Provides an interface for interaction with the main GUI elements
@@ -28,6 +29,8 @@ public class ViewEventController {
 	private ToolbarView toolbarView = null;
 	private NewGameTab newGameTab = null;
 	private ToolbarPanel toolbarPanel = null;
+	
+	private RequirementsPane reqPane = null;
 	
 	/**
 	 * Default constructor for ViewEventController.  Is protected to prevent instantiation.
@@ -49,6 +52,14 @@ public class ViewEventController {
 	/*
 	 *  Setters
 	 */
+	
+	public void setReqPane(RequirementsPane reqPane) {
+		this.reqPane = reqPane;
+	}
+	
+	public RequirementsPane getReqPane() {
+		return this.reqPane;
+	}
 	
 	/**
 	 * 
