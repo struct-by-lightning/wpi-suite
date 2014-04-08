@@ -11,12 +11,9 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
-import javax.swing.DefaultListModel;
-import javax.swing.ListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 
