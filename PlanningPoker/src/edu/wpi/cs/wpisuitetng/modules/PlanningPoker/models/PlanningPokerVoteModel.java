@@ -21,10 +21,13 @@ public class PlanningPokerVoteModel extends RegularAbstractModel<PlanningPokerVo
 	String gameName;
 	String userName;
 	int vote;
-	PlanningPokerVoteModel(String gameName, String userName, int number) {
+	int requirementID;
+	
+	PlanningPokerVoteModel(String gameName, String userName, int vote, int requirementID) {
 		this.gameName = gameName;
 		this.userName = userName.toLowerCase();
 		this.vote = vote;
+		this.requirementID = requirementID;
 	}
 	/**
 	 * in ppvotemodel, this does not extend easily to the standard one given to us by a gson object
@@ -33,7 +36,7 @@ public class PlanningPokerVoteModel extends RegularAbstractModel<PlanningPokerVo
 	@Override
 	public String toJSON() {
 		// TODO Auto-generated method stub
-		return "{\n  \"id\": \"" + gameName + ":" + userName + "\"\n  \"vote\": \"" + vote + "\"\n}";
+		return "{\n  \"id\": \"" + gameName + ":" + userName + ":" + requirementID + "\"\n  \"vote\": \"" + vote + "\"\n}";
 	}
 	/**
 	 * gives the cannonical styling (as would appear in the JSON) of the primary key
@@ -42,7 +45,7 @@ public class PlanningPokerVoteModel extends RegularAbstractModel<PlanningPokerVo
 	@Override
 	public String getID() {
 		// TODO Auto-generated method stub
-		return gameName + ":" + userName;
+		return gameName + ":" + userName + ":" + requirementID;
 	}
 	
 	@Override
@@ -51,6 +54,7 @@ public class PlanningPokerVoteModel extends RegularAbstractModel<PlanningPokerVo
 		scTemp.useDelimiter(":");
 		gameName = scTemp.next();
 		userName = scTemp.next();
+		requirementID = scTemp.nextInt();
 	}
 	
 	@Override
@@ -82,6 +86,9 @@ public class PlanningPokerVoteModel extends RegularAbstractModel<PlanningPokerVo
 		// check if the gameName is null
 		if(retGameName.equals("null"))
 			retGameName = null;
+		
+		// get the requirement ID
+		Integer retRequirementID = scTemp.nextInt();
 		// get the userName
 		scTemp.useDelimiter("\"\n  \"vote\": \"");
 		String retUserName = scTemp.next();
@@ -91,6 +98,6 @@ public class PlanningPokerVoteModel extends RegularAbstractModel<PlanningPokerVo
 		// get and format the vote
 		scTemp.useDelimiter("\"\n}");
 		int retVote = Integer.valueOf(scTemp.next());
-		return new PlanningPokerVoteModel(retGameName, retUserName, retVote);
+		return new PlanningPokerVoteModel(retGameName, retUserName, retVote, retRequirementID);
 	}
 }
