@@ -15,6 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 public class AboutPage extends JPanel {
 	/**
@@ -38,16 +44,62 @@ public class AboutPage extends JPanel {
 		JLabel lblAboutPoker = new JLabel("About Planning Poker");
 		lblAboutPoker.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		aboutTitle.add(lblAboutPoker);
-		
-		//adds the text for about planning poker with scrollbars if needed to the container in aboutPane
+
+		// adds the text for about planning poker with scrollbars if needed to
+		// the container in aboutPane
 		JPanel tipsContainer = new JPanel();
 		tipsContainer.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		aboutPane.add(tipsContainer, BorderLayout.CENTER);
 		tipsContainer.setLayout(new BorderLayout(0, 0));
 		JTextPane text = new JTextPane();
-		text.setText("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+		text.setEditable(false);
+		String[] textBody = { "   Planning Poker is a consensus-based tool for software developers to come together"
+				+ "and estimate effort of development goals for the team. This is a great tool for agile "
+				+ "teams to estimate the user stories they have for a given iteration.\n\n "
+				+ "   The idea behind Planning Poker is that team discusses each user story and then "
+				+ "goes into the game and then each user goes into the deck and selects the card "
+				+ "that represents how effort he or she thinks the task will take. This process can be "
+				+ "repeated for any number of user stories in the game. \n\n"
+				+ "   During the game all estimates remain private until everyone has chose his or her "
+				+ "card. After all estimates are in the Planning Poker game will calculate the Mean, "
+				+ "Median, Mode, Minimum, Maximum, and Standard Deviation of the game. These "
+				+ "values can be used for the team to continue the discussion and come to a consensus "
+				+ "of what the groups estimate is for the user story." };
+		String[] textStyles = { "regular" };
+
+		StyledDocument doc = text.getStyledDocument();
+		addStylesToDocument(doc);
+
+		try {
+			for (int i = 0; i < textBody.length; i++) {
+				doc.insertString(doc.getLength(), textBody[i],
+						doc.getStyle(textStyles[i]));
+			}
+		} catch (BadLocationException ble) {
+			System.err.println("Couldn't insert initial text into text pane.");
+		}
 		JScrollPane jsp = new JScrollPane(text);
 		tipsContainer.add(jsp);
+
+	}
+
+	protected void addStylesToDocument(StyledDocument doc) {
+		// Initialize some styles.
+		Style def = StyleContext.getDefaultStyleContext().getStyle(
+				StyleContext.DEFAULT_STYLE);
+
+		Style regular = doc.addStyle("regular", def);
+		StyleConstants.setFontFamily(def, "SansSerif");
+		
+		SimpleAttributeSet sa = new SimpleAttributeSet();
+		StyleConstants.setAlignment(sa, StyleConstants.ALIGN_JUSTIFIED);
+		doc.setParagraphAttributes(0, 0, sa, false);
+
+		Style s = doc.addStyle("italic", regular);
+		StyleConstants.setItalic(s, true);
+
+		s = doc.addStyle("bold", regular);
+		StyleConstants.setBold(s, true);
 
 	}
 }
