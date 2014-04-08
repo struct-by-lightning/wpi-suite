@@ -13,8 +13,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
  * @author sfmailand
  * @author hlong290494
  * @author friscis
- * 
- * This creates a tab for New games to be made. 
+ *
+ * This creates a tab for New games to be made.
  */
 
 import java.awt.BorderLayout;
@@ -41,13 +41,13 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -73,7 +73,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 
 /**
  * Implements the new game tab for planning poker module
- * 
+ *
  * @author Struct-by-lightning
  */
 public class NewGameTab extends JPanel {
@@ -112,35 +112,35 @@ public class NewGameTab extends JPanel {
 	 * These two lists contain the lists representing what the user has selected
 	 * These lists are then put into the JList swing component, which uses them
 	 * to display what the user will see in the GUI
-	 * 
+	 *
 	 * listOfRequirementsToAdd --> the list of requirements that the user wants
 	 * added to the game
-	 * 
+	 *
 	 * listOfAllRequirements -> the list of all the requirements in the requirement manager
-	 * 
-	 * listOfRequirementsForReset --> the full list of requirements. This is never edited 
+	 *
+	 * listOfRequirementsForReset --> the full list of requirements. This is never edited
 	 * 								  and is only used for reseting the requirements when
 	 * 								  the reset button is pressed
 	 */
-	
+
 	DefaultListModel<Requirement> listOfRequirementsToAdd= new DefaultListModel<Requirement>();
 	DefaultListModel<Requirement> listOfAllRequirements= new DefaultListModel<Requirement>();
 	DefaultListModel<Requirement> listOfRequirementsForReset = new DefaultListModel<Requirement>();
 
-	
+
 	/**
 	 * The list of requirement IDs that will actually be saved to the game will
 	 * be the same as 'listOfRequirementsToAdd' once the game is in the process
 	 * of being created
 	 */
 	List<Integer> gameRequirementIDsList = new ArrayList<Integer>();
-	
+
 	/**
 	 * The list of users to whom emails will be sent (assuming their email
 	 * address has been added to the server)
 	 */
 	List<User> userList = new ArrayList<User>();
-	
+
 	/**
 	 * The mailer which will send emails to all users with emails in their account
 	 */
@@ -382,7 +382,7 @@ public class NewGameTab extends JPanel {
 
 		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "Lightning Deck", "No Deck"}));
 		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
-		
+
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
 		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
@@ -411,20 +411,19 @@ public class NewGameTab extends JPanel {
 		deckPanel.add(cardPanel);
 
 		/**
-<<<<<<< HEAD
 		* Handles the combo box listener for deck selection and displays the deck type as a string
 		*/
 		deckType.addActionListener(new ActionListener () {
 		   public void actionPerformed(ActionEvent e) {
-			isTabEditedByUser = true;   
+			isTabEditedByUser = true;
 		    JComboBox combo = (JComboBox)e.getSource();
 		                String selection = (String)combo.getSelectedItem();
-		                if(selection.contentEquals("Default")) 
+		                if(selection.contentEquals("Default"))
 		                {
 		                // Replace this with button contents
 		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
-		                } 
-		                
+		                }
+
 		                else if(selection.contentEquals("Lightning Deck")) {
 		                // Replace this with button contents
 		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
@@ -490,7 +489,7 @@ public class NewGameTab extends JPanel {
 		projectList.setLayout(new BorderLayout(0, 0));
 
 		projectList.add(allRequirements);
-		
+
 		JPanel addRemPanel = new JPanel();
 		addRemPanel.setBorder(new LineBorder(new Color(192, 192, 192), 0));
 		requirementsSelector.add(addRemPanel);
@@ -526,11 +525,11 @@ public class NewGameTab extends JPanel {
 		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
 
 		btn_removeFromGame.setEnabled(false);
-		
+
 		JPanel bottommostButton = new JPanel();
 		buttonsPanel.add(bottommostButton);
 		bottommostButton.setLayout(new BorderLayout(0, 0));
-		
+
 		btn_removeAll = new JButton("<<");
 		bottommostButton.add(btn_removeAll);
 		btn_removeAll.setEnabled(false);
@@ -637,15 +636,15 @@ public class NewGameTab extends JPanel {
 		allRequirements.setModel(listOfAllRequirements);
 
 		gameList.add(selectedRequirements);
-		
+
 		// Get and add the list of emails to the mailer
 		GetUserController.getInstance().retrieveUser();
-		
+
 		try {
 			Thread.sleep(150);
 		} catch (InterruptedException e2) {
 		}
-		
+
 		userList = UserModel.getInstance().getUsers();
 		mailer.addEmailFromUsers(userList);
 
@@ -866,7 +865,7 @@ public class NewGameTab extends JPanel {
 		    public void actionPerformed(ActionEvent e) {
 		    	// Reset game name
 		    	sessionName.setText(dateFormat.format(date));
-		    	
+
 		    	// Reset start and end date
 		    	//startDateText.setText(defaultCalendarText);
 		    	endDateText.setText(defaultCalendarText);
@@ -875,36 +874,42 @@ public class NewGameTab extends JPanel {
 		    	// Reset start and end time
 		    	endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		    	// Reset the requirements boxes
-		    	
+
 		    	isTabEditedByUser = true;
-		    	
+
 		    	while(listOfRequirementsToAdd.getSize() > 0){
 		    		System.out.println(listOfRequirementsToAdd.elementAt(0));
 		    		listOfAllRequirements.addElement(listOfRequirementsToAdd.remove(0));
 		    	}
-		    	
+
 		    	selectedRequirements.setModel(listOfRequirementsToAdd);
 		    	allRequirements.setModel(listOfAllRequirements);
-		    	
+
 		    	btn_addToGame.setEnabled(true);
 		    	btn_addAll.setEnabled(true);
-		    	
-		    	btn_removeFromGame.setEnabled(false);	
+
+		    	btn_removeFromGame.setEnabled(false);
 	    		btn_removeAll.setEnabled(false);
 		    }
-		});		
-		
+		});
+
 		/**
 		 * Exports the list of selected requirements to a file when btnExport is
 		 * pressed
 		 */
 		btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Create exporter
-				Exporter ex = new Exporter();
-				// Export requirements
-				ex.exportAsJSON(listOfRequirementsToAdd, "filename.txt");
-				System.out.println("Exported all selected requirements\n");
+				//Create a file chooser
+				final JFileChooser fc = new JFileChooser();
+				//In response to a button click:
+				int returnVal = fc.showSaveDialog(NewGameTab.this);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					// Create exporter
+					Exporter ex = new Exporter();
+					// Export requirements
+					ex.exportAsJSON(listOfRequirementsToAdd, fc.getSelectedFile().getAbsolutePath());
+					System.out.println("Exported all selected requirements\n");
+				}
 			}
 		});
 	}
