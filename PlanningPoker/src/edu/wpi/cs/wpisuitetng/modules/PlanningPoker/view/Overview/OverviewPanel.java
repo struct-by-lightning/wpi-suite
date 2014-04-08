@@ -84,7 +84,7 @@ public class OverviewPanel extends JPanel {
 		/**
 		 * panel that contains the information for a game's requirements
 		 */
-			RequirementsPane requirementsPane = new RequirementsPane(infoContainer);
+			StartPage startPane = new StartPage(infoContainer);
 
 		/**
 		 * panel that contains information for a user to submit an estimate
