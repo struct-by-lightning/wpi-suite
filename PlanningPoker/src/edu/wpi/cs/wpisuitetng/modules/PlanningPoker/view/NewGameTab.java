@@ -649,8 +649,8 @@ public class NewGameTab extends JPanel {
 		// We iterate through the requirements list and add to that JList.
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);
-			listOfAllRequirements.addElement(req);
 			if(req.getIteration().equals("Backlog")){
+				listOfAllRequirements.addElement(req);
 				listOfRequirementsForReset.addElement(req);
 			}
 		}
