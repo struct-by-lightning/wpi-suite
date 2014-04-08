@@ -43,17 +43,13 @@ public class PlanningPoker implements IJanewayModule {
 
 	    //Create a JPanel to hold the toolbar for the tab
 	    ToolbarView toolbarView = new ToolbarView();
-		
-	    // Create a JPanel to hold the main contents of the tab
-	    JPanel overviewPanel = new OverviewPanel();
 	    
 	    //The inner tabs of the planning poker module in Janeway
 	    pokerTabs = new MainView();
 
 		ViewEventController.getInstance().setMainView(pokerTabs);
 		ViewEventController.getInstance().setToolBarView(toolbarView);
-		ViewEventController.getInstance().setOverviewPanel(overviewPanel);
-	    
+
 	    
 	    //pokerTabs.setTabComponentAt(0, new ClosableTabComponent(pokerTabs));
 	    /**
