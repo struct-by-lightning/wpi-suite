@@ -52,7 +52,7 @@ public class OverviewPanel extends JPanel {
 		 * panel that contains games in a tree structure
 		 */
 		JPanel yourGames = new JPanel();
-		yourGames.setMinimumSize(new Dimension(150, 10));
+		yourGames.setMinimumSize(new Dimension(200, 10));
 		yourGames.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		splitPane.setLeftComponent(yourGames);
 		yourGames.setLayout(new BorderLayout(0, 0));
