@@ -41,6 +41,9 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -472,15 +475,12 @@ public class NewGameTab extends JPanel {
 		projectList.add(allRequirements);
 
 		JPanel addRemPanel = new JPanel();
-		addRemPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		addRemPanel.setBorder(new LineBorder(new Color(192, 192, 192), 0));
 		requirementsSelector.add(addRemPanel);
-		addRemPanel.setLayout(new GridLayout(3, 1, 3, 3));
 
 		JPanel topSpacer = new JPanel();
-		addRemPanel.add(topSpacer);
 
 		JPanel buttonsPanel = new JPanel();
-		addRemPanel.add(buttonsPanel);
 		buttonsPanel.setLayout(new GridLayout(4, 1, 4, 4));
 
 		JPanel topmostButton = new JPanel();
@@ -519,7 +519,23 @@ public class NewGameTab extends JPanel {
 		btn_removeAll.setEnabled(false);
 
 		JPanel bottomSpacer = new JPanel();
-		addRemPanel.add(bottomSpacer);
+		GroupLayout gl_addRemPanel = new GroupLayout(addRemPanel);
+		gl_addRemPanel.setHorizontalGroup(
+			gl_addRemPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+				.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+		);
+		gl_addRemPanel.setVerticalGroup(
+			gl_addRemPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_addRemPanel.createSequentialGroup()
+					.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(3)
+					.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+					.addGap(3)
+					.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+		);
+		addRemPanel.setLayout(gl_addRemPanel);
 
 		JPanel gameRequirements = new JPanel();
 		gameRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
