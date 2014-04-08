@@ -20,12 +20,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.TeamEstimateTableModel;
+
 /**
  * 
  * This is a panel that displays all of the estimates for a planning poker session
  * This means that once a game is completed, all of the votes from the game will show
  * @author sfmailand
- *
+ * @author hlong290494
  */
 public class AllEstimatesPane {
 
@@ -57,22 +59,10 @@ public class AllEstimatesPane {
 		JPanel teamResults = new JPanel();
 		teamEstimates.add(teamResults, BorderLayout.CENTER);
 		teamResults.setLayout(new BorderLayout(0, 0));
+	
 		
-		/**
-		 * Table column 
-		 */
-		String[] columnNames = {"Username", "Estimation"};
-		
-		/**
-		 * Table data - contains team estimation
-		 */
-		Object[][] data = {
-				{"Long" , "1"},
-				{"Chris", "2"},
-				{"Ryan", "4"}	
-		};
-		
-		JTable table = new JTable(data, columnNames);
+		JTable table = new JTable();
+		table.setModel(new TeamEstimateTableModel());
 		JScrollPane teamResultsPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
 	
