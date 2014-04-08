@@ -775,15 +775,15 @@ public class NewGameTab extends JPanel {
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
-
-				if (allRequirements.getSelectedIndex() >= 0) {
+				
+				for(Requirement req: allRequirements.getSelectedValuesList()){
 
 					System.out.println("Added "
-							+ allRequirements.getSelectedValue()
+							+ req
 							+ "to selected requirements");
 
-					listOfRequirementsToAdd.addElement(listOfAllRequirements
-							.remove(allRequirements.getSelectedIndex()));
+					listOfRequirementsToAdd.addElement(req);
+					listOfAllRequirements.removeElement(req);
 					selectedRequirements.setModel(listOfRequirementsToAdd);
 					allRequirements.setModel(listOfAllRequirements);
 
@@ -806,15 +806,15 @@ public class NewGameTab extends JPanel {
 		btn_removeFromGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
-				if (selectedRequirements.getSelectedIndex() >= 0) {
+				
+				for(Requirement req: selectedRequirements.getSelectedValuesList()){
 
-					System.out.println("Removed "
-							+ selectedRequirements.getSelectedValue()
+					System.out.println("Added "
+							+ req
 							+ "to selected requirements");
 
-					listOfAllRequirements.addElement(listOfRequirementsToAdd
-							.remove(selectedRequirements.getSelectedIndex()));
-
+					listOfAllRequirements.addElement(req);
+					listOfRequirementsToAdd.removeElement(req);
 					allRequirements.setModel(listOfAllRequirements);
 					selectedRequirements.setModel(listOfRequirementsToAdd);
 
