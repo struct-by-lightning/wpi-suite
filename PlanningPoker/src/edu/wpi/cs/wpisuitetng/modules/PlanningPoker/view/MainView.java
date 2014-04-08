@@ -56,17 +56,6 @@ public class MainView extends JTabbedPane {
 	public MainView() {
 		this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		this.addTab("Overview", overview);
-		// this.addTab("Iteration Overview", newGame);
-		this.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				JComponent selected = (JComponent) MainView.this
-						.getSelectedComponent();
-
-				if (selected == overview) {
-					overview.fireRefresh();
-				}
-			}
-		});
 	}
 		
 		
