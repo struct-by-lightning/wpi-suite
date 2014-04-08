@@ -1,10 +1,10 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.DefaultListModel;
@@ -13,13 +13,6 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.AcceptanceTest;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.Note;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.Transaction;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.TransactionHistory;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 public class Exporter {
 

@@ -9,7 +9,6 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.decks;
 
-import java.awt.List;
 import java.util.Set;
 
 /**

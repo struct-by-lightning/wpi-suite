@@ -17,36 +17,17 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
  * This creates a tab for New games to be made. 
  */
 
-import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
-
-import javax.swing.border.LineBorder;
-
 import java.awt.Color;
-
-import javax.swing.JLabel;
-
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-
-import javax.swing.JTextField;
-
 import java.awt.GridLayout;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -66,33 +47,50 @@ import javax.swing.SpinnerDateModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.LinkedList;
 import java.util.List;
+
 import java.util.LinkedList;
 import java.util.ListIterator;
 
-import javax.swing.JComboBox;
+
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+>>>>>>> 0e27506d05acfb75337a00a0b638120c048d83b7
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SpinnerDateModel;
+import javax.swing.border.LineBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.Note;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.NoteList;
-
-import java.awt.Insets;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 
 /**
  * Implements the new game tab for planning poker module
@@ -157,6 +155,17 @@ public class NewGameTab extends JPanel {
 	 * of being created
 	 */
 	List<Integer> gameRequirementIDsList = new ArrayList<Integer>();
+	
+	/**
+	 * The list of users to whom emails will be sent (assuming their email
+	 * address has been added to the server)
+	 */
+	List<User> userList = new ArrayList<User>();
+	
+	/**
+	 * The mailer which will send emails to all users with emails in their account
+	 */
+	Mailer mailer = new Mailer();
 
 	final JSpinner endTime;
 	String enteredName = new String();
@@ -391,16 +400,15 @@ public class NewGameTab extends JPanel {
 		// calendarOverview.add(deckDisplayPane);
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {
-				"Fibonacci", "Other", "No Deck" }));
-		// deckType.setMinimumSize(new Dimension
-		// (deckType.getPreferredSize().width,
-		// deckType.getPreferredSize().height));
 
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "Lightning Deck", "No Deck"}));
+		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
+		
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
-		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 21");
-		deckOverview.setHorizontalAlignment(WIDTH / 2);
+		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
+		deckOverview.setHorizontalAlignment(WIDTH/2);
+
 		deckOverview.setEditable(false);
 
 		cardPanel.setPreferredSize(new Dimension(350, 220));
@@ -424,28 +432,29 @@ public class NewGameTab extends JPanel {
 		deckPanel.add(cardPanel);
 
 		/**
-		 * Handles the combo box listener for deck selection and displays the
-		 * deck type as a string
-		 */
-		deckType.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				isTabEditedByUser = true;
-				JComboBox combo = (JComboBox) e.getSource();
-				String selection = (String) combo.getSelectedItem();
-				if (selection.contentEquals("Other")) {
-					// Replace this with button contents
-					deckOverview
-							.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100, ??");
-				}
+<<<<<<< HEAD
+		* Handles the combo box listener for deck selection and displays the deck type as a string
+		*/
+		deckType.addActionListener(new ActionListener () {
+		   public void actionPerformed(ActionEvent e) {
+			isTabEditedByUser = true;   
+		    JComboBox combo = (JComboBox)e.getSource();
+		                String selection = (String)combo.getSelectedItem();
+		                if(selection.contentEquals("Default")) 
+		                {
+		                // Replace this with button contents
+		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
+		                } 
+		                
+		                else if(selection.contentEquals("Lightning Deck")) {
+		                // Replace this with button contents
+		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
+		                }
+		                else if(selection.contentEquals("No Deck")){
+		                	deckOverview.setText("User will be able to enter their own estimation");
+		                }
+		   }
 
-				else if (selection.contentEquals("Fibonacci")) {
-					// Replace this with button contents
-					deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 21");
-				} else if (selection.contentEquals("No Deck")) {
-					deckOverview
-							.setText("User will be able to enter their own estimation");
-				}
-			}
 		});
 
 		// JPanel panel_20 = new JPanel();
@@ -503,15 +512,12 @@ public class NewGameTab extends JPanel {
 		projectList.add(allRequirements);
 
 		JPanel addRemPanel = new JPanel();
-		addRemPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		addRemPanel.setBorder(new LineBorder(new Color(192, 192, 192), 0));
 		requirementsSelector.add(addRemPanel);
-		addRemPanel.setLayout(new GridLayout(3, 1, 3, 3));
 
 		JPanel topSpacer = new JPanel();
-		addRemPanel.add(topSpacer);
 
 		JPanel buttonsPanel = new JPanel();
-		addRemPanel.add(buttonsPanel);
 		buttonsPanel.setLayout(new GridLayout(4, 1, 4, 4));
 
 		JPanel topmostButton = new JPanel();
@@ -550,7 +556,23 @@ public class NewGameTab extends JPanel {
 		btn_removeAll.setEnabled(false);
 
 		JPanel bottomSpacer = new JPanel();
-		addRemPanel.add(bottomSpacer);
+		GroupLayout gl_addRemPanel = new GroupLayout(addRemPanel);
+		gl_addRemPanel.setHorizontalGroup(
+			gl_addRemPanel.createParallelGroup(Alignment.LEADING)
+				.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+				.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+		);
+		gl_addRemPanel.setVerticalGroup(
+			gl_addRemPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_addRemPanel.createSequentialGroup()
+					.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+					.addGap(3)
+					.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+					.addGap(3)
+					.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+		);
+		addRemPanel.setLayout(gl_addRemPanel);
 
 		JPanel gameRequirements = new JPanel();
 		gameRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -635,6 +657,17 @@ public class NewGameTab extends JPanel {
 
 		
 		gameList.add(selectedRequirements);
+		
+		// Get and add the list of emails to the mailer
+		GetUserController.getInstance().retrieveUser();
+		
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e2) {
+		}
+		
+		userList = UserModel.getInstance().getUsers();
+		mailer.addEmailFromUsers(userList);
 
 		/**
 		 * Saves data entered about the game when 'Create Game' button is
@@ -713,10 +746,9 @@ public class NewGameTab extends JPanel {
 								.addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
 						btnCreateGame.setEnabled(false);
-						Mailer m = new Mailer();
-						m.addEmail("software-team6@wpi.edu");
-						m.send();
-					} else {
+						mailer.send();
+					}
+					else{
 						// Error message when the session name is empty
 						if (sessionName.getText().isEmpty()) {
 							JOptionPane emptyNameErrorPanel = new JOptionPane(

@@ -9,47 +9,24 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview;
 
-import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
-import java.awt.Image;
-
-import javax.swing.border.LineBorder;
-
 import java.awt.Color;
-
-import javax.swing.JButton;
-
-import java.awt.FlowLayout;
-
-import javax.swing.JSplitPane;
-import javax.swing.JTree;
-
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.JTextPane;
-
-import java.awt.Font;
-
-import javax.swing.JScrollPane;
-
-import java.awt.Dimension;
-import java.io.IOException;
-
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
-import javax.swing.tree.DefaultTreeModel;
+import javax.swing.JTextPane;
+import javax.swing.JTree;
+import javax.swing.border.LineBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 
 public class OverviewPanel extends JPanel {
 	private JTextField estimateTextField;
@@ -157,5 +134,6 @@ public class OverviewPanel extends JPanel {
 //			unanswered.add(new DefaultMutableTreeNode(game.getGameName()));
 //		}
 	}
+
 
 }
