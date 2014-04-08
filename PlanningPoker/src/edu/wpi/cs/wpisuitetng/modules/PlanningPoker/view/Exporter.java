@@ -96,11 +96,17 @@ public class Exporter {
 			e1.printStackTrace();
 			return;
 		}
+		
+		out.print("[");
 		// Iterate over the list of requirements
 		for(int i = 0; i < listOfRequirementsToAdd.size(); i++) {
+			if(i != 0) {
+				out.println(",");
+			}
 			// Export the current requirement
-			out.println(listOfRequirementsToAdd.get(i).toJSON());
+			out.print(listOfRequirementsToAdd.get(i).toJSON());
 		}
+		out.println("]");
 		
 		// Close the file
 		out.close();

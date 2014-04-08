@@ -53,6 +53,7 @@ import java.awt.event.KeyListener;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JButton;
@@ -73,7 +74,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
-
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -888,11 +888,17 @@ public class NewGameTab extends JPanel {
 		 */
 		btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Create exporter
-				Exporter ex = new Exporter();
-				// Export requirements
-				ex.exportAsJSON(listOfRequirementsToAdd, "filename.txt");
-				System.out.println("Exported all selected requirements\n");
+				//Create a file chooser
+				final JFileChooser fc = new JFileChooser();
+				//In response to a button click:
+				int returnVal = fc.showSaveDialog(NewGameTab.this);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					// Create exporter
+					Exporter ex = new Exporter();
+					// Export requirements
+					ex.exportAsJSON(listOfRequirementsToAdd, fc.getSelectedFile().getAbsolutePath());
+					System.out.println("Exported all selected requirements\n");
+				}
 			}
 		});
 	}
