@@ -65,6 +65,8 @@ public class GameJTree extends JTree {
 	}
 
 	public void fireRefresh() {
+		DefaultTreeModel model = (DefaultTreeModel) this.getModel();
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
 
 		GetPlanningPokerGamesController.getInstance()
 				.retrievePlanningPokerGames();
@@ -75,6 +77,7 @@ public class GameJTree extends JTree {
 		DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode(
 				"Finished");
 
+		
 		for (PlanningPokerGame game : PlanningPokerGameModel
 				.getPlanningPokerGames()) {
 			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(
@@ -83,32 +86,32 @@ public class GameJTree extends JTree {
 			// Has the game started voting?
 			if (game.isLive()) {
 				openGames.add(nodeToAdd);
-				break;
 			}
-
-			// Has the game ended?
-			if (game.isFinished()) {
+			else if (game.isFinished()) {
 				finishedGames.add(nodeToAdd);
-				break;
+			} 
+			else {
+				// The game must be new.
+				newGames.add(nodeToAdd);
 			}
 
-			// The game must be new.
-			newGames.add(nodeToAdd);
 		}
 
+		root.removeAllChildren();
+
 		if (!newGames.isLeaf()) {
-			allGames.add(newGames);
+			root.add(newGames);
 		}
 
 		if (!openGames.isLeaf()) {
-			allGames.add(openGames);
+			root.add(openGames);
 		}
 
 		if (!finishedGames.isLeaf()) {
-			allGames.add(finishedGames);
+			root.add(finishedGames);
 		}
 
-		this.model.setRoot(allGames);
+		model.reload(root);
 
 		for (int i = 0; i < this.getRowCount(); i++) {
 			this.expandRow(i);
