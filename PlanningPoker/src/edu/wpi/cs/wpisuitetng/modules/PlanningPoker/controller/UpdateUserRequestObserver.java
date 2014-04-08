@@ -72,7 +72,8 @@ public class UpdateUserRequestObserver implements RequestObserver {
 	 * 
 	 * @param iReq
 	 *            the request that was made to the server
-	 * @param exception 
+	 * @param exception
+	 *            the exception that occurred.
 	 * 
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest,
 	 *      java.lang.Exception)
@@ -81,5 +82,4 @@ public class UpdateUserRequestObserver implements RequestObserver {
 	public void fail(IRequest iReq, Exception exception) {
 		System.err.println("The request to update a requirement failed.");
 	}
-
 }
