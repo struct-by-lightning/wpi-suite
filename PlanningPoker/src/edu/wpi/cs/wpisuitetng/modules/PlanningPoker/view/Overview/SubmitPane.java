@@ -23,6 +23,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
@@ -35,6 +36,7 @@ import javax.swing.border.LineBorder;
 public class SubmitPane extends JPanel{
 
 	static int selectedValue;
+	
 	public SubmitPane(JPanel infoContainer){
 		JPanel submitPane = new JPanel();
 		submitPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -101,4 +103,5 @@ public class SubmitPane extends JPanel{
 
 
 	}
+	
 }
