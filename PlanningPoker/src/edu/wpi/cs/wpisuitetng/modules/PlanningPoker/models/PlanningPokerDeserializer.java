@@ -27,9 +27,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPokerGame> {
 

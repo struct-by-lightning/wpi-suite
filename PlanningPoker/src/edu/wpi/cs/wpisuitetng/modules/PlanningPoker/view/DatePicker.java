@@ -15,10 +15,12 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
  */
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.*;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
