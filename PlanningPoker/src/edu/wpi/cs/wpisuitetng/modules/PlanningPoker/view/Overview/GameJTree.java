@@ -21,6 +21,7 @@ import javax.swing.tree.DefaultTreeModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
 
 public class GameJTree extends JTree {
 
@@ -48,12 +49,17 @@ public class GameJTree extends JTree {
 				DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode)tree.getLastSelectedPathComponent();
 				String gameName = (String)selectedNode.getUserObject();
 
-				PlanningPokerGame game = PlanningPokerGameModel.getPlanningPokerGame(gameName);
-				// DO SOMETHING WITH THIS GAME IF YOU WANNA!
+				try {
+					PlanningPokerGame game = PlanningPokerGameModel.getPlanningPokerGame(gameName);
+					ViewEventController.getInstance().getReqPane().newGameSelected(game);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 			}
 		});
 	}
-
+	
 	public void fireRefresh() {
 
 		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
