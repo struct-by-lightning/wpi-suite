@@ -217,6 +217,7 @@ public class NewGameTab extends JPanel {
 		createGamePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
 		btnCreateGame = new JButton("Create");
+		btnCreateGame.setEnabled(false);
 		createGamePane.add(btnCreateGame);
 
 		JButton btnResetGame = new JButton("Reset");
@@ -789,6 +790,7 @@ public class NewGameTab extends JPanel {
 
 				btn_addToGame.setEnabled(false);
 				btn_addAll.setEnabled(false);
+				btnCreateGame.setEnabled(true);
 			}
 		});
 
@@ -818,6 +820,8 @@ public class NewGameTab extends JPanel {
 						btn_addToGame.setEnabled(false);
 						btn_addAll.setEnabled(false);
 					}
+					
+					btnCreateGame.setEnabled(true);
 
 				}
 			}
@@ -848,8 +852,11 @@ public class NewGameTab extends JPanel {
 					if (listOfRequirementsToAdd.size() == 0) {
 						btn_removeFromGame.setEnabled(false);
 						btn_removeAll.setEnabled(false);
+						btnCreateGame.setEnabled(false);
 					}
 				}
+				
+
 
 			}
 		});
@@ -861,6 +868,7 @@ public class NewGameTab extends JPanel {
 		btn_removeAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
+				btnCreateGame.setEnabled(false);
 
 				while (listOfRequirementsToAdd.getSize() > 0) {
 					System.out.println(listOfRequirementsToAdd.elementAt(0));
@@ -887,7 +895,7 @@ public class NewGameTab extends JPanel {
 		    public void actionPerformed(ActionEvent e) {
 		    	// Reset game name
 		    	sessionName.setText(dateFormat.format(date));
-
+		    	btnCreateGame.setEnabled(true);
 		    	// Reset start and end date
 		    	//startDateText.setText(defaultCalendarText);
 		    	endDateText.setText(defaultCalendarText);
