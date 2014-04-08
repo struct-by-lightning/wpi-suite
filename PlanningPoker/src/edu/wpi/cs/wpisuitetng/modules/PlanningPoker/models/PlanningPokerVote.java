@@ -19,13 +19,13 @@ import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
  * @author bbiletch
  */
 
-public class PlanningPokerVoteModel extends RegularAbstractModel<PlanningPokerVoteModel>{
+public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	String gameName;
 	String userName;
 	int vote;
 	int requirementID;
 	
-	PlanningPokerVoteModel(String gameName, String userName, int vote, int requirementID) {
+	PlanningPokerVote(String gameName, String userName, int vote, int requirementID) {
 		this.gameName = gameName;
 		this.userName = userName.toLowerCase();
 		this.vote = vote;
@@ -77,7 +77,7 @@ public class PlanningPokerVoteModel extends RegularAbstractModel<PlanningPokerVo
 	 * @param json assumes a JSON string generated from a model of this type
 	 * @return the object form of the JSON
 	 */
-	static PlanningPokerVoteModel fromJSON(String json) {
+	public static PlanningPokerVote fromJSON(String json) {
 		Scanner scTemp = new Scanner(json);
 		// skip the boilerplate
 		scTemp.useDelimiter(": \"");
@@ -100,6 +100,6 @@ public class PlanningPokerVoteModel extends RegularAbstractModel<PlanningPokerVo
 		// get and format the vote
 		scTemp.useDelimiter("\"\n}");
 		int retVote = Integer.valueOf(scTemp.next());
-		return new PlanningPokerVoteModel(retGameName, retUserName, retVote, retRequirementID);
+		return new PlanningPokerVote(retGameName, retUserName, retVote, retRequirementID);
 	}
 }
