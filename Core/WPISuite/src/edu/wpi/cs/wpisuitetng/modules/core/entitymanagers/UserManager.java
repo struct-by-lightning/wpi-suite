@@ -234,6 +234,7 @@ public class UserManager implements EntityManager<User> {
 		{
 			logger.log(Level.FINE, "User update being attempted...");
 			changes = User.fromJSON(changeSet);
+					
 		}
 		catch(JsonParseException e)
 		{
@@ -257,6 +258,11 @@ public class UserManager implements EntityManager<User> {
 			{
 				String encryptedPass = this.passwordHash.generateHash(changes.getPassword());
 				toUpdate.setPassword(encryptedPass);
+			}
+			
+			if((changes.getEmail() != null))
+			{
+				toUpdate.setEmail(changes.getEmail());
 			}
 	
 			if((changes.getRole() != null))

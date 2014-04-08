@@ -20,9 +20,11 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
 
 public class GameJTree extends JTree {
 
@@ -56,14 +58,24 @@ public class GameJTree extends JTree {
 				JTree tree = (JTree) event.getSource();
 				DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tree
 						.getLastSelectedPathComponent();
-				String gameName = (String) selectedNode.getUserObject();
+				
+				
+				
 
-				PlanningPokerGame game = PlanningPokerGameModel
-						.getPlanningPokerGame(gameName);
+
+				try {
+					String gameName = (String) selectedNode.getUserObject();
+					PlanningPokerGame game = PlanningPokerGameModel.getPlanningPokerGame(gameName);
+					ViewEventController.getInstance().getReqPane().newGameSelected(game);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+
 			}
 		});
 	}
-
+	
 	public void fireRefresh() {
 		DefaultTreeModel model = (DefaultTreeModel) this.getModel();
 		DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
@@ -82,6 +94,9 @@ public class GameJTree extends JTree {
 				.getPlanningPokerGames()) {
 			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(
 					game.getGameName());
+			
+			System.out.println("Game name: " + game.getGameName());
+			System.out.println("Moderator: " + game.getModerator());
 
 			// Has the game started voting?
 			if (game.isLive()) {
@@ -90,7 +105,7 @@ public class GameJTree extends JTree {
 			else if (game.isFinished()) {
 				finishedGames.add(nodeToAdd);
 			} 
-			else {
+			else if (game.getModerator().equals(ConfigManager.getConfig().getUserName())){
 				// The game must be new.
 				newGames.add(nodeToAdd);
 			}

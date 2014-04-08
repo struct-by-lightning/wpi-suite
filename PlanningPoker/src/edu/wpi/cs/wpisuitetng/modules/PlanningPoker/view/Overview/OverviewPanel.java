@@ -27,6 +27,7 @@ import javax.swing.tree.DefaultTreeModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
 
 public class OverviewPanel extends JPanel {
 	private JTextField estimateTextField;
@@ -79,6 +80,12 @@ public class OverviewPanel extends JPanel {
 		 * panel that contains the getting start info
 		 */
 			StartPage startPane = new StartPage(infoContainer);
+
+			
+			//Remove this later
+			RequirementsPane requirementsPane = new RequirementsPane(infoContainer);
+			ViewEventController.getInstance().setReqPane(requirementsPane);
+
 
 		/**
 		 * panel that contains information for first time planning poker players
