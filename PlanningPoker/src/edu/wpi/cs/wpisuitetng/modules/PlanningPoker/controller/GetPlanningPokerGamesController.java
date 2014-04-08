@@ -83,13 +83,13 @@ public class GetPlanningPokerGamesController implements ActionListener {
 	 */
 	public void receivedPlanningPokerGames(PlanningPokerGame[] PlanningPokerGames) {
 		// Empty the local model to eliminate duplications
-		PlanningPokerGameModel.getInstance().emptyModel();
+		PlanningPokerGameModel.emptyModel();
 		
 		// Make sure the response was not null
 		if (PlanningPokerGames != null) {
 			
 			// add the PlanningPokerGames to the local model
-			PlanningPokerGameModel.getInstance().addPlanningPokerGames(PlanningPokerGames);
+			PlanningPokerGameModel.addPlanningPokerGames(PlanningPokerGames);
 		}
 	}
 }
