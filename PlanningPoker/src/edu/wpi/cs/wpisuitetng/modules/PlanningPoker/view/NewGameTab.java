@@ -362,16 +362,15 @@ public class NewGameTab extends JPanel {
 		// calendarOverview.add(deckDisplayPane);
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {
-				"Fibonacci", "Other", "No Deck" }));
-		// deckType.setMinimumSize(new Dimension
-		// (deckType.getPreferredSize().width,
-		// deckType.getPreferredSize().height));
 
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "Lightning Deck", "No Deck"}));
+		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
+		
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
-		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 21");
-		deckOverview.setHorizontalAlignment(WIDTH / 2);
+		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
+		deckOverview.setHorizontalAlignment(WIDTH/2);
+
 		deckOverview.setEditable(false);
 
 		cardPanel.setPreferredSize(new Dimension(350, 220));
@@ -395,28 +394,29 @@ public class NewGameTab extends JPanel {
 		deckPanel.add(cardPanel);
 
 		/**
-		 * Handles the combo box listener for deck selection and displays the
-		 * deck type as a string
-		 */
-		deckType.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				isTabEditedByUser = true;
-				JComboBox combo = (JComboBox) e.getSource();
-				String selection = (String) combo.getSelectedItem();
-				if (selection.contentEquals("Other")) {
-					// Replace this with button contents
-					deckOverview
-							.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100, ??");
-				}
+<<<<<<< HEAD
+		* Handles the combo box listener for deck selection and displays the deck type as a string
+		*/
+		deckType.addActionListener(new ActionListener () {
+		   public void actionPerformed(ActionEvent e) {
+			isTabEditedByUser = true;   
+		    JComboBox combo = (JComboBox)e.getSource();
+		                String selection = (String)combo.getSelectedItem();
+		                if(selection.contentEquals("Default")) 
+		                {
+		                // Replace this with button contents
+		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
+		                } 
+		                
+		                else if(selection.contentEquals("Lightning Deck")) {
+		                // Replace this with button contents
+		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
+		                }
+		                else if(selection.contentEquals("No Deck")){
+		                	deckOverview.setText("User will be able to enter their own estimation");
+		                }
+		   }
 
-				else if (selection.contentEquals("Fibonacci")) {
-					// Replace this with button contents
-					deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 21");
-				} else if (selection.contentEquals("No Deck")) {
-					deckOverview
-							.setText("User will be able to enter their own estimation");
-				}
-			}
 		});
 
 		// JPanel panel_20 = new JPanel();
