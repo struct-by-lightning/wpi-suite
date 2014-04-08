@@ -617,11 +617,18 @@ public class NewGameTab extends JPanel {
 				isTabEditedByUser = true;
 				String currentText = sessionName.getText();
 				if (currentText.equals("")) {
+
 					btnCreateGame.setEnabled(false);
 					createGameErrorText.setText("Session needs a name");
 				} else {
-					btnCreateGame.setEnabled(true);
-					createGameErrorText.setText("");
+					if (listOfRequirementsToAdd.size() == 0) {
+						btnCreateGame.setEnabled(false);
+					}
+					else{
+						btnCreateGame.setEnabled(true);
+						createGameErrorText.setText("");
+					}
+
 				}
 			}
 
