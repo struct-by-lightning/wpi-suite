@@ -83,6 +83,9 @@ public class GameJTree extends JTree {
 				.getPlanningPokerGames()) {
 			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(
 					game.getGameName());
+			
+			System.out.println("Game name: " + game.getGameName());
+			System.out.println("Moderator: " + game.getModerator());
 
 			// Has the game started voting?
 			if (game.isLive()) {
