@@ -67,38 +67,24 @@ public class OverviewPanel extends JPanel {
 		splitPane.setRightComponent(gameContainer);
 		gameContainer.setLayout(new BorderLayout(0, 0));
 
-		JPanel gameName = new JPanel();
-		gameName.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		gameContainer.add(gameName, BorderLayout.NORTH);
-
-		JLabel lblSessionNameCreatedBy = new JLabel("SESSION_NAME created by MODERATOR on DATE_CREATED");
-		lblSessionNameCreatedBy.setFont(new Font("Lucida Grande", Font.BOLD, 15));
-		gameName.add(lblSessionNameCreatedBy);
+		
 
 		JPanel infoContainer = new JPanel();
 		gameContainer.add(infoContainer, BorderLayout.CENTER);
-		infoContainer.setLayout(new GridLayout(2, 2, 5, 5));
+		infoContainer.setLayout(new GridLayout(1, 1, 5, 5));
 
 		
 		
 		/**
-		 * panel that contains the information for a game's requirements
+		 * panel that contains the getting start info
 		 */
 			StartPage startPane = new StartPage(infoContainer);
 
 		/**
-		 * panel that contains information for a user to submit an estimate
+		 * panel that contains information for first time planning poker players
 		 */
-			SubmitPane submitPane = new SubmitPane(infoContainer);
-		/**
-		 * panel that contains that statistics of a session (if the session has ended)
-		 */
-			StatisticsPane statisticsPane = new StatisticsPane(infoContainer);
-			
-		/**
-		 * panel that contains team estimates (if the session has ended)
-		 */
-			AllEstimatesPane allEstimatesPane = new AllEstimatesPane(infoContainer);
+			AboutPage aboutPane = new AboutPage(infoContainer);
+		
 
 	}
 

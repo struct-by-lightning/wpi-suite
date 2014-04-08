@@ -39,7 +39,7 @@ public class RequirementsPane extends JPanel {
 		requirementsPane.add(requirementLabel, BorderLayout.NORTH);
 
 		JLabel lblChooseARequirement = new JLabel("Choose a requirement to estimate");
-		lblChooseARequirement.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+		lblChooseARequirement.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		requirementLabel.add(lblChooseARequirement);
 
 		JPanel requirementSelector = new JPanel();
