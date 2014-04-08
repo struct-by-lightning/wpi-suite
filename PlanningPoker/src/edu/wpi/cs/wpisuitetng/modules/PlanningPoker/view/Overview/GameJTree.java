@@ -41,6 +41,7 @@ public class GameJTree extends JTree {
 			}
 		});
 
+		
 		this.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent event) {
 				JTree tree = (JTree)event.getSource();
