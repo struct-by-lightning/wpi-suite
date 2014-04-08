@@ -10,8 +10,8 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.AbstractListModel;
 
