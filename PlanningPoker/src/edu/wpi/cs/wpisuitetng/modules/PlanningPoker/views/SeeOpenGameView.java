@@ -155,7 +155,7 @@ public class SeeOpenGameView {
 		
 		gameContainer.add(topPanel, BorderLayout.NORTH);
 
-		JLabel lblGameName = new JLabel("GAME_NAME");
+		JLabel lblGameName = new JLabel(MainViewController.activeGame.getGameName());
 		lblGameName.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		gameName.add(lblGameName, BorderLayout.WEST);
 
