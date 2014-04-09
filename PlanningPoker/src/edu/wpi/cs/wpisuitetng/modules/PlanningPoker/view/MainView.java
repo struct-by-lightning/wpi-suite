@@ -23,7 +23,7 @@ import javax.swing.JTabbedPane;
 /**
  * This panel fills the main content area of the tab for this module. It
  * contains one inner JPanel, the BoardPanel.
- * 
+ *
  * @author Batyrlan Nurbekov
  * @author Sam Mailand
  * @author Zachary Zapatka
@@ -32,7 +32,7 @@ import javax.swing.JTabbedPane;
  */
 @SuppressWarnings("serial")
 public class MainView extends JTabbedPane {
-	
+
 	private boolean dragging = false;
 	private Image tabImage = null;
 	private Point currentMouseLocation = null;
@@ -41,18 +41,6 @@ public class MainView extends JTabbedPane {
 	private final JPopupMenu popup = new JPopupMenu();
 	private JMenuItem closeAll = new JMenuItem("Close All Tabs");
 	private JMenuItem closeOthers = new JMenuItem("Close Others");
-
-
-
-	/**
-	 * Adds main subtab when user goes to RequirementManager
-	 */
-//	public MainView() {
-//		this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-//		this.addTab("Overview", overview);
-//	}
-		
-		
 
 
 	/**
@@ -72,7 +60,7 @@ public class MainView extends JTabbedPane {
 
 	/**
 	 * Overridden insertTab function to allow tab to close.
-	 * 
+	 *
 	 * @param title	Title of the tab
 	 * @param icon	Icon for the tab
 	 * @param component	the visible tab
@@ -87,9 +75,9 @@ public class MainView extends JTabbedPane {
 //		}
 //	}
 
-	
+
 	/**
-	 * Method setSelectedComponent allows you to select tabs 
+	 * Method setSelectedComponent allows you to select tabs
 	 * i.e. Main view or New Game.
 	 * @param c Component which is a tab
 	 */
@@ -111,7 +99,7 @@ public class MainView extends JTabbedPane {
 				setSelectedComponent(this.lastTab);}
 		} catch (IllegalArgumentException e){}
 	}
-	
+
 	/**
 	 * Method getPopup opens a window that asks if you want to close a tab.
 	 * @return JPopupMenu the popup window
@@ -121,7 +109,7 @@ public class MainView extends JTabbedPane {
 	}
 	/**
 	 * Method getCloseAll is an internal component part of window builder .
-	 * @return JMenuItem 
+	 * @return JMenuItem
 	 */
 	public JMenuItem getCloseAll() {
 		return closeAll;

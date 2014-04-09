@@ -23,9 +23,9 @@ import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 
-public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPokerVoteModel> {
+public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPokerVote> {
 
-	Class<PlanningPokerVoteModel> ppg = PlanningPokerVoteModel.class;
+	Class<PlanningPokerVote> ppg = PlanningPokerVote.class;
 	Data data;
 
 	private static final Logger logger = Logger.getLogger(PlanningPokerEntityManager.class.getName());
@@ -35,9 +35,9 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	}
 	
 	@Override
-	public PlanningPokerVoteModel makeEntity(Session s, String content)
+	public PlanningPokerVote makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
-		PlanningPokerVoteModel p = PlanningPokerVoteModel.fromJSON(content);
+		PlanningPokerVote p = PlanningPokerVote.fromJSON(content);
 
 		if (getEntity(s, p.getID())[0] == null) {
 			save(s, p);
@@ -49,9 +49,9 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 		return p;
 	}
 	@Override
-	public PlanningPokerVoteModel[] getEntity(Session s, String id)
+	public PlanningPokerVote[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
-		PlanningPokerVoteModel[] m = new PlanningPokerVoteModel[1];
+		PlanningPokerVote[] m = new PlanningPokerVote[1];
 		if(id.equals(""))
 		{
 			return getAll(s);
@@ -63,16 +63,16 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	}
 
 	@Override
-	public PlanningPokerVoteModel[] getAll(Session s) throws WPISuiteException {
-		PlanningPokerVoteModel[] ret = new PlanningPokerVoteModel[1];
-		ret = data.retrieveAll(new PlanningPokerVoteModel(null, null, 0)).toArray(ret);
+	public PlanningPokerVote[] getAll(Session s) throws WPISuiteException {
+		PlanningPokerVote[] ret = new PlanningPokerVote[1];
+		ret = data.retrieveAll(new PlanningPokerVote(null, null, 0, 0)).toArray(ret);
 		return ret;
 	}
 
 	@Override
-	public PlanningPokerVoteModel update(Session s, String content)
+	public PlanningPokerVote update(Session s, String content)
 			throws WPISuiteException {
-		PlanningPokerVoteModel changes = PlanningPokerVoteModel.fromJSON(content);
+		PlanningPokerVote changes = PlanningPokerVote.fromJSON(content);
 		if(changes.gameName != null && changes.userName != null) {
 			deleteEntity(s, changes.getID());
 			data.save(changes);
@@ -84,7 +84,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	}
 
 	@Override
-	public void save(Session s, PlanningPokerVoteModel model)
+	public void save(Session s, PlanningPokerVote model)
 			throws WPISuiteException {
 		if(data.save(model))
 		{
@@ -117,7 +117,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
 		logger.log(Level.INFO, "PlanningPokerEntityManager invoking DeleteAll...");
-		data.deleteAll(new PlanningPokerVoteModel(null, null, 0));
+		data.deleteAll(new PlanningPokerVote(null, null, 0, 0));
 	}
 
 	@Override

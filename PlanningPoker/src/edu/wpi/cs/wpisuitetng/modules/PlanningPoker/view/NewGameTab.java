@@ -215,6 +215,7 @@ public class NewGameTab extends JPanel {
 		createGamePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
 		btnCreateGame = new JButton("Create");
+		btnCreateGame.setEnabled(false);
 		createGamePane.add(btnCreateGame);
 
 		JButton btnResetGame = new JButton("Reset");
@@ -614,11 +615,18 @@ public class NewGameTab extends JPanel {
 				isTabEditedByUser = true;
 				String currentText = sessionName.getText();
 				if (currentText.equals("")) {
+
 					btnCreateGame.setEnabled(false);
 					createGameErrorText.setText("Session needs a name");
 				} else {
-					btnCreateGame.setEnabled(true);
-					createGameErrorText.setText("");
+					if (listOfRequirementsToAdd.size() == 0) {
+						btnCreateGame.setEnabled(false);
+					}
+					else{
+						btnCreateGame.setEnabled(true);
+						createGameErrorText.setText("");
+					}
+
 				}
 			}
 
@@ -647,8 +655,8 @@ public class NewGameTab extends JPanel {
 		// We iterate through the requirements list and add to that JList.
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);
-			listOfAllRequirements.addElement(req);
 			if(req.getIteration().equals("Backlog")){
+				listOfAllRequirements.addElement(req);
 				listOfRequirementsForReset.addElement(req);
 			}
 		}
@@ -729,12 +737,12 @@ public class NewGameTab extends JPanel {
 									"Default description",
 
 									selectedDeckType, gameRequirementIDsList,
-									false, true, startCal, endCal, "");
+									false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
 						} else {
 							game = new PlanningPokerGame(enteredName,
 									"Default description", selectedDeckType,
 									gameRequirementIDsList, false, false,
-									startCal, endCal, "");
+									startCal, endCal, ConfigManager.getConfig().getUserName());
 
 						}
 						System.out.println("User Moderator: "
@@ -787,6 +795,7 @@ public class NewGameTab extends JPanel {
 
 				btn_addToGame.setEnabled(false);
 				btn_addAll.setEnabled(false);
+				btnCreateGame.setEnabled(true);
 			}
 		});
 
@@ -797,7 +806,7 @@ public class NewGameTab extends JPanel {
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
-				
+
 				for(Requirement req: allRequirements.getSelectedValuesList()){
 
 					System.out.println("Added "
@@ -817,6 +826,8 @@ public class NewGameTab extends JPanel {
 						btn_addAll.setEnabled(false);
 					}
 
+					btnCreateGame.setEnabled(true);
+
 				}
 			}
 		});
@@ -828,7 +839,7 @@ public class NewGameTab extends JPanel {
 		btn_removeFromGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
-				
+
 				for(Requirement req: selectedRequirements.getSelectedValuesList()){
 
 					System.out.println("Added "
@@ -846,8 +857,11 @@ public class NewGameTab extends JPanel {
 					if (listOfRequirementsToAdd.size() == 0) {
 						btn_removeFromGame.setEnabled(false);
 						btn_removeAll.setEnabled(false);
+						btnCreateGame.setEnabled(false);
 					}
 				}
+
+
 
 			}
 		});
@@ -859,6 +873,7 @@ public class NewGameTab extends JPanel {
 		btn_removeAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
+				btnCreateGame.setEnabled(false);
 
 				while (listOfRequirementsToAdd.getSize() > 0) {
 					System.out.println(listOfRequirementsToAdd.elementAt(0));
@@ -910,10 +925,9 @@ public class NewGameTab extends JPanel {
 
 		    	btn_removeFromGame.setEnabled(false);
 	    		btn_removeAll.setEnabled(false);
-	    		
+
 	    		MainView.getController().refreshGameTree();
 		    }
-		    
 		});
 
 		/**
