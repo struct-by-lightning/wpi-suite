@@ -127,6 +127,7 @@ public class CreateGameView {
 
 		btnCreateGame = new JButton("Create");
 		createGamePane.add(btnCreateGame);
+		btnCreateGame.setEnabled(false);
 
 		JButton btnResetGame = new JButton("Reset");
 		createGamePane.add(btnResetGame);
@@ -531,6 +532,13 @@ public class CreateGameView {
 					btnCreateGame.setEnabled(true);
 					createGameErrorText.setText("");
 				}
+				
+				if(listOfRequirementsToAdd.size() == 0){
+					btnCreateGame.setEnabled(false);
+				}
+				else{
+					btnCreateGame.setEnabled(true);
+				}
 			}
 
 			@Override
@@ -700,6 +708,8 @@ public class CreateGameView {
 
 				btn_addToGame.setEnabled(false);
 				btn_addAll.setEnabled(false);
+				
+				btnCreateGame.setEnabled(true);
 			}
 		});
 
@@ -731,6 +741,8 @@ public class CreateGameView {
 					}
 
 				}
+				
+				btnCreateGame.setEnabled(true);
 			}
 		});
 
@@ -761,6 +773,10 @@ public class CreateGameView {
 						btn_removeAll.setEnabled(false);
 					}
 				}
+				
+				if(listOfRequirementsToAdd.size() == 0){
+					btnCreateGame.setEnabled(false);
+				}
 
 			}
 		});
@@ -787,6 +803,8 @@ public class CreateGameView {
 
 				btn_removeFromGame.setEnabled(false);
 				btn_removeAll.setEnabled(false);
+				
+				btnCreateGame.setEnabled(false);
 			}
 		});
 
