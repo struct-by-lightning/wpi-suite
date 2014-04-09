@@ -54,7 +54,7 @@ public class AddPlanningPokerVoteController{
 	 */
 	public void addPlanningPokerVote(PlanningPokerVote newPlanningPokerVote) 
 	{
-		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote", HttpMethod.PUT); // PUT == create
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote", HttpMethod.POST); // PUT == create
 		request.setBody(newPlanningPokerVote.toJSON()); // put the new PlanningPokerVote in the body of the request
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); 
