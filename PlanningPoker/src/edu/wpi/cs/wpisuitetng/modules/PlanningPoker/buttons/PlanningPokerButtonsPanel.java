@@ -23,7 +23,6 @@ import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
 //import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 

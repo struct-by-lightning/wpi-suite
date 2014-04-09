@@ -19,11 +19,8 @@ import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.EmailPopup;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.OverviewPanel;
 
 public class PlanningPoker implements IJanewayModule {
 
