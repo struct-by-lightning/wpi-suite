@@ -6,12 +6,15 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -24,6 +27,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.SeeOpenGameViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
@@ -105,6 +109,12 @@ public class SeeOpenGameView {
 		
 
 		requirements.add(list);
+		
+		/**
+		 * Temporary panel to add the buttons
+		 */
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new BorderLayout(0, 0));
 
 		/**
 		 * panel that contains the information for a particular game
@@ -117,7 +127,29 @@ public class SeeOpenGameView {
 		FlowLayout flowLayout = (FlowLayout) gameName.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		gameName.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		gameContainer.add(gameName, BorderLayout.NORTH);
+		topPanel.add(gameName, BorderLayout.WEST);
+		
+		JButton startBtn = new JButton("Start Game");
+		startBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainViewController.activeGame.setLive(true);
+				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(MainViewController.activeGame);
+			}
+		});
+		topPanel.add(startBtn, BorderLayout.CENTER);
+		
+		JButton endBtn = new JButton("End Voting");
+		endBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainViewController.activeGame.setFinished(true);
+				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(MainViewController.activeGame);
+			}
+		});
+		topPanel.add(endBtn, BorderLayout.EAST);
+		
+		gameContainer.add(topPanel, BorderLayout.NORTH);
 
 		JLabel lblGameName = new JLabel("GAME_NAME");
 		lblGameName.setFont(new Font("Lucida Grande", Font.BOLD, 15));

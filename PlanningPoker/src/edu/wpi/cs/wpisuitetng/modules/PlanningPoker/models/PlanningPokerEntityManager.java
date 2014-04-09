@@ -71,8 +71,17 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public PlanningPokerGame update(Session s, String content)
 			throws WPISuiteException {
-		// TODO Auto-generated method stub
-		return null;
+		PlanningPokerGame changes = PlanningPokerGame.fromJSON(content);
+		if(true) { //TODO: Partial updates with nulls
+			System.out.println("Started update.");
+			deleteEntity(s, changes.getID());
+			data.save(changes);
+			System.out.println("Finished update.");
+			return changes;
+		}
+		// currently we don't have the ability to deal with updates on more than one entry
+		else
+			return null;
 	}
 
 	@Override
