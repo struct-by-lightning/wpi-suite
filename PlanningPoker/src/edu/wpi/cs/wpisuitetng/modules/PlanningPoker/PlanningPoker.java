@@ -30,8 +30,8 @@ public class PlanningPoker implements IJanewayModule {
 		// Initialize the list of tabs (however, this module has only one tab).
 		tabs = new ArrayList<JanewayTabModel>();
 
-		// TODO: If user has not provided contact info, show splash view.
-		MainView.activate();
+		// TODO: If user has not provided contact info, show splash view instead.
+		MainView.getController().activateView();
 
 		// Create a tab model that contains the toolbar panel and the main
 		// content panel

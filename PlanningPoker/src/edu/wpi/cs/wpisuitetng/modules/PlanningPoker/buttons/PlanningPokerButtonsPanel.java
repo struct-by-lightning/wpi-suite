@@ -28,79 +28,53 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 
 /**
- * @author Batyr, Christian, Francisco 
+ * @author Batyr, Christian, Francisco
  * @version $Revision: 1.0 $
  */
-public class PlanningPokerButtonsPanel extends ToolbarGroupView{
-	
+public class PlanningPokerButtonsPanel extends ToolbarGroupView {
+
 	// initialize the main view toolbar buttons
-		private JButton newGameButton = new JButton("<html>New<br />Game</html>");
-		
-		private final JButton modifyGameButton = new JButton("<html>Modify<br />Game</html>");
-		private final JPanel contentPanel = new JPanel();
-	
-	public PlanningPokerButtonsPanel(){
+	private JButton newGameButton = new JButton("<html>Create New Game</html>");
+	private final JPanel contentPanel = new JPanel();
+
+	public PlanningPokerButtonsPanel() {
 		super("");
-		
-		modifyGameButton.setEnabled(false);
-		
+
 		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-		this.setPreferredWidth(350);
-		
-		//this.modifyGameButton.setSize(200, 200);
-		//this.newGameButton.setPreferredSize(new Dimension(200, 200));
+		this.setPreferredWidth(250);
+
 		this.newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		try {
-		    Image img = ImageIO.read(getClass().getResource("new_req.png"));
-		    this.newGameButton.setIcon(new ImageIcon(img));
-		    
-		    img = ImageIO.read(getClass().getResource("edit.png"));
-		    this.modifyGameButton.setIcon(new ImageIcon(img));
-		    
+			Image img = ImageIO.read(getClass().getResource("new_req.png"));
+			this.newGameButton.setIcon(new ImageIcon(img));
+
 		} catch (IOException ex) {
 			System.out.print(ex.getMessage());
-			
+
 		}
-		
+
 		// the action listener for the New Game Button
 		newGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainView.getController().createGameButtonClicked();
 			}
-		});		
-		
-		//action listener for the Modify Game Button
-//		modifyGameButton.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				ViewEventController.getInstance().modifyGame();
-//			}
-//		});
-			
+		});
+
 		contentPanel.add(newGameButton);
-		contentPanel.add(modifyGameButton);
-		contentPanel.setOpaque(false);
-		
+		contentPanel.setOpaque(true);
 
 		this.add(contentPanel);
 	}
+
 	/**
 	 * Method getnewGameButton.
-	
-	 * @return JButton */
+	 * 
+	 * @return JButton
+	 */
 	public JButton getnewGameButton() {
 		return newGameButton;
 	}
 
-	/**
-	 * Method getmodifyGameButton.
-	
-	 * @return JButton */
-	public JButton getmodifyGameButton() {
-		return modifyGameButton;
-	}
-
-	
 }

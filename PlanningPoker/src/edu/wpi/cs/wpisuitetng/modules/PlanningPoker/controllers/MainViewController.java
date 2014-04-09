@@ -3,9 +3,9 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JToolBar;
 import javax.swing.JTree;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -13,20 +13,24 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.SeeOpenGameView;
 
 public class MainViewController {
-
-	private JTree gameTree;
+	
+	private JToolBar toolbar;
 	private JTabbedPane tabPane;
-	private JPanel createGamePanel;
-
-	public MainViewController(JTree gameTree, JPanel createGamePanel) {
+	private JTree gameTree;
+	
+	public MainViewController(JTree gameTree, JTabbedPane tabPane, JToolBar toolbar) {
 		this.gameTree = gameTree;
-		this.createGamePanel = createGamePanel;
+		this.tabPane = tabPane;
+		this.toolbar = toolbar;
 		
 		this.gameTree.addAncestorListener(new AncestorListener() {
 			public void ancestorAdded(AncestorEvent event) {refreshGameTree();}
@@ -34,7 +38,7 @@ public class MainViewController {
 			public void ancestorRemoved(AncestorEvent event) {refreshGameTree();}
 		});
 		
-		gameTree.addMouseListener(new MouseAdapter() {
+		this.gameTree.addMouseListener(new MouseAdapter() {
 		    public void mousePressed(MouseEvent e) {
 		        int selRow = getGameTree().getRowForLocation(e.getX(), e.getY());
 		        TreePath selPath = getGameTree().getPathForLocation(e.getX(), e.getY());
@@ -51,10 +55,18 @@ public class MainViewController {
 		});
 	}
 	
+	public void activateView() {
+		PlanningPoker.updateComponents(this.toolbar, this.tabPane);
+	}
+	
+	public void addCloseableTab(String tabName, JPanel tabPanel) {
+		this.tabPane.addTab(tabName, tabPanel);
+		this.tabPane.setTabComponentAt(this.tabPane.indexOfComponent(tabPanel), new ClosableTabComponent(this.tabPane));			
+		this.tabPane.setSelectedComponent(tabPanel);
+	}
+	
 	public void createGameButtonClicked() {
-		tabPane.addTab("Create Game", createGamePanel);
-		tabPane.setTabComponentAt(tabPane.indexOfComponent(createGamePanel), new ClosableTabComponent(tabPane));			
-		tabPane.setSelectedComponent(createGamePanel);
+		CreateGameView.getController().activateView(); 
 	}
 
 	public void refreshGameTree() {
@@ -72,17 +84,18 @@ public class MainViewController {
 			// Has the game started voting?
 			if (game.isLive()) {
 				openGames.add(nodeToAdd);
-				break;
 			}
 
 			// Has the game ended?
-			if (game.isFinished()) {
+			else if (game.isFinished()) {
 				finishedGames.add(nodeToAdd);
-				break;
 			}
 
-			// The game must be new.
-			newGames.add(nodeToAdd);
+			else {
+				// The game must be new.
+				newGames.add(nodeToAdd);
+			}
+
 		}
 
 		root.removeAllChildren();
@@ -107,7 +120,9 @@ public class MainViewController {
 	}
 
 	public void gameWasDoubleClicked(PlanningPokerGame game) {
-		System.out.println(game.getGameName());
+		SeeOpenGameView.getController().activateView(game);
+		
+		
 	}
 	
 	private JTree getGameTree() {

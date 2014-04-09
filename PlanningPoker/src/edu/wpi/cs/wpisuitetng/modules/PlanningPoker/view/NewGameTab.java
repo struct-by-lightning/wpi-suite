@@ -47,7 +47,6 @@ import javax.swing.SpinnerDateModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,10 +54,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import java.util.LinkedList;
 import java.util.ListIterator;
-
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -87,6 +84,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
@@ -912,7 +910,10 @@ public class NewGameTab extends JPanel {
 
 		    	btn_removeFromGame.setEnabled(false);
 	    		btn_removeAll.setEnabled(false);
+	    		
+	    		MainView.getController().refreshGameTree();
 		    }
+		    
 		});
 
 		/**
