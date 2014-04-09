@@ -125,7 +125,8 @@ public class MainViewController {
 	public void gameWasDoubleClicked(PlanningPokerGame game) {
 		MainViewController.activeGame = game;
 		
-		SeeOpenGameView.getController().activateView(game);
+		if(!game.isFinished())
+			SeeOpenGameView.getController().activateView(game);
 	}
 	
 	private JTree getGameTree() {
