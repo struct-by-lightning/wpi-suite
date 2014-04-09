@@ -77,8 +77,8 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 		super();
 
 		this.requirements = new ArrayList<Integer>();
-
-		this.gameName = gameName;
+		if(gameName != null)
+			this.gameName = gameName.replace(';', ':');
 		this.setDescription(description);
 		this.setDeckType(deckType);
 		if (requirements != null) {

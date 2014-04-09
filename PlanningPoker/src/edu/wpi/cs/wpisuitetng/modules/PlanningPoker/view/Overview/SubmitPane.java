@@ -29,6 +29,9 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 
 /**
  * The GUI where the user can cast his vote.
@@ -100,18 +103,20 @@ public class SubmitPane extends JPanel{
 			    		int selectedValue = Integer.parseInt(btn.getText());
 			    		
 			    		// Requirement ID
+			    		// @TODO: Get selected requirement ID
 			    		int requirementID = 1;
 			    		
 			    		// Game name
-			    		String gameName = "test";
+			    		String gameName = MainViewController.activeGame.getGameName();
 			    		
 			    		// User name
-			    		String username = ConfigManager.getConfig().getUserName();
+			    		String userName = ConfigManager.getConfig().getUserName();
 			    		
 			    		// Vote
+			    		//AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(new PlanningPokerVote(gameName, userName, selectedValue, requirementID));
 			    		
 			    		//Log
-			    		System.out.println("User " + username + " voted " + selectedValue + " for requirement" + requirementID + " in game " + gameName);
+			    		System.out.println("User " + userName + " voted " + selectedValue + " for requirement" + requirementID + " in game " + gameName);
 			    	}
 			    });
 			    // Add the button to the panel
