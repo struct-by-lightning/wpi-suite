@@ -31,6 +31,7 @@ import javax.swing.border.LineBorder;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.SeeOpenGameViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 
 /**
@@ -41,7 +42,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 public class SubmitPane extends JPanel{
 
 	static int selectedValue;
-	
+	static PlanningPokerVote ppv;
 	public SubmitPane(JPanel infoContainer){
 		JPanel submitPane = new JPanel();
 		submitPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -61,6 +62,13 @@ public class SubmitPane extends JPanel{
 		submitPane.add(submitButton, BorderLayout.SOUTH);
 
 		JButton btnSubmitEstimate = new JButton("Submit");
+		btnSubmitEstimate.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+	    		AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
+			}
+		});
 		submitButton.add(btnSubmitEstimate);
 
 		JScrollPane estimateSelector = new JScrollPane();
@@ -104,7 +112,7 @@ public class SubmitPane extends JPanel{
 			    		
 			    		// Requirement ID
 			    		// @TODO: Get selected requirement ID
-			    		int requirementID = 1;
+			    		int requirementID = SeeOpenGameViewController.getSelectedRequirement().getId();
 			    		
 			    		// Game name
 			    		String gameName = MainViewController.activeGame.getGameName();
@@ -113,7 +121,7 @@ public class SubmitPane extends JPanel{
 			    		String userName = ConfigManager.getConfig().getUserName();
 			    		
 			    		// Vote
-			    		//AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(new PlanningPokerVote(gameName, userName, selectedValue, requirementID));
+			    		ppv = new PlanningPokerVote(gameName, userName, selectedValue, requirementID);
 			    		
 			    		//Log
 			    		System.out.println("User " + userName + " voted " + selectedValue + " for requirement" + requirementID + " in game " + gameName);
