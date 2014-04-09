@@ -55,7 +55,7 @@ public class AddPlanningPokerVoteRequestObserver implements RequestObserver {
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(IRequest) */
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("The request to add a PlanningPokerVote failed.");
+		System.err.println("The request to add a PlanningPokerVote failed. Response error!");
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class AddPlanningPokerVoteRequestObserver implements RequestObserver {
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(IRequest, Exception) */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err.println("The request to add a PlanningPokerVote failed.");
+		System.err.println("The request to add a PlanningPokerVote failed. Not able to connect!");
 	}
 
 }

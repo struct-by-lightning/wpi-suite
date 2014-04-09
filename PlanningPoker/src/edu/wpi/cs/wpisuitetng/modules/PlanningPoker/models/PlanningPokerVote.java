@@ -25,8 +25,8 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	int vote;
 	int requirementID;
 	
-	PlanningPokerVote(String gameName, String userName, int vote, int requirementID) {
-		this.gameName = gameName;
+	public PlanningPokerVote(String gameName, String userName, int vote, int requirementID) {
+		this.gameName = gameName.replace(':', ';');
 		this.userName = userName.toLowerCase();
 		this.vote = vote;
 		this.requirementID = requirementID;
@@ -38,7 +38,7 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	@Override
 	public String toJSON() {
 		// TODO Auto-generated method stub
-		return "{\n  \"id\": \"" + gameName + ":" + userName + ":" + requirementID + "\"\n  \"vote\": \"" + vote + "\"\n}";
+		return "{\"id\":\"" + gameName + ":" + userName + ":" + requirementID + "\",\"vote\":\"" + vote + "\"}";
 	}
 	/**
 	 * gives the cannonical styling (as would appear in the JSON) of the primary key
@@ -53,7 +53,7 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	@Override
 	public void setID(String toSet) {
 		Scanner scTemp = new Scanner(toSet);
-		scTemp.useDelimiter(":");
+		scTemp.useDelimiter("\\s*:\\s*");
 		gameName = scTemp.next();
 		userName = scTemp.next();
 		requirementID = scTemp.nextInt();
@@ -79,27 +79,27 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	 */
 	public static PlanningPokerVote fromJSON(String json) {
 		Scanner scTemp = new Scanner(json);
+		System.out.println(json);
 		// skip the boilerplate
-		scTemp.useDelimiter(": \"");
+		scTemp.useDelimiter("\\\"?[:,{}]\\\"?");
 		scTemp.next();
+		// get the userName
+		String retUserName = scTemp.next();
 		// get the gameName
-		scTemp.useDelimiter(":");
 		String retGameName = scTemp.next();
 		// check if the gameName is null
 		if(retGameName.equals("null"))
 			retGameName = null;
 		
 		// get the requirement ID
-		Integer retRequirementID = scTemp.nextInt();
-		// get the userName
-		scTemp.useDelimiter("\"\n  \"vote\": \"");
-		String retUserName = scTemp.next();
+		Integer retRequirementID = Integer.parseInt(scTemp.next());
 		// check if the userName is null
 		if(retUserName.equals("null"))
 			retUserName = null;
+		scTemp.next();
 		// get and format the vote
-		scTemp.useDelimiter("\"\n}");
-		int retVote = Integer.valueOf(scTemp.next());
+		int retVote = Integer.parseInt(scTemp.next());
+		
 		return new PlanningPokerVote(retGameName, retUserName, retVote, retRequirementID);
 	}
 }
