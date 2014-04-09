@@ -24,6 +24,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
@@ -95,7 +97,7 @@ public class SeeOpenGameView {
 
 		updateRequirements();
 		
-		JList <Requirement> list = new JList<Requirement>();
+		final JList <Requirement> list = new JList<Requirement>();
 		list.setPreferredSize(new Dimension(150, 10));
 		list.setMinimumSize(new Dimension(150, 10));
 		list.setMaximumSize(new Dimension(30000, 30000));
@@ -105,7 +107,6 @@ public class SeeOpenGameView {
 		}
 		requirements.setLayout(new GridLayout(0, 1, 0, 0));
 		list.setModel(model);
-		
 		
 
 		requirements.add(list);
@@ -166,12 +167,12 @@ public class SeeOpenGameView {
 
 		JLabel lblEstimate = new JLabel("Estimate this requirement:");
 
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setColumns(10);
+		requirementNameText = new JTextField();
+		requirementNameText.setEditable(false);
+		requirementNameText.setColumns(10);
 
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
+		final JTextArea requirementDescriptionText = new JTextArea();
+		requirementDescriptionText.setEditable(false);
 		GroupLayout glDescription = new GroupLayout(description);
 		glDescription.setHorizontalGroup(
 			glDescription.createParallelGroup(Alignment.LEADING)
@@ -179,12 +180,12 @@ public class SeeOpenGameView {
 					.addGroup(glDescription.createParallelGroup(Alignment.TRAILING)
 						.addGroup(Alignment.LEADING, glDescription.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(textArea))
+							.addComponent(requirementDescriptionText))
 						.addGroup(Alignment.LEADING, glDescription.createSequentialGroup()
 							.addGap(5)
 							.addComponent(lblReqName)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE))
+							.addComponent(requirementNameText, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE))
 						.addGroup(Alignment.LEADING, glDescription.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(lblEstimate)))
@@ -196,11 +197,11 @@ public class SeeOpenGameView {
 					.addGap(5)
 					.addGroup(glDescription.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblReqName)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(requirementNameText, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblEstimate)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+					.addComponent(requirementDescriptionText, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		description.setLayout(glDescription);
@@ -208,12 +209,22 @@ public class SeeOpenGameView {
 		JPanel estimate = new JPanel();
 		infoContainer.add(estimate);
 		SubmitPane submitPane = new SubmitPane(infoContainer);
+		
+		   list.addListSelectionListener(new ListSelectionListener() {
+
+				@Override
+				public void valueChanged(ListSelectionEvent arg0) {
+					requirementNameText.setText(list.getSelectedValue().getName());
+					requirementDescriptionText.setText(list.getSelectedValue().getDescription());
+					
+				}
+	        });
 	}
 
     private JPanel viewGamePanel;
 	private JTextField estimateTextField;
 	private DefaultMutableTreeNode unanswered;
-	private JTextField textField;
+	private JTextField requirementNameText;
 	private List<Requirement> reqList = null;
 	
 	private void initRequirements() {
