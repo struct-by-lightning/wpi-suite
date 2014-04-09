@@ -640,12 +640,12 @@ public class CreateGameView {
 									"Default description",
 
 									selectedDeckType, gameRequirementIDsList,
-									false, true, startCal, endCal, "");
+									false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
 						} else {
 							game = new PlanningPokerGame(enteredName,
 									"Default description", selectedDeckType,
 									gameRequirementIDsList, false, false,
-									startCal, endCal, "");
+									startCal, endCal, ConfigManager.getConfig().getUserName());
 
 						}
 						System.out.println("User Moderator: "

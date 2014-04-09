@@ -23,6 +23,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.SeeOpenGameViewController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.SubmitPane;
 
 public class SeeOpenGameView {
@@ -165,5 +166,4 @@ public class SeeOpenGameView {
 	private JTextField estimateTextField;
 	private DefaultMutableTreeNode unanswered;
 	private JTextField textField;
-
 }
