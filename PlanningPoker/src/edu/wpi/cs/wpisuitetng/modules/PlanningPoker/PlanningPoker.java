@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.EmailPopup;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.MainView;
@@ -26,44 +26,32 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.OverviewPanel;
 
 public class PlanningPoker implements IJanewayModule {
-	
-	/**
-	 * A list of tabs owned by this module
-	 */
-	List<JanewayTabModel> tabs;
-	JTabbedPane pokerTabs;
-	NewGameTab newGameWindow;
-    int nextTab = 1;
-    
-    ClosableTabComponent clsblTab;
-    
+
+	private List<JanewayTabModel> tabs;
+
+	public static JComponent toolbarComponent;
+	public static JComponent mainComponent;
+
 	public PlanningPoker() {
-		
-		// Initialize the list of tabs (however, this module has only one tab)
-	    tabs = new ArrayList<JanewayTabModel>();
 
-	    //Create a JPanel to hold the toolbar for the tab
-	    ToolbarView toolbarView = new ToolbarView();
-	    
-	    //The inner tabs of the planning poker module in Janeway
-	    pokerTabs = new MainView();
+		// Initialize the list of tabs (however, this module has only one tab).
+		tabs = new ArrayList<JanewayTabModel>();
 
-		ViewEventController.getInstance().setMainView(pokerTabs);
-		ViewEventController.getInstance().setToolBarView(toolbarView);
+		// TODO: If user has not provided contact info, show splash view instead.
+		MainView.getController().activateView();
 
-	    
-	    //pokerTabs.setTabComponentAt(0, new ClosableTabComponent(pokerTabs));
-	    /**
-	     * Listens to check if the "New Game" button has been clicked and opens the 
-	     * new game window in a new tab when it is. It will automatically switch to 
-	     * the new tab. Currently only one new game tab can be open at at time
-	     */
-		
-	    // Create a tab model that contains the toolbar panel and the main content panel
-	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, pokerTabs);
+		// Create a tab model that contains the toolbar panel and the main
+		// content panel
+		JanewayTabModel tab = new JanewayTabModel(this.getName(), new ImageIcon(),
+				PlanningPoker.toolbarComponent, PlanningPoker.mainComponent);
 
-	    // Add the tab to the list of tabs owned by this module
-	    tabs.add(tab1);
+		// Add the tab to the list of tabs owned by this module
+		tabs.add(tab);
+	}
+
+	public static void updateComponents(JComponent toolbarComponent, JComponent mainComponent) {
+		PlanningPoker.toolbarComponent = toolbarComponent;
+		PlanningPoker.mainComponent = mainComponent;
 	}
 
 	/*
@@ -71,7 +59,6 @@ public class PlanningPoker implements IJanewayModule {
 	 */
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "PlanningPoker";
 	}
 
@@ -80,7 +67,6 @@ public class PlanningPoker implements IJanewayModule {
 	 */
 	@Override
 	public List<JanewayTabModel> getTabs() {
-		// TODO Auto-generated method stub
 		return tabs;
 	}
 

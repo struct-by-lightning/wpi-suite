@@ -34,7 +34,7 @@ import javax.swing.JTextField;
  * This class contains an interactive calendar to select when a Planning Poker session is to begin and end.
  */
 
-class DatePicker {
+public class DatePicker {
 	int month = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH);
 	int year = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
 	JLabel l = new JLabel("", JLabel.CENTER);

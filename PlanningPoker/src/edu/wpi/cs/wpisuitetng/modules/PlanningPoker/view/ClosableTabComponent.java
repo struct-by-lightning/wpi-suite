@@ -76,25 +76,9 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 		// close this tab when close button is clicked
 		final int index = tabbedPane.indexOfTabComponent(this);
 		if(index > -1) { 
-			if (((NewGameTab) (tabbedPane.getComponentAt(index))).isTabEditedByUser){
-				// Confirmation dialog
-				/*int dialogButton = JOptionPane.YES_NO_OPTION;
-				int dialogResult = JOptionPane.showConfirmDialog(this, "Close this game session?", "Confirmation",dialogButton);
-				*/
-				 JOptionPane pane = new JOptionPane("Close this planning poker tab?", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
-				 JDialog d = pane.createDialog(null); 
-				 d.setLocation(tabbedPane.getWidth() / 2, tabbedPane.getHeight() / 2);
-				 d.setVisible(true);
-				 
-				 System.out.println("Dialog was closed with button " + pane.getValue());
-				 if((int) pane.getValue()==0) { //remove tab at the specified index
-					tabbedPane.removeTabAt(index);
-				 }
-				 d.dispose();
-			}
-			else {
-				tabbedPane.removeTabAt(index);
-			}
+
+			tabbedPane.removeTabAt(index);
+
 		}
 	}
 	
