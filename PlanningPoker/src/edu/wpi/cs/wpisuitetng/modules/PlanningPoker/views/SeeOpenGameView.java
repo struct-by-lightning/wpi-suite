@@ -105,7 +105,7 @@ public class SeeOpenGameView {
 		}
 		requirements.setLayout(new GridLayout(0, 1, 0, 0));
 		list.setModel(model);
-		
+		SeeOpenGameViewController.setRequirementList(list);
 		
 
 		requirements.add(list);
