@@ -91,16 +91,18 @@ public class SeeOpenGameView {
 
 		updateRequirements();
 		
-		JList list = new JList();
+		JList <Requirement> list = new JList<Requirement>();
 		list.setPreferredSize(new Dimension(150, 10));
 		list.setMinimumSize(new Dimension(150, 10));
 		list.setMaximumSize(new Dimension(30000, 30000));
-		DefaultListModel model = new DefaultListModel();
+		DefaultListModel<Requirement> model = new DefaultListModel<Requirement>();
 		for (Requirement r : reqList){ 
-			model.addElement(r.getName());
+			model.addElement(r);
 		}
 		requirements.setLayout(new GridLayout(0, 1, 0, 0));
 		list.setModel(model);
+		
+		
 
 		requirements.add(list);
 
