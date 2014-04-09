@@ -29,7 +29,6 @@ import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ViewEventController;
 
 /**
  * The GUI where the user can cast his vote.

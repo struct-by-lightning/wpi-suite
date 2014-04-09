@@ -1,21 +1,4 @@
-/*******************************************************************************
- * Copyright (c) 2012-2014 -- WPI Suite
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * Contributor: team struct-by-lightning
- *******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
-
-/**
- * @author sfmailand
- * @author hlong290494
- * @author friscis
- *
- * This creates a tab for New games to be made.
- */
+package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -30,23 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextPane;
-import javax.swing.JToolBar;
-import javax.swing.ListModel;
-import javax.swing.SpinnerDateModel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,8 +20,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.LinkedList;
-import java.util.ListIterator;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -81,118 +45,65 @@ import javax.swing.border.LineBorder;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.CreateGameViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.DatePicker;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Exporter;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
-
-/**
- * Implements the new game tab for planning poker module
- *
- * @author Struct-by-lightning
- */
-public class NewGameTab extends JPanel {
-	private JTextField sessionName;
-	private NewGameTab thisPanel;
-	final String defaultCalendarText = "Click Calendar to set date";
+public class CreateGameView {
+	
 	/**
-	 * Error label that will show the reason why a game cannot be created
+	 * Static members.
 	 */
-	JLabel createGameErrorText;
-
-	// indicates whether the user edited the new game tab
-	/*
-	 * **THE FOLLOWING CODE NEEDS TO BE ADDED TO EVERY USER ACTION LISTENER:***
-	 * isTabEditedByUser = true;
-	 */
-	public boolean isTabEditedByUser;
-
+	
+	private static CreateGameView singleInstance;
+	
+	private static CreateGameView getSingleInstance() {
+		if (CreateGameView.singleInstance == null) {
+			CreateGameView.singleInstance = new CreateGameView();
+		}
+		
+		return CreateGameView.singleInstance;
+	}
+	
+	public static CreateGameViewController getController() {
+		return CreateGameView.getSingleInstance().controller;
+	}
+	
 	/**
-	 * A dropdown box that contains the default deck to choose.
+	 * Instance members.
 	 */
-	JComboBox<String> deckType = new JComboBox<String>();
-	String selectedDeckType = new String();
-	/**
-	 * A list contains of available requirements to add to the session
-	 */
-	JList<Requirement> selectedRequirements = new JList<Requirement>();
+ 	
+	private CreateGameViewController controller;
+	
+	private CreateGameView() {
+		this.controller = new CreateGameViewController(this);
+	}
 
-	/**
-	 * A JList that contains the requirements that are to be estimated in the
-	 * current planning poker session
-	 */
-	JList<Requirement> allRequirements = new JList<Requirement>();
-
-	/**
-	 * These two lists contain the lists representing what the user has selected
-	 * These lists are then put into the JList swing component, which uses them
-	 * to display what the user will see in the GUI
-	 *
-	 * listOfRequirementsToAdd --> the list of requirements that the user wants
-	 * added to the game
-	 *
-	 * listOfAllRequirements -> the list of all the requirements in the requirement manager
-	 *
-	 * listOfRequirementsForReset --> the full list of requirements. This is never edited
-	 * 								  and is only used for reseting the requirements when
-	 * 								  the reset button is pressed
-	 */
-
-	DefaultListModel<Requirement> listOfRequirementsToAdd= new DefaultListModel<Requirement>();
-	DefaultListModel<Requirement> listOfAllRequirements= new DefaultListModel<Requirement>();
-	DefaultListModel<Requirement> listOfRequirementsForReset = new DefaultListModel<Requirement>();
-
-
-	/**
-	 * The list of requirement IDs that will actually be saved to the game will
-	 * be the same as 'listOfRequirementsToAdd' once the game is in the process
-	 * of being created
-	 */
-	List<Integer> gameRequirementIDsList = new ArrayList<Integer>();
-
-	/**
-	 * The list of users to whom emails will be sent (assuming their email
-	 * address has been added to the server)
-	 */
-	List<User> userList = new ArrayList<User>();
-
-	/**
-	 * The mailer which will send emails to all users with emails in their account
-	 */
-	Mailer mailer = new Mailer();
-
-	final JSpinner endTime;
-	String enteredName = new String();
-	GregorianCalendar startCalendar;
-	GregorianCalendar endCalendar;
-
-	JButton btnCreateGame;
-	JLabel lblGameCreated;
-	JButton btn_removeFromGame;
-	JButton btn_addToGame;
-	JButton btn_removeAll;
-	boolean calendarOpen = false;
-
-	/**
-	 * Create the new game panel.
-	 */
-	public NewGameTab() {
+	public JPanel newCreateGamePanel() {
+		
+		listOfRequirementsForReset= new DefaultListModel<Requirement>();
+		listOfRequirementsToAdd= new DefaultListModel<Requirement>();
+		listOfAllRequirements= new DefaultListModel<Requirement>();
+		
+		panel = new JPanel();
 		isTabEditedByUser = false;
 
-		thisPanel = this;
-		setBorder(new LineBorder(Color.DARK_GRAY));
-		setLayout(new BorderLayout(0, 0));
+		panel.setBorder(new LineBorder(Color.DARK_GRAY));
+		panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel titlePanel = new JPanel();
 		FlowLayout fl_titlePanel = (FlowLayout) titlePanel.getLayout();
 		fl_titlePanel.setAlignment(FlowLayout.LEFT);
 		titlePanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		add(titlePanel, BorderLayout.NORTH);
+		panel.add(titlePanel, BorderLayout.NORTH);
 
 		JPanel namePane = new JPanel();
 		titlePanel.add(namePane);
@@ -215,7 +126,6 @@ public class NewGameTab extends JPanel {
 		createGamePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
 		btnCreateGame = new JButton("Create");
-		btnCreateGame.setEnabled(false);
 		createGamePane.add(btnCreateGame);
 
 		JButton btnResetGame = new JButton("Reset");
@@ -239,7 +149,7 @@ public class NewGameTab extends JPanel {
 
 		JPanel settingsPanel = new JPanel();
 		settingsPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		add(settingsPanel, BorderLayout.SOUTH);
+		panel.add(settingsPanel, BorderLayout.SOUTH);
 		settingsPanel.setLayout(new BorderLayout(0, 0));
 
 		JPanel configPanel = new JPanel();
@@ -384,7 +294,7 @@ public class NewGameTab extends JPanel {
 					dp.close();
 					open = false;
 				}
-				calendarSetOpen(open);
+				calendarOpen = open;
 			}
 		});
 
@@ -407,7 +317,7 @@ public class NewGameTab extends JPanel {
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
 		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
-		deckOverview.setHorizontalAlignment(WIDTH/2);
+		//deckOverview.setHorizontalAlignment(WIDTH/2);
 
 		deckOverview.setEditable(false);
 
@@ -473,7 +383,7 @@ public class NewGameTab extends JPanel {
 
 		JPanel requirementsPanel = new JPanel();
 		requirementsPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		add(requirementsPanel, BorderLayout.CENTER);
+		panel.add(requirementsPanel, BorderLayout.CENTER);
 		requirementsPanel.setLayout(new BorderLayout(0, 0));
 
 		JPanel requirementsHeader = new JPanel();
@@ -615,18 +525,11 @@ public class NewGameTab extends JPanel {
 				isTabEditedByUser = true;
 				String currentText = sessionName.getText();
 				if (currentText.equals("")) {
-
 					btnCreateGame.setEnabled(false);
 					createGameErrorText.setText("Session needs a name");
 				} else {
-					if (listOfRequirementsToAdd.size() == 0) {
-						btnCreateGame.setEnabled(false);
-					}
-					else{
-						btnCreateGame.setEnabled(true);
-						createGameErrorText.setText("");
-					}
-
+					btnCreateGame.setEnabled(true);
+					createGameErrorText.setText("");
 				}
 			}
 
@@ -655,8 +558,8 @@ public class NewGameTab extends JPanel {
 		// We iterate through the requirements list and add to that JList.
 		for (int i = 0; i < requirements.size(); i++) {
 			Requirement req = requirements.get(i);
+			listOfAllRequirements.addElement(req);
 			if(req.getIteration().equals("Backlog")){
-				listOfAllRequirements.addElement(req);
 				listOfRequirementsForReset.addElement(req);
 			}
 		}
@@ -737,12 +640,12 @@ public class NewGameTab extends JPanel {
 									"Default description",
 
 									selectedDeckType, gameRequirementIDsList,
-									false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
+									false, true, startCal, endCal, "");
 						} else {
 							game = new PlanningPokerGame(enteredName,
 									"Default description", selectedDeckType,
 									gameRequirementIDsList, false, false,
-									startCal, endCal, ConfigManager.getConfig().getUserName());
+									startCal, endCal, "");
 
 						}
 						System.out.println("User Moderator: "
@@ -770,7 +673,9 @@ public class NewGameTab extends JPanel {
 						System.out.println("Start date is after the end date.");
 					}
 				}
+				MainView.getController().refreshGameTree();
 			}
+			
 		});
 
 		/**
@@ -795,7 +700,6 @@ public class NewGameTab extends JPanel {
 
 				btn_addToGame.setEnabled(false);
 				btn_addAll.setEnabled(false);
-				btnCreateGame.setEnabled(true);
 			}
 		});
 
@@ -806,7 +710,7 @@ public class NewGameTab extends JPanel {
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
-
+				
 				for(Requirement req: allRequirements.getSelectedValuesList()){
 
 					System.out.println("Added "
@@ -826,8 +730,6 @@ public class NewGameTab extends JPanel {
 						btn_addAll.setEnabled(false);
 					}
 
-					btnCreateGame.setEnabled(true);
-
 				}
 			}
 		});
@@ -839,7 +741,7 @@ public class NewGameTab extends JPanel {
 		btn_removeFromGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
-
+				
 				for(Requirement req: selectedRequirements.getSelectedValuesList()){
 
 					System.out.println("Added "
@@ -857,11 +759,8 @@ public class NewGameTab extends JPanel {
 					if (listOfRequirementsToAdd.size() == 0) {
 						btn_removeFromGame.setEnabled(false);
 						btn_removeAll.setEnabled(false);
-						btnCreateGame.setEnabled(false);
 					}
 				}
-
-
 
 			}
 		});
@@ -873,7 +772,6 @@ public class NewGameTab extends JPanel {
 		btn_removeAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
-				btnCreateGame.setEnabled(false);
 
 				while (listOfRequirementsToAdd.getSize() > 0) {
 					System.out.println(listOfRequirementsToAdd.elementAt(0));
@@ -925,8 +823,6 @@ public class NewGameTab extends JPanel {
 
 		    	btn_removeFromGame.setEnabled(false);
 	    		btn_removeAll.setEnabled(false);
-
-	    		MainView.getController().refreshGameTree();
 		    }
 		});
 
@@ -939,7 +835,7 @@ public class NewGameTab extends JPanel {
 				//Create a file chooser
 				final JFileChooser fc = new JFileChooser();
 				//In response to a button click:
-				int returnVal = fc.showSaveDialog(NewGameTab.this);
+				int returnVal = fc.showSaveDialog(panel);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					// Create exporter
 					Exporter ex = new Exporter();
@@ -949,10 +845,88 @@ public class NewGameTab extends JPanel {
 				}
 			}
 		});
+		return panel;
 	}
+	
+	private JPanel panel;
+	private JTextField sessionName;
+	private NewGameTab thisPanel;
+	final String defaultCalendarText = "Click Calendar to set date";
+	/**
+	 * Error label that will show the reason why a game cannot be created
+	 */
+	JLabel createGameErrorText;
 
-	public void calendarSetOpen(boolean open) {
-		calendarOpen = open;
-	}
+	// indicates whether the user edited the new game tab
+	/*
+	 * **THE FOLLOWING CODE NEEDS TO BE ADDED TO EVERY USER ACTION LISTENER:***
+	 * isTabEditedByUser = true;
+	 */
+	public boolean isTabEditedByUser;
 
+	/**
+	 * A dropdown box that contains the default deck to choose.
+	 */
+	JComboBox<String> deckType = new JComboBox<String>();
+	String selectedDeckType = new String();
+	/**
+	 * A list contains of available requirements to add to the session
+	 */
+	JList<Requirement> selectedRequirements = new JList<Requirement>();
+
+	/**
+	 * A JList that contains the requirements that are to be estimated in the
+	 * current planning poker session
+	 */
+	JList<Requirement> allRequirements = new JList<Requirement>();
+
+	/**
+	 * These two lists contain the lists representing what the user has selected
+	 * These lists are then put into the JList swing component, which uses them
+	 * to display what the user will see in the GUI
+	 *
+	 * listOfRequirementsToAdd --> the list of requirements that the user wants
+	 * added to the game
+	 *
+	 * listOfAllRequirements -> the list of all the requirements in the requirement manager
+	 *
+	 * listOfRequirementsForReset --> the full list of requirements. This is never edited
+	 * 								  and is only used for reseting the requirements when
+	 * 								  the reset button is pressed
+	 */
+
+	DefaultListModel<Requirement> listOfRequirementsToAdd= new DefaultListModel<Requirement>();
+	DefaultListModel<Requirement> listOfAllRequirements= new DefaultListModel<Requirement>();
+	DefaultListModel<Requirement> listOfRequirementsForReset = new DefaultListModel<Requirement>();
+
+
+	/**
+	 * The list of requirement IDs that will actually be saved to the game will
+	 * be the same as 'listOfRequirementsToAdd' once the game is in the process
+	 * of being created
+	 */
+	List<Integer> gameRequirementIDsList = new ArrayList<Integer>();
+
+	/**
+	 * The list of users to whom emails will be sent (assuming their email
+	 * address has been added to the server)
+	 */
+	List<User> userList = new ArrayList<User>();
+
+	/**
+	 * The mailer which will send emails to all users with emails in their account
+	 */
+	Mailer mailer = new Mailer();
+
+	JSpinner endTime;
+	String enteredName = new String();
+	GregorianCalendar startCalendar;
+	GregorianCalendar endCalendar;
+
+	JButton btnCreateGame;
+	JLabel lblGameCreated;
+	JButton btn_removeFromGame;
+	JButton btn_addToGame;
+	JButton btn_removeAll;
+	boolean calendarOpen = false;
 }

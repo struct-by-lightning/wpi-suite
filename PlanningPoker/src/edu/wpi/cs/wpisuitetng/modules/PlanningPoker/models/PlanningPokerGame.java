@@ -25,7 +25,6 @@ import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	/** Name for the game (primary key) */
 	private String gameName;
-	
 
 	/** Description for the game */
 	private String description;
