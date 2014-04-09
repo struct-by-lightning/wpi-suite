@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -22,17 +24,15 @@ import javax.swing.border.LineBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.SeeOpenGameViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.SubmitPane;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 public class SeeOpenGameView {
-	
-
-    private JPanel viewGamePanel;
-	private JTextField estimateTextField;
-	private DefaultMutableTreeNode unanswered;
-	private JTextField textField;
 	
 	/**
 	 * Static members.
@@ -41,15 +41,19 @@ public class SeeOpenGameView {
 	private static SeeOpenGameView singleInstance;
 	
 	private static SeeOpenGameView getSingleInstance() {
-		if (SeeOpenGameView.singleInstance == null) {
+		if (SeeOpenGameView.singleInstance == null)
 			SeeOpenGameView.singleInstance = new SeeOpenGameView();
-		}
-		
 		return SeeOpenGameView.singleInstance;
 	}
 	
 	public static SeeOpenGameViewController getController() {
 		return SeeOpenGameView.getSingleInstance().controller;
+	}
+	
+	public static void update() {
+		SeeOpenGameView.singleInstance.updateRequirements();
+		SeeOpenGameView.singleInstance.initComponents();
+		SeeOpenGameView.getController().setViewGamePanel(SeeOpenGameView.singleInstance.viewGamePanel);
 	}
 	
 	/**
@@ -59,6 +63,7 @@ public class SeeOpenGameView {
 	private SeeOpenGameViewController controller;
 	
 	private SeeOpenGameView() {
+		initRequirements();
 		initComponents();
 		this.controller = new SeeOpenGameViewController(this.viewGamePanel);
 	}
@@ -84,13 +89,16 @@ public class SeeOpenGameView {
 		requirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		splitPane.setLeftComponent(requirements);
 
+		updateRequirements();
+		
 		JList list = new JList();
 		list.setPreferredSize(new Dimension(150, 10));
 		list.setMinimumSize(new Dimension(150, 10));
 		list.setMaximumSize(new Dimension(30000, 30000));
 		DefaultListModel model = new DefaultListModel();
-		model.addElement("red");
-		model.addElement("blue");
+		for (Requirement r : reqList){ 
+			model.addElement(r.getName());
+		}
 		requirements.setLayout(new GridLayout(0, 1, 0, 0));
 		list.setModel(model);
 
@@ -168,4 +176,26 @@ public class SeeOpenGameView {
 		SubmitPane submitPane = new SubmitPane(infoContainer);
 	}
 
+    private JPanel viewGamePanel;
+	private JTextField estimateTextField;
+	private DefaultMutableTreeNode unanswered;
+	private JTextField textField;
+	private List<Requirement> reqList = null;
+	
+	private void initRequirements() {
+		GetRequirementsController.getInstance().retrieveRequirements();
+		
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+			
+		}
+	}
+	
+	private void updateRequirements() {
+		reqList = new ArrayList<Requirement>();
+		for(int id : MainViewController.activeGame.getRequirements()) {
+			reqList.add(RequirementModel.getInstance().getRequirement(id));
+		}
+	}
 }
