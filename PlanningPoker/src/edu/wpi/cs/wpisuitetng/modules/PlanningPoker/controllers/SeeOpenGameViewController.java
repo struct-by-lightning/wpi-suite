@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.SeeOpenGameView;
 
 public class SeeOpenGameViewController {
 	

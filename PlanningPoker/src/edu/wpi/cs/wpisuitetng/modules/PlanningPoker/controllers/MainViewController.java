@@ -13,6 +13,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
@@ -22,6 +23,8 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.SeeOpenGameView;
 
 public class MainViewController {
+	
+	public static PlanningPokerGame activeGame;
 	
 	private JToolBar toolbar;
 	private JTabbedPane tabPane;
@@ -91,7 +94,7 @@ public class MainViewController {
 				finishedGames.add(nodeToAdd);
 			}
 
-			else {
+			else if (game.getModerator().equals(ConfigManager.getConfig().getUserName())){
 				// The game must be new.
 				newGames.add(nodeToAdd);
 			}
@@ -120,9 +123,8 @@ public class MainViewController {
 	}
 
 	public void gameWasDoubleClicked(PlanningPokerGame game) {
-		SeeOpenGameView.getController().activateView(game);
-		
-		
+		MainViewController.activeGame = game;
+		SeeOpenGameView.getController().activateView(game);	
 	}
 	
 	private JTree getGameTree() {
