@@ -138,29 +138,29 @@ public class SeeOpenGameView {
 
 		JTextArea textArea = new JTextArea();
 		textArea.setEditable(false);
-		GroupLayout gl_description = new GroupLayout(description);
-		gl_description.setHorizontalGroup(
-			gl_description.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_description.createSequentialGroup()
-					.addGroup(gl_description.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_description.createSequentialGroup()
+		GroupLayout glDescription = new GroupLayout(description);
+		glDescription.setHorizontalGroup(
+			glDescription.createParallelGroup(Alignment.LEADING)
+				.addGroup(glDescription.createSequentialGroup()
+					.addGroup(glDescription.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, glDescription.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(textArea))
-						.addGroup(Alignment.LEADING, gl_description.createSequentialGroup()
+						.addGroup(Alignment.LEADING, glDescription.createSequentialGroup()
 							.addGap(5)
 							.addComponent(lblReqName)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.LEADING, gl_description.createSequentialGroup()
+						.addGroup(Alignment.LEADING, glDescription.createSequentialGroup()
 							.addContainerGap()
 							.addComponent(lblEstimate)))
 					.addContainerGap(48, Short.MAX_VALUE))
 		);
-		gl_description.setVerticalGroup(
-			gl_description.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_description.createSequentialGroup()
+		glDescription.setVerticalGroup(
+			glDescription.createParallelGroup(Alignment.LEADING)
+				.addGroup(glDescription.createSequentialGroup()
 					.addGap(5)
-					.addGroup(gl_description.createParallelGroup(Alignment.BASELINE)
+					.addGroup(glDescription.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblReqName)
 						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -169,7 +169,7 @@ public class SeeOpenGameView {
 					.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
 					.addContainerGap())
 		);
-		description.setLayout(gl_description);
+		description.setLayout(glDescription);
 
 		JPanel estimate = new JPanel();
 		infoContainer.add(estimate);
