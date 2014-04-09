@@ -66,7 +66,8 @@ public class SubmitPane extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-	    		AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
+				if(MainViewController.activeGame.isLive() && !MainViewController.activeGame.isFinished())
+					AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
 			}
 		});
 		submitButton.add(btnSubmitEstimate);
