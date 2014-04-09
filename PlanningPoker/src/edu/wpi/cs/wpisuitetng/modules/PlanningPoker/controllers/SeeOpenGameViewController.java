@@ -15,7 +15,12 @@ public class SeeOpenGameViewController {
 	}
 	
 	public void activateView(PlanningPokerGame game) {
+		SeeOpenGameView.update();
 		MainView.getController().addCloseableTab(game.getGameName(), viewGamePanel);
+	}
+	
+	public void setViewGamePanel(JPanel viewGamePanel) {
+		this.viewGamePanel = viewGamePanel;
 	}
 
 }
