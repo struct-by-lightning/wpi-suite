@@ -83,16 +83,18 @@ public class MainViewController {
 		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
 		for (PlanningPokerGame game : PlanningPokerGameModel.getPlanningPokerGames()) {
 			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(game.getGameName());
-
+			
+			// Has the game ended?
+			if (game.isFinished()) {
+				finishedGames.add(nodeToAdd);
+			}
+			
 			// Has the game started voting?
-			if (game.isLive()) {
+			else if (game.isLive()) {
 				openGames.add(nodeToAdd);
 			}
 
-			// Has the game ended?
-			else if (game.isFinished()) {
-				finishedGames.add(nodeToAdd);
-			}
+
 
 			else if (game.getModerator().equals(ConfigManager.getConfig().getUserName())){
 				// The game must be new.

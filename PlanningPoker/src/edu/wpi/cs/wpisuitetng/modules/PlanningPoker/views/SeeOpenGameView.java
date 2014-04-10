@@ -132,7 +132,7 @@ public class SeeOpenGameView {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		gameName.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		topPanel.add(gameName, BorderLayout.WEST);
-		
+
 		JButton startBtn = new JButton("Start Game");
 		startBtn.addActionListener(new ActionListener() {
 			@Override
@@ -141,7 +141,8 @@ public class SeeOpenGameView {
 				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(MainViewController.activeGame);
 			}
 		});
-		topPanel.add(startBtn, BorderLayout.CENTER);
+		
+		
 		
 		JButton endBtn = new JButton("End Voting");
 		endBtn.addActionListener(new ActionListener() {
@@ -151,7 +152,12 @@ public class SeeOpenGameView {
 				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(MainViewController.activeGame);
 			}
 		});
-		topPanel.add(endBtn, BorderLayout.EAST);
+		
+		if((MainViewController.activeGame.getModerator().equals(ConfigManager.getConfig().getUserName()))){
+			topPanel.add(startBtn, BorderLayout.CENTER);
+			topPanel.add(endBtn, BorderLayout.EAST);
+		}
+		
 		
 		gameContainer.add(topPanel, BorderLayout.NORTH);
 
