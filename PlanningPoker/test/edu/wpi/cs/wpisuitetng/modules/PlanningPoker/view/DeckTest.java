@@ -293,7 +293,7 @@ public class DeckTest {
 		}
 
 		Deck test = new Deck("test");
-		
+
 		test.setCards(cardList);
 
 		// set up expected values and results
@@ -309,6 +309,27 @@ public class DeckTest {
 		for (int i = 0; i < Math.min(expected.length, deckResult.length); i++) {
 			assertEquals(expected[i], deckResult[i]);
 		}
+	}
+
+	@Test
+	public void testSerialize() {
+		// set up ordered list of cards in deck
+		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+
+		ArrayList<Integer> cardList = new ArrayList<Integer>();
+
+		for (Integer i : cards) {
+			cardList.add(i);
+		}
+
+		Deck test = new Deck("test", cardList);
+		
+		String serialized = test.toJSON();
+		
+		assertTrue(serialized.contains("deckName"));
+		assertTrue(serialized.contains("test"));
+		assertTrue(serialized.contains("cards"));
+		assertTrue(serialized.contains("[1,1,2,3,5,8,13,21]"));
 	}
 
 }
