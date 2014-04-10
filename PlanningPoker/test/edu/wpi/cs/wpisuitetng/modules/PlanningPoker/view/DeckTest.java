@@ -20,7 +20,7 @@ import org.junit.Test;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
 
 /**
- * Description
+ * Tests for the Deck class
  * 
  * @author Alec Thompson - ajthompson
  * @version Apr 10, 2014
