@@ -32,6 +32,8 @@ import javax.swing.JTabbedPane;
  */
 @SuppressWarnings("serial")
 public class MainView extends JTabbedPane {
+	public MainView() {
+	}
 
 	private boolean dragging = false;
 	private Image tabImage = null;
