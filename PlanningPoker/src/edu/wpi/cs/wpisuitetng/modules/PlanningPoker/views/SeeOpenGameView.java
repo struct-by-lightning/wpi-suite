@@ -237,8 +237,12 @@ public class SeeOpenGameView {
 
 		JPanel estimate = new JPanel();
 		infoContainer.add(estimate);
-		NoCardVoting submitPane = new NoCardVoting(infoContainer);
-		
+		if(MainViewController.activeGame.getDeckType().equals("No Deck")){
+			NoCardVoting noCardVoting = new NoCardVoting(infoContainer);
+		}
+		else{ 
+			SubmitPane submitPane = new SubmitPane(infoContainer);	 
+		}
 		   list.addListSelectionListener(new ListSelectionListener() {
 
 				@Override

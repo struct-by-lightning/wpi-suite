@@ -40,6 +40,7 @@ public class NoCardVoting extends JPanel{
 		static int selectedValue;
 		static PlanningPokerVote ppv;
 		private JTextField textField;
+		private JPanel estimatePanel = new JPanel();
 		
 		public NoCardVoting(JPanel infoContainer){
 			JPanel submitPane = new JPanel();
@@ -73,45 +74,51 @@ public class NoCardVoting extends JPanel{
 			JScrollPane estimateSelector = new JScrollPane();
 			submitPane.add(estimateSelector, BorderLayout.CENTER);
 
-			JPanel estimatePanel = new JPanel();
 			estimateSelector.setViewportView(estimatePanel);
 			 
 			textField = new JTextField();
 			    estimatePanel.add(textField);
-			    textField.setColumns(20);
+			    textField.setColumns(10);
+			    textField.setFont(new Font("Lucida Grande", Font.BOLD, 36));
 		       
-			// Add a listener
-				textField.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-				    		// Vote value
-				    		int selectedValue = Integer.parseInt(textField.getText());
-				    		
-				    		// Requirement ID
-				    		// @TODO: Get selected requirement ID
-				    		int requirementID = SeeOpenGameViewController.getSelectedRequirement().getId();
-				    		
-				    		// Game name
-				    		String gameName = MainViewController.activeGame.getGameName();
-				    		
-				    		// User name
-				    		String userName = ConfigManager.getConfig().getUserName();
-				    		
-				    		// Vote
-				    		ppv = new PlanningPokerVote(gameName, userName, selectedValue, requirementID);
-				    		
-				    		//Log
-				    		System.out.println("User " + userName + " voted " + selectedValue + " for requirement" + requirementID + " in game " + gameName);
-				    	}
-				    });
 				    // Add the button to the panel
 				    estimatePanel.add(textField);
 				   
 		
 			}
 
-
+		public void refresh() {
+			ActionListener[] act = textField.getActionListeners();
+			 	if(act.length > 0) {
+			 		textField.removeActionListener(act[0]);//remove the previous action listener if it exists
+			 }
+			// Add a listener
+			textField.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+			    		// Vote value
+			    		int selectedValue = Integer.parseInt(textField.getText());
+			    		
+			    		// Requirement ID
+			    		// @TODO: Get selected requirement ID
+			    		int requirementID = SeeOpenGameViewController.getSelectedRequirement().getId();
+			    		
+			    		// Game name
+			    		String gameName = MainViewController.activeGame.getGameName();
+			    		
+			    		// User name
+			    		String userName = ConfigManager.getConfig().getUserName();
+			    		
+			    		// Vote
+			    		ppv = new PlanningPokerVote(gameName, userName, selectedValue, requirementID);
+			    		
+			    		//Log
+			    		System.out.println("User " + userName + " voted " + selectedValue + " for requirement" + requirementID + " in game " + gameName);
+			    	}
+			    });
+			estimatePanel.repaint();
 		}
-		
+		}
+	
 	
 
 
