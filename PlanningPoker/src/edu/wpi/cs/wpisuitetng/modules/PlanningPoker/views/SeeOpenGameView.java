@@ -48,6 +48,7 @@ public class SeeOpenGameView {
 	 */
 	
 	private static SeeOpenGameView singleInstance;
+	private SubmitPane submitPane;
 	
 	private static SeeOpenGameView getSingleInstance() {
 		if (SeeOpenGameView.singleInstance == null)
@@ -133,10 +134,17 @@ public class SeeOpenGameView {
 		JPanel gameName = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) gameName.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
+<<<<<<< Updated upstream
 		gameName.setBorder(null);
 		topPanel.add(gameName);
 
 		final JButton startBtn = new JButton("Start Game");
+=======
+		gameName.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		topPanel.add(gameName, BorderLayout.WEST);
+		
+		JButton startBtn = new JButton("Start Game");
+>>>>>>> Stashed changes
 		startBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -236,7 +244,7 @@ public class SeeOpenGameView {
 
 		JPanel estimate = new JPanel();
 		infoContainer.add(estimate);
-		SubmitPane submitPane = new SubmitPane(infoContainer);
+		submitPane = new SubmitPane(infoContainer);
 		
 		   list.addListSelectionListener(new ListSelectionListener() {
 
@@ -245,6 +253,8 @@ public class SeeOpenGameView {
 					requirementNameText.setText(list.getSelectedValue().getName());
 					requirementDescriptionText.setText(list.getSelectedValue().getDescription());
 					
+					// Check to see if the user has voted yet?
+					submitPane.updateVoteText(list.getSelectedValue().getName());
 				}
 	        });
 	}

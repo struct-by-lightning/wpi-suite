@@ -9,7 +9,6 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.SeeOpenGameView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 public class SeeOpenGameViewController {
-	
 	private JPanel viewGamePanel;
 	private static JList<Requirement> selectedRequirement;
 	public static Requirement getSelectedRequirement() {
