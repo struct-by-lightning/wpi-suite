@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckSerializer;
+
 /**
  * A deck of planning poker cards.
  * 
@@ -93,5 +98,38 @@ public class Deck {
 		this.cards = cards;
 	}
 	
+	// Serializing
 	
+	/**
+	 * Serializes this Deck into a JSON string.
+	 *
+	 * @return the JSON representation of this Deck
+	 */
+	public String toJSON() {
+		String json;
+		
+		Gson gson = new GsonBuilder().registerTypeAdapter(Deck.class, new DeckSerializer()).create();
+		
+		json = gson.toJson(this, Deck.class);
+		
+		return json;
+	}
+	
+	/**
+	 * Static method offering comma-delimited JSON serialization of Deck lists
+	 *
+	 * @param d an array of Decks
+	 * @return the serialized array of Decks
+	 */
+	public static String toJSON(Deck[] d) {
+		String json = "[";
+		
+		for (Deck a : d) {
+			json += a.toJSON() + ", ";
+		}
+		
+		json += "]";
+		
+		return json;
+	}
 }
