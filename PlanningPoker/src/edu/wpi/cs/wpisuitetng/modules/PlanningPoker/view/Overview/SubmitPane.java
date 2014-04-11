@@ -39,8 +39,11 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
  * @author sfmailand
  *
  */
+
+
 public class SubmitPane extends JPanel{
 
+	JLabel lblSubmitAnEstimate;
 	static int selectedValue;
 	static PlanningPokerVote ppv;
 	public SubmitPane(JPanel infoContainer){
@@ -53,7 +56,7 @@ public class SubmitPane extends JPanel{
 		submitLabel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		submitPane.add(submitLabel, BorderLayout.NORTH);
 
-		JLabel lblSubmitAnEstimate = new JLabel("Submit an estimate");
+		lblSubmitAnEstimate = new JLabel("You haven't voted. Please submit an estimate");
 		lblSubmitAnEstimate.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		submitLabel.add(lblSubmitAnEstimate);
 
@@ -122,7 +125,10 @@ public class SubmitPane extends JPanel{
 			    		String userName = ConfigManager.getConfig().getUserName();
 			    		
 			    		// Vote
-			    		ppv = new PlanningPokerVote(gameName, userName, selectedValue, requirementID);
+			    		// @TODO : Re-enable this.
+			    		//ppv = new PlanningPokerVote(gameName, userName, selectedValue, requirementID);
+			    		
+			    		
 			    		
 			    		//Log
 			    		System.out.println("User " + userName + " voted " + selectedValue + " for requirement" + requirementID + " in game " + gameName);
@@ -136,6 +142,10 @@ public class SubmitPane extends JPanel{
 		}
 
 
+	}
+	
+	public void updateVoteText(String vote){
+		lblSubmitAnEstimate.setText(vote);
 	}
 	
 }
