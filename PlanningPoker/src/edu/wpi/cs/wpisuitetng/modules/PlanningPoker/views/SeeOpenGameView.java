@@ -33,6 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPok
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.SeeOpenGameViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.ManualSubmit;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.SubmitPane;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
@@ -236,7 +237,13 @@ public class SeeOpenGameView {
 
 		JPanel estimate = new JPanel();
 		infoContainer.add(estimate);
-		SubmitPane submitPane = new SubmitPane(infoContainer);
+		JPanel submitPane;
+		if(MainViewController.activeGame.getDeckType().equals("No Deck")){
+			submitPane = new ManualSubmit();
+		}
+		else {
+			submitPane = new SubmitPane(infoContainer);
+		}
 		
 		   list.addListSelectionListener(new ListSelectionListener() {
 
