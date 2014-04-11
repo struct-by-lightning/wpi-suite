@@ -9,6 +9,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers;
 
+import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -75,6 +76,12 @@ public class MainViewController {
 		this.tabPane.addTab(tabName, tabPanel);
 		this.tabPane.setTabComponentAt(this.tabPane.indexOfComponent(tabPanel), new ClosableTabComponent(this.tabPane));			
 		this.tabPane.setSelectedComponent(tabPanel);
+	}
+	
+	public void removeClosableTab(){
+		Component selected = tabPane.getSelectedComponent();
+		if(selected != null)
+			this.tabPane.remove(selected);
 	}
 	
 	public void createGameButtonClicked() {
