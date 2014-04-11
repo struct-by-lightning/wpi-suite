@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerDateModel;
@@ -58,6 +61,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.CreateGameViewCo
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.DatePicker;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Exporter;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
@@ -73,6 +77,7 @@ public class CreateGameView {
 	 */
 	
 	private static CreateGameView singleInstance;
+
 	
 	private static CreateGameView getSingleInstance() {
 		if (CreateGameView.singleInstance == null) {
@@ -452,10 +457,16 @@ public class CreateGameView {
 		topButton.setLayout(new BorderLayout(0, 0));
 
 		final JButton btn_addToGame = new JButton(">");
+		btn_addToGame.setEnabled(false);//lisa did
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+//				if ()
+//					btn_addToGame.setEnabled(true);
 			}
+			
 		});
+		
+		
 		topButton.add(btn_addToGame, BorderLayout.CENTER);
 
 		JPanel bottomButton = new JPanel();
@@ -535,20 +546,43 @@ public class CreateGameView {
 				isTabEditedByUser = true;
 				String currentText = sessionName.getText();
 				if (currentText.equals("")) {
+
 					btnCreateGame.setEnabled(false);
 					createGameErrorText.setText("Session needs a name");
 				} else {
-					btnCreateGame.setEnabled(true);
-					createGameErrorText.setText("");
-				}
-				
-				if(listOfRequirementsToAdd.size() == 0){
-					btnCreateGame.setEnabled(false);
-				}
-				else{
-					btnCreateGame.setEnabled(true);
+					if (listOfRequirementsToAdd.size() == 0) {
+						btnCreateGame.setEnabled(false);
+					}
+					else{
+						btnCreateGame.setEnabled(true);
+						createGameErrorText.setText("");
+					}
+
 				}
 			}
+//			@Override
+//			public void keyReleased(KeyEvent arg0) {
+//				isTabEditedByUser = true;
+//				String currentText = sessionName.getText();
+//				if (currentText.equals("")) {
+//					btnCreateGame.setEnabled(false);
+//					createGameErrorText.setText("Session needs a name");
+//				} else {
+//					
+//					btnCreateGame.setEnabled(true);
+//					createGameErrorText.setText("");
+//					
+//					
+//					
+//				}
+//				
+//				if(listOfRequirementsToAdd.size() == 0){
+//					btnCreateGame.setEnabled(false);
+//				}
+//				else{
+//					btnCreateGame.setEnabled(true);
+//				}
+//			}
 
 			@Override
 			public void keyPressed(KeyEvent arg0) {
@@ -583,6 +617,21 @@ public class CreateGameView {
 
 		allRequirements.setModel(listOfAllRequirements);
 
+		allRequirements.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				btn_addToGame.setEnabled(true);
+				btn_addAll.setEnabled(true);
+				btn_removeFromGame.setEnabled(false);
+			}
+		});
+		
+		selectedRequirements.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				btn_addToGame.setEnabled(false);
+				btn_removeFromGame.setEnabled(true);
+				btn_removeAll.setEnabled(true);
+			}
+		});
 		gameList.add(selectedRequirements);
 
 		// Get and add the list of emails to the mailer
@@ -678,6 +727,7 @@ public class CreateGameView {
 					else{
 						// Error message when the session name is empty
 						if (sessionName.getText().isEmpty()) {
+							btnCreateGame.setEnabled(false);
 							JOptionPane emptyNameErrorPanel = new JOptionPane(
 									"You must enter the session name",
 									JOptionPane.ERROR_MESSAGE);
@@ -686,8 +736,10 @@ public class CreateGameView {
 							errorDialog.setLocation(thisPanel.getWidth() / 2,
 									thisPanel.getHeight() / 2);
 							errorDialog.setVisible(true);
+							btnCreateGame.setEnabled(false);
 						}
 						System.out.println("Start date is after the end date.");
+						
 					}
 				}
 				MainView.getController().refreshGameTree();
@@ -714,11 +766,12 @@ public class CreateGameView {
 
 				btn_removeFromGame.setEnabled(true);
 				btn_removeAll.setEnabled(true);
-
-				btn_addToGame.setEnabled(false);
-				btn_addAll.setEnabled(false);
+				//btnCreateGame.setEnabled(false);
 				
+				btn_addAll.setEnabled(false);
+				btn_addToGame.setEnabled(false);
 				btnCreateGame.setEnabled(true);
+				
 			}
 		});
 
@@ -747,6 +800,7 @@ public class CreateGameView {
 					if (listOfAllRequirements.size() == 0) {
 						btn_addToGame.setEnabled(false);
 						btn_addAll.setEnabled(false);
+						btnCreateGame.setEnabled(false);
 					}
 
 				}
@@ -774,9 +828,9 @@ public class CreateGameView {
 					allRequirements.setModel(listOfAllRequirements);
 					selectedRequirements.setModel(listOfRequirementsToAdd);
 
-					btn_addToGame.setEnabled(true);
-					btn_addAll.setEnabled(true);
-
+					btn_addToGame.setEnabled(false);
+					btn_addAll.setEnabled(false);
+					
 					if (listOfRequirementsToAdd.size() == 0) {
 						btn_removeFromGame.setEnabled(false);
 						btn_removeAll.setEnabled(false);
@@ -786,6 +840,8 @@ public class CreateGameView {
 				if(listOfRequirementsToAdd.size() == 0){
 					btnCreateGame.setEnabled(false);
 				}
+				
+				btn_addAll.setEnabled(true);
 
 			}
 		});
@@ -797,7 +853,8 @@ public class CreateGameView {
 		btn_removeAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
-
+				btnCreateGame.setEnabled(false);
+				
 				while (listOfRequirementsToAdd.getSize() > 0) {
 					System.out.println(listOfRequirementsToAdd.elementAt(0));
 					listOfAllRequirements.addElement(listOfRequirementsToAdd
@@ -807,13 +864,12 @@ public class CreateGameView {
 				selectedRequirements.setModel(listOfRequirementsToAdd);
 				allRequirements.setModel(listOfAllRequirements);
 
-				btn_addToGame.setEnabled(true);
+				btn_addToGame.setEnabled(false);
 				btn_addAll.setEnabled(true);
-
 				btn_removeFromGame.setEnabled(false);
 				btn_removeAll.setEnabled(false);
 				
-				btnCreateGame.setEnabled(false);
+				
 			}
 		});
 
@@ -845,8 +901,7 @@ public class CreateGameView {
 		    	selectedRequirements.setModel(listOfRequirementsToAdd);
 		    	allRequirements.setModel(listOfAllRequirements);
 
-		    	btn_addToGame.setEnabled(true);
-		    	btn_addAll.setEnabled(true);
+
 
 		    	btn_removeFromGame.setEnabled(false);
 	    		btn_removeAll.setEnabled(false);
@@ -874,6 +929,7 @@ public class CreateGameView {
 		});
 		return panel;
 	}
+
 	
 	private JPanel panel;
 	private JTextField sessionName;
