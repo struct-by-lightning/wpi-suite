@@ -705,11 +705,11 @@ public class CreateGameView {
 							game = new PlanningPokerGame(enteredName,
 									"Default description",
 
-									selectedDeckType, gameRequirementIDsList,
+									(String)deckType.getSelectedItem(), gameRequirementIDsList,
 									false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
 						} else {
 							game = new PlanningPokerGame(enteredName,
-									"Default description", selectedDeckType,
+									"Default description", (String)deckType.getSelectedItem(),
 									gameRequirementIDsList, false, false,
 									startCal, endCal, ConfigManager.getConfig().getUserName());
 

@@ -42,15 +42,20 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPok
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.SeeOpenGameViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NoCardVoting;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.SubmitPane;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+import java.awt.Component;
+import javax.swing.BoxLayout;
+import javax.swing.Box;
 
 public class SeeOpenGameView {
 	
 	/**
 	 * Static members.
+	 * @author friscis fmsanchez@wpi.edu
 	 */
 	
 	private static SeeOpenGameView singleInstance;
@@ -127,7 +132,6 @@ public class SeeOpenGameView {
 		 * Temporary panel to add the buttons
 		 */
 		JPanel topPanel = new JPanel();
-		topPanel.setLayout(new BorderLayout(0, 0));
 
 		/**
 		 * panel that contains the information for a particular game
@@ -135,36 +139,49 @@ public class SeeOpenGameView {
 		JPanel gameContainer = new JPanel();
 		splitPane.setRightComponent(gameContainer);
 		gameContainer.setLayout(new BorderLayout(0, 0));
+		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
 		JPanel gameName = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) gameName.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		gameName.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		topPanel.add(gameName, BorderLayout.WEST);
+		gameName.setBorder(null);
+		topPanel.add(gameName);
 
-		JButton startBtn = new JButton("Start Game");
+		final JButton startBtn = new JButton("Start Game");
 		startBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainViewController.activeGame.setLive(true);
+				startBtn.setText("Game Started");
+				startBtn.setEnabled(false);
 				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(MainViewController.activeGame);
 			}
 		});
 		
 		
 		
-		JButton endBtn = new JButton("End Voting");
+		final JButton endBtn = new JButton("End Voting");
 		endBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				MainViewController.activeGame.setFinished(true);
+				endBtn.setText("Voting Ended");
+				endBtn.setEnabled(false);
 				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(MainViewController.activeGame);
 			}
 		});
 		
 		if((MainViewController.activeGame.getModerator().equals(ConfigManager.getConfig().getUserName()))){
-			topPanel.add(startBtn, BorderLayout.CENTER);
-			topPanel.add(endBtn, BorderLayout.EAST);
+			topPanel.add(startBtn);
+			if(MainViewController.activeGame.isLive()){
+				startBtn.setText("Game Started");
+				startBtn.setEnabled(false);
+			}
+			
+			Component horizontalStrut = Box.createHorizontalStrut(20);
+			horizontalStrut.setPreferredSize(new Dimension(10, 0));
+			topPanel.add(horizontalStrut);
+			topPanel.add(endBtn);
 		}
 		
 		
@@ -173,6 +190,10 @@ public class SeeOpenGameView {
 		JLabel lblGameName = new JLabel(MainViewController.activeGame.getGameName());
 		lblGameName.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		gameName.add(lblGameName, BorderLayout.WEST);
+		
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		horizontalStrut_1.setPreferredSize(new Dimension(10, 0));
+		topPanel.add(horizontalStrut_1);
 
 		JPanel infoContainer = new JPanel();
 		gameContainer.add(infoContainer, BorderLayout.CENTER);
@@ -226,15 +247,20 @@ public class SeeOpenGameView {
 
 		JPanel estimate = new JPanel();
 		infoContainer.add(estimate);
-		SubmitPane submitPane = new SubmitPane(infoContainer);
-		
+
+		if(MainViewController.activeGame.getDeckType().equals("No Deck")){
+			NoCardVoting submitPane = new NoCardVoting(infoContainer);
+		}
+		else{ 
+			SubmitPane submitPane = new SubmitPane(infoContainer);	 
+		}
 		   list.addListSelectionListener(new ListSelectionListener() {
 
 				@Override
 				public void valueChanged(ListSelectionEvent arg0) {
 					requirementNameText.setText(list.getSelectedValue().getName());
 					requirementDescriptionText.setText(list.getSelectedValue().getDescription());
-					
+					((SubmitPane)submitPane).refresh();//refresh the Submit Pane object when a new req is clicked
 				}
 	        });
 	}
@@ -244,7 +270,7 @@ public class SeeOpenGameView {
 	private DefaultMutableTreeNode unanswered;
 	private JTextField requirementNameText;
 	private List<Requirement> reqList = null;
-	
+	private JPanel submitPane;
 	private void initRequirements() {
 		GetRequirementsController.getInstance().retrieveRequirements();
 		
