@@ -45,6 +45,7 @@ public class SeeOpenGameView {
 	
 	/**
 	 * Static members.
+	 * @author friscis fmsanchez@wpi.edu
 	 */
 	
 	private static SeeOpenGameView singleInstance;
@@ -236,7 +237,8 @@ public class SeeOpenGameView {
 
 		JPanel estimate = new JPanel();
 		infoContainer.add(estimate);
-		SubmitPane submitPane = new SubmitPane(infoContainer);
+		submitPane = new SubmitPane(infoContainer);
+		final JPanel containerClone = infoContainer;
 		
 		   list.addListSelectionListener(new ListSelectionListener() {
 
@@ -244,7 +246,7 @@ public class SeeOpenGameView {
 				public void valueChanged(ListSelectionEvent arg0) {
 					requirementNameText.setText(list.getSelectedValue().getName());
 					requirementDescriptionText.setText(list.getSelectedValue().getDescription());
-					
+					((SubmitPane)submitPane).refresh();//refresh the Submit Pane object when a new req is clicked
 				}
 	        });
 	}
@@ -254,7 +256,7 @@ public class SeeOpenGameView {
 	private DefaultMutableTreeNode unanswered;
 	private JTextField requirementNameText;
 	private List<Requirement> reqList = null;
-	
+	private JPanel submitPane;
 	private void initRequirements() {
 		GetRequirementsController.getInstance().retrieveRequirements();
 		
