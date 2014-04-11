@@ -37,12 +37,16 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 /**
  * The GUI where the user can cast his vote.
  * @author sfmailand
+ * @author friscis fmsanchez@wpi.edu
  *
  */
 public class SubmitPane extends JPanel{
 
 	static int selectedValue;
 	static PlanningPokerVote ppv;
+	// Button objects list
+	private LinkedList<JButton> cardBtns= new LinkedList<JButton>();
+	private JPanel estimatePanel = new JPanel();
 	public SubmitPane(JPanel infoContainer){
 		JPanel submitPane = new JPanel();
 		submitPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -75,7 +79,6 @@ public class SubmitPane extends JPanel{
 		JScrollPane estimateSelector = new JScrollPane();
 		submitPane.add(estimateSelector, BorderLayout.CENTER);
 
-		JPanel estimatePanel = new JPanel();
 		estimateSelector.setViewportView(estimatePanel);
 		
 		// Adding card faces
@@ -87,8 +90,6 @@ public class SubmitPane extends JPanel{
 		cardFace.add(50);
 		cardFace.add(80);
 		cardFace.add(101);
-		// Button objects list
-		LinkedList<JButton> cardBtns= new LinkedList<JButton>();
 		for (Integer value: cardFace) {
 			cardBtns.add(new JButton(value.toString()));
 			// Add a listener
@@ -106,6 +107,24 @@ public class SubmitPane extends JPanel{
 			    btn.setVerticalTextPosition(JButton.CENTER);
 			    btn.setFont(new Font("arial",Font.BOLD,23));
 			    // Add a listener
+			    // Add the button to the panel
+			    estimatePanel.add(btn);
+			}
+		} catch (IOException ex) {
+			System.out.print(ex.getMessage());
+		}
+
+
+	}
+	/**
+	 * refreshes the btn action listener using the new selected requirement
+	 */
+	public void refresh() {
+			for (final JButton btn : cardBtns) {
+				ActionListener[] act = btn.getActionListeners();
+				if(act.length > 0) {
+					btn.removeActionListener(act[0]);//remove the previous action listener if it exists
+				}
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 			    		// Vote value
@@ -129,13 +148,9 @@ public class SubmitPane extends JPanel{
 			    	}
 			    });
 			    // Add the button to the panel
-			    estimatePanel.add(btn);
+			    estimatePanel.repaint();
 			}
-		} catch (IOException ex) {
-			System.out.print(ex.getMessage());
-		}
-
-
+		
 	}
 	
 }
