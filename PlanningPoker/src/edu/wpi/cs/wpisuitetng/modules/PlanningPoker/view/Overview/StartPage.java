@@ -39,7 +39,7 @@ public class StartPage extends JPanel {
 
 		// I heard you like labels, so I put a label inside yo label #swag
 		JLabel lblGettingStarted = new JLabel("Getting Started");
-		lblGettingStarted.setFont(new Font("Lucida Grande", Font.BOLD, 24));
+		lblGettingStarted.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		startTitle.add(lblGettingStarted);
 
 		// adds the text for getting started with scrollbars if needed to the
@@ -90,7 +90,7 @@ public class StartPage extends JPanel {
 
 		Style regular = doc.addStyle("regular", def);
 		StyleConstants.setFontFamily(def, "SansSerif");
-		StyleConstants.setFontSize(def, 16);
+		StyleConstants.setAlignment(def, StyleConstants.ALIGN_JUSTIFIED);
 		
 		SimpleAttributeSet sa = new SimpleAttributeSet();
 		StyleConstants.setAlignment(sa, StyleConstants.ALIGN_JUSTIFIED);

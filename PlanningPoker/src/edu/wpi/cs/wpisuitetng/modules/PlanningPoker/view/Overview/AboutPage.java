@@ -42,7 +42,7 @@ public class AboutPage extends JPanel {
 
 		// I heard you like labels, so I put a label inside yo label #swag
 		JLabel lblAboutPoker = new JLabel("About Planning Poker");
-		lblAboutPoker.setFont(new Font("Lucida Grande", Font.BOLD, 24));
+		lblAboutPoker.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		aboutTitle.add(lblAboutPoker);
 
 		// adds the text for about planning poker with scrollbars if needed to
@@ -90,7 +90,6 @@ public class AboutPage extends JPanel {
 
 		Style regular = doc.addStyle("regular", def);
 		StyleConstants.setFontFamily(def, "SansSerif");
-		StyleConstants.setFontSize(def, 16);
 		
 		SimpleAttributeSet sa = new SimpleAttributeSet();
 		StyleConstants.setAlignment(sa, StyleConstants.ALIGN_JUSTIFIED);
