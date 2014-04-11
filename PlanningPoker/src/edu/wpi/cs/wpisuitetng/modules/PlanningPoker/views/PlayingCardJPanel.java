@@ -1,3 +1,5 @@
+package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
+
 
 import java.awt.Color;
 import javax.swing.BorderFactory;

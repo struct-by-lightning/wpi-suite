@@ -18,6 +18,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
  * A model to store the information for a planning poker game
@@ -33,7 +36,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	private String deckType;
 
 	/** Requirement IDs associated with this game */
-	private List<Integer> requirements;
+	private List<Integer> requirementIds;
 
 	/** Whether the game is finished */
 	private boolean isFinished;
@@ -59,7 +62,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 *            Description for the game
 	 * @param deckType
 	 *            Selected deck
-	 * @param requirements
+	 * @param requirementsIds
 	 *            Requirement IDs associated with this game
 	 * @param isFinished
 	 *            Whether the game is finished
@@ -71,19 +74,19 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 *            The date the game was started
 	 */
 	public PlanningPokerGame(String gameName, String description,
-			String deckType, List<Integer> requirements,
+			String deckType, List<Integer> requirementsIds,
 			boolean isFinished, boolean isLive, GregorianCalendar startDate,
 			GregorianCalendar endDate, String moderator) {
 		super();
 
-		this.requirements = new ArrayList<Integer>();
+		this.requirementIds = new ArrayList<Integer>();
 		if(gameName != null)
 			this.gameName = gameName.replace(';', ':');
 		this.setDescription(description);
 		this.setDeckType(deckType);
-		if (requirements != null) {
-			for (Integer r : requirements) {
-				this.addRequirement(r);
+		if (requirementsIds != null) {
+			for (Integer r : requirementsIds) {
+				this.addRequirementId(r);
 			}
 		}
 		this.setFinished(isFinished);
@@ -91,6 +94,51 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 		this.setStartDate(startDate);
 		this.setEndDate(endDate);
 		this.setModerator(moderator);
+	}
+	
+	/**
+	 * @return A list of the requirements which are associated with this planning poker game.
+	 */
+	public ArrayList<Requirement> getRequirements() {
+		
+
+		
+		ArrayList<Requirement> toReturn = new ArrayList<Requirement>();
+
+		for(int id : this.getRequirementIds()) {
+			toReturn.add(RequirementModel.getInstance().getRequirement(id));
+		}
+		
+		return toReturn;
+	}
+	
+	public ArrayList<Integer> getDeckValues() {
+		// TODO This method returns mock data, and needs to be correctly implemented.
+		
+        return new ArrayList<Integer>() {
+            {
+                add(1);
+                add(1);
+                add(2);
+                add(3);
+                add(5);
+                add(8);
+            }
+        };
+	}
+	
+
+	public boolean hasEndDate() {
+		// TODO This method returns mock data, and needs to be correctly implemented.
+		
+		return true;
+	}
+	
+
+	public ArrayList<Integer> getSelectedCardIndices(Object user, Requirement selectedRequirement) {
+		// TODO This method returns mock data, and needs to be correctly implemented.
+		
+		return new ArrayList<Integer>();
 	}
 
 	/**
@@ -223,8 +271,8 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * 
 	 * @return A list of the game's requirement IDs
 	 */
-	public List<Integer> getRequirements() {
-		return this.requirements;
+	public List<Integer> getRequirementIds() {
+		return this.requirementIds;
 	}
 
 	/**
@@ -233,8 +281,8 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * @param requirementID
 	 *            The requirement to add
 	 */
-	public void addRequirement(Integer requirementID) {
-		this.requirements.add(requirementID);
+	public void addRequirementId(Integer requirementID) {
+		this.requirementIds.add(requirementID);
 	}
 
 	/**
@@ -245,7 +293,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * @return {@code true} if the game had the specified requirement
 	 */
 	public boolean removeRequirement(Integer requirementID) {
-		return this.requirements.remove(requirementID);
+		return this.requirementIds.remove(requirementID);
 	}
 
 	/**
@@ -327,4 +375,8 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	public void setEndDate(GregorianCalendar endDate) {
 		this.endDate = endDate;
 	}
+
+
+
+
 }

@@ -23,6 +23,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -42,10 +43,14 @@ public class OpenGameView extends JPanel {
 	 *            A planning poker game which is open for voting.
 	 */
 	public static void open(PlanningPokerGame game) {
+		
 		OpenGameView view = new OpenGameView(game);
 		MainView.getController().addCloseableTab(game.getGameName(), view);
 	}
 
+	private PlanningPokerGame game;
+	private ArrayList<Requirement> requirements;
+	
 	// JPanel subclasses for each card in this game's deck.
 	private ArrayList<PlayingCardJPanel> cards;
 
@@ -58,13 +63,17 @@ public class OpenGameView extends JPanel {
 	 *            JPanel.
 	 */
 	private OpenGameView(PlanningPokerGame game) {
+		System.out.println("OpenGameView(" + game + ")");
+		this.game = game;
+		this.requirements = game.getRequirements();
 		this.cards = new ArrayList<>();
+		
 
 		// Initialize all GUI components. Netbeans generated code.
 		initComponents();
 
 		// Fill components with data from the planning poker game.
-		initForGame(game);
+		initForGame();
 	}
 
 	/**
@@ -73,11 +82,7 @@ public class OpenGameView extends JPanel {
 	 * @param game
 	 *            The planning poker game to define this view.
 	 */
-	private void initForGame(PlanningPokerGame game) {
-
-		// Final variables needed for the inner class definition below.
-		final PlanningPokerGame finalGame = game;
-		final ArrayList<Requirement> requirements = game.getRequirements();
+	private void initForGame() {
 
 		// Add JPanels for each card available in this game.
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -106,14 +111,15 @@ public class OpenGameView extends JPanel {
 				Requirement selected = requirements.get(list.getSelectedIndex());
 				requirementNameLabel.setText(selected.getName());
 				requirementDescriptionLabel.setText(selected.getDescription());
-				updateSelectedCards(finalGame, selected);
+				updateSelectedCards(game, selected);
 				updateEstimateTotal();
 			}
 		});
 
-		// Populate the tree with each requirement.
+		// Populate the list with each requirement.
 		DefaultListModel<String> model = new DefaultListModel<String>();
-		for (Requirement r : requirements) {
+		for (Requirement r : this.requirements) {
+			System.out.println("r: " + r);
 			model.addElement(r.getName());
 		}
 		this.requirementList.setModel(model);
