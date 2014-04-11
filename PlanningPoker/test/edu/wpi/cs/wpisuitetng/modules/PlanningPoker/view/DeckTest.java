@@ -17,6 +17,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.google.gson.JsonElement;
+
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
 
 /**
@@ -323,7 +325,6 @@ public class DeckTest {
 		}
 
 		Deck test = new Deck("test", cardList);
-		
 		String serialized = test.toJSON();
 		
 		assertTrue(serialized.contains("deckName"));
@@ -332,4 +333,36 @@ public class DeckTest {
 		assertTrue(serialized.contains("[1,1,2,3,5,8,13,21]"));
 	}
 
+	@Test
+	public void testSerializeArray() {
+		// set up ordered list of cards in deck
+		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		Integer[] cards2 = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		ArrayList<Integer> cardList2 = new ArrayList<Integer>();
+
+		for (Integer i : cards) {
+			cardList.add(i);
+		}
+		
+		for (Integer i : cards2) {
+			cardList2.add(i);
+		}
+
+		Deck test = new Deck("test", cardList);
+		Deck test2 = new Deck("test2", cardList2);
+		
+		String serialized = test.toJSON();
+		String serialized2 = test2.toJSON();
+		
+		assertTrue(serialized.contains("deckName"));
+		assertTrue(serialized.contains("test"));
+		assertTrue(serialized.contains("cards"));
+		assertTrue(serialized.contains("[1,1,2,3,5,8,13,21]"));
+		assertTrue(serialized2.contains("deckName"));
+		assertTrue(serialized2.contains("test2"));
+		assertTrue(serialized2.contains("cards"));
+		assertTrue(serialized2.contains("[1,2,3,4,5,6,7,8,9,10]"));
+	}
 }
