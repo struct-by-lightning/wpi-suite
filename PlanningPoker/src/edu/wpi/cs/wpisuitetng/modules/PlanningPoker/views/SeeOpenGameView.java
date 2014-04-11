@@ -33,7 +33,6 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPok
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.SeeOpenGameViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.ManualSubmit;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.SubmitPane;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
@@ -46,6 +45,7 @@ public class SeeOpenGameView {
 	
 	/**
 	 * Static members.
+	 * @author friscis fmsanchez@wpi.edu
 	 */
 	
 	private static SeeOpenGameView singleInstance;
@@ -237,12 +237,7 @@ public class SeeOpenGameView {
 
 		JPanel estimate = new JPanel();
 		infoContainer.add(estimate);
-		if(MainViewController.activeGame.getDeckType().equals("No Deck")){
-			submitPane = new ManualSubmit();
-		}
-		else {
-			submitPane = new SubmitPane(infoContainer);
-		}
+		submitPane = new SubmitPane(infoContainer);
 		final JPanel containerClone = infoContainer;
 		
 		   list.addListSelectionListener(new ListSelectionListener() {
@@ -251,7 +246,7 @@ public class SeeOpenGameView {
 				public void valueChanged(ListSelectionEvent arg0) {
 					requirementNameText.setText(list.getSelectedValue().getName());
 					requirementDescriptionText.setText(list.getSelectedValue().getDescription());
-					((SubmitPane)submitPane).refresh();
+					((SubmitPane)submitPane).refresh();//refresh the Submit Pane object when a new req is clicked
 				}
 	        });
 	}

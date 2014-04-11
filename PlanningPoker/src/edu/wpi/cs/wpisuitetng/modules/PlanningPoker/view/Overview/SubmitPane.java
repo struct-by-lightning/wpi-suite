@@ -37,6 +37,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 /**
  * The GUI where the user can cast his vote.
  * @author sfmailand
+ * @author friscis fmsanchez@wpi.edu
  *
  */
 public class SubmitPane extends JPanel{
@@ -115,8 +116,15 @@ public class SubmitPane extends JPanel{
 
 
 	}
+	/**
+	 * refreshes the btn action listener using the new selected requirement
+	 */
 	public void refresh() {
 			for (final JButton btn : cardBtns) {
+				ActionListener[] act = btn.getActionListeners();
+				if(act.length > 0) {
+					btn.removeActionListener(act[0]);//remove the previous action listener if it exists
+				}
 				btn.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 			    		// Vote value
