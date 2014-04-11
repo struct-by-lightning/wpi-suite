@@ -60,19 +60,6 @@ public class DeckModel extends AbstractListModel<Deck> {
 	}
 
 	/**
-	 * Adds an array of Decks to the list of decks for the project, and add the
-	 * Decks to the database.
-	 * 
-	 * @param newDecks
-	 *            the array of new Decks to be added.
-	 */
-	public void addDeck(Deck[] newDecks) {
-		for (Deck d : newDecks) {
-			this.addDeck(d);
-		}
-	}
-
-	/**
 	 * Gets the deck with the given name
 	 * 
 	 * @param name
@@ -128,7 +115,14 @@ public class DeckModel extends AbstractListModel<Deck> {
 	public Deck getElementAt(int index) {
 		return Decks.get(Decks.size() - 1 - index);
 	}
-	
+
+	/**
+	 * Removes all Users from this model
+	 * 
+	 * NOTE: One does not simply walk into Mor- I mean construct a new instance
+	 * of the model. Other classes reference it, so we must manually remove each
+	 * User from the model.
+	 */
 	public void emptyModel() {
 		int oldSize = getSize();
 		Iterator<Deck> iterator = Decks.iterator();
@@ -137,5 +131,28 @@ public class DeckModel extends AbstractListModel<Deck> {
 			iterator.remove();
 		}
 		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
+	}
+
+	/**
+	 * Adds an array of Decks to the list of decks for the project, and add the
+	 * Decks to the database.
+	 * 
+	 * @param newDecks
+	 *            the array of new Decks to be added.
+	 */
+	public void addDeck(Deck[] newDecks) {
+		for (Deck d : newDecks) {
+			this.addDeck(d);
+		}
+		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
+	}
+
+	/**
+	 * Returns the list of Decks
+	 * 
+	 * @return the Decks held within the DeckModel
+	 */
+	public List<Deck> getDecks() {
+		return Decks;
 	}
 }
