@@ -134,17 +134,14 @@ public class SeeOpenGameView {
 		JPanel gameName = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) gameName.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-<<<<<<< Updated upstream
 		gameName.setBorder(null);
 		topPanel.add(gameName);
 
 		final JButton startBtn = new JButton("Start Game");
-=======
+		
 		gameName.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		topPanel.add(gameName, BorderLayout.WEST);
 		
-		JButton startBtn = new JButton("Start Game");
->>>>>>> Stashed changes
 		startBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

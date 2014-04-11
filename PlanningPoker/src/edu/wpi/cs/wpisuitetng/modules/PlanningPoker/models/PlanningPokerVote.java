@@ -21,6 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 
 /**
  * @author rbkillea
+ * @author cgwalker
  * @author lhnguyenduc
  * @author bbiletch
  */
@@ -29,6 +30,13 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	String gameName;
 	String userName;
 	int vote;
+	public int getVote() {
+		return vote;
+	}
+	public void setVote(int vote) {
+		this.vote = vote;
+	}
+
 	int requirementID;
 	
 	public PlanningPokerVote(String gameName, String userName, int vote, int requirementID) {

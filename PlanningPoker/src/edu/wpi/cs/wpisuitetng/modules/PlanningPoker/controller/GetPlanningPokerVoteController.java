@@ -74,7 +74,14 @@ public class GetPlanningPokerVoteController implements ActionListener {
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 	}
-
+	public int retrievePlanningPokerVote(String gameName, String userName, int requirementID) {
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote", HttpMethod.GET); // GET == read
+		request.addObserver(observer); // add an observer to process the response
+		request.setBody(new PlanningPokerVote(gameName, userName, 0, requirementID).toJSON());
+		request.send(); // send the request
+		return PlanningPokerVote.fromJSON(request.getBody()).getVote();
+		
+	}
 	/**
 	 * Add the given PlanningPokerGames to the local model (they were received from the core).
 	 * This method is called by the GetPlanningPokerGamesRequestObserver
