@@ -237,13 +237,13 @@ public class SeeOpenGameView {
 
 		JPanel estimate = new JPanel();
 		infoContainer.add(estimate);
-		JPanel submitPane;
 		if(MainViewController.activeGame.getDeckType().equals("No Deck")){
 			submitPane = new ManualSubmit();
 		}
 		else {
 			submitPane = new SubmitPane(infoContainer);
 		}
+		final JPanel containerClone = infoContainer;
 		
 		   list.addListSelectionListener(new ListSelectionListener() {
 
@@ -251,7 +251,7 @@ public class SeeOpenGameView {
 				public void valueChanged(ListSelectionEvent arg0) {
 					requirementNameText.setText(list.getSelectedValue().getName());
 					requirementDescriptionText.setText(list.getSelectedValue().getDescription());
-					
+					((SubmitPane)submitPane).refresh();
 				}
 	        });
 	}
@@ -261,7 +261,7 @@ public class SeeOpenGameView {
 	private DefaultMutableTreeNode unanswered;
 	private JTextField requirementNameText;
 	private List<Requirement> reqList = null;
-	
+	private JPanel submitPane;
 	private void initRequirements() {
 		GetRequirementsController.getInstance().retrieveRequirements();
 		
