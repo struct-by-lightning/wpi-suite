@@ -16,7 +16,11 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckDeserializer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckSerializer;
 
 /**
@@ -56,16 +60,16 @@ public class Deck {
 		this.cards = cards;
 		Collections.sort(this.cards);
 	}
-	
+
 	public void addCard(Integer card) {
 		this.cards.add(card);
 		this.sortDeck();
 	}
-	
+
 	public void removeCard(Integer card) {
 		this.cards.remove((Integer) card);
 	}
-	
+
 	public void sortDeck() {
 		Collections.sort(this.cards);
 	}
@@ -85,51 +89,86 @@ public class Deck {
 	}
 
 	/**
-	 * @param deckName the deckName to set
+	 * @param deckName
+	 *            the deckName to set
 	 */
 	public void setDeckName(String deckName) {
 		this.deckName = deckName;
 	}
 
 	/**
-	 * @param cards the list of cards to set
+	 * @param cards
+	 *            the list of cards to set
 	 */
 	public void setCards(List<Integer> cards) {
 		this.cards = cards;
 	}
-	
+
 	// Serializing
-	
+
 	/**
 	 * Serializes this Deck into a JSON string.
-	 *
+	 * 
 	 * @return the JSON representation of this Deck
 	 */
 	public String toJSON() {
 		String json;
-		
-		Gson gson = new GsonBuilder().registerTypeAdapter(Deck.class, new DeckSerializer()).create();
-		
+
+		Gson gson = new GsonBuilder().registerTypeAdapter(Deck.class,
+				new DeckSerializer()).create();
+
 		json = gson.toJson(this, Deck.class);
-		
+
 		return json;
 	}
-	
+
 	/**
 	 * Static method offering comma-delimited JSON serialization of Deck lists
-	 *
-	 * @param d an array of Decks
+	 * 
+	 * @param d
+	 *            an array of Decks
 	 * @return the serialized array of Decks
 	 */
 	public static String toJSON(Deck[] d) {
 		String json = "[";
-		
+
 		for (Deck a : d) {
 			json += a.toJSON() + ", ";
 		}
-		
+
 		json += "]";
-		
+
 		return json;
+	}
+
+	/**
+	 * Reconstruct a Deck from its JSON representation
+	 * 
+	 * @param json
+	 *            the JSON string to user
+	 * @return the reconstructed Deck
+	 */
+	public static Deck fromJSON(String json) {
+		DeckDeserializer dd = new DeckDeserializer();
+		return dd.deserialize(new JsonParser().parse(json), null, null);
+	}
+
+	/**
+	 * Reconstruct an array of Decks from a JSON array
+	 * 
+	 * @param jsonArr
+	 *            the JSON array to deserialize
+	 * @return an array of reconstructed decks
+	 */
+	public static Deck[] fromJsonArray(String jsonArr) {
+		DeckDeserializer dd = new DeckDeserializer();
+		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		List<Deck> decks = new ArrayList<Deck>();
+
+		for (JsonElement json : array) {
+			decks.add(dd.deserialize(json, null, null));
+		}
+
+		return decks.toArray(new Deck[0]);
 	}
 }
