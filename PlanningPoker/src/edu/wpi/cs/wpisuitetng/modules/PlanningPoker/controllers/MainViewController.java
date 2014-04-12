@@ -29,6 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerG
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.ClosedGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.OpenGameView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
@@ -165,6 +166,9 @@ public class MainViewController {
 
 		if (game.isLive() && !game.isFinished()) {
 			OpenGameView.open(game);
+		}
+		if(game.isFinished()) {
+			ClosedGameView.open(game);
 		}
 	}
 
