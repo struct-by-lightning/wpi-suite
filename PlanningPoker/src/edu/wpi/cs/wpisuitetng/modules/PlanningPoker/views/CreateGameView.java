@@ -120,12 +120,12 @@ public class CreateGameView {
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel titlePanel = new JPanel();
-		FlowLayout fl_titlePanel = (FlowLayout) titlePanel.getLayout();
-		fl_titlePanel.setAlignment(FlowLayout.LEFT);
+		titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
 		titlePanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		panel.add(titlePanel, BorderLayout.NORTH);
 
 		JPanel namePane = new JPanel();
+		namePane.setLayout(new BoxLayout(namePane, BoxLayout.X_AXIS));
 		titlePanel.add(namePane);
 
 		JLabel lblName = new JLabel("Name:");
