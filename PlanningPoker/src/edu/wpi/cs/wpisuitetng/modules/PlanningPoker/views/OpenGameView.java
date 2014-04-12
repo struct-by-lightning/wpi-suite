@@ -137,6 +137,9 @@ public class OpenGameView extends JPanel {
 			String dateFormatted = fmt.format(game.getEndDate().getTime());
 			this.gameDeadlineDateLabel.setText(dateFormatted);
 		}
+		else {
+			this.gameDeadlineDateLabel.setText("No Deadline");
+		}
 
 	}
 

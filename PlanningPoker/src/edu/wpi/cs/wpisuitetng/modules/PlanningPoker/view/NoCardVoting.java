@@ -31,7 +31,7 @@ import javax.swing.border.LineBorder;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.SeeOpenGameViewController;
+//import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.SeeOpenGameViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 
 
@@ -100,7 +100,7 @@ public class NoCardVoting extends JPanel{
 			    		
 			    		// Requirement ID
 			    		// @TODO: Get selected requirement ID
-			    		int requirementID = SeeOpenGameViewController.getSelectedRequirement().getId();
+//			    		int requirementID = SeeOpenGameViewController.getSelectedRequirement().getId();
 			    		
 			    		// Game name
 			    		String gameName = MainViewController.activeGame.getGameName();
@@ -109,10 +109,10 @@ public class NoCardVoting extends JPanel{
 			    		String userName = ConfigManager.getConfig().getUserName();
 			    		
 			    		// Vote
-			    		ppv = new PlanningPokerVote(gameName, userName, selectedValue, requirementID);
+//			    		ppv = new PlanningPokerVote(gameName, userName, selectedValue, requirementID);
 			    		
 			    		//Log
-			    		System.out.println("User " + userName + " voted " + selectedValue + " for requirement" + requirementID + " in game " + gameName);
+//			    		System.out.println("User " + userName + " voted " + selectedValue + " for requirement" + requirementID + " in game " + gameName);
 			    	}
 			    });
 			estimatePanel.repaint();
