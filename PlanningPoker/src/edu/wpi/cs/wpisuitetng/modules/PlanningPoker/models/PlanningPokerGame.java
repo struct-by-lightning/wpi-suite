@@ -130,7 +130,8 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 
 	public boolean hasEndDate() {
 		// TODO This method returns mock data, and needs to be correctly implemented.
-		
+		if(endDate.get(GregorianCalendar.YEAR) == 9999)
+			return false;
 		return true;
 	}
 	
