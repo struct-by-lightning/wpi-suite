@@ -11,6 +11,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -22,9 +24,17 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
 
 /**
  * This JPanel contains the GUI for interacting with a planning poker game which
@@ -294,30 +304,91 @@ public class OpenGameView extends JPanel {
 
 		gameDeadlineDateLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		gameDeadlineDateLabel.setText("game.getDeadlineDate()");
+		
+		/**
+		 * Button for starting the game
+		 */
+		btnStartGame = new JButton("Start Game");
+		
+		/**
+		 * Button for ending a game
+		 */
+		btnEndGame = new JButton("End Game");
+		
+		
+		
+		if(game.isLive() && !game.isFinished()){
+			btnStartGame.setText("Game Started");
+			btnStartGame.setEnabled(false);
+		}
+		
+		if(!game.isLive() && !game.isFinished()){
+			btnStartGame.setText("Game Ended");
+			btnStartGame.setEnabled(false);
+		}
+		
+		
+		
+		if(!game.getModerator().equals(ConfigManager.getConfig().getUserName())){
+			btnStartGame.setEnabled(false);
+			btnEndGame.setEnabled(false);
+		}
 
+		/**
+		 * Action listener for start button
+		 */
+		btnStartGame.addActionListener( new ActionListener()
+		{
+		    public void actionPerformed(ActionEvent e)
+		    {
+		        btnStartGame.setEnabled(false);
+		        btnStartGame.setText("Game Started");
+		        game.setLive(true);
+		        UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+		        
+		    }
+		});
+		
+		/**
+		 * Action listener for end button
+		 */
+		btnEndGame.addActionListener( new ActionListener()
+		{
+		    public void actionPerformed(ActionEvent e)
+		    {
+		    	btnEndGame.setEnabled(false);
+		    	btnEndGame.setText("Game Ended");
+		    	game.setFinished(true);
+		    	UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+		    }
+		});
+		
 		javax.swing.GroupLayout gameTitlePanelLayout = new javax.swing.GroupLayout(gameTitlePanel);
-		gameTitlePanel.setLayout(gameTitlePanelLayout);
-		gameTitlePanelLayout.setHorizontalGroup(gameTitlePanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				gameTitlePanelLayout
-						.createSequentialGroup()
-						.addContainerGap()
+		gameTitlePanelLayout.setHorizontalGroup(
+			gameTitlePanelLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gameTitlePanelLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(gameNameLabel, GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+					.addGap(18)
+					.addComponent(btnStartGame)
+					.addGap(18)
+					.addComponent(btnEndGame)
+					.addGap(18)
+					.addComponent(gameDeadlineDateLabel)
+					.addContainerGap())
+		);
+		gameTitlePanelLayout.setVerticalGroup(
+			gameTitlePanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(gameTitlePanelLayout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gameTitlePanelLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(gameNameLabel)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(gameDeadlineDateLabel).addContainerGap()));
-		gameTitlePanelLayout.setVerticalGroup(gameTitlePanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				gameTitlePanelLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								gameTitlePanelLayout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(gameNameLabel)
-										.addComponent(gameDeadlineDateLabel))
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+						.addComponent(gameDeadlineDateLabel)
+						.addComponent(btnEndGame)
+						.addComponent(btnStartGame))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gameTitlePanel.setLayout(gameTitlePanelLayout);
 
 		rowSplitPanel.setLayout(new java.awt.GridLayout(2, 1));
 
@@ -612,5 +683,6 @@ public class OpenGameView extends JPanel {
 	private javax.swing.JPanel rowSplitPanel;
 	private javax.swing.JSplitPane splitPane;
 	private javax.swing.JPanel topRowRequirementPanel;
-	// End of variables declaration//GEN-END:variables
+	private JButton btnStartGame;
+	private JButton btnEndGame;
 }

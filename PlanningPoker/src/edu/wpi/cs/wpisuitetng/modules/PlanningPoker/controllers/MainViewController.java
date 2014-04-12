@@ -96,7 +96,7 @@ public class MainViewController {
 		this.tabPane.setSelectedComponent(tabPanel);
 	}
 
-	
+
 	public void removeClosableTab(){
 		Component selected = tabPane.getSelectedComponent();
 		if(selected != null)
