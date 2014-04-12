@@ -41,7 +41,7 @@ public class AddDeckController {
 
 	/** Construct an AddDeckController */
 	private AddDeckController() {
-		observer = new AddDeckRequestObserver();
+		observer = new AddDeckRequestObserver(this);
 	}
 
 	public void addDeck(Deck newDeck) {

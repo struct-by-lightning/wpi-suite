@@ -47,7 +47,7 @@ public class GetDeckController implements ActionListener {
 	 * Constructs the controller
 	 */
 	private GetDeckController() {
-		observer = new GetDeckRequestObserver();
+		observer = new GetDeckRequestObserver(this);
 	}
 
 	/**
