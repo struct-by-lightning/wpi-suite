@@ -30,53 +30,71 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.SeeOpenGameView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.OpenGameView;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 
+/**
+ * This class provides the interface with the main overview tab of the planning
+ * poker module.
+ * 
+ * @author arose
+ */
 public class MainViewController {
-	
+
 	public static PlanningPokerGame activeGame;
-	
+
 	private JToolBar toolbar;
 	private JTabbedPane tabPane;
 	private JTree gameTree;
-	
+
 	public MainViewController(JTree gameTree, JTabbedPane tabPane, JToolBar toolbar) {
 		this.gameTree = gameTree;
 		this.tabPane = tabPane;
 		this.toolbar = toolbar;
-		
+
 		this.gameTree.addAncestorListener(new AncestorListener() {
-			public void ancestorAdded(AncestorEvent event) {refreshGameTree();}
-			public void ancestorMoved(AncestorEvent event) {refreshGameTree();}
-			public void ancestorRemoved(AncestorEvent event) {refreshGameTree();}
+			public void ancestorAdded(AncestorEvent event) {
+				refreshGameTree();
+			}
+
+			public void ancestorMoved(AncestorEvent event) {
+				refreshGameTree();
+			}
+
+			public void ancestorRemoved(AncestorEvent event) {
+				refreshGameTree();
+			}
 		});
-		
+
 		this.gameTree.addMouseListener(new MouseAdapter() {
-		    public void mousePressed(MouseEvent e) {
-		        int selRow = getGameTree().getRowForLocation(e.getX(), e.getY());
-		        TreePath selPath = getGameTree().getPathForLocation(e.getX(), e.getY());
-		        if(selRow != -1) {
-		        	if(e.getClickCount() == 2) {
-		        		DefaultMutableTreeNode node = (DefaultMutableTreeNode)selPath.getLastPathComponent();
-		        		String gameName = (String)node.getUserObject();
-		        		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
-		        		
-		                gameWasDoubleClicked(PlanningPokerGameModel.getPlanningPokerGame(gameName));
-		        	}
-		        }
-		    }
+			public void mousePressed(MouseEvent e) {
+				int selRow = getGameTree().getRowForLocation(e.getX(), e.getY());
+				TreePath selPath = getGameTree().getPathForLocation(e.getX(), e.getY());
+				if (selRow != -1) {
+					if (e.getClickCount() == 2) {
+						DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
+								.getLastPathComponent();
+						String gameName = (String) node.getUserObject();
+						GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
+
+						gameWasDoubleClicked(PlanningPokerGameModel.getPlanningPokerGame(gameName));
+					}
+				}
+			}
 		});
 	}
-	
+
 	public void activateView() {
 		PlanningPoker.updateComponents(this.toolbar, this.tabPane);
 	}
-	
+
 	public void addCloseableTab(String tabName, JPanel tabPanel) {
 		this.tabPane.addTab(tabName, tabPanel);
-		this.tabPane.setTabComponentAt(this.tabPane.indexOfComponent(tabPanel), new ClosableTabComponent(this.tabPane));			
+		this.tabPane.setTabComponentAt(this.tabPane.indexOfComponent(tabPanel),
+				new ClosableTabComponent(this.tabPane));
 		this.tabPane.setSelectedComponent(tabPanel);
 	}
+
 	
 	public void removeClosableTab(){
 		Component selected = tabPane.getSelectedComponent();
@@ -84,8 +102,9 @@ public class MainViewController {
 			this.tabPane.remove(selected);
 	}
 	
+
 	public void createGameButtonClicked() {
-		CreateGameView.getController().activateView(); 
+		CreateGameView.getController().activateView();
 	}
 
 	public void refreshGameTree() {
@@ -96,23 +115,23 @@ public class MainViewController {
 		DefaultMutableTreeNode openGames = new DefaultMutableTreeNode("Open");
 		DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode("Finished");
 
+		GetRequirementsController.getInstance().retrieveRequirements();
 		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
+		
 		for (PlanningPokerGame game : PlanningPokerGameModel.getPlanningPokerGames()) {
 			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(game.getGameName());
-			
+
 			// Has the game ended?
 			if (game.isFinished()) {
 				finishedGames.add(nodeToAdd);
 			}
-			
+
 			// Has the game started voting?
 			else if (game.isLive()) {
 				openGames.add(nodeToAdd);
 			}
 
-
-
-			else if (game.getModerator().equals(ConfigManager.getConfig().getUserName())){
+			else if (game.getModerator().equals(ConfigManager.getConfig().getUserName())) {
 				// The game must be new.
 				newGames.add(nodeToAdd);
 			}
@@ -141,12 +160,14 @@ public class MainViewController {
 	}
 
 	public void gameWasDoubleClicked(PlanningPokerGame game) {
-		MainViewController.activeGame = game;
 		
-		if(!game.isFinished())
-			SeeOpenGameView.getController().activateView(game);
+		MainViewController.activeGame = game;
+
+		if (game.isLive() && !game.isFinished()) {
+			OpenGameView.open(game);
+		}
 	}
-	
+
 	private JTree getGameTree() {
 		return this.gameTree;
 	}
