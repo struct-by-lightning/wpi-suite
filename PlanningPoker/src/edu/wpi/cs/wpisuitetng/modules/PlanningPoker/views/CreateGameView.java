@@ -742,7 +742,9 @@ public class CreateGameView {
 						
 					}
 				}
+	
 				MainView.getController().refreshGameTree();
+				MainView.getController().removeClosableTab();
 			}
 			
 		});
