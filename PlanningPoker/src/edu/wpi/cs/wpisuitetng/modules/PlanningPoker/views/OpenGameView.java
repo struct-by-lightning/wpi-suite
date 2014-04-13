@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -44,7 +45,11 @@ import javax.swing.JButton;
  */
 @SuppressWarnings("serial")
 public class OpenGameView extends JPanel {
-
+	/**
+	 * Playing Card JPanel List that makes it possible to select the panel object!
+	 */
+	LinkedList<PlayingCardJPanel> PlayingCardJPanelList;
+	
 	/**
 	 * This function is what to call to open up the display for an
 	 * open-for-voting planning poker game in a new tab.
@@ -93,17 +98,27 @@ public class OpenGameView extends JPanel {
 	 *            The planning poker game to define this view.
 	 */
 	private void initForGame() {
-
+		PlayingCardJPanelList = new LinkedList<PlayingCardJPanel>();
+		
 		// Add JPanels for each card available in this game.
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.insets = new Insets(0, 15, 0, 15);
+		
 		for (Integer cardValue : game.getDeckValues()) {
 			PlayingCardJPanel card = new PlayingCardJPanel(cardValue.intValue(), false);
+			
+			// Add this to the card panel list 
+			PlayingCardJPanelList.add(card);
+			
 			this.cards.add(card);
 			this.allCardsPanel.add(card, gridBagConstraints);
 			card.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent evt) {
+					for (PlayingCardJPanel card: PlayingCardJPanelList) {
+						card.deselect();
+					}
+					
 					PlayingCardJPanel clickedCard = (PlayingCardJPanel) evt.getSource();
 					clickedCard.toggle();
 					updateEstimateTotal();
