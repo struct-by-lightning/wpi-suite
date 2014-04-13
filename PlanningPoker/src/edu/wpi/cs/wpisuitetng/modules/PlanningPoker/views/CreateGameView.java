@@ -662,7 +662,9 @@ public class CreateGameView {
 							+ endCal.toString());
 					System.out.println(enteredName);
 					System.out.println(selectedDeckType);
-
+						
+					gameRequirementIDsList.clear();
+					
 					for (int i = 0; i < listOfRequirementsToAdd.size(); i++) {
 						gameRequirementIDsList.add(listOfRequirementsToAdd
 								.getElementAt(i).getId());

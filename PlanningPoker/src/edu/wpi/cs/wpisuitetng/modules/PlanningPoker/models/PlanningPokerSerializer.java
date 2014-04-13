@@ -24,7 +24,7 @@ public class PlanningPokerSerializer implements JsonSerializer<PlanningPokerGame
 
 	@Override
 	public JsonElement serialize(PlanningPokerGame m, Type t, JsonSerializationContext context) {
-		DateFormat df = new SimpleDateFormat("dd MM yyyy");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 		JsonObject deflated = new JsonObject();
 		JsonArray deflatedReqs = new JsonArray();
 		
