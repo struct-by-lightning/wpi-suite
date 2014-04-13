@@ -105,6 +105,7 @@ public class OpenGameView extends JPanel {
 			PlayingCardJPanel card = new PlayingCardJPanel(cardValue.intValue(), false);
 			this.cards.add(card);
 			this.allCardsPanel.add(card, gridBagConstraints);
+			card.repaint();
 			card.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent evt) {
