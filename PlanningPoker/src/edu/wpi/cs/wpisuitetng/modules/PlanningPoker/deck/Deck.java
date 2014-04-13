@@ -105,7 +105,17 @@ public class Deck extends AbstractModel {
 	public void setCards(List<Integer> cards) {
 		this.cards = cards;
 	}
-	
+
+	/**
+	 * Converts the list of cards to a string
+	 * 
+	 * @return the string representing the list of cards
+	 */
+	@Override
+	public String toString() {
+		return this.deckName;
+	}
+
 	// Serializing
 
 	/**

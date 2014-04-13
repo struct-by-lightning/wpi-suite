@@ -110,7 +110,6 @@ public class CreateGameView {
 	List<Integer> defaultList = new ArrayList<Integer>();
 	Integer[] lightningArray = {0, 1, 2, 3, 5, 8, 13, 20, 40, 100};
 	List<Integer> lightningList = new ArrayList<Integer>();
-	List<Deck> deckList = new ArrayList<Deck>();
 	
 /** 
  * creates the view for the create new game window
@@ -132,9 +131,7 @@ public class CreateGameView {
 		Deck noDeck = new Deck("No Deck", null);
 		
 		/** List of Decks to mimic database funtionality */
-		deckList.add(defaultDeck);
-		deckList.add(lightningDeck);
-		deckList.add(noDeck);
+		Deck[] deckArray = {defaultDeck, lightningDeck, noDeck};
 		
 		listOfRequirementsForReset= new DefaultListModel<Requirement>();
 		listOfRequirementsToAdd= new DefaultListModel<Requirement>();
@@ -362,19 +359,13 @@ public class CreateGameView {
 
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
-		
-		DefaultComboBoxModel<String> deckComboBox = new DefaultComboBoxModel<String>();
-		
-		for (Deck d : deckList) {
-			deckComboBox.addElement(d.getDeckName());
-		}
 
-		deckType.setModel(deckComboBox);
+		deckType.setModel(new DefaultComboBoxModel<Deck>(deckArray));
 	
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
 		// get the text to display below
-		deckOverview.setText(getDeckByName("Default").getCards().toArray().toString());
+		deckOverview.setText(defaultDeck.getCards().toString());
 	
 
 		deckOverview.setEditable(false);
@@ -406,11 +397,11 @@ public class CreateGameView {
 		   public void actionPerformed(ActionEvent e) {
 			isTabEditedByUser = true;
 		    JComboBox combo = (JComboBox)e.getSource();
-		                String selection = (String)combo.getSelectedItem();
-		                if (getDeckByName(selection).getDeckName().equals("No Deck")) {
+		                Deck selection = (Deck)combo.getSelectedItem();
+		                if (selection.getDeckName().equals("No Deck")) {
 		                	deckOverview.setText("User will be able to enter their own estimation");
 		                } else {
-		                	deckOverview.setText(getDeckByName(selection).getCards().toString());
+		                	deckOverview.setText(selection.getCards().toString());
 		                }
 		   }
 
@@ -952,7 +943,7 @@ public class CreateGameView {
 	/**
 	 * A dropdown box that contains the default deck to choose.
 	 */
-	JComboBox<String> deckType = new JComboBox<String>();
+	JComboBox<Deck> deckType = new JComboBox<Deck>();
 	String selectedDeckType = new String();
 	/**
 	 * A list contains of available requirements to add to the session
@@ -1014,12 +1005,4 @@ public class CreateGameView {
 	JButton btn_addToGame;
 	JButton btn_removeAll;
 	boolean calendarOpen = false;
-	
-	private Deck getDeckByName(String deckName) {
-		for (Deck d : deckList) {
-			if (d.getDeckName().equals(deckName))
-				return d;
-		}
-		return new Deck(null, null);
-	}
 }
