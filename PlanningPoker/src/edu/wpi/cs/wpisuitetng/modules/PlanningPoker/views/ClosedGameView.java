@@ -9,17 +9,33 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.InputVerifier;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.RequirementManager;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
  * @author Legion
@@ -51,7 +67,7 @@ public class ClosedGameView extends JPanel {
 					public void valueChanged(ListSelectionEvent ev) {
 						JList list;
 						list = (JList) ev.getSource();
-						Requirement selected = requirements.get(list
+						selected = requirements.get(list
 								.getSelectedIndex());
 						requirementNameLabel.setText(selected.getName());
 						requirementDescriptionLabel.setText(selected
@@ -74,14 +90,8 @@ public class ClosedGameView extends JPanel {
 		this.gameNameLabel.setText(game.getGameName());
 
 		// Show the deadline of the game if there is one.
-		if (game.hasEndDate()) {
-			SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
-			fmt.setCalendar(game.getEndDate());
-			String dateFormatted = fmt.format(game.getEndDate().getTime());
-			this.gameDeadlineDateLabel.setText(dateFormatted);
-		} else {
-			this.gameDeadlineDateLabel.setText("No Deadline");
-		}
+		this.gameDeadlineDateLabel.setText("Game is Finished");
+		
 
 	}
 
@@ -301,6 +311,222 @@ public class ClosedGameView extends JPanel {
 						.addContainerGap()));
 
 		topRowRequirementPanel.add(requirementPanel);
+		
+		instructionsLabel.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+		instructionsLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+		instructionsLabel
+				.setText("<html>Below is a list of statistics for this requirement</html>");
+
+		estimateCenteringPanel.setLayout(new java.awt.GridBagLayout());
+
+		estimateTitlePanel.setBorder(new javax.swing.border.SoftBevelBorder(
+				javax.swing.border.BevelBorder.RAISED));
+
+		estimateTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+		estimateTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		estimateTitleLabel.setText("<html>Your estimate</html>");
+
+		javax.swing.GroupLayout estimateTitlePanelLayout = new javax.swing.GroupLayout(
+				estimateTitlePanel);
+		estimateTitlePanel.setLayout(estimateTitlePanelLayout);
+		estimateTitlePanelLayout.setHorizontalGroup(estimateTitlePanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				javax.swing.GroupLayout.Alignment.TRAILING,
+				estimateTitlePanelLayout.createSequentialGroup().addContainerGap()
+						.addComponent(estimateTitleLabel).addContainerGap()));
+		estimateTitlePanelLayout.setVerticalGroup(estimateTitlePanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				estimateTitlePanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(estimateTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+
+		estimateNumberPanel.setBorder(new javax.swing.border.SoftBevelBorder(
+				javax.swing.border.BevelBorder.RAISED));
+
+		estimateNumberBox.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+		estimateNumberBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		estimateNumberBox.setText("#");
+	    estimateNumberBox.addKeyListener(new KeyAdapter() {
+	        public void keyTyped(KeyEvent e) {
+	          char c = e.getKeyChar();
+	          if (!((c >= '0') && (c <= '9') ||
+	             (c == KeyEvent.VK_BACK_SPACE) ||
+	             (c == KeyEvent.VK_DELETE))) {
+	            getToolkit().beep();
+	            e.consume();
+	            System.out.println("Please enter a number");
+	          }
+	          else if (estimateNumberBox.getText().length()>=3) {
+		          getToolkit().beep();
+		          e.consume();
+	        	  System.out.println("Character Limited exceeded");
+	          }
+	        }
+	      });
+	    
+		javax.swing.GroupLayout estimateNumberPanelLayout = new javax.swing.GroupLayout(
+				estimateNumberPanel);
+		estimateNumberPanel.setLayout(estimateNumberPanelLayout);
+		estimateNumberPanelLayout.setHorizontalGroup(estimateNumberPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				estimateNumberPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addContainerGap()));
+		estimateNumberPanelLayout.setVerticalGroup(estimateNumberPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				estimateNumberPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addContainerGap()));
+
+		javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(estimatePanel);
+		estimatePanel.setLayout(estimatePanelLayout);
+		estimatePanelLayout.setHorizontalGroup(estimatePanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				estimatePanelLayout
+						.createSequentialGroup()
+						.addGap(0, 0, Short.MAX_VALUE)
+						.addGroup(
+								estimatePanelLayout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING, false)
+										.addComponent(estimateTitlePanel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(estimateNumberPanel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE))));
+		estimatePanelLayout.setVerticalGroup(estimatePanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				estimatePanelLayout
+						.createSequentialGroup()
+						.addComponent(estimateTitlePanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+						.addComponent(estimateNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE)));
+
+		estimateCenteringPanel.add(estimatePanel, new java.awt.GridBagConstraints());
+
+//		javax.swing.GroupLayout rightBlankPanelLayout = new javax.swing.GroupLayout(rightBlankPanel);
+//		rightBlankPanel.setLayout(rightBlankPanelLayout);
+//		rightBlankPanelLayout
+//				.setHorizontalGroup(rightBlankPanelLayout
+//						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//						.addGroup(
+//								rightBlankPanelLayout
+//										.createSequentialGroup()
+//										.addContainerGap()
+//										.addGroup(
+//												rightBlankPanelLayout
+//														.createParallelGroup(
+//																javax.swing.GroupLayout.Alignment.LEADING)
+//														.addGroup(
+//																javax.swing.GroupLayout.Alignment.TRAILING,
+//																rightBlankPanelLayout
+//																		.createSequentialGroup()
+//																		.addComponent(
+//																				instructionsLabel,
+//																				javax.swing.GroupLayout.DEFAULT_SIZE,
+//																				598,
+//																				Short.MAX_VALUE)
+//																		.addContainerGap()))));
+//														.addComponent(
+//																estimateCenteringPanel,
+//																javax.swing.GroupLayout.Alignment.TRAILING,
+//																javax.swing.GroupLayout.DEFAULT_SIZE,
+//																javax.swing.GroupLayout.DEFAULT_SIZE,
+//																Short.MAX_VALUE))));
+//		rightBlankPanelLayout.setVerticalGroup(rightBlankPanelLayout.createParallelGroup(
+//				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+//				javax.swing.GroupLayout.Alignment.TRAILING,
+//				rightBlankPanelLayout
+//						.createSequentialGroup()
+//						.addComponent(estimateCenteringPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
+//								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+//						.addComponent(instructionsLabel, javax.swing.GroupLayout.PREFERRED_SIZE,
+//								javax.swing.GroupLayout.DEFAULT_SIZE,
+//								javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
+//
+//		topRowRequirementPanel.add(rightBlankPanel);
+
+		rowSplitPanel.add(topRowRequirementPanel);
+		rowSplitPanel.add(estimateCenteringPanel);
+		JButton submitButton = new JButton("Submit");
+		rowSplitPanel.add(submitButton);
+		submitButton.setFont(new java.awt.Font("Tahoma", 0, 48));
+		submitButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				List<Requirement> req = RequirementModel.getInstance().getRequirements();
+				int n = 0;
+				for(int i = 0; i < req.size(); i++) {
+					if(req.get(i).getName().equals(selected.getName())) {
+						n = i;
+						break;
+					}
+				}
+				System.out.println(RequirementModel.getInstance().getRequirements().get(n).getName()+" set estimate to "+ estimateNumberBox.getText());
+				Requirement req2set = RequirementModel.getInstance().getRequirement(n);
+				req2set.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
+				UpdateRequirementController.getInstance().updateRequirement(req2set);
+				//GetRequirementsController.getInstance().retrieveRequirements();
+			}
+		});
+		if(!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {
+			submitButton.setEnabled(false);
+			estimateNumberBox.setEnabled(false);
+			estimateTitleLabel.setEnabled(false);
+		}
+		javax.swing.GroupLayout rightSplitPanelLayout = new javax.swing.GroupLayout(rightSplitPanel);
+		rightSplitPanel.setLayout(rightSplitPanelLayout);
+		rightSplitPanelLayout.setHorizontalGroup(rightSplitPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				rightSplitPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								rightSplitPanelLayout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+										.addComponent(gameTitlePanel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(rowSplitPanel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)).addContainerGap()));
+		rightSplitPanelLayout.setVerticalGroup(rightSplitPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				rightSplitPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(gameTitlePanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addComponent(rowSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addContainerGap()));
+		//rowSplitPanel.add(estimateCenteringPanel);
+		splitPane.setRightComponent(rightSplitPanel);
+
+		add(splitPane, java.awt.BorderLayout.CENTER);
 	}
 
 	private javax.swing.JPanel estimateCenteringPanel;
@@ -328,5 +554,6 @@ public class ClosedGameView extends JPanel {
 	private javax.swing.JPanel rowSplitPanel;
 	private javax.swing.JSplitPane splitPane;
 	private javax.swing.JPanel topRowRequirementPanel;
+	private Requirement selected;
 
 }
