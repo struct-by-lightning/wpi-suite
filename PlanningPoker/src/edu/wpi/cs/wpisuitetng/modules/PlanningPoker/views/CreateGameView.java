@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * Copyright (c) 2013 WPI-Suite
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Struct-By-Lightning
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.BorderLayout;
@@ -13,6 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,6 +48,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerDateModel;
@@ -49,6 +61,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.CreateGameViewCo
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.DatePicker;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Exporter;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
@@ -56,7 +69,10 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
-
+/**
+ * CreateGameView creates the game view for a new game 
+ *
+ */
 public class CreateGameView {
 	
 	/**
@@ -64,6 +80,7 @@ public class CreateGameView {
 	 */
 	
 	private static CreateGameView singleInstance;
+
 	
 	private static CreateGameView getSingleInstance() {
 		if (CreateGameView.singleInstance == null) {
@@ -86,7 +103,10 @@ public class CreateGameView {
 	private CreateGameView() {
 		this.controller = new CreateGameViewController(this);
 	}
-
+/** 
+ * creates the view for the create new game window
+ * @return
+ */
 	public JPanel newCreateGamePanel() {
 		
 		listOfRequirementsForReset= new DefaultListModel<Requirement>();
@@ -100,12 +120,12 @@ public class CreateGameView {
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel titlePanel = new JPanel();
-		FlowLayout fl_titlePanel = (FlowLayout) titlePanel.getLayout();
-		fl_titlePanel.setAlignment(FlowLayout.LEFT);
+		titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
 		titlePanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		panel.add(titlePanel, BorderLayout.NORTH);
 
 		JPanel namePane = new JPanel();
+		namePane.setLayout(new BoxLayout(namePane, BoxLayout.X_AXIS));
 		titlePanel.add(namePane);
 
 		JLabel lblName = new JLabel("Name:");
@@ -197,6 +217,7 @@ public class CreateGameView {
 			boolean checked = false;
 
 			public void actionPerformed(ActionEvent ae) {
+				isTabEditedByUser = true;
 				if (!checked) {
 					calendarButton_2.setEnabled(true);
 					endTime.setEnabled(true);
@@ -285,8 +306,12 @@ public class CreateGameView {
 		calendarButton_2.addActionListener(new ActionListener() {
 			boolean open = false;
 			DatePicker dp;
-
+/**
+ * action for using the calendar method for enabling it and selecting
+ * a date
+ */
 			public void actionPerformed(ActionEvent ae) {
+				isTabEditedByUser = true;
 				if (!open) {
 					dp = new DatePicker(calendarPanel, constraints14,
 							endDateText);
@@ -306,19 +331,17 @@ public class CreateGameView {
 		JPanel cardDeckPane = new JPanel();
 
 		calendarOverview.add(deckPanel);
-		// JPanel deckDisplayPane = new JPanel();
+		
 
-		// calendarOverview.add(deckDisplayPane);
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
 
 		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "Lightning Deck", "No Deck"}));
-		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
-
+	
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
 		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
-		//deckOverview.setHorizontalAlignment(WIDTH/2);
+	
 
 		deckOverview.setEditable(false);
 
@@ -367,21 +390,7 @@ public class CreateGameView {
 
 		});
 
-		// JPanel panel_20 = new JPanel();
-		// panel_15.add(panel_20);
-		//
-		//
-		//
-		// textField_1 = new JTextField();
-		// panel_21.add(textField_1);
-		// textField_1.setColumns(10);
-		//
-		// JPanel panel_22 = new JPanel();
-		// panel_15.add(panel_22);
-		//
-		// JPanel panel_23 = new JPanel();
-		// panel_15.add(panel_23);
-
+		
 		JPanel requirementsPanel = new JPanel();
 		requirementsPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		panel.add(requirementsPanel, BorderLayout.CENTER);
@@ -443,10 +452,15 @@ public class CreateGameView {
 		topButton.setLayout(new BorderLayout(0, 0));
 
 		final JButton btn_addToGame = new JButton(">");
+		btn_addToGame.setEnabled(false);
 		btn_addToGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
 			}
+			
 		});
+		
+		
 		topButton.add(btn_addToGame, BorderLayout.CENTER);
 
 		JPanel bottomButton = new JPanel();
@@ -520,24 +534,27 @@ public class CreateGameView {
 			public void keyTyped(KeyEvent arg0) {
 
 			}
-
+/**
+ * Enables create button key to work if all fields are properly filled out
+ * else tells user what is still needed
+ */
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				isTabEditedByUser = true;
 				String currentText = sessionName.getText();
 				if (currentText.equals("")) {
+
 					btnCreateGame.setEnabled(false);
 					createGameErrorText.setText("Session needs a name");
 				} else {
-					btnCreateGame.setEnabled(true);
-					createGameErrorText.setText("");
-				}
-				
-				if(listOfRequirementsToAdd.size() == 0){
-					btnCreateGame.setEnabled(false);
-				}
-				else{
-					btnCreateGame.setEnabled(true);
+					if (listOfRequirementsToAdd.size() == 0) {
+						btnCreateGame.setEnabled(false);
+					}
+					else{
+						btnCreateGame.setEnabled(true);
+						createGameErrorText.setText("");
+					}
+
 				}
 			}
 
@@ -574,6 +591,21 @@ public class CreateGameView {
 
 		allRequirements.setModel(listOfAllRequirements);
 
+		allRequirements.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				btn_addToGame.setEnabled(true);
+				btn_addAll.setEnabled(true);
+				btn_removeFromGame.setEnabled(false);
+			}
+		});
+		
+		selectedRequirements.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				btn_addToGame.setEnabled(false);
+				btn_removeFromGame.setEnabled(true);
+				btn_removeAll.setEnabled(true);
+			}
+		});
 		gameList.add(selectedRequirements);
 
 		// Get and add the list of emails to the mailer
@@ -647,11 +679,11 @@ public class CreateGameView {
 							game = new PlanningPokerGame(enteredName,
 									"Default description",
 
-									selectedDeckType, gameRequirementIDsList,
+									(String)deckType.getSelectedItem(), gameRequirementIDsList,
 									false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
 						} else {
 							game = new PlanningPokerGame(enteredName,
-									"Default description", selectedDeckType,
+									"Default description", (String)deckType.getSelectedItem(),
 									gameRequirementIDsList, false, false,
 									startCal, endCal, ConfigManager.getConfig().getUserName());
 
@@ -669,6 +701,7 @@ public class CreateGameView {
 					else{
 						// Error message when the session name is empty
 						if (sessionName.getText().isEmpty()) {
+							btnCreateGame.setEnabled(false);
 							JOptionPane emptyNameErrorPanel = new JOptionPane(
 									"You must enter the session name",
 									JOptionPane.ERROR_MESSAGE);
@@ -677,11 +710,15 @@ public class CreateGameView {
 							errorDialog.setLocation(thisPanel.getWidth() / 2,
 									thisPanel.getHeight() / 2);
 							errorDialog.setVisible(true);
+							btnCreateGame.setEnabled(false);
 						}
 						System.out.println("Start date is after the end date.");
+						
 					}
 				}
+	
 				MainView.getController().refreshGameTree();
+				MainView.getController().removeClosableTab();
 			}
 			
 		});
@@ -705,11 +742,12 @@ public class CreateGameView {
 
 				btn_removeFromGame.setEnabled(true);
 				btn_removeAll.setEnabled(true);
-
-				btn_addToGame.setEnabled(false);
-				btn_addAll.setEnabled(false);
+				//btnCreateGame.setEnabled(false);
 				
+				btn_addAll.setEnabled(false);
+				btn_addToGame.setEnabled(false);
 				btnCreateGame.setEnabled(true);
+				
 			}
 		});
 
@@ -738,6 +776,7 @@ public class CreateGameView {
 					if (listOfAllRequirements.size() == 0) {
 						btn_addToGame.setEnabled(false);
 						btn_addAll.setEnabled(false);
+						btnCreateGame.setEnabled(false);
 					}
 
 				}
@@ -765,9 +804,9 @@ public class CreateGameView {
 					allRequirements.setModel(listOfAllRequirements);
 					selectedRequirements.setModel(listOfRequirementsToAdd);
 
-					btn_addToGame.setEnabled(true);
-					btn_addAll.setEnabled(true);
-
+					btn_addToGame.setEnabled(false);
+					btn_addAll.setEnabled(false);
+					
 					if (listOfRequirementsToAdd.size() == 0) {
 						btn_removeFromGame.setEnabled(false);
 						btn_removeAll.setEnabled(false);
@@ -777,6 +816,8 @@ public class CreateGameView {
 				if(listOfRequirementsToAdd.size() == 0){
 					btnCreateGame.setEnabled(false);
 				}
+				
+				btn_addAll.setEnabled(true);
 
 			}
 		});
@@ -788,7 +829,8 @@ public class CreateGameView {
 		btn_removeAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
-
+				btnCreateGame.setEnabled(false);
+				
 				while (listOfRequirementsToAdd.getSize() > 0) {
 					System.out.println(listOfRequirementsToAdd.elementAt(0));
 					listOfAllRequirements.addElement(listOfRequirementsToAdd
@@ -798,13 +840,12 @@ public class CreateGameView {
 				selectedRequirements.setModel(listOfRequirementsToAdd);
 				allRequirements.setModel(listOfAllRequirements);
 
-				btn_addToGame.setEnabled(true);
+				btn_addToGame.setEnabled(false);
 				btn_addAll.setEnabled(true);
-
 				btn_removeFromGame.setEnabled(false);
 				btn_removeAll.setEnabled(false);
 				
-				btnCreateGame.setEnabled(false);
+				
 			}
 		});
 
@@ -814,6 +855,7 @@ public class CreateGameView {
 
 		btnResetGame.addActionListener(new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
+		    	isTabEditedByUser = true;
 		    	// Reset game name
 		    	sessionName.setText(dateFormat.format(date));
 
@@ -836,8 +878,7 @@ public class CreateGameView {
 		    	selectedRequirements.setModel(listOfRequirementsToAdd);
 		    	allRequirements.setModel(listOfAllRequirements);
 
-		    	btn_addToGame.setEnabled(true);
-		    	btn_addAll.setEnabled(true);
+
 
 		    	btn_removeFromGame.setEnabled(false);
 	    		btn_removeAll.setEnabled(false);
@@ -850,6 +891,7 @@ public class CreateGameView {
 		 */
 		btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				isTabEditedByUser = true;
 				//Create a file chooser
 				final JFileChooser fc = new JFileChooser();
 				//In response to a button click:
@@ -865,6 +907,7 @@ public class CreateGameView {
 		});
 		return panel;
 	}
+
 	
 	private JPanel panel;
 	private JTextField sessionName;
@@ -875,10 +918,8 @@ public class CreateGameView {
 	 */
 	JLabel createGameErrorText;
 
-	// indicates whether the user edited the new game tab
-	/*
-	 * **THE FOLLOWING CODE NEEDS TO BE ADDED TO EVERY USER ACTION LISTENER:***
-	 * isTabEditedByUser = true;
+	/**
+	 *  indicates whether the user edited the new game tab
 	 */
 	public boolean isTabEditedByUser;
 
