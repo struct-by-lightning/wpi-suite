@@ -9,12 +9,19 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 
 /**
  * @author rbkillea
+ * @author cgwalker
  * @author lhnguyenduc
  * @author bbiletch
  */
@@ -23,6 +30,13 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	String gameName;
 	String userName;
 	int vote;
+	public int getVote() {
+		return vote;
+	}
+	public void setVote(int vote) {
+		this.vote = vote;
+	}
+
 	int requirementID;
 	
 	public PlanningPokerVote(String gameName, String userName, int vote, int requirementID) {
@@ -101,5 +115,24 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 		int retVote = Integer.parseInt(scTemp.next());
 		
 		return new PlanningPokerVote(retGameName, retUserName, retVote, retRequirementID);
+	}
+	
+	/**
+	 * Reconstruct an array of PlanningPokerVotes from a JSON array
+	 * 
+	 * @param jsonArr
+	 *            The JSON array to use
+	 * @return An array of reconstructed PlanningPokerGames
+	 */
+	public static PlanningPokerVote[] fromJsonArray(String jsonArr) {
+		PlanningPokerVoteDeserializer ppd = new PlanningPokerVoteDeserializer();
+		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		List<PlanningPokerVote> ppvs = new ArrayList<PlanningPokerVote>();
+
+		for (JsonElement json : array) {
+			ppvs.add(ppd.deserialize(json, null, null));
+		}
+
+		return ppvs.toArray(new PlanningPokerVote[0]);
 	}
 }
