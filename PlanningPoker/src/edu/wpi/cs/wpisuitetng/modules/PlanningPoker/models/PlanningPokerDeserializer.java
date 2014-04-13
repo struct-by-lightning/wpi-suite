@@ -116,7 +116,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 					"PlanningPokerModel transmitted with String in isLive field");
 		}
 
-		DateFormat df = new SimpleDateFormat("dd MM yyyy");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 		try {
 			Date date = df.parse(deflated.get("startDate").getAsString());
