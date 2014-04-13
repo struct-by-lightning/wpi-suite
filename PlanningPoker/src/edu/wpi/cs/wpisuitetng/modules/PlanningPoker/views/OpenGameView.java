@@ -378,6 +378,7 @@ public class OpenGameView extends JPanel {
 		        btnStartGame.setText("Game Started");
 		        game.setLive(true);
 		        UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+		        MainView.getController().refreshGameTree();
 		        
 		    }
 		});
@@ -393,6 +394,7 @@ public class OpenGameView extends JPanel {
 		    	btnEndGame.setText("Game Ended");
 		    	game.setFinished(true);
 		    	UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+		    	MainView.getController().refreshGameTree();
 		    }
 		});
 		
