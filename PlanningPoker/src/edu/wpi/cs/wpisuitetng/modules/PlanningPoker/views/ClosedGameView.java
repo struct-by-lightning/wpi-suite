@@ -1,153 +1,80 @@
 /*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
+ * Copyright (c) 2012-2014 -- WPI Suite
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Struct-By-Lightning
- ******************************************************************************/
+ * Contributor: team struct-by-lightning
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.InputVerifier;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.RequirementManager;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
-
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
- * This JPanel contains the GUI for interacting with a planning poker game which
- * is open for voting.
+ * @author Legion
  * 
- * @author Austin Rose (arose)
  */
-@SuppressWarnings("serial")
-public class OpenGameView extends JPanel {
-
-	/**
-	 * This function is what to call to open up the display for an
-	 * open-for-voting planning poker game in a new tab.
-	 * 
-	 * @param game
-	 *            A planning poker game which is open for voting.
-	 */
+public class ClosedGameView extends JPanel {
 	public static void open(PlanningPokerGame game) {
-		
-		OpenGameView view = new OpenGameView(game);
+		ClosedGameView view = new ClosedGameView(game);
 		MainView.getController().addCloseableTab(game.getGameName(), view);
 	}
 
 	private PlanningPokerGame game;
 	private ArrayList<Requirement> requirements;
-	private static PlanningPokerVote ppv;
-	
-	// JPanel subclasses for each card in this game's deck.
-	private ArrayList<PlayingCardJPanel> cards;
 
-	/**
-	 * Constructor runs NetBeans generated UI initialization code and then
-	 * updates those components based on the given planning poker game.
-	 * 
-	 * @param game
-	 *            The planning poker game whose data will be displayed on this
-	 *            JPanel.
-	 */
-	private OpenGameView(PlanningPokerGame game) {
-		System.out.println("OpenGameView(" + game + ")");
+	private ClosedGameView(PlanningPokerGame game) {
+		System.out.println("ClsoedGameView(" + game + ")");
 		this.game = game;
 		this.requirements = game.getRequirements();
-		this.cards = new ArrayList<>();
-		
-
-		// Initialize all GUI components. Netbeans generated code.
 		initComponents();
-
-		// Fill components with data from the planning poker game.
 		initForGame();
 	}
 
-	/**
-	 * Initializes components based on the given planning poker game.
-	 * 
-	 * @param game
-	 *            The planning poker game to define this view.
-	 */
 	private void initForGame() {
-
-		// Add JPanels for each card available in this game.
-		GridBagConstraints gridBagConstraints = new GridBagConstraints();
-		gridBagConstraints.insets = new Insets(0, 15, 0, 15);
-		for (final Integer cardValue : game.getDeckValues()) {
-			PlayingCardJPanel card = new PlayingCardJPanel(cardValue.intValue(), false);
-			this.cards.add(card);
-			this.allCardsPanel.add(card, gridBagConstraints);
-			card.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent evt) {
-					PlayingCardJPanel clickedCard = (PlayingCardJPanel) evt.getSource();
-					clickedCard.toggle();
-					updateEstimateTotal();// Vote value
-		    		
-		    		// Requirement ID
-		    		// @TODO: Get selected requirement ID
-		    		int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
-		    		
-		    		// Game name
-		    		String gameName = MainViewController.activeGame.getGameName();
-		    		
-		    		// User name
-		    		String userName = ConfigManager.getConfig().getUserName();
-		    		
-		    		// Vote
-		    		if(estimateNumberLabel.getText().equals("?"))
-		    			submitButton.setEnabled(false);
-		    		else {
-		    			submitButton.setEnabled(true);
-		    			ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);	
-		    		}
-				}
-			});
-		}
-
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
-		this.requirementList.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent ev) {
-				JList list;
-				list = (JList) ev.getSource();
-				Requirement selected = requirements.get(list.getSelectedIndex());
-				requirementNameLabel.setText(selected.getName());
-				requirementDescriptionLabel.setText(selected.getDescription());
-				updateSelectedCards(game, selected);
-				updateEstimateTotal();
-			}
-		});
-
+		this.requirementList
+				.addListSelectionListener(new ListSelectionListener() {
+					@Override
+					public void valueChanged(ListSelectionEvent ev) {
+						JList list;
+						list = (JList) ev.getSource();
+						selected = requirements.get(list
+								.getSelectedIndex());
+						requirementNameLabel.setText(selected.getName());
+						requirementDescriptionLabel.setText(selected
+								.getDescription());
+						updateEstimateTotal(selected);
+					}
+				});
 		// Populate the list with each requirement.
 		DefaultListModel<String> model = new DefaultListModel<String>();
 		for (Requirement r : this.requirements) {
@@ -163,64 +90,15 @@ public class OpenGameView extends JPanel {
 		this.gameNameLabel.setText(game.getGameName());
 
 		// Show the deadline of the game if there is one.
-		if (game.hasEndDate()) {
-			SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
-			fmt.setCalendar(game.getEndDate());
-			String dateFormatted = fmt.format(game.getEndDate().getTime());
-			this.gameDeadlineDateLabel.setText(dateFormatted);
-		}
-		else {
-			this.gameDeadlineDateLabel.setText("No Deadline");
-		}
+		this.gameDeadlineDateLabel.setText("Game is Finished");
+		
 
 	}
 
-	/**
-	 * Set each of the cards displayed to be either selected or not selected
-	 * based on the votes for the given game and requirement.
-	 * 
-	 * @param game
-	 *            Game whose card selection values are in question.
-	 * @param selectedRequirement
-	 *            Particular requirement whose card selection values are in
-	 *            question.
-	 */
-	private void updateSelectedCards(PlanningPokerGame game, Requirement selectedRequirement) {
-
-		ArrayList<Integer> selectedIndices = game.getSelectedCardIndices(null, selectedRequirement);
-
-		for (int i = 0; i < this.cards.size(); i++) {
-			if (selectedIndices.contains(new Integer(i))) {
-				this.cards.get(i).select();
-			} else {
-				this.cards.get(i).deselect();
-			}
-		}
+	private void updateEstimateTotal(Requirement selected) {
+		this.estimateNumberBox.setText("" + selected.getEstimate());
 	}
-
-	/**
-	 * Updates the display on the estimate sum counter based on the cards which
-	 * are currently selected.
-	 */
-	private void updateEstimateTotal() {
-		int total = 0;
-		for (PlayingCardJPanel card : this.cards) {
-			total += card.getValue();
-		}
-
-		String newText = (total > 0 ? ("" + total) : "?");
-
-		this.estimateNumberLabel.setText(newText);
-	}
-
-	/**
-	 * This method is called from within the constructor to initialize the form.
-	 * WARNING: Do NOT modify this code. The content of this method is always
-	 * regenerated by the Form Editor.
-	 */
-	@SuppressWarnings("unchecked")
-	// <editor-fold defaultstate="collapsed"
-	// desc="Generated Code">//GEN-BEGIN:initComponents
+	
 	private void initComponents() {
 		java.awt.GridBagConstraints gridBagConstraints;
 
@@ -248,20 +126,7 @@ public class OpenGameView extends JPanel {
 		estimateTitlePanel = new javax.swing.JPanel();
 		estimateTitleLabel = new javax.swing.JLabel();
 		estimateNumberPanel = new javax.swing.JPanel();
-		estimateNumberLabel = new javax.swing.JLabel();
-		cardsScrollPane = new javax.swing.JScrollPane();
-		allCardsPanel = new javax.swing.JPanel();
-		submitButton = new javax.swing.JButton();
-		
-		submitButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if(MainViewController.activeGame.isLive() && !MainViewController.activeGame.isFinished())
-					AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
-			}
-		});
-		
-		submitButton.setText("Submit Vote");
+		estimateNumberBox = new javax.swing.JTextField();
 		
 		setLayout(new java.awt.BorderLayout());
 
@@ -337,91 +202,30 @@ public class OpenGameView extends JPanel {
 
 		gameDeadlineDateLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		gameDeadlineDateLabel.setText("game.getDeadlineDate()");
-		
-		/**
-		 * Button for starting the game
-		 */
-		btnStartGame = new JButton("Start Game");
-		
-		/**
-		 * Button for ending a game
-		 */
-		btnEndGame = new JButton("End Game");
-		
-		
-		
-		if(game.isLive() && !game.isFinished()){
-			btnStartGame.setText("Game Started");
-			btnStartGame.setEnabled(false);
-		}
-		
-		if(!game.isLive() && !game.isFinished()){
-			btnStartGame.setText("Game Ended");
-			btnStartGame.setEnabled(false);
-		}
-		
-		
-		
-		if(!game.getModerator().equals(ConfigManager.getConfig().getUserName())){
-			btnStartGame.setEnabled(false);
-			btnEndGame.setEnabled(false);
-		}
 
-		/**
-		 * Action listener for start button
-		 */
-		btnStartGame.addActionListener( new ActionListener()
-		{
-		    public void actionPerformed(ActionEvent e)
-		    {
-		        btnStartGame.setEnabled(false);
-		        btnStartGame.setText("Game Started");
-		        game.setLive(true);
-		        UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
-		        
-		    }
-		});
-		
-		/**
-		 * Action listener for end button
-		 */
-		btnEndGame.addActionListener( new ActionListener()
-		{
-		    public void actionPerformed(ActionEvent e)
-		    {
-		    	btnEndGame.setEnabled(false);
-		    	btnEndGame.setText("Game Ended");
-		    	game.setFinished(true);
-		    	UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
-		    }
-		});
-		
 		javax.swing.GroupLayout gameTitlePanelLayout = new javax.swing.GroupLayout(gameTitlePanel);
-		gameTitlePanelLayout.setHorizontalGroup(
-			gameTitlePanelLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gameTitlePanelLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(gameNameLabel, GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(btnStartGame)
-					.addGap(18)
-					.addComponent(btnEndGame)
-					.addGap(18)
-					.addComponent(gameDeadlineDateLabel)
-					.addContainerGap())
-		);
-		gameTitlePanelLayout.setVerticalGroup(
-			gameTitlePanelLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(gameTitlePanelLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gameTitlePanelLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(gameNameLabel)
-						.addComponent(gameDeadlineDateLabel)
-						.addComponent(btnEndGame)
-						.addComponent(btnStartGame))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
 		gameTitlePanel.setLayout(gameTitlePanelLayout);
+		gameTitlePanelLayout.setHorizontalGroup(gameTitlePanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				gameTitlePanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(gameNameLabel)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(gameDeadlineDateLabel).addContainerGap()));
+		gameTitlePanelLayout.setVerticalGroup(gameTitlePanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				gameTitlePanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								gameTitlePanelLayout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(gameNameLabel)
+										.addComponent(gameDeadlineDateLabel))
+						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		rowSplitPanel.setLayout(new java.awt.GridLayout(2, 1));
 
@@ -507,11 +311,11 @@ public class OpenGameView extends JPanel {
 						.addContainerGap()));
 
 		topRowRequirementPanel.add(requirementPanel);
-
+		
 		instructionsLabel.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
 		instructionsLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 		instructionsLabel
-				.setText("<html>Click on one or more cards below to sum up your estimate&nbsp</html>");
+				.setText("<html>Below is a list of statistics for this requirement</html>");
 
 		estimateCenteringPanel.setLayout(new java.awt.GridBagLayout());
 
@@ -543,10 +347,27 @@ public class OpenGameView extends JPanel {
 		estimateNumberPanel.setBorder(new javax.swing.border.SoftBevelBorder(
 				javax.swing.border.BevelBorder.RAISED));
 
-		estimateNumberLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-		estimateNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		estimateNumberLabel.setText("?");
-
+		estimateNumberBox.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+		estimateNumberBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		estimateNumberBox.setText("#");
+	    estimateNumberBox.addKeyListener(new KeyAdapter() {
+	        public void keyTyped(KeyEvent e) {
+	          char c = e.getKeyChar();
+	          if (!((c >= '0') && (c <= '9') ||
+	             (c == KeyEvent.VK_BACK_SPACE) ||
+	             (c == KeyEvent.VK_DELETE))) {
+	            getToolkit().beep();
+	            e.consume();
+	            System.out.println("Please enter a number");
+	          }
+	          else if (estimateNumberBox.getText().length()>=3) {
+		          getToolkit().beep();
+		          e.consume();
+	        	  System.out.println("Character Limited exceeded");
+	          }
+	        }
+	      });
+	    
 		javax.swing.GroupLayout estimateNumberPanelLayout = new javax.swing.GroupLayout(
 				estimateNumberPanel);
 		estimateNumberPanel.setLayout(estimateNumberPanelLayout);
@@ -555,7 +376,7 @@ public class OpenGameView extends JPanel {
 				estimateNumberPanelLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(estimateNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE,
+						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
 		estimateNumberPanelLayout.setVerticalGroup(estimateNumberPanelLayout.createParallelGroup(
@@ -563,9 +384,10 @@ public class OpenGameView extends JPanel {
 				estimateNumberPanelLayout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(estimateNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE,
+						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
+
 		javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(estimatePanel);
 		estimatePanel.setLayout(estimatePanelLayout);
 		estimatePanelLayout.setHorizontalGroup(estimatePanelLayout.createParallelGroup(
@@ -584,10 +406,6 @@ public class OpenGameView extends JPanel {
 										.addComponent(estimateNumberPanel,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addComponent(submitButton,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE))));
 		estimatePanelLayout.setVerticalGroup(estimatePanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -599,65 +417,81 @@ public class OpenGameView extends JPanel {
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addComponent(estimateNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addComponent(submitButton,
-								javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)));
 
 		estimateCenteringPanel.add(estimatePanel, new java.awt.GridBagConstraints());
 
-		javax.swing.GroupLayout rightBlankPanelLayout = new javax.swing.GroupLayout(rightBlankPanel);
-		rightBlankPanel.setLayout(rightBlankPanelLayout);
-		rightBlankPanelLayout
-				.setHorizontalGroup(rightBlankPanelLayout
-						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								rightBlankPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												rightBlankPanelLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																rightBlankPanelLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				instructionsLabel,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				598,
-																				Short.MAX_VALUE)
-																		.addContainerGap())
-														.addComponent(
-																estimateCenteringPanel,
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))));
-		rightBlankPanelLayout.setVerticalGroup(rightBlankPanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				rightBlankPanelLayout
-						.createSequentialGroup()
-						.addComponent(estimateCenteringPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addComponent(instructionsLabel, javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
-
-		topRowRequirementPanel.add(rightBlankPanel);
+//		javax.swing.GroupLayout rightBlankPanelLayout = new javax.swing.GroupLayout(rightBlankPanel);
+//		rightBlankPanel.setLayout(rightBlankPanelLayout);
+//		rightBlankPanelLayout
+//				.setHorizontalGroup(rightBlankPanelLayout
+//						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//						.addGroup(
+//								rightBlankPanelLayout
+//										.createSequentialGroup()
+//										.addContainerGap()
+//										.addGroup(
+//												rightBlankPanelLayout
+//														.createParallelGroup(
+//																javax.swing.GroupLayout.Alignment.LEADING)
+//														.addGroup(
+//																javax.swing.GroupLayout.Alignment.TRAILING,
+//																rightBlankPanelLayout
+//																		.createSequentialGroup()
+//																		.addComponent(
+//																				instructionsLabel,
+//																				javax.swing.GroupLayout.DEFAULT_SIZE,
+//																				598,
+//																				Short.MAX_VALUE)
+//																		.addContainerGap()))));
+//														.addComponent(
+//																estimateCenteringPanel,
+//																javax.swing.GroupLayout.Alignment.TRAILING,
+//																javax.swing.GroupLayout.DEFAULT_SIZE,
+//																javax.swing.GroupLayout.DEFAULT_SIZE,
+//																Short.MAX_VALUE))));
+//		rightBlankPanelLayout.setVerticalGroup(rightBlankPanelLayout.createParallelGroup(
+//				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+//				javax.swing.GroupLayout.Alignment.TRAILING,
+//				rightBlankPanelLayout
+//						.createSequentialGroup()
+//						.addComponent(estimateCenteringPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
+//								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+//						.addComponent(instructionsLabel, javax.swing.GroupLayout.PREFERRED_SIZE,
+//								javax.swing.GroupLayout.DEFAULT_SIZE,
+//								javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
+//
+//		topRowRequirementPanel.add(rightBlankPanel);
 
 		rowSplitPanel.add(topRowRequirementPanel);
-
-		allCardsPanel.setBackground(new java.awt.Color(255, 255, 255));
-		allCardsPanel.setLayout(new java.awt.GridBagLayout());
-		cardsScrollPane.setViewportView(allCardsPanel);
-
-		rowSplitPanel.add(cardsScrollPane);
-
+		rowSplitPanel.add(estimateCenteringPanel);
+		JButton submitButton = new JButton("Submit");
+		rowSplitPanel.add(submitButton);
+		submitButton.setFont(new java.awt.Font("Tahoma", 0, 48));
+		submitButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				List<Requirement> req = RequirementModel.getInstance().getRequirements();
+				int n = 0;
+				for(int i = 0; i < req.size(); i++) {
+					if(req.get(i).getName().equals(selected.getName())) {
+						n = i;
+						break;
+					}
+				}
+				System.out.println(RequirementModel.getInstance().getRequirements().get(n).getName()+" set estimate to "+ estimateNumberBox.getText());
+				Requirement req2set = RequirementModel.getInstance().getRequirement(n);
+				req2set.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
+				UpdateRequirementController.getInstance().updateRequirement(req2set);
+				//GetRequirementsController.getInstance().retrieveRequirements();
+			}
+		});
+		if(!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {
+			submitButton.setEnabled(false);
+			estimateNumberBox.setEnabled(false);
+			estimateTitleLabel.setEnabled(false);
+		}
 		javax.swing.GroupLayout rightSplitPanelLayout = new javax.swing.GroupLayout(rightSplitPanel);
 		rightSplitPanel.setLayout(rightSplitPanelLayout);
 		rightSplitPanelLayout.setHorizontalGroup(rightSplitPanelLayout.createParallelGroup(
@@ -689,17 +523,14 @@ public class OpenGameView extends JPanel {
 						.addComponent(rowSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-
+		//rowSplitPanel.add(estimateCenteringPanel);
 		splitPane.setRightComponent(rightSplitPanel);
 
 		add(splitPane, java.awt.BorderLayout.CENTER);
-	}// </editor-fold>//GEN-END:initComponents
+	}
 
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JPanel allCardsPanel;
-	private javax.swing.JScrollPane cardsScrollPane;
 	private javax.swing.JPanel estimateCenteringPanel;
-	private javax.swing.JLabel estimateNumberLabel;
+	private javax.swing.JTextField estimateNumberBox;
 	private javax.swing.JPanel estimateNumberPanel;
 	private javax.swing.JPanel estimatePanel;
 	private javax.swing.JLabel estimateTitleLabel;
@@ -723,7 +554,6 @@ public class OpenGameView extends JPanel {
 	private javax.swing.JPanel rowSplitPanel;
 	private javax.swing.JSplitPane splitPane;
 	private javax.swing.JPanel topRowRequirementPanel;
-	private javax.swing.JButton submitButton;
-	JButton btnStartGame;
-	private JButton btnEndGame;
+	private Requirement selected;
+
 }

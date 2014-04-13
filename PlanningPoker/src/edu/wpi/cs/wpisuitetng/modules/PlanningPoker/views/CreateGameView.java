@@ -58,6 +58,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.CreateGameViewController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
@@ -103,11 +104,34 @@ public class CreateGameView {
 	private CreateGameView() {
 		this.controller = new CreateGameViewController(this);
 	}
+	
+	/** Dummy Card Lists for Testing */
+	Integer[] defaultArray = {1, 1, 3, 5, 8, 13, 0};
+	List<Integer> defaultList = new ArrayList<Integer>();
+	Integer[] lightningArray = {0, 1, 2, 3, 5, 8, 13, 20, 40, 100};
+	List<Integer> lightningList = new ArrayList<Integer>();
+	
 /** 
  * creates the view for the create new game window
  * @return
  */
 	public JPanel newCreateGamePanel() {
+		
+		for (Integer i : defaultArray) {
+			defaultList.add(i);
+		}
+		
+		for (Integer i : lightningArray) {
+			lightningList.add(i);
+		}
+		
+		/** Dummy Decks for Testing */
+		Deck defaultDeck = new Deck("Default", defaultList);
+		Deck lightningDeck = new Deck("Lightning Deck", lightningList);
+		Deck noDeck = new Deck("No Deck", null);
+		
+		/** List of Decks to mimic database funtionality */
+		Deck[] deckArray = {defaultDeck, lightningDeck, noDeck};
 		
 		listOfRequirementsForReset= new DefaultListModel<Requirement>();
 		listOfRequirementsToAdd= new DefaultListModel<Requirement>();
@@ -336,11 +360,12 @@ public class CreateGameView {
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
 
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "Lightning Deck", "No Deck"}));
+		deckType.setModel(new DefaultComboBoxModel<Deck>(deckArray));
 	
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
-		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
+		// get the text to display below
+		deckOverview.setText(defaultDeck.getCards().toString());
 	
 
 		deckOverview.setEditable(false);
@@ -372,19 +397,11 @@ public class CreateGameView {
 		   public void actionPerformed(ActionEvent e) {
 			isTabEditedByUser = true;
 		    JComboBox combo = (JComboBox)e.getSource();
-		                String selection = (String)combo.getSelectedItem();
-		                if(selection.contentEquals("Default"))
-		                {
-		                // Replace this with button contents
-		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
-		                }
-
-		                else if(selection.contentEquals("Lightning Deck")) {
-		                // Replace this with button contents
-		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
-		                }
-		                else if(selection.contentEquals("No Deck")){
+		                Deck selection = (Deck)combo.getSelectedItem();
+		                if (selection.getDeckName().equals("No Deck")) {
 		                	deckOverview.setText("User will be able to enter their own estimation");
+		                } else {
+		                	deckOverview.setText(selection.getCards().toString());
 		                }
 		   }
 
@@ -662,7 +679,9 @@ public class CreateGameView {
 							+ endCal.toString());
 					System.out.println(enteredName);
 					System.out.println(selectedDeckType);
-
+						
+					gameRequirementIDsList.clear();
+					
 					for (int i = 0; i < listOfRequirementsToAdd.size(); i++) {
 						gameRequirementIDsList.add(listOfRequirementsToAdd
 								.getElementAt(i).getId());
@@ -926,7 +945,7 @@ public class CreateGameView {
 	/**
 	 * A dropdown box that contains the default deck to choose.
 	 */
-	JComboBox<String> deckType = new JComboBox<String>();
+	JComboBox<Deck> deckType = new JComboBox<Deck>();
 	String selectedDeckType = new String();
 	/**
 	 * A list contains of available requirements to add to the session
