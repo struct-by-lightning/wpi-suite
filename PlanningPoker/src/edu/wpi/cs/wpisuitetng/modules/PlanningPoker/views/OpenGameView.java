@@ -25,9 +25,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
@@ -60,6 +63,7 @@ public class OpenGameView extends JPanel {
 
 	private PlanningPokerGame game;
 	private ArrayList<Requirement> requirements;
+	private static PlanningPokerVote ppv;
 	
 	// JPanel subclasses for each card in this game's deck.
 	private ArrayList<PlayingCardJPanel> cards;
@@ -97,7 +101,7 @@ public class OpenGameView extends JPanel {
 		// Add JPanels for each card available in this game.
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.insets = new Insets(0, 15, 0, 15);
-		for (Integer cardValue : game.getDeckValues()) {
+		for (final Integer cardValue : game.getDeckValues()) {
 			PlayingCardJPanel card = new PlayingCardJPanel(cardValue.intValue(), false);
 			this.cards.add(card);
 			this.allCardsPanel.add(card, gridBagConstraints);
@@ -106,7 +110,25 @@ public class OpenGameView extends JPanel {
 				public void mouseClicked(MouseEvent evt) {
 					PlayingCardJPanel clickedCard = (PlayingCardJPanel) evt.getSource();
 					clickedCard.toggle();
-					updateEstimateTotal();
+					updateEstimateTotal();// Vote value
+		    		
+		    		// Requirement ID
+		    		// @TODO: Get selected requirement ID
+		    		int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
+		    		
+		    		// Game name
+		    		String gameName = MainViewController.activeGame.getGameName();
+		    		
+		    		// User name
+		    		String userName = ConfigManager.getConfig().getUserName();
+		    		
+		    		// Vote
+		    		if(estimateNumberLabel.getText().equals("?"))
+		    			submitButton.setEnabled(false);
+		    		else {
+		    			submitButton.setEnabled(true);
+		    			ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);	
+		    		}
 				}
 			});
 		}
@@ -229,7 +251,18 @@ public class OpenGameView extends JPanel {
 		estimateNumberLabel = new javax.swing.JLabel();
 		cardsScrollPane = new javax.swing.JScrollPane();
 		allCardsPanel = new javax.swing.JPanel();
-
+		submitButton = new javax.swing.JButton();
+		
+		submitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(MainViewController.activeGame.isLive() && !MainViewController.activeGame.isFinished())
+					AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
+			}
+		});
+		
+		submitButton.setText("Submit Vote");
+		
 		setLayout(new java.awt.BorderLayout());
 
 		requirementsLabelPanel.setBorder(javax.swing.BorderFactory
@@ -512,7 +545,7 @@ public class OpenGameView extends JPanel {
 
 		estimateNumberLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
 		estimateNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		estimateNumberLabel.setText("#");
+		estimateNumberLabel.setText("?");
 
 		javax.swing.GroupLayout estimateNumberPanelLayout = new javax.swing.GroupLayout(
 				estimateNumberPanel);
@@ -533,7 +566,6 @@ public class OpenGameView extends JPanel {
 						.addComponent(estimateNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-
 		javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(estimatePanel);
 		estimatePanel.setLayout(estimatePanelLayout);
 		estimatePanelLayout.setHorizontalGroup(estimatePanelLayout.createParallelGroup(
@@ -552,6 +584,10 @@ public class OpenGameView extends JPanel {
 										.addComponent(estimateNumberPanel,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(submitButton,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE))));
 		estimatePanelLayout.setVerticalGroup(estimatePanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -562,6 +598,10 @@ public class OpenGameView extends JPanel {
 								javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addComponent(estimateNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(submitButton,
+								javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)));
 
@@ -683,6 +723,7 @@ public class OpenGameView extends JPanel {
 	private javax.swing.JPanel rowSplitPanel;
 	private javax.swing.JSplitPane splitPane;
 	private javax.swing.JPanel topRowRequirementPanel;
-	private JButton btnStartGame;
+	private javax.swing.JButton submitButton;
+	JButton btnStartGame;
 	private JButton btnEndGame;
 }
