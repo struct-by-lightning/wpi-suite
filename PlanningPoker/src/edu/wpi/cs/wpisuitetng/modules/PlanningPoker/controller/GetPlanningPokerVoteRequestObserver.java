@@ -40,11 +40,6 @@ public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
-		// Convert the JSON array of PlanningPokerGames to a PlanningPokerGame object array
-		PlanningPokerVote vote[] = PlanningPokerVote.fromJsonArray(iReq.getResponse().getBody());
-		
-		// Pass these PlanningPokerGames to the controller
-		controller.receivedPlanningPokerVote(vote);
 	}
 
 	/**

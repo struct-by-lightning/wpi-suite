@@ -566,7 +566,27 @@ public class OpenGameView extends JPanel {
 						.addComponent(estimateNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-
+		
+		javax.swing.GroupLayout submitButtonLayout = new javax.swing.GroupLayout(
+				submitButton);
+		submitButton.setLayout(submitButtonLayout);
+		submitButtonLayout.setHorizontalGroup(submitButtonLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				submitButtonLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addContainerGap()));
+		submitButtonLayout.setVerticalGroup(submitButtonLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				submitButtonLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addContainerGap()));
+		
 		javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(estimatePanel);
 		estimatePanel.setLayout(estimatePanelLayout);
 		estimatePanelLayout.setHorizontalGroup(estimatePanelLayout.createParallelGroup(
@@ -599,6 +619,10 @@ public class OpenGameView extends JPanel {
 								javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addComponent(estimateNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(submitButton,
+								javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)));
 

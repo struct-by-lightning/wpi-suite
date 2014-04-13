@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVoteModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -81,22 +80,5 @@ public class GetPlanningPokerVoteController implements ActionListener {
 		request.send(); // send the request
 		return PlanningPokerVote.fromJSON(request.getBody()).getVote();
 		
-	}
-	/**
-	 * Add the given PlanningPokerGames to the local model (they were received from the core).
-	 * This method is called by the GetPlanningPokerGamesRequestObserver
-	 * 
-	 * @param PlanningPokerGames array of PlanningPokerGames received from the server
-	 */
-	public void receivedPlanningPokerVote(PlanningPokerVote[] PlanningPokerVotes) {
-		// Empty the local model to eliminate duplications
-		PlanningPokerVoteModel.emptyModel();
-		
-		// Make sure the response was not null
-		if (PlanningPokerVotes != null) {
-			
-			// add the PlanningPokerGames to the local model
-			PlanningPokerVoteModel.addPlanningPokerVotes(PlanningPokerVotes);
-		}
 	}
 }
