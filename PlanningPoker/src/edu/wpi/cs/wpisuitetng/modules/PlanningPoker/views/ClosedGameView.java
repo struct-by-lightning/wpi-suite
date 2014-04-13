@@ -56,23 +56,29 @@ public class ClosedGameView extends JPanel {
 		this.requirements = game.getRequirements();
 		initComponents();
 		initForGame();
+
+		// Initially select the first item in the tree.
+		this.requirementList.setSelectedIndex(0);
 	}
 
 	private void initForGame() {
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
+		this.requirements = game.getRequirements();
 		this.requirementList
 				.addListSelectionListener(new ListSelectionListener() {
 					@Override
 					public void valueChanged(ListSelectionEvent ev) {
 						JList list;
 						list = (JList) ev.getSource();
-						selected = requirements.get(list
-								.getSelectedIndex());
-						requirementNameLabel.setText(selected.getName());
-						requirementDescriptionLabel.setText(selected
-								.getDescription());
-						updateEstimateTotal(selected);
+						if(list.getSelectedIndex()!=-1) {
+							selected = requirements.get(list
+									.getSelectedIndex());
+							requirementNameLabel.setText(selected.getName());
+							requirementDescriptionLabel.setText(selected
+									.getDescription());
+							updateEstimateTotal(selected);
+						}
 					}
 				});
 		// Populate the list with each requirement.
@@ -83,8 +89,7 @@ public class ClosedGameView extends JPanel {
 		}
 		this.requirementList.setModel(model);
 
-		// Initially select the first item in the tree.
-		this.requirementList.setSelectedIndex(0);
+
 
 		// Show the name of the game.
 		this.gameNameLabel.setText(game.getGameName());
@@ -481,10 +486,18 @@ public class ClosedGameView extends JPanel {
 					}
 				}
 				System.out.println(RequirementModel.getInstance().getRequirements().get(n).getName()+" set estimate to "+ estimateNumberBox.getText());
+				
 				Requirement req2set = RequirementModel.getInstance().getRequirement(n);
 				req2set.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
 				UpdateRequirementController.getInstance().updateRequirement(req2set);
-				//GetRequirementsController.getInstance().retrieveRequirements();
+				try {
+					Thread.sleep(150);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				initForGame();
+				GetRequirementsController.getInstance().retrieveRequirements();
 			}
 		});
 		if(!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {
