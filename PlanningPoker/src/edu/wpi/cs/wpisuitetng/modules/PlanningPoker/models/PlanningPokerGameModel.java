@@ -8,10 +8,12 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 
 /**
  * A singleton class used to read from or add to the set of planning poker games
@@ -26,20 +28,22 @@ public class PlanningPokerGameModel {
 
 	/**
 	 * Adds a single PlanningPokerGame to the project's set of games.
+	 * 
+	 * Also sets the game finished if it has passed the end date.
 	 *
 	 * @param newGame
 	 *            The PlanningPokerGame to be added to the list of
 	 *            PlanningPokerGames in the project
 	 */
 	public static void addPlanningPokerGame(PlanningPokerGame newGame) {
+		if(new Date().after(newGame.getEndDate().getTime())) {
+			newGame.setFinished(true);
+			UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(newGame);
+		}
 
 		// Add the planning poker game to the local dictionary.
 		PlanningPokerGameModel.planningPokerGamesDict.put(
 				newGame.getGameName(), newGame);
-
-		// Trigger a request to the database to add the game.
-		AddPlanningPokerGameController.getInstance().addPlanningPokerGame(
-				newGame);
 	}
 	
 	public static void addPlanningPokerGames(PlanningPokerGame[] games) {

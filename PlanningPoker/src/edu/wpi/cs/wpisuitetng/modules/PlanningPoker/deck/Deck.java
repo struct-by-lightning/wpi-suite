@@ -59,7 +59,7 @@ public class Deck extends AbstractModel {
 	public Deck(String deckName, List<Integer> cards) {
 		this.deckName = deckName;
 		this.cards = cards;
-		Collections.sort(this.cards);
+		this.sortDeck();
 	}
 
 	public void addCard(Integer card) {
@@ -72,7 +72,8 @@ public class Deck extends AbstractModel {
 	}
 
 	public void sortDeck() {
-		Collections.sort(this.cards);
+		if (this.cards != null)
+			Collections.sort(this.cards);
 	}
 
 	/**
@@ -103,6 +104,16 @@ public class Deck extends AbstractModel {
 	 */
 	public void setCards(List<Integer> cards) {
 		this.cards = cards;
+	}
+
+	/**
+	 * Converts the list of cards to a string
+	 * 
+	 * @return the string representing the list of cards
+	 */
+	@Override
+	public String toString() {
+		return this.deckName;
 	}
 
 	// Serializing
