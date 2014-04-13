@@ -752,7 +752,6 @@ public class NewGameTab extends JPanel {
 						AddPlanningPokerGameController.getInstance()
 								.addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
-						btnCreateGame.setEnabled(false);
 						mailer.send();
 					}
 					else{
@@ -766,6 +765,7 @@ public class NewGameTab extends JPanel {
 							errorDialog.setLocation(thisPanel.getWidth() / 2,
 									thisPanel.getHeight() / 2);
 							errorDialog.setVisible(true);
+							btnCreateGame.setEnabled(false);
 						}
 						System.out.println("Start date is after the end date.");
 					}

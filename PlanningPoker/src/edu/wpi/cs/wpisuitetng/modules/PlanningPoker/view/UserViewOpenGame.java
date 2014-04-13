@@ -74,7 +74,7 @@ public class UserViewOpenGame extends JPanel {
 		JList list = new JList();
 		list.setPreferredSize(new Dimension(150, 10));
 		list.setMinimumSize(new Dimension(150, 10));
-		list.setMaximumSize(new Dimension(30000, 30000));
+		list.setMaximumSize(new Dimension(3000000, 3000000));
 		DefaultListModel model = new DefaultListModel();
 		model.addElement("red");
 		model.addElement("blue");
@@ -121,19 +121,19 @@ public class UserViewOpenGame extends JPanel {
 		gl_description.setHorizontalGroup(
 			gl_description.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_description.createSequentialGroup()
-					.addGroup(gl_description.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_description.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(textArea))
-						.addGroup(Alignment.LEADING, gl_description.createSequentialGroup()
+					.addGroup(gl_description.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_description.createSequentialGroup()
 							.addGap(5)
 							.addComponent(lblReqName)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE))
-						.addGroup(Alignment.LEADING, gl_description.createSequentialGroup()
+							.addComponent(textField, GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE))
+						.addGroup(gl_description.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(lblEstimate)))
-					.addContainerGap(48, Short.MAX_VALUE))
+							.addComponent(lblEstimate))
+						.addGroup(gl_description.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		gl_description.setVerticalGroup(
 			gl_description.createParallelGroup(Alignment.LEADING)
@@ -141,7 +141,7 @@ public class UserViewOpenGame extends JPanel {
 					.addGap(5)
 					.addGroup(gl_description.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblReqName)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblEstimate)
 					.addPreferredGap(ComponentPlacement.RELATED)
