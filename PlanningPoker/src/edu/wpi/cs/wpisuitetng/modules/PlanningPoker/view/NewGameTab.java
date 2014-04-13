@@ -780,11 +780,11 @@ public class NewGameTab extends JPanel {
 		btn_addAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				isTabEditedByUser = true;
-
-				while (listOfAllRequirements.getSize() > 0) {
-					System.out.println(listOfAllRequirements.elementAt(0));
-					listOfRequirementsToAdd.addElement(listOfAllRequirements
-							.remove(0));
+				
+				for(int index = 0; index < allRequirements.getModel().getSize(); index++) {
+					Requirement req = allRequirements.getModel().getElementAt(index);
+					listOfRequirementsToAdd.addElement(req);
+					listOfAllRequirements.removeElement(req);					
 				}
 
 				selectedRequirements.setModel(listOfRequirementsToAdd);
