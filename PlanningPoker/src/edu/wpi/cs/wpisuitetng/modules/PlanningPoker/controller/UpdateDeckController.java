@@ -52,4 +52,5 @@ public class UpdateDeckController {
 		request.setBody(newDeck.toJSON()); // put the new Deck into the request
 		request.addObserver(observer); // add an observer to process the response
 		request.send();
+	}
 }
