@@ -20,6 +20,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckDeserializer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckSerializer;
 
@@ -29,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckSerializer;
  * @author Alec Thompson - ajthompson
  * @version Apr 10, 2014
  */
-public class Deck {
+public class Deck extends AbstractModel {
 	/** The name of the deck */
 	private String deckName;
 	/** The numbers for the cards in the decks */
@@ -170,5 +171,32 @@ public class Deck {
 		}
 
 		return decks.toArray(new Deck[0]);
+	}
+
+	/*
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#save()
+	 */
+	@Override
+	public void save() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#delete()
+	 */
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+
+	}
+
+	/*
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(java.lang.Object)
+	 */
+	@Override
+	public Boolean identify(Object o) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

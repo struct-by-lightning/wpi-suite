@@ -10,42 +10,82 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
+import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
 /**
- * Description
- *
+ * This observer is called when a response is received from a request to the
+ * server to add a Deck
+ * 
  * @author Alec Thompson - ajthompson
  * @version Apr 10, 2014
  */
 public class UpdateDeckRequestObserver implements RequestObserver {
 
-	/*
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+	/** The controller this request observer was created with */
+	private final UpdateDeckController controller;
+
+	/**
+	 * Constructs the observer given an UpdateDeckController
+	 * 
+	 * @param controller
+	 *            the controller used to update Decks
+	 */
+	public UpdateDeckRequestObserver(UpdateDeckController controller) {
+		this.controller = controller;
+	}
+
+	/**
+	 * Parse the Deck that was received from the server and then pass it to the
+	 * controller
+	 * 
+	 * @param iReq
+	 *            the request that was made to the server
+	 * 
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi
+	 *      .cs.wpisuitetng.network.models.IRequest)
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
-		// TODO Auto-generated method stub
+		// Get the response to the given request
+		final ResponseModel response = iReq.getResponse();
 
+		// Parse the Deck out of the response body
+		final Deck deck = Deck.fromJSON(response.getBody());
 	}
 
-	/*
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+	/**
+	 * Prints out an error message if the response results in an error
+	 * 
+	 * @param iReq
+	 *            the request sent to the server
+	 * 
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.
+	 *      cs.wpisuitetng.network.models.IRequest)
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		// TODO Auto-generated method stub
-
+		System.err.println(iReq.getResponse().getStatusMessage());
+		System.err
+				.println("The request to update a Deck has encountered an error and had to quit.");
 	}
 
-	/*
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
+	/**
+	 * Prints out a failure message if the response fails
+	 * 
+	 * @param iReq
+	 *            the request sent to the server
+	 * @param exception
+	 *            the Exception that was thrown
+	 * 
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng
+	 *      .network.models.IRequest, java.lang.Exception)
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		// TODO Auto-generated method stub
-
+		System.err.println("The request to update a Deck failed.");
 	}
 
 }
