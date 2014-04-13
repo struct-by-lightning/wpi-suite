@@ -637,7 +637,7 @@ public class CreateGameView {
 						&& deadline.isSelected()) {
 					System.out.println("Please enter a valid date");
 				} else {
-					// String[] startDate = startDateText.getText().split("-");
+					
 					String[] endDate = endDateText.getText().split("-");
 
 					Date endVal = (Date) endTime.getValue();
@@ -740,9 +740,9 @@ public class CreateGameView {
 				selectedRequirements.setModel(listOfRequirementsToAdd);
 				allRequirements.setModel(listOfAllRequirements);
 
-				btn_removeFromGame.setEnabled(true);
+		
 				btn_removeAll.setEnabled(true);
-				//btnCreateGame.setEnabled(false);
+			
 				
 				btn_addAll.setEnabled(false);
 				btn_addToGame.setEnabled(false);
@@ -769,8 +769,8 @@ public class CreateGameView {
 					listOfAllRequirements.removeElement(req);
 					selectedRequirements.setModel(listOfRequirementsToAdd);
 					allRequirements.setModel(listOfAllRequirements);
-
-					btn_removeFromGame.setEnabled(true);
+					
+					btn_addToGame.setEnabled(false);
 					btn_removeAll.setEnabled(true);
 
 					if (listOfAllRequirements.size() == 0) {
@@ -803,7 +803,7 @@ public class CreateGameView {
 					listOfRequirementsToAdd.removeElement(req);
 					allRequirements.setModel(listOfAllRequirements);
 					selectedRequirements.setModel(listOfRequirementsToAdd);
-
+					btn_removeFromGame.setEnabled(false);
 					btn_addToGame.setEnabled(false);
 					btn_addAll.setEnabled(false);
 					
@@ -818,6 +818,7 @@ public class CreateGameView {
 				}
 				
 				btn_addAll.setEnabled(true);
+				
 
 			}
 		});
