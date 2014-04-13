@@ -410,7 +410,7 @@ public class CreateGameView {
 		                if (getDeckByName(selection).getDeckName().equals("No Deck")) {
 		                	deckOverview.setText("User will be able to enter their own estimation");
 		                } else {
-		                	deckOverview.setText(getDeckByName(selection).getCards().toArray().toString());
+		                	deckOverview.setText(getDeckByName(selection).getCards().toString());
 		                }
 		   }
 

@@ -59,7 +59,7 @@ public class Deck extends AbstractModel {
 	public Deck(String deckName, List<Integer> cards) {
 		this.deckName = deckName;
 		this.cards = cards;
-		Collections.sort(this.cards);
+		this.sortDeck();
 	}
 
 	public void addCard(Integer card) {
@@ -72,21 +72,9 @@ public class Deck extends AbstractModel {
 	}
 
 	public void sortDeck() {
-		Collections.sort(this.cards);
+		if (this.cards != null)
+			Collections.sort(this.cards);
 	}
-	
-//	/**
-//	 * Converts the list of cards to a string for use in the GUI
-//	 *
-//	 * @return a string of the 
-//	 */
-//	public String deckCardToString() {
-//		String ret = "";
-//		int lastElement = cards.size() - 1;
-//		for (int i = 0; i < cards.size() - 1; i ++) {
-//			ret += cards.get(i).toString() + ", ";
-//		}
-//	}
 
 	/**
 	 * @return the deckName
@@ -117,7 +105,7 @@ public class Deck extends AbstractModel {
 	public void setCards(List<Integer> cards) {
 		this.cards = cards;
 	}
-
+	
 	// Serializing
 
 	/**
