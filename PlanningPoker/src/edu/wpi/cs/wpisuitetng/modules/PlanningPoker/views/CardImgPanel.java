@@ -23,8 +23,6 @@ public class CardImgPanel extends JPanel {
 		// paint the background image and scale it to fill the entire space
         if (img != null) {
         	g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
-        	System.out.println("Width = " + this.getWidth());
-        	System.out.println("Height = " + this.getHeight());
         }
     }
     

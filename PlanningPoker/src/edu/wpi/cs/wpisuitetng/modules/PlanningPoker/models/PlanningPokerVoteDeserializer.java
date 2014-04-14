@@ -42,14 +42,14 @@ public class PlanningPokerVoteDeserializer {
 		
 		JsonObject deflated = ppmElement.getAsJsonObject();
 
-		if (!deflated.has("gameName")) {
+		if (!deflated.has("id")) {
 			throw new JsonParseException(
-					"The serialized PlanningPokerVoteModel did not contain the required gameName field.");
+					"The serialized PlanningPokerVoteModel did not contain the required id field.");
 		}
 
 		if (!deflated.has("vote")) {
 			throw new JsonParseException(
-					"The serialized PlanningPokerVoteModel did not contain the required username field.");
+					"The serialized PlanningPokerVoteModel did not contain the required vote field.");
 		}
 		// for all other attributes: instantiate as null, fill in if given.
 
