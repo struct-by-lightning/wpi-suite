@@ -9,6 +9,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -128,7 +129,7 @@ public class OpenGameView extends JPanel {
 		    			submitButton.setEnabled(false);
 		    		else {
 		    			submitButton.setEnabled(true);
-		    			ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);	
+		    			ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);
 		    		}
 				}
 			});
@@ -452,7 +453,7 @@ public class OpenGameView extends JPanel {
 						.addComponent(requirementNameLabel)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		requirementDescriptionLabelPanel.setBackground(new java.awt.Color(255, 255, 255));
+		requirementDescriptionLabelPanel.setBackground(Color.white);
 		requirementDescriptionLabelPanel.setBorder(javax.swing.BorderFactory
 				.createLineBorder(new java.awt.Color(153, 153, 153)));
 
@@ -653,7 +654,7 @@ public class OpenGameView extends JPanel {
 
 		rowSplitPanel.add(topRowRequirementPanel);
 
-		allCardsPanel.setBackground(new java.awt.Color(255, 255, 255));
+		allCardsPanel.setBackground(Color.white);
 		allCardsPanel.setLayout(new java.awt.GridBagLayout());
 		cardsScrollPane.setViewportView(allCardsPanel);
 

@@ -218,7 +218,7 @@ public class CreateGameView {
 		endPanel.add(deadline, constraints1);
 
 		deadline.addActionListener(new ActionListener() {
-			boolean checked = false;
+			private boolean checked = false;
 
 			public void actionPerformed(ActionEvent ae) {
 				isTabEditedByUser = true;
@@ -308,8 +308,8 @@ public class CreateGameView {
 		calendarHandler.add(calendarPanel);
 		calendarOverview.add(calendarHandler);
 		calendarButton_2.addActionListener(new ActionListener() {
-			boolean open = false;
-			DatePicker dp;
+			private boolean open = false;
+			private DatePicker dp;
 /**
  * action for using the calendar method for enabling it and selecting
  * a date
@@ -379,7 +379,7 @@ public class CreateGameView {
 		    String selection = (String)combo.getSelectedItem();
 		    	if(selection.contentEquals("Default")){
 		    		// Replace this with button contents		               
-		    		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");		                
+		    		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");                
 		   		}
 		   
 		   		else if(selection.contentEquals("Lighning Deck")){
@@ -436,7 +436,7 @@ public class CreateGameView {
 		projectList.add(allRequirements);
 
 		JPanel addRemPanel = new JPanel();
-		addRemPanel.setBorder(new LineBorder(new Color(192, 192, 192), 0));
+		addRemPanel.setBorder(new LineBorder(Color.LIGHT_GRAY, 0));
 		requirementsSelector.add(addRemPanel);
 
 		JPanel topSpacer = new JPanel();
