@@ -35,13 +35,15 @@ public class DeckDeserializer implements JsonDeserializer<Deck> {
 	private static final Logger logger = Logger
 			.getLogger(DeckDeserializer.class.getName());
 
-
 	/**
 	 * Deserializes a JSON serialized Deck
 	 * 
-	 * @param dElement the JsonElement being deserialized
-	 * @param dType the class to be deserialized into
-	 * @param context the JSON deserialization context
+	 * @param dElement
+	 *            the JsonElement being deserialized
+	 * @param dType
+	 *            the class to be deserialized into
+	 * @param context
+	 *            the JSON deserialization context
 	 * 
 	 * @return the deflated Deck
 	 */
@@ -55,28 +57,27 @@ public class DeckDeserializer implements JsonDeserializer<Deck> {
 					"The serialized deck did not contain the required deckName field.");
 		}
 
-		if (!deflated.has("cards")) {
-			throw new JsonParseException(
-					"The serialized deck did not contain the required cards field.");
-		}
-		
 		String deckName = deflated.get("deckName").getAsString();
-		List<Integer> cards = new ArrayList<Integer>();
-		
+		List<Integer> cards = null;
 		JsonArray jsonCards = null;
-		
-		try {
-			jsonCards = deflated.get("requirements").getAsJsonArray();
-		} catch (java.lang.ClassCastException e) {
-			logger.log(Level.FINER, "DeckModel transmitted with non-array in cards field");
+
+		if (deflated.has("cards")) {
+			try {
+				jsonCards = deflated.get("requirements").getAsJsonArray();
+			} catch (java.lang.ClassCastException e) {
+				logger.log(Level.FINER,
+						"DeckModel transmitted with non-array in cards field");
+			}
+			if (jsonCards != null) {
+				cards = new ArrayList<Integer>();
+				for (JsonElement jsonCard : jsonCards) {
+					cards.add(jsonCard.getAsInt());
+				}
+			}
 		}
-		
-		for (JsonElement jsonCard : jsonCards) {
-			cards.add(jsonCard.getAsInt());
-		}
-		
+
 		Deck inflated = new Deck(deckName, cards);
-		
+
 		return inflated;
 	}
 }

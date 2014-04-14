@@ -31,7 +31,7 @@ public class PlanningPokerSerializer implements JsonSerializer<PlanningPokerGame
 		deflated.addProperty("gameName", m.getID());
 		deflated.addProperty("moderator", m.getModerator());
 		deflated.addProperty("description", m.getDescription());
-		deflated.addProperty("deckType", m.getDeckType());
+		deflated.addProperty("deckType", m.getDeckType().getDeckName());
 		for(Integer id : m.getRequirementIds()) {
 			deflatedReqs.add(new JsonPrimitive(id));
 		}

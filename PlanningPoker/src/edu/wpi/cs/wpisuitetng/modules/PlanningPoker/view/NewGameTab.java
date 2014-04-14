@@ -733,24 +733,24 @@ public class NewGameTab extends JPanel {
 
 						PlanningPokerGame game;
 						if (startNow.isSelected()) {
-							game = new PlanningPokerGame(enteredName,
-									"Default description",
-
-									selectedDeckType, gameRequirementIDsList,
-									false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
+//							game = new PlanningPokerGame(enteredName,
+//									"Default description",
+//
+//									selectedDeckType, gameRequirementIDsList,
+//									false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
 						} else {
-							game = new PlanningPokerGame(enteredName,
-									"Default description", selectedDeckType,
-									gameRequirementIDsList, false, false,
-									startCal, endCal, ConfigManager.getConfig().getUserName());
+//							game = new PlanningPokerGame(enteredName,
+//									"Default description", selectedDeckType,
+//									gameRequirementIDsList, false, false,
+//									startCal, endCal, ConfigManager.getConfig().getUserName());
 
 						}
-						System.out.println("User Moderator: "
-								+ ConfigManager.getConfig().getUserName());
-						System.out.println("Planning Poker Live: "
-								+ game.isLive());
-						AddPlanningPokerGameController.getInstance()
-								.addPlanningPokerGame(game);
+//						System.out.println("User Moderator: "
+//								+ ConfigManager.getConfig().getUserName());
+//						System.out.println("Planning Poker Live: "
+//								+ game.isLive());
+//						AddPlanningPokerGameController.getInstance()
+//								.addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
 						mailer.send();
 					}

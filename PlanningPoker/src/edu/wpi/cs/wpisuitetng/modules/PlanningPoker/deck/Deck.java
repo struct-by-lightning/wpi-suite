@@ -34,7 +34,7 @@ public class Deck extends AbstractModel {
 	/** The name of the deck */
 	private String deckName;
 	/** The numbers for the cards in the decks */
-	private List<Integer> cards;
+	private List<Integer> cards = null;
 
 	/**
 	 * Constructor for a deck, in which all the cards are added later.
@@ -42,9 +42,12 @@ public class Deck extends AbstractModel {
 	 * @param deckName
 	 *            the name of the Deck
 	 */
-	public Deck(String deckName) {
-		this.deckName = deckName;
-		this.cards = new ArrayList<Integer>();
+	public Deck(String deckName) throws NullPointerException {
+		if (deckName != null) {
+			this.deckName = deckName;
+		} else {
+			throw new NullPointerException();
+		}
 	}
 
 	/**
@@ -57,20 +60,43 @@ public class Deck extends AbstractModel {
 	 * @param cards
 	 */
 	public Deck(String deckName, List<Integer> cards) {
-		this.deckName = deckName;
+		if (deckName != null) {
+			this.deckName = deckName;
+		} else {
+			throw new NullPointerException();
+		}
 		this.cards = cards;
 		this.sortDeck();
 	}
 
+	/**
+	 * Adds a new card value to the list of cards (and initializes the list of
+	 * cards if it is null!)
+	 * 
+	 * @param card
+	 *            the card value to be added
+	 */
 	public void addCard(Integer card) {
+		if (this.cards == null)
+			this.cards = new ArrayList<Integer>();
 		this.cards.add(card);
 		this.sortDeck();
 	}
 
+	/**
+	 * Removes the given card from the deck if it exists within the deck.
+	 * 
+	 * @param card
+	 *            the card value to be removed.
+	 */
 	public void removeCard(Integer card) {
-		this.cards.remove((Integer) card);
+		if (this.cards != null)
+			this.cards.remove((Integer) card);
 	}
 
+	/**
+	 * Sorts the deck
+	 */
 	public void sortDeck() {
 		if (this.cards != null)
 			Collections.sort(this.cards);
