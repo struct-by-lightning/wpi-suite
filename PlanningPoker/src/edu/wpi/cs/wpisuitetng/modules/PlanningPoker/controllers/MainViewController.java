@@ -25,7 +25,9 @@ import javax.swing.tree.TreePath;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.PlanningPoker;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetDeckController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
@@ -117,6 +119,8 @@ public class MainViewController {
 
 		GetRequirementsController.getInstance().retrieveRequirements();
 		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
+		GetUserController.getInstance().retrieveUser();
+		GetDeckController.getInstance().retrieveDeck();
 		
 		for (PlanningPokerGame game : PlanningPokerGameModel.getPlanningPokerGames()) {
 			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(game.getGameName());

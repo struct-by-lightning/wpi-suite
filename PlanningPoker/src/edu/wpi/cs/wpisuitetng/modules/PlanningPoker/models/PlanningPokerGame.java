@@ -18,6 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -33,7 +34,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	private String description;
 
 	/** Selected deck */
-	private String deckType;
+	private Deck deckType;
 
 	/** Requirement IDs associated with this game */
 	private List<Integer> requirementIds;
@@ -74,7 +75,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 *            The date the game was started
 	 */
 	public PlanningPokerGame(String gameName, String description,
-			String deckType, List<Integer> requirementsIds,
+			Deck deckType, List<Integer> requirementsIds,
 			boolean isFinished, boolean isLive, GregorianCalendar startDate,
 			GregorianCalendar endDate, String moderator) {
 		super();
@@ -112,19 +113,13 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 		return toReturn;
 	}
 	
-	public ArrayList<Integer> getDeckValues() {
-		// TODO This method returns mock data, and needs to be correctly implemented.
-		
-        return new ArrayList<Integer>() {
-            {
-                add(1);
-                add(1);
-                add(2);
-                add(3);
-                add(5);
-                add(8);
-            }
-        };
+	/**
+	 * Returns the list of cards in the deck
+	 *
+	 * @return the list of cards in the deck
+	 */
+	public List<Integer> getDeckValues() {
+		return deckType.getCards();
 	}
 	
 
@@ -253,7 +248,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * 
 	 * @return The selected deck
 	 */
-	public String getDeckType() {
+	public Deck getDeckType() {
 		return deckType;
 	}
 
@@ -263,7 +258,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * @param deckType
 	 *            The new deck to select
 	 */
-	public void setDeckType(String deckType) {
+	public void setDeckType(Deck deckType) {
 		this.deckType = deckType;
 	}
 

@@ -26,6 +26,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
 import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
 
 public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPokerGame> {
@@ -76,7 +77,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 
 		String gameName = deflated.get("gameName").getAsString();
 		String description = null;
-		String deckType = null;
+		Deck deckType = null;
 		List<Integer> requirements = new ArrayList<Integer>();
 		boolean isFinished = false;
 		boolean isLive = false;
@@ -86,7 +87,8 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 
 		if (deflated.has("deckType")
 				&& !deflated.get("deckType").getAsString().equals("")) {
-			deckType = deflated.get("deckType").getAsString();
+			String deckName = deflated.get("deckType").getAsString();
+			deckType = new Deck(deckName, DeckModel.getInstance().getDeck(deckName).getCards());
 		}
 		
 		JsonArray jsonRequirements = null;
