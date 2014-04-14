@@ -24,9 +24,9 @@ public class TeamEstimateTableModel extends AbstractTableModel{
 	 * Table data - contains team estimation
 	 */
 	Object[][] data = {
-			{"Long" , "1"},
+			{"Long", "1"},
 			{"Chris", "2"},
-			{"Ryan", "4"}	
+			{"Ryan", "4"}
 	};
 
     public int getColumnCount() {
