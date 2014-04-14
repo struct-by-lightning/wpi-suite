@@ -378,7 +378,7 @@ public class CreateGameView {
 		    JComboBox combo = (JComboBox)e.getSource();
 		    String selection = (String)combo.getSelectedItem();
 		    	if(selection.contentEquals("Default")){
-		    		// Replace this with button contents		                } else {
+		    		// Replace this with button contents		               
 		    		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");		                
 		   		}
 		   
