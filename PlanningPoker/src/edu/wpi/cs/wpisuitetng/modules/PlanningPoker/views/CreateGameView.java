@@ -645,7 +645,7 @@ public class CreateGameView {
 				isTabEditedByUser = false;
 
 				enteredName = sessionName.getText();
-				selectedDeckType = deckType.getSelectedItem().toString();
+				selectedDeckType = (String)deckType.getSelectedItem();
 				GregorianCalendar startCal, endCal;
 
 				// Checks to see if the user set the date to something other
@@ -698,11 +698,11 @@ public class CreateGameView {
 							game = new PlanningPokerGame(enteredName,
 									"Default description",
 
-									deckType.getSelectedItem().toString(), gameRequirementIDsList,
+									(String)deckType.getSelectedItem(), gameRequirementIDsList,
 									false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
 						} else {
 							game = new PlanningPokerGame(enteredName,
-									"Default description", deckType.getSelectedItem().toString(),
+									"Default description", (String)deckType.getSelectedItem(),
 									gameRequirementIDsList, false, false,
 									startCal, endCal, ConfigManager.getConfig().getUserName());
 
