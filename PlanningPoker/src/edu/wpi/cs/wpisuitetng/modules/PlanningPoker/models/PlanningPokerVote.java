@@ -40,8 +40,10 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	int requirementID;
 	
 	public PlanningPokerVote(String gameName, String userName, int vote, int requirementID) {
-		this.gameName = gameName.replace(':', ';');
-		this.userName = userName.toLowerCase();
+		if(gameName != null)
+			this.gameName = gameName.replace(':', ';');
+		if(userName != null)
+			this.userName = userName.toLowerCase();
 		this.vote = vote;
 		this.requirementID = requirementID;
 	}
@@ -135,4 +137,5 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 
 		return ppvs.toArray(new PlanningPokerVote[0]);
 	}
+	
 }

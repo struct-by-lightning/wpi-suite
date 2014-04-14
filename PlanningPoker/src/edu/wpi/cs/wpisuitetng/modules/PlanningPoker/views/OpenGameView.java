@@ -155,6 +155,7 @@ public class OpenGameView extends JPanel {
 						updateSelectedCards(game, selected);
 						updateEstimateTotal();
 						estimateNumberLabel.setText("?");
+						submitButton.setEnabled(false);
 						int voteNumber = GetPlanningPokerVoteController.getInstance()
 								.retrievePlanningPokerVote(
 										MainViewController.activeGame.getGameName(),
@@ -634,6 +635,7 @@ public class OpenGameView extends JPanel {
 		estimateNumberLabel
 				.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		estimateNumberLabel.setText("?");
+		submitButton.setEnabled(false);
 		int voteNumber = GetPlanningPokerVoteController.getInstance()
 				.retrievePlanningPokerVote(
 						MainViewController.activeGame.getGameName(),

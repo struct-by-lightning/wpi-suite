@@ -50,6 +50,7 @@ public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
 	@Override
 	public void responseError(IRequest iReq) {
 		isError = true;
+		System.out.println("Error!" + iReq.getResponse().getBody());
 	}
 
 	/**
