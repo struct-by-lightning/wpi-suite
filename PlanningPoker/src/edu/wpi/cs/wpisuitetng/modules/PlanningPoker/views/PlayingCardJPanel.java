@@ -2,6 +2,13 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -12,6 +19,7 @@ public class PlayingCardJPanel extends JPanel {
 
     private final int value;
     private boolean selected;
+    private Image img;
 
     /**
      * Inner panels for displaying this card.
@@ -20,13 +28,12 @@ public class PlayingCardJPanel extends JPanel {
     private final JLabel cardLabel;
 
     public PlayingCardJPanel(int value, boolean selected) {
-
         this.value = value;
         this.selected = selected;
         
         this.updateBorder();
 
-        this.innerCardPanel = new JPanel();
+        this.innerCardPanel = new CardImgPanel();
         this.cardLabel = new JLabel();
 
         innerCardPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
@@ -35,7 +42,7 @@ public class PlayingCardJPanel extends JPanel {
         cardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cardLabel.setText(new Integer(value).toString());
 
-        GroupLayout innerCardPanelLayout = new GroupLayout(innerCardPanel);
+       GroupLayout innerCardPanelLayout = new GroupLayout(innerCardPanel);
         innerCardPanel.setLayout(innerCardPanelLayout);
         innerCardPanelLayout.setHorizontalGroup(
                 innerCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -44,6 +51,7 @@ public class PlayingCardJPanel extends JPanel {
                         .addComponent(cardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                         .addContainerGap())
         );
+        
         innerCardPanelLayout.setVerticalGroup(
                 innerCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(innerCardPanelLayout.createSequentialGroup()
