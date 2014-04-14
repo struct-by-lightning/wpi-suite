@@ -73,12 +73,22 @@ public class GetPlanningPokerVoteController implements ActionListener {
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 	}
+	/**
+	 * Retrieves the planning poker vote from the server
+	 * @param gameName the gameName of the vote to retrieve
+	 * @param userName the userName of the vote to retrieve
+	 * @param requirementID the requirementID of the vote to retrieve
+	 * @return the vote if it exists, Integer.MIN_VALUE otherwise
+	 */
 	public int retrievePlanningPokerVote(String gameName, String userName, int requirementID) {
 		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote", HttpMethod.GET); // GET == read
 		request.addObserver(observer); // add an observer to process the response
 		request.setBody(new PlanningPokerVote(gameName, userName, 0, requirementID).toJSON());
 		request.send(); // send the request
-		return PlanningPokerVote.fromJSON(request.getBody()).getVote();
-		
+		if(request.getResponse() != null)
+			//return Integer.MIN_VALUE;
+			return PlanningPokerVote.fromJSON(request.getResponse().getBody()).getVote();
+		else
+			return Integer.MIN_VALUE;
 	}
 }

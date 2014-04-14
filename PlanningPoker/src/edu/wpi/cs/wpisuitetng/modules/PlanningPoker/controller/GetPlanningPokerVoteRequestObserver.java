@@ -22,7 +22,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * @author cgwalker
  */
 public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
-	
+	public static boolean isError = false;
 	private GetPlanningPokerVoteController controller;
 	
 	/**
@@ -40,6 +40,8 @@ public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
+		isError = false;
+		System.out.println("Success!" + iReq.getResponse().getBody());
 	}
 
 	/**
@@ -47,7 +49,7 @@ public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		fail(iReq, null);
+		isError = true;
 	}
 
 	/**
@@ -57,8 +59,7 @@ public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		//Do something suitable for an error condition.
-		;
+		
 	}
 
 }
