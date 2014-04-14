@@ -87,8 +87,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 
 		if (deflated.has("deckType")
 				&& !deflated.get("deckType").getAsString().equals("")) {
-			String deckName = deflated.get("deckType").getAsString();
-			deckType = new Deck(deckName, DeckModel.getInstance().getDeck(deckName).getCards());
+			deckType = DeckModel.getInstance().getDeck(deflated.get("deckType").getAsString());
 		}
 		
 		JsonArray jsonRequirements = null;

@@ -118,11 +118,11 @@ public class MainViewController {
 		DefaultMutableTreeNode openGames = new DefaultMutableTreeNode("Open");
 		DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode("Finished");
 
+//		GetDeckController.getInstance().retrieveDeck(); // must be before you get planning poker games
 		GetRequirementsController.getInstance().retrieveRequirements();
 		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
 		GetUserController.getInstance().retrieveUser();
-		GetDeckController.getInstance().retrieveDeck();
-		
+				
 		for (PlanningPokerGame game : PlanningPokerGameModel.getPlanningPokerGames()) {
 			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(game.getGameName());
 

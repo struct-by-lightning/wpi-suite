@@ -645,7 +645,7 @@ public class CreateGameView {
 				isTabEditedByUser = false;
 
 				enteredName = sessionName.getText();
-				selectedDeckType = (String) deckType.getSelectedItem();
+				selectedDeckType = (Deck) deckType.getSelectedItem();
 				GregorianCalendar startCal, endCal;
 
 				// Checks to see if the user set the date to something other
@@ -947,7 +947,7 @@ public class CreateGameView {
 	 * A dropdown box that contains the default deck to choose.
 	 */
 	JComboBox<Deck> deckType = new JComboBox<Deck>();
-	String selectedDeckType = new String();
+	Deck selectedDeckType = null;
 	/**
 	 * A list contains of available requirements to add to the session
 	 */
