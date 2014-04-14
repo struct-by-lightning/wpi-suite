@@ -56,7 +56,7 @@ public class PlayingCardJPanel extends JPanel {
                 innerCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(innerCardPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(cardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                        .addComponent(cardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                         .addContainerGap())
         );
         
@@ -64,7 +64,7 @@ public class PlayingCardJPanel extends JPanel {
                 innerCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(innerCardPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(cardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                        .addComponent(cardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
                         .addContainerGap())
         );
 
