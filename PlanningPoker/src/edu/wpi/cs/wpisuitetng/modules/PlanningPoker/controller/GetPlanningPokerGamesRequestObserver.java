@@ -61,7 +61,6 @@ public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
 		//Do something suitable for an error condition.
-		;
 	}
 
 }

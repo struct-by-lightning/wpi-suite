@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (c) 2012-2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 
@@ -40,7 +48,7 @@ public class PlayingCardJPanel extends JPanel {
 
         cardLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         cardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cardLabel.setText(new Integer(value).toString());
+        cardLabel.setText(Integer.toString(value));
 
        GroupLayout innerCardPanelLayout = new GroupLayout(innerCardPanel);
         innerCardPanel.setLayout(innerCardPanelLayout);
