@@ -70,8 +70,8 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 	/**
 	 * Method getnewGameButton.
 	 * 
-	 * @return JButton
-	 */
+	
+	 * @return JButton */
 	public JButton getnewGameButton() {
 		return newGameButton;
 	}

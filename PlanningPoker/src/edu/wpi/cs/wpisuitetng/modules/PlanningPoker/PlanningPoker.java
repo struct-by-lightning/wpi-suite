@@ -18,6 +18,10 @@ import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 
+/**
+ * This is the planning poker module.
+ * It initializes the tabs. 
+ */
 public class PlanningPoker implements IJanewayModule {
 
 	private List<JanewayTabModel> tabs;
@@ -42,6 +46,11 @@ public class PlanningPoker implements IJanewayModule {
 		tabs.add(tab);
 	}
 
+	/**
+	 * Method updateComponents.
+	 * @param toolbarComponent JComponent
+	 * @param mainComponent JComponent
+	 */
 	public static void updateComponents(JComponent toolbarComponent, JComponent mainComponent) {
 		PlanningPoker.toolbarComponent = toolbarComponent;
 		PlanningPoker.mainComponent = mainComponent;
