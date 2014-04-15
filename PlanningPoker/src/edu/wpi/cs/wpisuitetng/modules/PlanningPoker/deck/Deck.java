@@ -42,7 +42,9 @@ public class Deck extends RegularAbstractModel<Deck> {
 	 * @param deckName
 	 *            the name of the Deck
 	 */
-	public Deck(String deckName) {
+	public Deck(String deckName) throws NullPointerException {
+		if (deckName == null)
+			throw new NullPointerException("DeckName must not be null");		
 		this.deckName = deckName;
 		this.cards = new ArrayList<Integer>();
 	}
@@ -56,19 +58,24 @@ public class Deck extends RegularAbstractModel<Deck> {
 	 * @param deckName
 	 * @param cards
 	 */
-	public Deck(String deckName, List<Integer> cards) {
+	public Deck(String deckName, List<Integer> cards) throws NullPointerException {
+		if (deckName == null)
+			throw new NullPointerException("DeckName must not be null");		
 		this.deckName = deckName;
 		this.cards = cards;
 		this.sortDeck();
 	}
 
 	public void addCard(Integer card) {
+		if (this.cards == null)
+			this.cards = new ArrayList<Integer>();
 		this.cards.add(card);
 		this.sortDeck();
 	}
 
 	public void removeCard(Integer card) {
-		this.cards.remove((Integer) card);
+		if (this.cards != null)
+			this.cards.remove((Integer) card);
 	}
 
 	public void sortDeck() {
