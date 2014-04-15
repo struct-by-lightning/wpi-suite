@@ -84,17 +84,28 @@ public class GetPlanningPokerVoteController implements ActionListener {
 		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote" /*+ new PlanningPokerVote(gameName, userName, 0, requirementID).getID()*/, HttpMethod.GET); // GET == read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		if(request.getResponse() != null) {
 			//return Integer.MIN_VALUE;
 			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
 			PlanningPokerVote ret = new PlanningPokerVote(null, null, 0, 0);
+			
+			String match =  gameName.toLowerCase() + ":" + userName.toLowerCase() + ":" + requirementID;
+
 			for(PlanningPokerVote v : a) {
-				if(v.getID().equals(userName + ":" + gameName + ":" + requirementID)) {
+
+				if(v.getID().equals(match)) {
+
 						ret = v;
 				}
 			}
 			return ret.getVote();
 		} else {
+			System.out.println("Ouch.");
 			return Integer.MIN_VALUE;
 		}
 	}
