@@ -152,13 +152,13 @@ public class ClosedGameView extends JPanel {
 		estimateNumberPanel = new javax.swing.JPanel();
 		estimateSubmitPanel = new javax.swing.JPanel();
 		estimateNumberBox = new javax.swing.JTextField();
-		mean = new javax.swing.JLabel("Mean: ");
+		mean = new javax.swing.JLabel("   Mean: ");
 		median = new javax.swing.JLabel("Median: ");
-		mode = new javax.swing.JLabel("Mode: ");
+		mode = new javax.swing.JLabel("   Mode: ");
 		std = new javax.swing.JLabel("Standard Deviation: ");
-		max = new javax.swing.JLabel("Maximum: ");
-		min = new javax.swing.JLabel("Minimum: ");
-		stats = new javax.swing.JPanel(new GridLayout(3, 2));
+		max = new javax.swing.JLabel("   Maximum: ");
+		min = new javax.swing.JLabel("   Minimum: ");
+		stats = new javax.swing.JPanel(new GridLayout(3, 2, 5, 5));
 		
 		setLayout(new java.awt.BorderLayout());
 
@@ -259,7 +259,7 @@ public class ClosedGameView extends JPanel {
 										.addComponent(gameDeadlineDateLabel))
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		rowSplitPanel.setLayout(new java.awt.GridLayout(2, 2));
+		rowSplitPanel.setLayout(new java.awt.GridLayout(2, 2, 15, 15));
 
 		topRowRequirementPanel.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -339,8 +339,7 @@ public class ClosedGameView extends JPanel {
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addComponent(requirementDescriptionLabelPanel,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addContainerGap()));
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		topRowRequirementPanel.add(requirementPanel);
 		
@@ -426,12 +425,12 @@ public class ClosedGameView extends JPanel {
 		max.setFont(new java.awt.Font("Tahoma", 0, 18));
 		min.setFont(new java.awt.Font("Tahoma", 0, 18));
 		stats.add(mean);
-		stats.add(mode);
-		stats.add(max);
 		stats.add(median);
+		stats.add(mode);
 		stats.add(std);
+		stats.add(max);
 		stats.add(min);
-		stats.setPreferredSize(new Dimension(100,200));
+		//stats.setPreferredSize(new Dimension(stats.getWidth(), 50));
 		stats.setBorder(javax.swing.BorderFactory
 				.createLineBorder(new java.awt.Color(153, 153, 153)));
 
@@ -475,9 +474,9 @@ public class ClosedGameView extends JPanel {
 		//allVotes = GetPlanningPokerVotesController.getInstance().getGameVotes(game);
 		estimates = new javax.swing.JList();
 		estimateModel = new DefaultListModel<String>();
-		for(int i = 0; i < 5; i++) {
+		for(int i = 0; i < 25; i++) {
 			System.out.println("Zak: 9");
-			estimateModel.addElement(new String("Zak: 9"));
+			estimateModel.addElement(new String("   Zak: 9"));
 		}
 		System.out.println(estimateModel);
 		estimates.setModel(estimateModel);
@@ -485,17 +484,17 @@ public class ClosedGameView extends JPanel {
 		estimates.setFont(new java.awt.Font("Tahoma", 0, 18));
 		JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(estimates);
-		scroll.setPreferredSize(new Dimension(500, 400));
+		//scroll.setPreferredSize(new Dimension(500, 400));
 		
-		allEstimates = new javax.swing.JPanel();
-		allEstimates.add(scroll);
-		allEstimates.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153,
+		//allEstimates = new javax.swing.JPanel();
+		//allEstimates.add(scroll);
+		scroll.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153,
 				153, 153)));
 		
 		rowSplitPanel.add(topRowRequirementPanel);
-		rowSplitPanel.add(rightBlankPanel);
+		rowSplitPanel.add(stats);
 		rowSplitPanel.add(estimateCenteringPanel);
-		rowSplitPanel.add(allEstimates);
+		rowSplitPanel.add(scroll);
 		
 		
 		JButton submitButton = new JButton("Submit");
