@@ -36,19 +36,22 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 
 	// initialize the main view toolbar buttons
-	private final JButton newGameButton = new JButton("<html>Create New Game</html>");
+	private final JButton newGameButton = new JButton(
+			"<html>Create New Game</html>");
 	private final JPanel contentPanel = new JPanel();
 
 	public PlanningPokerButtonsPanel() {
 		super("");
 
-		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		this.contentPanel.setLayout(new BoxLayout(contentPanel,
+				BoxLayout.X_AXIS));
 		this.setPreferredWidth(250);
 
 		this.newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 
 		try {
-			final Image img = ImageIO.read(getClass().getResource("new_req.png"));
+			final Image img = ImageIO.read(getClass()
+					.getResource("new_req.png"));
 			this.newGameButton.setIcon(new ImageIcon(img));
 
 		} catch (IOException ex) {
@@ -72,6 +75,7 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 
 	/**
 	 * Method getnewGameButton.
+	 * 
 	 * 
 	 * @return JButton
 	 */

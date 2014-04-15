@@ -41,8 +41,13 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 /**
  * @author Legion
  * 
+ * @version $Revision: 1.0 $
  */
 public class ClosedGameView extends JPanel {
+	/**
+	 * Method open.
+	 * @param game PlanningPokerGame
+	 */
 	public static void open(PlanningPokerGame game) {
 		ClosedGameView view = new ClosedGameView(game);
 		MainView.getController().addCloseableTab(game.getGameName(), view);
@@ -51,6 +56,10 @@ public class ClosedGameView extends JPanel {
 	private PlanningPokerGame game;
 	private ArrayList<Requirement> requirements;
 
+	/**
+	 * Constructor for ClosedGameView.
+	 * @param game PlanningPokerGame
+	 */
 	private ClosedGameView(PlanningPokerGame game) {
 		System.out.println("ClsoedGameView(" + game + ")");
 		this.game = game;
@@ -101,6 +110,10 @@ public class ClosedGameView extends JPanel {
 
 	}
 
+	/**
+	 * Method updateEstimateTotal.
+	 * @param selected Requirement
+	 */
 	private void updateEstimateTotal(Requirement selected) {
 		this.estimateNumberBox.setText("" + selected.getEstimate());
 	}
