@@ -66,8 +66,7 @@ import javax.swing.JButton;
 public class OpenGameView extends JPanel {
 	
 	JTextArea textArea;
-	String oldStringForTextArea;
-	
+
 	/**
 	 * This function is what to call to open up the display for an
 	 * open-for-voting planning poker game in a new tab.
@@ -116,7 +115,7 @@ public class OpenGameView extends JPanel {
 	 * @param input
 	 * @return true if the input string is valid and false otherwise
 	 */
-	private boolean checkInputString(String input) {
+	private boolean convertStrToInt(String input) {
 		if (input.matches("^[0-9]+$")) {
 			return false;
 		}
@@ -188,19 +187,15 @@ public class OpenGameView extends JPanel {
 	
 	class MyDocumentListener implements DocumentListener {
 		public void insertUpdate(DocumentEvent e) {
-			String tempString = textArea.getText();
-			
-			if (checkInputString(tempString)) {
-				estimateNumberLabel.setText(tempString);
-				textArea.setText(tempString);
-				oldStringForTextArea = tempString;
-			}
+			estimateNumberLabel.setText(textArea.getText());
 		}
 		
 		public void removeUpdate(DocumentEvent e) {
 			String tempString = textArea.getText();
 			
 			estimateNumberLabel.setText(tempString);
+			if (textArea.getText().equals(""))
+				estimateNumberLabel.setText("?");
 		}
 		
 		public void changedUpdate(DocumentEvent e) {
@@ -329,9 +324,14 @@ public class OpenGameView extends JPanel {
 		for (PlayingCardJPanel card : this.cards) {
 			total += card.getValue();
 		}
+		/*if(deckName.equals("No Deck") && estimateNumberLabel.getText().equals("")) {
+			String newText = "?";
+		} else {
+			
+		}*/
 
 		String newText = (total > 0 ? ("" + total) : "?");
-
+		
 		this.estimateNumberLabel.setText(newText);
 	}
 
