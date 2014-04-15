@@ -19,6 +19,7 @@ import org.junit.Test;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
+ * Test for adding and retrieving users to/from a user model.
  * @author Alec Thompson - ajthompson
  * @version Apr 3, 2014
  */

@@ -10,6 +10,8 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
 import java.io.FileNotFoundException;
+
+
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +24,10 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.AcceptanceTest;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.Note;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.Transaction;
+
+/**
+ * This class controls the exportation of requirements to a file as JSON.
+ */
 
 public class Exporter {
 

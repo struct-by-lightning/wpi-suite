@@ -11,6 +11,7 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
 import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -34,6 +35,10 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerV
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 //import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.SeeOpenGameViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
+
+/**
+ * This class controls voting using user-defined values instead of defined Planning Poker cards.
+ */
 
 
 public class NoCardVoting extends JPanel{
