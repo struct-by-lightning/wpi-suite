@@ -117,7 +117,8 @@ public class MainViewController {
 	
 
 	public void createGameButtonClicked() {
-		CreateGameView.getController().activateView();
+		CreateGameView createGameView = new CreateGameView();
+		createGameView.getController().activateView();
 	}
 
 	public void refreshGameTree() {
