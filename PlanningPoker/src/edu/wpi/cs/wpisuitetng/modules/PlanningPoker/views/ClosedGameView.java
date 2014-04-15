@@ -9,6 +9,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -71,7 +72,7 @@ public class ClosedGameView extends JPanel {
 					public void valueChanged(ListSelectionEvent ev) {
 						JList list;
 						list = (JList) ev.getSource();
-						if(list.getSelectedIndex()!=-1) {
+						if(list.getSelectedIndex() != -1) {
 							selected = requirements.get(list
 									.getSelectedIndex());
 							requirementNameLabel.setText(selected.getName());
@@ -260,7 +261,7 @@ public class ClosedGameView extends JPanel {
 						.addComponent(requirementNameLabel)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		requirementDescriptionLabelPanel.setBackground(new java.awt.Color(255, 255, 255));
+		requirementDescriptionLabelPanel.setBackground(Color.white);
 		requirementDescriptionLabelPanel.setBorder(javax.swing.BorderFactory
 				.createLineBorder(new java.awt.Color(153, 153, 153)));
 
@@ -365,7 +366,7 @@ public class ClosedGameView extends JPanel {
 	            e.consume();
 	            System.out.println("Please enter a number");
 	          }
-	          else if (estimateNumberBox.getText().length()>=3) {
+	          else if (estimateNumberBox.getText().length() >= 3) {
 		          getToolkit().beep();
 		          e.consume();
 	        	  System.out.println("Character Limited exceeded");
@@ -485,7 +486,7 @@ public class ClosedGameView extends JPanel {
 						break;
 					}
 				}
-				System.out.println(RequirementModel.getInstance().getRequirements().get(n).getName()+" set estimate to "+ estimateNumberBox.getText());
+				System.out.println(RequirementModel.getInstance().getRequirements().get(n).getName() + " set estimate to " + estimateNumberBox.getText());
 				
 				Requirement req2set = RequirementModel.getInstance().getRequirement(n);
 				req2set.setEstimate(Integer.parseInt(estimateNumberBox.getText()));

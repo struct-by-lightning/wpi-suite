@@ -33,7 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 
 	// initialize the main view toolbar buttons
-	private JButton newGameButton = new JButton("<html>Create New Game</html>");
+	private final JButton newGameButton = new JButton("<html>Create New Game</html>");
 	private final JPanel contentPanel = new JPanel();
 
 	public PlanningPokerButtonsPanel() {
@@ -45,7 +45,7 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 		this.newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 
 		try {
-			Image img = ImageIO.read(getClass().getResource("new_req.png"));
+			final Image img = ImageIO.read(getClass().getResource("new_req.png"));
 			this.newGameButton.setIcon(new ImageIcon(img));
 
 		} catch (IOException ex) {

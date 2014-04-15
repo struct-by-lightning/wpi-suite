@@ -65,7 +65,7 @@ public class DatePicker {
 		for (int x = 0; x < button.length; x++) {
 			final int selection = x;
 			button[x] = new JButton();
-			button[x].setMargin(new Insets(0,0,0,0));
+			button[x].setMargin(new Insets(0, 0, 0, 0));
 			button[x].setFocusPainted(false);
 			button[x].setBackground(Color.white);
 			if (x > 6)
@@ -73,7 +73,7 @@ public class DatePicker {
 					public void actionPerformed(ActionEvent ae) {
 						day = button[selection].getActionCommand();
 						if(!day.equals(""))
-								txt.setText(setPickedDate());
+								txt.setText(formatPickedDate());
 						}
 				});
 			if (x < 7) {
@@ -136,7 +136,7 @@ public class DatePicker {
 		cal.set(year, month, 1);
 		int dayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK);
 		int daysInMonth = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
-		for (int x = 6 + dayOfWeek, day = 1; day <= daysInMonth; x++, day++) {
+		for (int x = 6 + dayOfWeek, day = 1; day <= daysInMonth; x ++, day++) {
 			button[x].setFont(new Font("Default", Font.PLAIN, 14));
 			cal.set(year,  month, day);
 			if (cal.before(current))
@@ -156,7 +156,7 @@ public class DatePicker {
 	 * Formats the user picked date as Day/Month/Year with the time.
 	 */
 
-	public String setPickedDate() {
+	public String formatPickedDate() {
 		if (day.equals(""))
 			return day;
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(

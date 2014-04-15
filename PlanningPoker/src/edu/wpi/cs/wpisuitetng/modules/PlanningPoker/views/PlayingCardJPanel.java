@@ -1,3 +1,11 @@
+/*******************************************************************************
+ * Copyright (c) 2012-2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 
@@ -40,7 +48,7 @@ public class PlayingCardJPanel extends JPanel {
 
         cardLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         cardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cardLabel.setText(new Integer(value).toString());
+        cardLabel.setText(Integer.toString(value));
 
        GroupLayout innerCardPanelLayout = new GroupLayout(innerCardPanel);
         innerCardPanel.setLayout(innerCardPanelLayout);
@@ -48,7 +56,7 @@ public class PlayingCardJPanel extends JPanel {
                 innerCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(innerCardPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(cardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                        .addComponent(cardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
                         .addContainerGap())
         );
         
@@ -56,7 +64,7 @@ public class PlayingCardJPanel extends JPanel {
                 innerCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(innerCardPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(cardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                        .addComponent(cardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
                         .addContainerGap())
         );
 
@@ -88,7 +96,7 @@ public class PlayingCardJPanel extends JPanel {
     }
 
     private void updateBorder() {
-        Color borderColor = (this.selected ? new Color(204, 255, 204) : new Color(255, 255, 255));
+        Color borderColor = (this.selected ? new Color(204, 255, 204) : Color.white);
         this.setBorder(BorderFactory.createLineBorder(borderColor, 10));
     }
 
