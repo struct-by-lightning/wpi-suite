@@ -31,6 +31,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 
 	private GetPlanningPokerVoteRequestObserver observer;
 	private static GetPlanningPokerVoteController instance;
+	private boolean ready;
 
 	/**
 	 * Constructs the controller given a PlanningPokerVoteModel
@@ -81,15 +82,22 @@ public class GetPlanningPokerVoteController implements ActionListener {
 	 * @return the vote if it exists, Integer.MIN_VALUE otherwise
 	 */
 	public int retrievePlanningPokerVote(String gameName, String userName, int requirementID) {
+		setReady(false);
+		gameName = gameName.toLowerCase();
+		userName = userName.toLowerCase();
 		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote" /*+ new PlanningPokerVote(gameName, userName, 0, requirementID).getID()*/, HttpMethod.GET); // GET == read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
-		if(request.getResponse() != null) {
+		
+		while(!isReady()) {
+		}
+		
+		if(request.getResponse() != null && request.getResponse().getStatusCode() == 200) {
 			//return Integer.MIN_VALUE;
 			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
 			PlanningPokerVote ret = new PlanningPokerVote(null, null, 0, 0);
 			for(PlanningPokerVote v : a) {
-				if(v.getID().equals(userName + ":" + gameName + ":" + requirementID)) {
+				if(v.getID().toLowerCase().equals(gameName + ":" + userName + ":" + requirementID)) {
 						ret = v;
 				}
 			}
@@ -97,5 +105,13 @@ public class GetPlanningPokerVoteController implements ActionListener {
 		} else {
 			return Integer.MIN_VALUE;
 		}
+	}
+	
+	public synchronized void setReady(boolean ready) {
+		this.ready = ready;
+	}
+	
+	public synchronized boolean isReady() {
+		return ready;
 	}
 }
