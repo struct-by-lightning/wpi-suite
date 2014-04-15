@@ -1,18 +1,13 @@
 /*******************************************************************************
-* Copyright (c) 2012-2014 -- WPI Suite
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-* Contributor: team struct-by-lightning
-*******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
-/**
- * @author friscis
+ * Copyright (c) 2013-2014 WPI-Suite
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Allows an instance of a calendar that is not a pop-up to be added to any JPanel
- */
+ * Contributors: Team Rolling Thunder, struct-by-lightning
+ ******************************************************************************/
+package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -29,9 +24,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * @author Miguel (Code), Christian (Comments)
- *
+ * @author Miguel
+ * @author Friscis
+ * @author cgwalker
  * This class contains an interactive calendar to select when a Planning Poker session is to begin and end.
+ * Allows an instance of a calendar that is not a pop-up to be added to any JPanel
  */
 
 public class DatePicker {
