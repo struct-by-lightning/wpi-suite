@@ -42,6 +42,8 @@ public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
 	public void responseSuccess(IRequest iReq) {
 		isError = false;
 		System.out.println("Success!" + iReq.getResponse().getBody());
+		
+		controller.setReady(true);
 	}
 
 	/**
@@ -51,6 +53,8 @@ public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
 	public void responseError(IRequest iReq) {
 		isError = true;
 		System.out.println("Error!" + iReq.getResponse().getBody());
+		
+		controller.setReady(true);
 	}
 
 	/**
@@ -60,7 +64,7 @@ public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-
+		controller.setReady(true);
 	}
 
 }
