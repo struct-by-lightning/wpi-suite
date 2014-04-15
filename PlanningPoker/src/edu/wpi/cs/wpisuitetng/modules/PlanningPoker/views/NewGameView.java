@@ -248,8 +248,11 @@
 			// We iterate through the requirements list and add to that JList.
 			for (int i = 0; i < requirements.size(); i++) {
 				Requirement req = requirements.get(i);
-				listModelForBacklog.addElement(req);
-				if (req.getIteration().equals("Backlog")) {
+				if (game.getRequirements().contains(req)) {
+					listModelForThisGame.addElement(req);
+				}
+				else if (req.getIteration().equals("Backlog")) {
+					listModelForBacklog.addElement(req);
 					listModelForReseting.addElement(req);
 				}
 			}
