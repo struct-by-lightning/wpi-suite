@@ -12,6 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -32,6 +33,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
@@ -45,7 +49,10 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  */
 @SuppressWarnings("serial")
 public class OpenGameView extends JPanel {
-
+	
+	JTextArea textArea;
+	String oldStringForTextArea;
+	
 	/**
 	 * This function is what to call to open up the display for an
 	 * open-for-voting planning poker game in a new tab.
@@ -87,6 +94,24 @@ public class OpenGameView extends JPanel {
 		initForGame();
 	}
 
+	/**
+	 * Checks if the input string is correct, also protects from buffer overflow attacks
+	 * 
+	 * @param input
+	 * @return true if the input string is valid and false otherwise
+	 */
+	private boolean checkInputString(String input) {
+		if (input.matches("^[0-9]+$")) {
+			return false;
+		}
+	
+		return true;
+				
+	}
+	
+	/**
+	 * Populates the allCardsPanel with cards
+	 */
 	private void populateWithCards() {
 		// Add JPanels for each card available in this game.
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -106,35 +131,61 @@ public class OpenGameView extends JPanel {
 		}
 	}
 	
+	/**
+	 * Populates the allCardsPanel with one card and JTextArea for the user to enter the estimation manually
+	 */
 	private void populateWithNoCardDeckPanel() {
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.insets = new Insets(0, 15, 0, 15);		
-		int value = 20;
 		
-		JPanel newPanel = new JPanel();
-		JTextArea textArea = new JTextArea();
+		textArea = new JTextArea();
+		textArea.setDocument(new LimitedDocument(textArea));
 		textArea.getDocument().addDocumentListener(new MyDocumentListener());
+		Font bigFont = new Font(null, Font.PLAIN, 32); 
+		textArea.setFont(bigFont);
 		
 		textArea.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-		textArea.setMinimumSize(new Dimension(100, 100));
-		PlayingCardJPanel card = new PlayingCardJPanel(value, false);
+		textArea.setColumns(2);
+		textArea.setRows(1);
 		
 		this.allCardsPanel.add(textArea, gridBagConstraints);
-		//add just a single card to the bottom panel 
-		this.allCardsPanel.add(card, gridBagConstraints);
 	}
 	
 	class MyDocumentListener implements DocumentListener {
 		public void insertUpdate(DocumentEvent e) {
-			System.out.println("Insert");
+			String tempString = textArea.getText();
+			
+			if (checkInputString(tempString)) {
+				estimateNumberLabel.setText(tempString);
+				textArea.setText(tempString);
+				oldStringForTextArea = tempString;
+			}
 		}
 		
 		public void removeUpdate(DocumentEvent e) {
-			System.out.println("Remove");
+			String tempString = textArea.getText();
+			
+			estimateNumberLabel.setText(tempString);
 		}
 		
 		public void changedUpdate(DocumentEvent e) {
 			System.out.println("Changed");
+		}
+	}
+	
+	class LimitedDocument extends PlainDocument {
+		private int MAX_LENGTH = 3;
+		private JTextArea field;
+
+		LimitedDocument(JTextArea input) {
+			field = input;
+		}
+		
+		public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+			if(str == null || field.getText().length() >= MAX_LENGTH || !(field.getText().matches("^[0-9]+$") || field.getText().equals(""))) {
+				return;
+			}
+			super.insertString(offs, str, a);
 		}
 	}
 	
