@@ -57,7 +57,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 		}
 		else
 		{
-			return data.retrieve(ppg, "gameName", id).toArray(m);
+			return data.retrieve(ppg, "gameName", id, s.getProject()).toArray(m);
 		}
 	}
 

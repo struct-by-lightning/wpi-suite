@@ -58,7 +58,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 		}
 		else
 		{
-			return data.retrieve(ppg, "id", id).toArray(m);
+			return data.retrieve(ppg, "id", id, s.getProject()).toArray(m);
 		}
 	}
 
@@ -75,7 +75,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 		PlanningPokerVote changes = PlanningPokerVote.fromJSON(content);
 		if(changes.gameName != null && changes.userName != null) {
 			deleteEntity(s, changes.getID());
-			data.save(changes);
+			save(s, changes);
 			return changes;
 		}
 		// currently we don't have the ability to deal with updates on more than one entry
@@ -86,16 +86,18 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	@Override
 	public void save(Session s, PlanningPokerVote model)
 			throws WPISuiteException {
-		if(data.save(model))
-		{
-			logger.log(Level.FINE, "PlanningPokerVoteModel Saved :" + model);
+		if(model.vote != 0) {	
+			if(data.save(model, s.getProject()))
+			{
+				logger.log(Level.FINE, "PlanningPokerVoteModel Saved :" + model);
 
-			return ;
-		}
-		else
-		{
-			logger.log(Level.WARNING, "PlanningPokerVoteModel Save Failure!");
-			throw new DatabaseException("Save failure for PlanningPokerVoteModel.");
+				return ;
+			}
+			else
+			{
+				logger.log(Level.WARNING, "PlanningPokerVoteModel Save Failure!");
+				throw new DatabaseException("Save failure for PlanningPokerVoteModel.");
+			}
 		}
 	}
 
