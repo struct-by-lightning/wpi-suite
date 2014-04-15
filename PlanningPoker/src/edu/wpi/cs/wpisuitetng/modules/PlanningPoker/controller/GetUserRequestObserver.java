@@ -14,6 +14,7 @@ import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
+ * Controller that sends requests to and extracts users from the GetUserController controller.
  * @author Alec Thompson
  * 
  */
@@ -22,7 +23,7 @@ public class GetUserRequestObserver implements RequestObserver {
 	private GetUserController controller;
 
 	/**
-	 * Pars the Users out of the response body and pass them the controller
+	 * Parse the Users out of the response body and pass them the controller
 	 * 
 	 * @param controller
 	 *            the controller used to retrieve users
@@ -32,7 +33,7 @@ public class GetUserRequestObserver implements RequestObserver {
 	}
 
 	/**
-	 * Parse the User out of the response body and pass them to the controller
+	 * Parse the Users out of the response body and pass them to the controller
 	 * 
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
