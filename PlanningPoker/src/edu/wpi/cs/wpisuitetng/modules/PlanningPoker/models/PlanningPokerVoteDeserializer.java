@@ -32,11 +32,20 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
  * Deserialize the JSON string of Planning Poker Vote
  * @author hlong290494
  * @author cgwalker
+ * @version $Revision: 1.0 $
  */
 public class PlanningPokerVoteDeserializer {
 
 	private static final Logger logger = Logger.getLogger(UserDeserializer.class.getName());
 
+	/**
+	 * Method deserialize.
+	 * @param ppmElement JsonElement
+	 * @param ppmType Type
+	 * @param context JsonDeserializationContext
+	
+	
+	 * @return PlanningPokerVote * @throws JsonParseException */
 	public PlanningPokerVote deserialize(JsonElement ppmElement, Type ppmType,
 			JsonDeserializationContext context) throws JsonParseException {
 		

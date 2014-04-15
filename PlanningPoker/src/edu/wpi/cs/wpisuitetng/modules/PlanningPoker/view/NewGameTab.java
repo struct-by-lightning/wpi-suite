@@ -95,6 +95,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * Implements the new game tab for planning poker module
  *
  * @author Struct-by-lightning
+ * @version $Revision: 1.0 $
  */
 public class NewGameTab extends JPanel {
 	private JTextField sessionName;
@@ -951,6 +952,10 @@ public class NewGameTab extends JPanel {
 		});
 	}
 
+	/**
+	 * Method calendarSetOpen.
+	 * @param open boolean
+	 */
 	public void calendarSetOpen(boolean open) {
 		calendarOpen = open;
 	}

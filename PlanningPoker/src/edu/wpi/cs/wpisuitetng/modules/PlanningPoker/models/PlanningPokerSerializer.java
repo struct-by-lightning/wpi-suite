@@ -20,8 +20,19 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
+/**
+ * @author Miguel
+ * @version $Revision: 1.0 $
+ */
 public class PlanningPokerSerializer implements JsonSerializer<PlanningPokerGame> {
 
+	/**
+	 * Method serialize.
+	 * @param m PlanningPokerGame
+	 * @param t Type
+	 * @param context JsonSerializationContext
+	
+	 * @return JsonElement */
 	@Override
 	public JsonElement serialize(PlanningPokerGame m, Type t, JsonSerializationContext context) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");

@@ -23,6 +23,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
+/**
+ * @author Miguel
+ * @version $Revision: 1.0 $
+ */
 public class PlayingCardJPanel extends JPanel {
 
     private final int value;
@@ -35,6 +39,11 @@ public class PlayingCardJPanel extends JPanel {
     private final JPanel innerCardPanel;
     private final JLabel cardLabel;
 
+    /**
+     * Constructor for PlayingCardJPanel.
+     * @param value int
+     * @param selected boolean
+     */
     public PlayingCardJPanel(int value, boolean selected) {
         this.value = value;
         this.selected = selected;
@@ -100,6 +109,10 @@ public class PlayingCardJPanel extends JPanel {
         this.setBorder(BorderFactory.createLineBorder(borderColor, 10));
     }
 
+    /**
+     * Method getValue.
+    
+     * @return int */
     public int getValue() {
         return (this.selected ? value : 0);
     }

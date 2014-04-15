@@ -42,9 +42,11 @@ public class Deck extends AbstractModel {
 	 * @param deckName
 	 *            the name of the Deck
 	 */
-	public Deck(String deckName) {
+	public Deck(String deckName) throws NullPointerException {
+		if (deckName == null)
+			throw new NullPointerException("DeckName must not be null");		
 		this.deckName = deckName;
-		this.cards = new ArrayList<Integer>();
+		this.cards = null;
 	}
 
 	/**
@@ -56,19 +58,32 @@ public class Deck extends AbstractModel {
 	 * @param deckName
 	 * @param cards
 	 */
-	public Deck(String deckName, List<Integer> cards) {
+	public Deck(String deckName, List<Integer> cards) throws NullPointerException {
+		if (deckName == null)
+			throw new NullPointerException("DeckName must not be null");		
 		this.deckName = deckName;
 		this.cards = cards;
 		this.sortDeck();
 	}
 
+	/**
+	 * Method addCard.
+	 * @param card Integer
+	 */
 	public void addCard(Integer card) {
+		if (this.cards == null)
+			this.cards = new ArrayList<Integer>();
 		this.cards.add(card);
 		this.sortDeck();
 	}
 
+	/**
+	 * Method removeCard.
+	 * @param card Integer
+	 */
 	public void removeCard(Integer card) {
-		this.cards.remove((Integer) card);
+		if (this.cards != null)
+			this.cards.remove((Integer) card);
 	}
 
 	public void sortDeck() {
@@ -77,15 +92,15 @@ public class Deck extends AbstractModel {
 	}
 
 	/**
-	 * @return the deckName
-	 */
+	
+	 * @return the deckName */
 	public String getDeckName() {
 		return deckName;
 	}
 
 	/**
-	 * @return the list of cards
-	 */
+	
+	 * @return the list of cards */
 	public List<Integer> getCards() {
 		return cards;
 	}
@@ -109,7 +124,9 @@ public class Deck extends AbstractModel {
 	/**
 	 * Converts the list of cards to a string
 	 * 
-	 * @return the string representing the list of cards
+	
+	
+	 * @return the string representing the list of cards * @see edu.wpi.cs.wpisuitetng.modules.Model#toString() * @see edu.wpi.cs.wpisuitetng.modules.Model#toString()
 	 */
 	@Override
 	public String toString() {
@@ -121,7 +138,9 @@ public class Deck extends AbstractModel {
 	/**
 	 * Serializes this Deck into a JSON string.
 	 * 
-	 * @return the JSON representation of this Deck
+	
+	
+	 * @return the JSON representation of this Deck * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
 	public String toJSON() {
 		String json;
@@ -139,8 +158,8 @@ public class Deck extends AbstractModel {
 	 * 
 	 * @param d
 	 *            an array of Decks
-	 * @return the serialized array of Decks
-	 */
+	
+	 * @return the serialized array of Decks */
 	public static String toJSON(Deck[] d) {
 		String json = "[";
 
@@ -158,8 +177,8 @@ public class Deck extends AbstractModel {
 	 * 
 	 * @param json
 	 *            the JSON string to user
-	 * @return the reconstructed Deck
-	 */
+	
+	 * @return the reconstructed Deck */
 	public static Deck fromJSON(String json) {
 		DeckDeserializer dd = new DeckDeserializer();
 		return dd.deserialize(new JsonParser().parse(json), null, null);
@@ -170,8 +189,8 @@ public class Deck extends AbstractModel {
 	 * 
 	 * @param jsonArr
 	 *            the JSON array to deserialize
-	 * @return an array of reconstructed decks
-	 */
+	
+	 * @return an array of reconstructed decks */
 	public static Deck[] fromJsonArray(String jsonArr) {
 		DeckDeserializer dd = new DeckDeserializer();
 		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();

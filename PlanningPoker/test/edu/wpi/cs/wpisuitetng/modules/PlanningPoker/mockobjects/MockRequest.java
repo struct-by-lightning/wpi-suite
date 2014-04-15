@@ -23,6 +23,12 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 public class MockRequest extends Request {
 	protected boolean sent = false;
 
+	/**
+	 * Constructor for MockRequest.
+	 * @param networkConfiguration NetworkConfiguration
+	 * @param path String
+	 * @param requestMethod HttpMethod
+	 */
 	public MockRequest(NetworkConfiguration networkConfiguration, String path,
 			HttpMethod requestMethod) {
 		super(networkConfiguration, path, requestMethod);
@@ -31,16 +37,16 @@ public class MockRequest extends Request {
 	/**
 	 * Pretends to send the request by setting sent = true
 	 * 
-	 * @throws IllegalStateException
-	 */
+	
+	 * @throws IllegalStateException */
 	@Override
 	public void send() throws IllegalStateException {
 		sent = true;
 	}
 	
 	/**
-	 * @return whether the request was sent
-	 */
+	
+	 * @return whether the request was sent */
 	public boolean isSent() {
 		return sent;
 	}

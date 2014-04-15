@@ -73,6 +73,13 @@ public class GetPlanningPokerVoteController implements ActionListener {
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 	}
+	/**
+	 * Method retrievePlanningPokerVote.
+	 * @param gameName String this the name of the game
+	 * @param userName String this is the user name of the player
+	 * @param requirementID int this is the unique id for the requirement
+	 * @return int returns the vote value of the player
+ 	 */
 	public int retrievePlanningPokerVote(String gameName, String userName, int requirementID) {
 		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote", HttpMethod.GET); // GET == read
 		request.addObserver(observer); // add an observer to process the response

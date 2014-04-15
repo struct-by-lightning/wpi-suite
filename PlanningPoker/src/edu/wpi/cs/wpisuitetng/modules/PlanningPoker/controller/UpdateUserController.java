@@ -31,8 +31,8 @@ public class UpdateUserController {
 	 * Returns the instance of the UpdateUserController, or creates one if it
 	 * does not exist.
 	 * 
-	 * @return the instance of UpdateUserController
-	 */
+	
+	 * @return the instance of UpdateUserController */
 	public static UpdateUserController getInstance() {
 		if (instance == null)
 			instance = new UpdateUserController();
@@ -46,6 +46,10 @@ public class UpdateUserController {
 		observer = new UpdateUserRequestObserver(this);
 	}
 	
+	/**
+	 * Method update.
+	 * @param newUser User
+	 */
 	public void update(User newUser) {
 		Request request = Network.getInstance().makeRequest("planningpoker/user", HttpMethod.POST);
 		request.setBody(newUser.toJSON());

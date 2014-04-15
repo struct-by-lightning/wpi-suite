@@ -20,6 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPok
  * stored in the database.
  *
  * @author bbiletch, atrose
+ * @version $Revision: 1.0 $
  */
 public class PlanningPokerGameModel {
 
@@ -46,6 +47,10 @@ public class PlanningPokerGameModel {
 				newGame.getGameName(), newGame);
 	}
 	
+	/**
+	 * Method addPlanningPokerGames.
+	 * @param games PlanningPokerGame[]
+	 */
 	public static void addPlanningPokerGames(PlanningPokerGame[] games) {
 		for (PlanningPokerGame game : games) {
 			PlanningPokerGameModel.addPlanningPokerGame(game);
@@ -57,10 +62,10 @@ public class PlanningPokerGameModel {
 	 *
 	 * @param name
 	 *            The name of the PlanningPokerGame to be returned.
-	 * @return The PlanningPokerGame instance with the name provided.
-	 * @throws NotFoundException
-	 *             If no game with the given name is found.
-	 */
+	
+	
+	 * @return The PlanningPokerGame instance with the name provided. * @throws NotFoundException
+	 *             If no game with the given name is found. */
 	public static PlanningPokerGame getPlanningPokerGame(String name) {
 		PlanningPokerGame toReturn = PlanningPokerGameModel.planningPokerGamesDict
 				.get(name);
@@ -71,13 +76,17 @@ public class PlanningPokerGameModel {
 	/**
 	 * Returns the list of the PlanningPokerGames
 	 *
-	 * @return the PlanningPokerGames held within the PlanningPokerGameModel.
-	 */
+	
+	 * @return the PlanningPokerGames held within the PlanningPokerGameModel. */
 	public static ArrayList<PlanningPokerGame> getPlanningPokerGames() {
 		return new ArrayList<PlanningPokerGame>(
 				PlanningPokerGameModel.planningPokerGamesDict.values());
 	}
 
+	/**
+	 * Method getSize.
+	
+	 * @return int */
 	public static int getSize() {
 		return PlanningPokerGameModel.planningPokerGamesDict.size();
 	}

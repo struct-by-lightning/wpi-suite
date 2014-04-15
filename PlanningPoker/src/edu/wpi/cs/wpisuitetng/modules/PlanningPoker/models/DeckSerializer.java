@@ -23,23 +23,36 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
 
 /**
  * Description
- *
+ * 
  * @author Alec Thompson - ajthompson
  * @version Apr 10, 2014
  */
 public class DeckSerializer implements JsonSerializer<Deck> {
+
 	
+	/**
+	 * Method serialize.
+	 * @param d Deck
+	 * @param t Type
+	 * @param context JsonSerializationContext
+	
+	 * @return JsonElement */
 	@Override
-	public JsonElement serialize(Deck d, Type t, JsonSerializationContext context) {
+	public JsonElement serialize(Deck d, Type t,
+			JsonSerializationContext context) {
 		JsonObject deflated = new JsonObject();
 		JsonArray deflatedCards = new JsonArray();
-		
+
 		deflated.addProperty("deckName", d.getDeckName());
-		for (Integer card : d.getCards()) {
-			deflatedCards.add(new JsonPrimitive(card));
-		}
-		deflated.add("cards", deflatedCards);
 		
+		if (d.getCards() != null) {
+			System.out.println("Cards is not null");
+			for (Integer card : d.getCards()) {
+				deflatedCards.add(new JsonPrimitive(card));
+			}
+			deflated.add("cards", deflatedCards);
+		}
+
 		return deflated;
 	}
 }

@@ -27,6 +27,7 @@ import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
@@ -45,6 +46,7 @@ import javax.swing.JButton;
  * is open for voting.
  * 
  * @author Austin Rose (arose)
+ * @version $Revision: 1.0 $
  */
 @SuppressWarnings("serial")
 public class OpenGameView extends JPanel {
@@ -94,8 +96,7 @@ public class OpenGameView extends JPanel {
 	/**
 	 * Initializes components based on the given planning poker game.
 	 * 
-	 * @param game
-	 *            The planning poker game to define this view.
+	
 	 */
 	private void initForGame() {
 
@@ -137,18 +138,35 @@ public class OpenGameView extends JPanel {
 
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
-		this.requirementList.addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent ev) {
-				JList list;
-				list = (JList) ev.getSource();
-				Requirement selected = requirements.get(list.getSelectedIndex());
-				requirementNameLabel.setText(selected.getName());
-				requirementDescriptionLabel.setText(selected.getDescription());
-				updateSelectedCards(game, selected);
-				updateEstimateTotal();
-			}
-		});
+
+		this.requirementList
+				.addListSelectionListener(new ListSelectionListener() {
+					@Override
+					public void valueChanged(ListSelectionEvent ev) {
+						JList list;
+						list = (JList) ev.getSource();
+						Requirement selected = requirements.get(list
+								.getSelectedIndex());
+						requirementNameLabel.setText(selected.getName());
+						requirementDescriptionLabel.setText(selected
+								.getDescription());
+						int vote = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVote(
+								game.getGameName(), ConfigManager.getConfig().getUserName(), selected.getId());
+						String strVote = vote > 0 ? ((Integer)vote).toString() : "?";
+						System.out.println("Retrieved vote: " + vote + ": " + strVote);
+						estimateNumberLabel.setText(strVote);
+						submitButton.setEnabled(false);
+						int voteNumber = GetPlanningPokerVoteController.getInstance()
+								.retrievePlanningPokerVote(
+										MainViewController.activeGame.getGameName(),
+										ConfigManager.getConfig().getUserName(),
+										requirements.get(requirementList.getSelectedIndex()).getId());
+						if (voteNumber
+												!= Integer.MIN_VALUE) {
+							estimateNumberLabel.setText("" + voteNumber);
+						}
+					}
+				});
 
 		// Populate the list with each requirement.
 		DefaultListModel<String> model = new DefaultListModel<String>();

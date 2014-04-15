@@ -25,6 +25,7 @@ import javax.swing.JTabbedPane;
 /**
  * This class closes open tabs
  * @author bnurbekov
+ * @version $Revision: 1.0 $
  */
 @SuppressWarnings("serial")
 public class ClosableTabComponent extends JPanel implements ActionListener {
@@ -69,8 +70,8 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 	/**
 	 * Removes tab at the selected index on action event
 	 * @param e ActionEvent The event that occurred 
-	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent) 
-	 * */
+	
+	 * * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)  */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// close this tab when close button is clicked

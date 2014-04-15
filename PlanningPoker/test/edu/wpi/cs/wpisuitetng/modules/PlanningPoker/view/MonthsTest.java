@@ -12,6 +12,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * @author Miguel
+ * @version $Revision: 1.0 $
+ */
 public class MonthsTest {
 
 	@Test

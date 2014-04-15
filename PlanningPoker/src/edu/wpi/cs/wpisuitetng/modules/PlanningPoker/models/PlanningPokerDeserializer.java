@@ -28,11 +28,24 @@ import com.google.gson.JsonParseException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
 
+/**
+ * @author Miguel
+ * @version $Revision: 1.0 $
+ */
 public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPokerGame> {
 
 	private static final Logger logger = Logger
 			.getLogger(UserDeserializer.class.getName());
 
+	/**
+	 * Method deserialize.
+	 * @param ppmElement JsonElement
+	 * @param ppmType Type
+	 * @param context JsonDeserializationContext
+	
+	
+	
+	 * @return PlanningPokerGame * @throws JsonParseException * @see com.google.gson.JsonDeserializer#deserialize(JsonElement, Type, JsonDeserializationContext) */
 	@Override
 	public PlanningPokerGame deserialize(JsonElement ppmElement, Type ppmType,
 			JsonDeserializationContext context) throws JsonParseException {

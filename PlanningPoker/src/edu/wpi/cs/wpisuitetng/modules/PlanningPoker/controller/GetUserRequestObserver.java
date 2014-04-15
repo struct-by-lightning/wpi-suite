@@ -14,15 +14,17 @@ import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
+ * Controller that sends requests to and extracts users from the GetUserController controller.
  * @author Alec Thompson
  * 
+ * @version $Revision: 1.0 $
  */
 public class GetUserRequestObserver implements RequestObserver {
 
 	private GetUserController controller;
 
 	/**
-	 * Pars the Users out of the response body and pass them the controller
+	 * Parse the Users out of the response body and pass them the controller
 	 * 
 	 * @param controller
 	 *            the controller used to retrieve users
@@ -32,7 +34,7 @@ public class GetUserRequestObserver implements RequestObserver {
 	}
 
 	/**
-	 * Parse the User out of the response body and pass them to the controller
+	 * Parse the Users out of the response body and pass them to the controller
 	 * 
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
@@ -46,18 +48,21 @@ public class GetUserRequestObserver implements RequestObserver {
 	}
 
 	/**
+	
+	 * @param iReq IRequest
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.
-	 *      cs.wpisuitetng.network.models.IRequest)
-	 */
+	 *      cs.wpisuitetng.network.models.IRequest) */
 	@Override
 	public void responseError(IRequest iReq) {
 		fail(iReq, null);
 	}
 
 	/**
+	
+	 * @param iReq IRequest
+	 * @param exception Exception
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng
-	 *      .network.models.IRequest, java.lang.Exception)
-	 */
+	 *      .network.models.IRequest, java.lang.Exception) */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
 		// Do something suitable for an error condition.

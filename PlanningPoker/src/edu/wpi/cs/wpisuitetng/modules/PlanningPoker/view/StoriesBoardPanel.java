@@ -35,6 +35,7 @@ import javax.swing.JTextField;
  * @author Miguel Mora
  * 
  *
+ * @version $Revision: 1.0 $
  */
 @SuppressWarnings({"serial", "rawtypes", "unchecked" })
 public class StoriesBoardPanel extends JPanel {

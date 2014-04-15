@@ -32,6 +32,7 @@ import javax.swing.JTextField;
  * @author Miguel (Code), Christian (Comments)
  *
  * This class contains an interactive calendar to select when a Planning Poker session is to begin and end.
+ * @version $Revision: 1.0 $
  */
 
 public class DatePicker {
@@ -154,7 +155,8 @@ public class DatePicker {
 	}
 	/**
 	 * Formats the user picked date as Day/Month/Year with the time.
-	 */
+	
+	 * @return String */
 
 	public String formatPickedDate() {
 		if (day.equals(""))
