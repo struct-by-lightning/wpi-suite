@@ -154,9 +154,11 @@ public class OpenGameView extends JPanel {
 						requirementNameLabel.setText(selected.getName());
 						requirementDescriptionLabel.setText(selected
 								.getDescription());
-						updateSelectedCards(game, selected);
-						updateEstimateTotal();
-						estimateNumberLabel.setText("?");
+						int vote = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVote(
+								game.getGameName(), ConfigManager.getConfig().getUserName(), selected.getId());
+						String strVote = vote > 0 ? ((Integer)vote).toString() : "?";
+						System.out.println("Retrieved vote: " + vote + ": " + strVote);
+						estimateNumberLabel.setText(strVote);
 						submitButton.setEnabled(false);
 						int voteNumber = GetPlanningPokerVoteController.getInstance()
 								.retrievePlanningPokerVote(
