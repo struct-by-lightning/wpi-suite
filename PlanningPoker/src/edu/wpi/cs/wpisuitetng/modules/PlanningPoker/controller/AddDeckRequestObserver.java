@@ -44,9 +44,9 @@ public class AddDeckRequestObserver implements RequestObserver {
 	 * @param iReq
 	 *            the request that was made to the controller
 	 * 
+	
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi
-	 *      .cs.wpisuitetng.network.models.IRequest)
-	 */
+	 *      .cs.wpisuitetng.network.models.IRequest) */
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		// Get the response to the given request
@@ -63,9 +63,9 @@ public class AddDeckRequestObserver implements RequestObserver {
 	 * @param iReq
 	 *            the request that was made
 	 *            
+	
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.
-	 *      cs.wpisuitetng.network.models.IRequest)
-	 */
+	 *      cs.wpisuitetng.network.models.IRequest) */
 	@Override
 	public void responseError(IRequest iReq) {
 		System.err
@@ -81,9 +81,9 @@ public class AddDeckRequestObserver implements RequestObserver {
 	 * @param exception
 	 *            the exception that occurred
 	 *            
+	
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng
-	 *      .network.models.IRequest, java.lang.Exception)
-	 */
+	 *      .network.models.IRequest, java.lang.Exception) */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
 		System.err.println("The request to add a Deck failed.");
