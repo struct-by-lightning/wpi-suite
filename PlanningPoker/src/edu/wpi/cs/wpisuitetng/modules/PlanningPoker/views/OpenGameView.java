@@ -163,8 +163,7 @@ public class OpenGameView extends JPanel {
 										MainViewController.activeGame.getGameName(),
 										ConfigManager.getConfig().getUserName(),
 										requirements.get(requirementList.getSelectedIndex()).getId());
-						if (voteNumber
-												!= Integer.MIN_VALUE) {
+						if (voteNumber != Integer.MIN_VALUE) {
 							estimateNumberLabel.setText("" + voteNumber);
 						}
 					}

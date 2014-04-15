@@ -130,6 +130,9 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 		PlanningPokerVoteDeserializer ppd = new PlanningPokerVoteDeserializer();
 		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
 		List<PlanningPokerVote> ppvs = new ArrayList<PlanningPokerVote>();
+		
+		System.out.println("String array" + jsonArr);
+		System.out.println("Array" + array);
 
 		for (JsonElement json : array) {
 			ppvs.add(ppd.deserialize(json, null, null));
