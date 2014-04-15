@@ -56,8 +56,19 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	 * @param requirementID int
 	 */
 	public PlanningPokerVote(String gameName, String userName, int vote, int requirementID) {
-		this.gameName = gameName.replace(':', ';');
-		this.userName = userName.toLowerCase();
+		if(gameName != null){
+			this.gameName = gameName.replace(':', ';');
+		}
+		
+		else{
+			this.gameName = null;
+		}
+		if(userName != null){
+			this.userName = userName.toLowerCase();
+		}
+		else{
+			this.userName = null;
+		}
 		this.vote = vote;
 		this.requirementID = requirementID;
 	}

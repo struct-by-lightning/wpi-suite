@@ -36,10 +36,10 @@ public class GetPlanningPokerVoteController implements ActionListener {
 	 * Constructs the controller given a PlanningPokerVoteModel
 	 */
 	private GetPlanningPokerVoteController() {
-		
+
 		observer = new GetPlanningPokerVoteRequestObserver(this);
 	}
-	
+
 	/**
 	
 	 * @return the instance of the GetPlanningPokerGameController or creates one if it does not
@@ -50,7 +50,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 		{
 			instance = new GetPlanningPokerVoteController();
 		}
-		
+
 		return instance;
 	}
 
@@ -64,7 +64,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		this.retrievePlanningPokerVote();
 	}
-	
+
 	/**
 	 * Sends an HTTP request to retrieve all PlanningPokerGames
 	 */
@@ -74,18 +74,35 @@ public class GetPlanningPokerVoteController implements ActionListener {
 		request.send(); // send the request
 	}
 	/**
-	 * Method retrievePlanningPokerVote.
-	 * @param gameName String this the name of the game
-	 * @param userName String this is the user name of the player
-	 * @param requirementID int this is the unique id for the requirement
-	 * @return int returns the vote value of the player
- 	 */
+	 * Retrieves the planning poker vote from the server
+	 * @param gameName the gameName of the vote to retrieve
+	 * @param userName the userName of the vote to retrieve
+	 * @param requirementID the requirementID of the vote to retrieve
+	 * @return the vote if it exists, Integer.MIN_VALUE otherwise
+	 */
 	public int retrievePlanningPokerVote(String gameName, String userName, int requirementID) {
-		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote", HttpMethod.GET); // GET == read
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote" /*+ new PlanningPokerVote(gameName, userName, 0, requirementID).getID()*/, HttpMethod.GET); // GET == read
 		request.addObserver(observer); // add an observer to process the response
-		request.setBody(new PlanningPokerVote(gameName, userName, 0, requirementID).toJSON());
 		request.send(); // send the request
-		return PlanningPokerVote.fromJSON(request.getBody()).getVote();
 		
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(request.getResponse() != null) {
+			//return Integer.MIN_VALUE;
+			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
+			PlanningPokerVote ret = new PlanningPokerVote(null, null, 0, 0);
+			for(PlanningPokerVote v : a) {
+				if(v.getID().equalsIgnoreCase(gameName + ":" + userName + ":" + requirementID)) {
+						ret = v;
+				}
+			}
+			return ret.getVote();
+		} else {
+			return Integer.MIN_VALUE;
+		}
 	}
 }
