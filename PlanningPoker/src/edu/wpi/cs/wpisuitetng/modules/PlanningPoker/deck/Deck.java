@@ -46,7 +46,7 @@ public class Deck extends RegularAbstractModel<Deck> {
 		if (deckName == null)
 			throw new NullPointerException("DeckName must not be null");		
 		this.deckName = deckName;
-		this.cards = new ArrayList<Integer>();
+		this.cards = null;
 	}
 
 	/**

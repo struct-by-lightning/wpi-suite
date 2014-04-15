@@ -34,8 +34,10 @@ public class DeckSerializer implements JsonSerializer<Deck> {
 		JsonObject deflated = new JsonObject();
 		JsonArray deflatedCards = new JsonArray();
 
+		deflated.addProperty("deckName", d.getDeckName());
+		
 		if (d.getCards() != null) {
-			deflated.addProperty("deckName", d.getDeckName());
+			System.out.println("Cards is not null");
 			for (Integer card : d.getCards()) {
 				deflatedCards.add(new JsonPrimitive(card));
 			}

@@ -14,7 +14,9 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.google.gson.JsonElement;
 
@@ -28,6 +30,12 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
  */
 public class DeckTest {
 
+	/**
+	 * Used to test exceptions being thrown
+	 */
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
+	
 	/**
 	 * Test method for
 	 * {@link edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck#Deck(java.lang.String)}
@@ -363,5 +371,28 @@ public class DeckTest {
 		assertTrue(serialized2.contains("test2"));
 		assertTrue(serialized2.contains("cards"));
 		assertTrue(serialized2.contains("[1,2,3,4,5,6,7,8,9,10]"));
+	}
+	
+	@Test
+	public void constructorNullName() { 
+		thrown.expect(NullPointerException.class);
+		thrown.expectMessage("DeckName must not be null");
+		Deck test = new Deck(null, null);
+	}
+	
+	@Test
+	public void serializeNullCards() {
+		Deck test1 = new Deck("test1");
+		Deck test2 = new Deck("test2", null);
+		
+		String serialized1 = test1.toJSON();
+		String serialized2 = test2.toJSON();
+		
+		assertTrue(serialized1.contains("deckName"));
+		assertTrue(serialized2.contains("deckName"));
+		assertTrue(serialized1.contains("test1"));
+		assertTrue(serialized2.contains("test2"));
+		assertFalse(serialized1.contains("cards"));
+		assertFalse(serialized2.contains("cards"));
 	}
 }
