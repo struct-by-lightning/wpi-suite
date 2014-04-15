@@ -394,7 +394,15 @@ public class OpenGameView extends JPanel {
 		    	btnEndGame.setEnabled(false);
 		    	btnEndGame.setText("Game Ended");
 		    	game.setFinished(true);
+		    	game.setLive(false);
 		    	UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+		    	try {
+					new Thread().wait(200);
+				} catch (Exception ex) {
+				}
+		    	
+		    	MainView.getController().refreshGameTree();
+		    	MainView.getController().removeClosableTab();
 		    }
 		});
 		
