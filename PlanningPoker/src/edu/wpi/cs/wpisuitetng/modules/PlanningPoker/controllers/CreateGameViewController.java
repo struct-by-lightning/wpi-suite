@@ -12,6 +12,14 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 
+/**
+ * This class provides adds the "Create Game" tab and adds it to the main interface.
+ * poker module.
+ * 
+ * @author arose
+ * @author cgwalker
+ */
+
 public class CreateGameViewController {
 
 	private CreateGameView view;

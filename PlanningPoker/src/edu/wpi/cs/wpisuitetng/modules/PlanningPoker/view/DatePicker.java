@@ -8,11 +8,6 @@
  * Contributors: Team Rolling Thunder, struct-by-lightning
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
-/**
- * @author friscis
- * 
- * Allows an instance of a calendar that is not a pop-up to be added to any JPanel
- */
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -29,9 +24,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * @author Miguel (Code), Christian (Comments)
- *
+ * @author Miguel
+ * @author Friscis
+ * @author cgwalker
  * This class contains an interactive calendar to select when a Planning Poker session is to begin and end.
+ * Allows an instance of a calendar that is not a pop-up to be added to any JPanel
  */
 
 public class DatePicker {

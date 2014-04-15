@@ -14,7 +14,7 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
- * Description
+ * This class creates a mock network to keep track of mock requests.
  * 
  * @author Alec Thompson - ajthompson
  * @version Apr 6, 2014
@@ -25,7 +25,7 @@ public class MockNetwork extends Network {
 	@Override
 	public Request makeRequest(String path, HttpMethod requestMethod) {
 		if (requestMethod == null) {
-			throw new NullPointerException("requestMethot may not be null");
+			throw new NullPointerException("requestMethod may not be null");
 		}
 
 		lastRequest = new MockRequest(defaultNetworkConfiguration, path,
