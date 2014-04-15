@@ -29,6 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerG
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.ClosedGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.OpenGameView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
@@ -38,6 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequireme
  * poker module.
  * 
  * @author arose
+ * @version $Revision: 1.0 $
  */
 public class MainViewController {
 
@@ -47,6 +49,12 @@ public class MainViewController {
 	private JTabbedPane tabPane;
 	private JTree gameTree;
 
+	/**
+	 * Constructor for MainViewController.
+	 * @param gameTree JTree 
+	 * @param tabPane JTabbedPane 
+	 * @param toolbar JToolBar
+	 */
 	public MainViewController(JTree gameTree, JTabbedPane tabPane, JToolBar toolbar) {
 		this.gameTree = gameTree;
 		this.tabPane = tabPane;
@@ -88,6 +96,11 @@ public class MainViewController {
 		PlanningPoker.updateComponents(this.toolbar, this.tabPane);
 	}
 
+	/**
+	 * Method addCloseableTab.
+	 * @param tabName String
+	 * @param tabPanel JPanel
+	 */
 	public void addCloseableTab(String tabName, JPanel tabPanel) {
 		this.tabPane.addTab(tabName, tabPanel);
 		this.tabPane.setTabComponentAt(this.tabPane.indexOfComponent(tabPanel),
@@ -159,6 +172,10 @@ public class MainViewController {
 		}
 	}
 
+	/**
+	 * Method gameWasDoubleClicked.
+	 * @param game PlanningPokerGame
+	 */
 	public void gameWasDoubleClicked(PlanningPokerGame game) {
 		
 		MainViewController.activeGame = game;
@@ -166,8 +183,15 @@ public class MainViewController {
 		if (game.isLive() && !game.isFinished()) {
 			OpenGameView.open(game);
 		}
+		if(game.isFinished()) {
+			ClosedGameView.open(game);
+		}
 	}
 
+	/**
+	 * Method getGameTree.
+	
+	 * @return JTree */
 	private JTree getGameTree() {
 		return this.gameTree;
 	}

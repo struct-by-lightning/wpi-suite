@@ -9,6 +9,10 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
+/**
+ * @author Miguel
+ * @version $Revision: 1.0 $
+ */
 public class PlanningPokerVoteSerializer {
 
 }

@@ -9,12 +9,18 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.awt.Color;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
 
 
+/**
+ * @author Miguel
+ * @version $Revision: 1.0 $
+ */
 public class MainView {
 	
 	/**
@@ -23,6 +29,10 @@ public class MainView {
 	
 	private static MainView singleInstance;
 	
+	/**
+	 * Method getSingleInstance.
+	
+	 * @return MainView */
 	private static MainView getSingleInstance() {
 		if (MainView.singleInstance == null) {
 			MainView.singleInstance = new MainView();
@@ -31,6 +41,10 @@ public class MainView {
 		return MainView.singleInstance;
 	}
 	
+	/**
+	 * Method getController.
+	
+	 * @return MainViewController */
 	public static MainViewController getController() {
 		return MainView.getSingleInstance().controller;
 	}
@@ -360,7 +374,7 @@ public class MainView {
 		jPanel10.setLayout(new java.awt.GridBagLayout());
 
 		jList2.setModel(new javax.swing.AbstractListModel() {
-			String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+			private String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
 
 			public int getSize() {
 				return strings.length;
@@ -499,7 +513,7 @@ public class MainView {
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		jList1.setModel(new javax.swing.AbstractListModel() {
-			String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+			private String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
 
 			public int getSize() {
 				return strings.length;
@@ -621,7 +635,7 @@ public class MainView {
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
 
-		jPanel15.setBackground(new java.awt.Color(255, 255, 255));
+		jPanel15.setBackground(Color.white);
 		jPanel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204,
 				204)));
 

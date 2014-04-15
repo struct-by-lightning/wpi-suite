@@ -35,6 +35,10 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewControll
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 
 
+/**
+ * @author Miguel
+ * @version $Revision: 1.0 $
+ */
 public class NoCardVoting extends JPanel{
 
 		static int selectedValue;
@@ -42,6 +46,10 @@ public class NoCardVoting extends JPanel{
 		private JTextField textField;
 		private JPanel estimatePanel = new JPanel();
 		
+		/**
+		 * Constructor for NoCardVoting.
+		 * @param infoContainer JPanel
+		 */
 		public NoCardVoting(JPanel infoContainer){
 			JPanel submitPane = new JPanel();
 			submitPane.setBorder(new LineBorder(Color.LIGHT_GRAY));

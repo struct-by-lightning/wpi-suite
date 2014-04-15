@@ -23,6 +23,12 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 public class MockNetwork extends Network {
 	protected MockRequest lastRequest = null;
 
+	/**
+	 * Method makeRequest.
+	 * @param path String
+	 * @param requestMethod HttpMethod
+	
+	 * @return Request */
 	@Override
 	public Request makeRequest(String path, HttpMethod requestMethod) {
 		if (requestMethod == null) {
@@ -36,8 +42,8 @@ public class MockNetwork extends Network {
 	}
 
 	/**
-	 * @return the last MockRequest made
-	 */
+	
+	 * @return the last MockRequest made */
 	public MockRequest getLastRequest() {
 		return lastRequest;
 	}

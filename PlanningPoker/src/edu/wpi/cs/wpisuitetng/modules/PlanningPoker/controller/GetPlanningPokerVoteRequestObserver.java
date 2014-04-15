@@ -10,6 +10,7 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -17,17 +18,18 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * This observer handles responses to requests for all PlanningPokerGames
  *
  * @version $Revision: 1.0 $
- * @author justinhess
+ * @author lhnguyenduc
+ * @author cgwalker
  */
-public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
-	
-	private GetPlanningPokerGamesController controller;
+public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
+	public static boolean isError = false;
+	private GetPlanningPokerVoteController controller;
 	
 	/**
 	 * Constructs the observer given a GetPlanningPokerGamesController
 	 * @param controller the controller used to retrieve PlanningPokerGames
 	 */
-	public GetPlanningPokerGamesRequestObserver(GetPlanningPokerGamesController controller) {
+	public GetPlanningPokerVoteRequestObserver(GetPlanningPokerVoteController controller) {
 		this.controller = controller;
 	}
 
@@ -38,11 +40,8 @@ public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
-		// Convert the JSON array of PlanningPokerGames to a PlanningPokerGame object array
-		PlanningPokerGame[] PlanningPokerGames = PlanningPokerGame.fromJsonArray(iReq.getResponse().getBody());
-		
-		// Pass these PlanningPokerGames to the controller
-		controller.receivedPlanningPokerGames(PlanningPokerGames);
+		isError = false;
+		System.out.println("Success!" + iReq.getResponse().getBody());
 	}
 
 	/**
@@ -50,7 +49,8 @@ public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		fail(iReq, null);
+		isError = true;
+		System.out.println("Error!" + iReq.getResponse().getBody());
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		//Do something suitable for an error condition.
+
 	}
 
 }

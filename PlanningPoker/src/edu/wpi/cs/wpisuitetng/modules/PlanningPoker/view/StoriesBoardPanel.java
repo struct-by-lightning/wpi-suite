@@ -35,6 +35,7 @@ import javax.swing.JTextField;
  * @author Miguel Mora
  * 
  *
+ * @version $Revision: 1.0 $
  */
 @SuppressWarnings({"serial", "rawtypes", "unchecked" })
 public class StoriesBoardPanel extends JPanel {
@@ -76,7 +77,7 @@ public class StoriesBoardPanel extends JPanel {
 
         // Put the listbox in a scroll pane
         JScrollPane lstScrollPane = new JScrollPane(lstBoard);
-        lstScrollPane.setPreferredSize(new Dimension(150,400));
+        lstScrollPane.setPreferredSize(new Dimension(150, 400));
 
         // Clear the contents of the text field when the user clicks on it
         txtNewMessage.addMouseListener(new MouseAdapter() {

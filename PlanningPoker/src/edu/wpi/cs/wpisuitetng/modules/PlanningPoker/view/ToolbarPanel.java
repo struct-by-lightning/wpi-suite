@@ -12,6 +12,10 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons.PlanningPokerButtonsPanel;
 
+/**
+ * @author Miguel
+ * @version $Revision: 1.0 $
+ */
 @SuppressWarnings("serial")
 public class ToolbarPanel extends DefaultToolbarView {
 
@@ -26,6 +30,10 @@ public class ToolbarPanel extends DefaultToolbarView {
 		addGroup(btnsPanel);
 	}
 
+	/**
+	 * Method getButton.
+	
+	 * @return PlanningPokerButtonsPanel */
 	public PlanningPokerButtonsPanel getButton() {
 		return btnsPanel;
 	}

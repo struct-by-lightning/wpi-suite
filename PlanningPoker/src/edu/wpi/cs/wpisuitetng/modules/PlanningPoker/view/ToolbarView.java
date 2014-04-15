@@ -13,10 +13,18 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons.PlanningPokerButtonsPanel;
 
+/**
+ * @author Miguel
+ * @version $Revision: 1.0 $
+ */
 public class ToolbarView extends DefaultToolbarView {
 
 	PlanningPokerButtonsPanel buttonsPanel = new PlanningPokerButtonsPanel();
 
+	/**
+	 * Constructor for ToolbarView.
+	 * @param visible boolean
+	 */
 	public ToolbarView(boolean visible) {
 
 		this.addGroup(buttonsPanel);

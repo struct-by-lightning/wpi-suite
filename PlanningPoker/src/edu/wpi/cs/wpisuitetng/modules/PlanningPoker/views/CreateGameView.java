@@ -58,6 +58,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.CreateGameViewController;
+
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
@@ -72,6 +73,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 /**
  * CreateGameView creates the game view for a new game 
  *
+ * @author Miguel
+ * @version $Revision: 1.0 $
  */
 public class CreateGameView {
 	
@@ -82,6 +85,10 @@ public class CreateGameView {
 	private static CreateGameView singleInstance;
 
 	
+	/**
+	 * Method getSingleInstance.
+	
+	 * @return CreateGameView */
 	private static CreateGameView getSingleInstance() {
 		if (CreateGameView.singleInstance == null) {
 			CreateGameView.singleInstance = new CreateGameView();
@@ -90,6 +97,10 @@ public class CreateGameView {
 		return CreateGameView.singleInstance;
 	}
 	
+	/**
+	 * Method getController.
+	
+	 * @return CreateGameViewController */
 	public static CreateGameViewController getController() {
 		return CreateGameView.getSingleInstance().controller;
 	}
@@ -103,11 +114,15 @@ public class CreateGameView {
 	private CreateGameView() {
 		this.controller = new CreateGameViewController(this);
 	}
+	
+	
 /** 
  * creates the view for the create new game window
- * @return
- */
+
+
+ * @return JPanel */
 	public JPanel newCreateGamePanel() {
+		
 		
 		listOfRequirementsForReset= new DefaultListModel<Requirement>();
 		listOfRequirementsToAdd= new DefaultListModel<Requirement>();
@@ -214,7 +229,7 @@ public class CreateGameView {
 		endPanel.add(deadline, constraints1);
 
 		deadline.addActionListener(new ActionListener() {
-			boolean checked = false;
+			private boolean checked = false;
 
 			public void actionPerformed(ActionEvent ae) {
 				isTabEditedByUser = true;
@@ -304,8 +319,8 @@ public class CreateGameView {
 		calendarHandler.add(calendarPanel);
 		calendarOverview.add(calendarHandler);
 		calendarButton_2.addActionListener(new ActionListener() {
-			boolean open = false;
-			DatePicker dp;
+			private boolean open = false;
+			private DatePicker dp;
 /**
  * action for using the calendar method for enabling it and selecting
  * a date
@@ -340,8 +355,8 @@ public class CreateGameView {
 	
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
+		
 		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
-	
 
 		deckOverview.setEditable(false);
 
@@ -372,20 +387,20 @@ public class CreateGameView {
 		   public void actionPerformed(ActionEvent e) {
 			isTabEditedByUser = true;
 		    JComboBox combo = (JComboBox)e.getSource();
-		                String selection = (String)combo.getSelectedItem();
-		                if(selection.contentEquals("Default"))
-		                {
-		                // Replace this with button contents
-		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
-		                }
-
-		                else if(selection.contentEquals("Lightning Deck")) {
-		                // Replace this with button contents
-		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
-		                }
-		                else if(selection.contentEquals("No Deck")){
-		                	deckOverview.setText("User will be able to enter their own estimation");
-		                }
+		    String selection = (String)combo.getSelectedItem();
+		    	if(selection.contentEquals("Default")){
+		    		// Replace this with button contents		               
+		    		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");                
+		   		}
+		   
+		   		else if(selection.contentEquals("Lighning Deck")){
+		   			//Replace this with button contents
+		   			deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
+		   		}
+		   		else if(selection.contentEquals("No Deck")){
+		   			deckOverview.setText("User will be able to enter their own estimation");
+		   		}
+		   		
 		   }
 
 		});
@@ -432,7 +447,7 @@ public class CreateGameView {
 		projectList.add(allRequirements);
 
 		JPanel addRemPanel = new JPanel();
-		addRemPanel.setBorder(new LineBorder(new Color(192, 192, 192), 0));
+		addRemPanel.setBorder(new LineBorder(Color.LIGHT_GRAY, 0));
 		requirementsSelector.add(addRemPanel);
 
 		JPanel topSpacer = new JPanel();
@@ -628,7 +643,7 @@ public class CreateGameView {
 				isTabEditedByUser = false;
 
 				enteredName = sessionName.getText();
-				selectedDeckType = (String) deckType.getSelectedItem();
+				selectedDeckType = (String)deckType.getSelectedItem();
 				GregorianCalendar startCal, endCal;
 
 				// Checks to see if the user set the date to something other
@@ -637,7 +652,7 @@ public class CreateGameView {
 						&& deadline.isSelected()) {
 					System.out.println("Please enter a valid date");
 				} else {
-					// String[] startDate = startDateText.getText().split("-");
+					
 					String[] endDate = endDateText.getText().split("-");
 
 					Date endVal = (Date) endTime.getValue();
@@ -662,7 +677,9 @@ public class CreateGameView {
 							+ endCal.toString());
 					System.out.println(enteredName);
 					System.out.println(selectedDeckType);
-
+						
+					gameRequirementIDsList.clear();
+					
 					for (int i = 0; i < listOfRequirementsToAdd.size(); i++) {
 						gameRequirementIDsList.add(listOfRequirementsToAdd
 								.getElementAt(i).getId());
@@ -740,9 +757,9 @@ public class CreateGameView {
 				selectedRequirements.setModel(listOfRequirementsToAdd);
 				allRequirements.setModel(listOfAllRequirements);
 
-				btn_removeFromGame.setEnabled(true);
+		
 				btn_removeAll.setEnabled(true);
-				//btnCreateGame.setEnabled(false);
+			
 				
 				btn_addAll.setEnabled(false);
 				btn_addToGame.setEnabled(false);
@@ -769,8 +786,8 @@ public class CreateGameView {
 					listOfAllRequirements.removeElement(req);
 					selectedRequirements.setModel(listOfRequirementsToAdd);
 					allRequirements.setModel(listOfAllRequirements);
-
-					btn_removeFromGame.setEnabled(true);
+					
+					btn_addToGame.setEnabled(false);
 					btn_removeAll.setEnabled(true);
 
 					if (listOfAllRequirements.size() == 0) {
@@ -803,7 +820,7 @@ public class CreateGameView {
 					listOfRequirementsToAdd.removeElement(req);
 					allRequirements.setModel(listOfAllRequirements);
 					selectedRequirements.setModel(listOfRequirementsToAdd);
-
+					btn_removeFromGame.setEnabled(false);
 					btn_addToGame.setEnabled(false);
 					btn_addAll.setEnabled(false);
 					
@@ -818,6 +835,7 @@ public class CreateGameView {
 				}
 				
 				btn_addAll.setEnabled(true);
+				
 
 			}
 		});

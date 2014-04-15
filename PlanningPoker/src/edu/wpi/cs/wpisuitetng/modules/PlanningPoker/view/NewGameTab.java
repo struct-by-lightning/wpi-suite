@@ -95,6 +95,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * Implements the new game tab for planning poker module
  *
  * @author Struct-by-lightning
+ * @version $Revision: 1.0 $
  */
 public class NewGameTab extends JPanel {
 	private JTextField sessionName;
@@ -283,7 +284,7 @@ public class NewGameTab extends JPanel {
 		endPanel.add(deadline, constraints1);
 
 		deadline.addActionListener(new ActionListener() {
-			boolean checked = false;
+			private boolean checked = false;
 
 			public void actionPerformed(ActionEvent ae) {
 				if (!checked) {
@@ -372,8 +373,8 @@ public class NewGameTab extends JPanel {
 		calendarHandler.add(calendarPanel);
 		calendarOverview.add(calendarHandler);
 		calendarButton_2.addActionListener(new ActionListener() {
-			boolean open = false;
-			DatePicker dp;
+			private boolean open = false;
+			private DatePicker dp;
 
 			public void actionPerformed(ActionEvent ae) {
 				if (!open) {
@@ -407,7 +408,7 @@ public class NewGameTab extends JPanel {
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
 		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
-		deckOverview.setHorizontalAlignment(WIDTH/2);
+		deckOverview.setHorizontalAlignment(WIDTH / 2);
 
 		deckOverview.setEditable(false);
 
@@ -512,7 +513,7 @@ public class NewGameTab extends JPanel {
 		projectList.add(allRequirements);
 
 		JPanel addRemPanel = new JPanel();
-		addRemPanel.setBorder(new LineBorder(new Color(192, 192, 192), 0));
+		addRemPanel.setBorder(new LineBorder(Color.lightGray, 0));
 		requirementsSelector.add(addRemPanel);
 
 		JPanel topSpacer = new JPanel();
@@ -951,6 +952,10 @@ public class NewGameTab extends JPanel {
 		});
 	}
 
+	/**
+	 * Method calendarSetOpen.
+	 * @param open boolean
+	 */
 	public void calendarSetOpen(boolean open) {
 		calendarOpen = open;
 	}

@@ -28,11 +28,24 @@ import com.google.gson.JsonParseException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
 
+/**
+ * @author Miguel
+ * @version $Revision: 1.0 $
+ */
 public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPokerGame> {
 
 	private static final Logger logger = Logger
 			.getLogger(UserDeserializer.class.getName());
 
+	/**
+	 * Method deserialize.
+	 * @param ppmElement JsonElement
+	 * @param ppmType Type
+	 * @param context JsonDeserializationContext
+	
+	
+	
+	 * @return PlanningPokerGame * @throws JsonParseException * @see com.google.gson.JsonDeserializer#deserialize(JsonElement, Type, JsonDeserializationContext) */
 	@Override
 	public PlanningPokerGame deserialize(JsonElement ppmElement, Type ppmType,
 			JsonDeserializationContext context) throws JsonParseException {
@@ -116,7 +129,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 					"PlanningPokerModel transmitted with String in isLive field");
 		}
 
-		DateFormat df = new SimpleDateFormat("dd MM yyyy");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 		try {
 			Date date = df.parse(deflated.get("startDate").getAsString());
