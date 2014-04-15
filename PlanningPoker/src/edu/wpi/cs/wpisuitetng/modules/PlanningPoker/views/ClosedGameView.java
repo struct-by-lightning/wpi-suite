@@ -10,6 +10,8 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -26,12 +28,15 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.RequirementManager;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
@@ -132,7 +137,15 @@ public class ClosedGameView extends JPanel {
 		estimateTitlePanel = new javax.swing.JPanel();
 		estimateTitleLabel = new javax.swing.JLabel();
 		estimateNumberPanel = new javax.swing.JPanel();
+		estimateSubmitPanel = new javax.swing.JPanel();
 		estimateNumberBox = new javax.swing.JTextField();
+		mean = new javax.swing.JLabel("Mean: ");
+		median = new javax.swing.JLabel("Median: ");
+		mode = new javax.swing.JLabel("Mode: ");
+		std = new javax.swing.JLabel("Standard Deviation: ");
+		max = new javax.swing.JLabel("Maximum: ");
+		min = new javax.swing.JLabel("Minimum: ");
+		stats = new javax.swing.JPanel(new GridLayout(3, 2));
 		
 		setLayout(new java.awt.BorderLayout());
 
@@ -233,7 +246,7 @@ public class ClosedGameView extends JPanel {
 										.addComponent(gameDeadlineDateLabel))
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		rowSplitPanel.setLayout(new java.awt.GridLayout(2, 1));
+		rowSplitPanel.setLayout(new java.awt.GridLayout(2, 2));
 
 		topRowRequirementPanel.setLayout(new java.awt.GridLayout(1, 2));
 
@@ -393,7 +406,107 @@ public class ClosedGameView extends JPanel {
 						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
+		mean.setFont(new java.awt.Font("Tahoma", 0, 18));
+		median.setFont(new java.awt.Font("Tahoma", 0, 18));
+		mode.setFont(new java.awt.Font("Tahoma", 0, 18));
+		std.setFont(new java.awt.Font("Tahoma", 0, 18));
+		max.setFont(new java.awt.Font("Tahoma", 0, 18));
+		min.setFont(new java.awt.Font("Tahoma", 0, 18));
+		stats.add(mean);
+		stats.add(mode);
+		stats.add(max);
+		stats.add(median);
+		stats.add(std);
+		stats.add(min);
+		stats.setPreferredSize(new Dimension(100,200));
+		stats.setBorder(javax.swing.BorderFactory
+				.createLineBorder(new java.awt.Color(153, 153, 153)));
 
+		javax.swing.GroupLayout rightBlankPanelLayout = new javax.swing.GroupLayout(rightBlankPanel);
+		rightBlankPanel.setLayout(rightBlankPanelLayout);
+		rightBlankPanelLayout
+				.setHorizontalGroup(rightBlankPanelLayout
+						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								rightBlankPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												rightBlankPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																rightBlankPanelLayout
+																		.createSequentialGroup()
+																		.addContainerGap()
+																		.addComponent(
+																				stats,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)))));
+														
+		rightBlankPanelLayout.setVerticalGroup(rightBlankPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				javax.swing.GroupLayout.Alignment.TRAILING,
+				rightBlankPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addComponent(stats, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
+
+		
+		
+		//allVotes = GetPlanningPokerVotesController.getInstance().getGameVotes(game);
+		estimates = new javax.swing.JList();
+		estimateModel = new DefaultListModel<String>();
+		for(int i = 0; i < 5; i++) {
+			System.out.println("Zak: 9");
+			estimateModel.addElement(new String("Zak: 9"));
+		}
+		System.out.println(estimateModel);
+		estimates.setModel(estimateModel);
+
+		estimates.setFont(new java.awt.Font("Tahoma", 0, 18));
+		JScrollPane scroll = new JScrollPane();
+		scroll.setViewportView(estimates);
+		scroll.setPreferredSize(new Dimension(500, 400));
+		
+		allEstimates = new javax.swing.JPanel();
+		allEstimates.add(scroll);
+		allEstimates.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153,
+				153, 153)));
+		
+		rowSplitPanel.add(topRowRequirementPanel);
+		rowSplitPanel.add(rightBlankPanel);
+		rowSplitPanel.add(estimateCenteringPanel);
+		rowSplitPanel.add(allEstimates);
+		
+		
+		JButton submitButton = new JButton("Submit");
+		
+		javax.swing.GroupLayout estimateSubmitPanelLayout = new javax.swing.GroupLayout(
+				estimateSubmitPanel);
+		estimateSubmitPanel.setLayout(estimateSubmitPanelLayout);
+		estimateSubmitPanelLayout.setHorizontalGroup(estimateSubmitPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				estimateSubmitPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addContainerGap()));
+		estimateSubmitPanelLayout.setVerticalGroup(estimateSubmitPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				estimateSubmitPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addContainerGap()));
+		
 		javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(estimatePanel);
 		estimatePanel.setLayout(estimatePanelLayout);
 		estimatePanelLayout.setHorizontalGroup(estimatePanelLayout.createParallelGroup(
@@ -412,6 +525,10 @@ public class ClosedGameView extends JPanel {
 										.addComponent(estimateNumberPanel,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(estimateSubmitPanel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE))));
 		estimatePanelLayout.setVerticalGroup(estimatePanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -423,57 +540,13 @@ public class ClosedGameView extends JPanel {
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 						.addComponent(estimateNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(estimateSubmitPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)));
 
 		estimateCenteringPanel.add(estimatePanel, new java.awt.GridBagConstraints());
-
-//		javax.swing.GroupLayout rightBlankPanelLayout = new javax.swing.GroupLayout(rightBlankPanel);
-//		rightBlankPanel.setLayout(rightBlankPanelLayout);
-//		rightBlankPanelLayout
-//				.setHorizontalGroup(rightBlankPanelLayout
-//						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-//						.addGroup(
-//								rightBlankPanelLayout
-//										.createSequentialGroup()
-//										.addContainerGap()
-//										.addGroup(
-//												rightBlankPanelLayout
-//														.createParallelGroup(
-//																javax.swing.GroupLayout.Alignment.LEADING)
-//														.addGroup(
-//																javax.swing.GroupLayout.Alignment.TRAILING,
-//																rightBlankPanelLayout
-//																		.createSequentialGroup()
-//																		.addComponent(
-//																				instructionsLabel,
-//																				javax.swing.GroupLayout.DEFAULT_SIZE,
-//																				598,
-//																				Short.MAX_VALUE)
-//																		.addContainerGap()))));
-//														.addComponent(
-//																estimateCenteringPanel,
-//																javax.swing.GroupLayout.Alignment.TRAILING,
-//																javax.swing.GroupLayout.DEFAULT_SIZE,
-//																javax.swing.GroupLayout.DEFAULT_SIZE,
-//																Short.MAX_VALUE))));
-//		rightBlankPanelLayout.setVerticalGroup(rightBlankPanelLayout.createParallelGroup(
-//				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-//				javax.swing.GroupLayout.Alignment.TRAILING,
-//				rightBlankPanelLayout
-//						.createSequentialGroup()
-//						.addComponent(estimateCenteringPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-//								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-//						.addComponent(instructionsLabel, javax.swing.GroupLayout.PREFERRED_SIZE,
-//								javax.swing.GroupLayout.DEFAULT_SIZE,
-//								javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
-//
-//		topRowRequirementPanel.add(rightBlankPanel);
-
-		rowSplitPanel.add(topRowRequirementPanel);
-		rowSplitPanel.add(estimateCenteringPanel);
-		JButton submitButton = new JButton("Submit");
-		rowSplitPanel.add(submitButton);
+		
 		submitButton.setFont(new java.awt.Font("Tahoma", 0, 48));
 		submitButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
@@ -546,6 +619,7 @@ public class ClosedGameView extends JPanel {
 	private javax.swing.JPanel estimateCenteringPanel;
 	private javax.swing.JTextField estimateNumberBox;
 	private javax.swing.JPanel estimateNumberPanel;
+	private javax.swing.JPanel estimateSubmitPanel;
 	private javax.swing.JPanel estimatePanel;
 	private javax.swing.JLabel estimateTitleLabel;
 	private javax.swing.JPanel estimateTitlePanel;
@@ -569,5 +643,16 @@ public class ClosedGameView extends JPanel {
 	private javax.swing.JSplitPane splitPane;
 	private javax.swing.JPanel topRowRequirementPanel;
 	private Requirement selected;
+	private javax.swing.JLabel mean;
+	private javax.swing.JLabel median;
+	private javax.swing.JLabel mode;
+	private javax.swing.JLabel std;
+	private javax.swing.JLabel max;
+	private javax.swing.JLabel min;
+	private javax.swing.JPanel stats;
+	private javax.swing.JList estimates;
+	private javax.swing.JPanel allEstimates;
+	private DefaultListModel<String> estimateModel;
+	private List<PlanningPokerVote> allVotes;
 
 }
