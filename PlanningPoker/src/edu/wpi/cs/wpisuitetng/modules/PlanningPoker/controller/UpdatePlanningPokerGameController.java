@@ -37,7 +37,6 @@ public class UpdatePlanningPokerGameController{
 	}
 	
 	/**
-	
 	 * @return the instance of the UpdatePlanningPokerGameController or creates one if it does not
 	 * exist. */
 	public static UpdatePlanningPokerGameController getInstance()

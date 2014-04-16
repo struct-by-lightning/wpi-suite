@@ -31,6 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameMode
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.ClosedGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.NewGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.OpenGameView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 
@@ -51,9 +52,13 @@ public class MainViewController {
 
 	/**
 	 * Constructor for MainViewController.
-	 * @param gameTree JTree 
-	 * @param tabPane JTabbedPane 
-	 * @param toolbar JToolBar
+	 * 
+	 * @param gameTree
+	 *            JTree
+	 * @param tabPane
+	 *            JTabbedPane
+	 * @param toolbar
+	 *            JToolBar
 	 */
 	public MainViewController(JTree gameTree, JTabbedPane tabPane, JToolBar toolbar) {
 		this.gameTree = gameTree;
@@ -98,8 +103,11 @@ public class MainViewController {
 
 	/**
 	 * Method addCloseableTab.
-	 * @param tabName String
-	 * @param tabPanel JPanel
+	 * 
+	 * @param tabName
+	 *            String
+	 * @param tabPanel
+	 *            JPanel
 	 */
 	public void addCloseableTab(String tabName, JPanel tabPanel) {
 		this.tabPane.addTab(tabName, tabPanel);
@@ -108,16 +116,24 @@ public class MainViewController {
 		this.tabPane.setSelectedComponent(tabPanel);
 	}
 
-
-	public void removeClosableTab(){
+	public void removeClosableTab() {
 		Component selected = tabPane.getSelectedComponent();
-		if(selected != null)
+		if (selected != null) {
 			this.tabPane.remove(selected);
+		}
+		
+		try {
+			GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
+			new Thread().wait(150);
+		} catch (Exception e) {
+		}
+		
+		this.gameTree.repaint();
+		this.gameTree.getParent().repaint();
 	}
-	
 
 	public void createGameButtonClicked() {
-		CreateGameView.getController().activateView();
+		CreateGameView.open();
 	}
 
 	public void refreshGameTree() {
@@ -127,30 +143,40 @@ public class MainViewController {
 		DefaultMutableTreeNode newGames = new DefaultMutableTreeNode("New");
 		DefaultMutableTreeNode openGames = new DefaultMutableTreeNode("Open");
 		DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode("Finished");
-
-		GetRequirementsController.getInstance().retrieveRequirements();
-		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
 		
+		try {
+			GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
+			new Thread().wait(150);
+		} catch (Exception e) {
+		}
+		
+		System.out.println();
+		System.out.println("HERE ALL GAMES: ");
+		System.out.println(PlanningPokerGameModel.getPlanningPokerGames());
+		System.out.println();
+
 		for (PlanningPokerGame game : PlanningPokerGameModel.getPlanningPokerGames()) {
 			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(game.getGameName());
 
-			// Has the game ended?
-			if (game.isFinished()) {
-				finishedGames.add(nodeToAdd);
-			}
-
-			// Has the game started voting?
-			else if (game.isLive()) {
-				openGames.add(nodeToAdd);
-			}
-
-			else if (game.getModerator().equals(ConfigManager.getConfig().getUserName())) {
-				// The game must be new.
+			// Conditions for a game to be "New"
+			if (!game.isLive() && !game.isFinished()) {
 				newGames.add(nodeToAdd);
 			}
 
-		}
+			// Conditions for a game to be "Open"
+			if (game.isLive() && !game.isFinished()) {
+				openGames.add(nodeToAdd);
+			}
 
+			// Conditions for a game to be "Finished"
+			if (game.isFinished() && !game.isLive()) {
+				finishedGames.add(nodeToAdd);
+			}
+
+		}
+// made a change
+		
+		
 		root.removeAllChildren();
 
 		if (!newGames.isLeaf()) {
@@ -174,24 +200,41 @@ public class MainViewController {
 
 	/**
 	 * Method gameWasDoubleClicked.
-	 * @param game PlanningPokerGame
+	 * 
+	 * @param game
+	 *            PlanningPokerGame
 	 */
 	public void gameWasDoubleClicked(PlanningPokerGame game) {
-		
-		MainViewController.activeGame = game;
 
+		MainViewController.activeGame = game;
+		
+		try {
+			GetRequirementsController.getInstance().retrieveRequirements();
+			new Thread().wait(250);
+		} catch (Exception e) {
+		}
+
+		// Conditions for a game to be "New"
+		if (!game.isLive() && !game.isFinished()) {
+			NewGameView.open(game);
+		}
+
+		// Conditions for a game to be "Open"
 		if (game.isLive() && !game.isFinished()) {
 			OpenGameView.open(game);
 		}
-		if(game.isFinished()) {
+
+		// Conditions for a game to be "Finished"
+		if (game.isFinished() && !game.isLive()) {
 			ClosedGameView.open(game);
 		}
 	}
 
 	/**
 	 * Method getGameTree.
-	
-	 * @return JTree */
+	 * 
+	 * @return JTree
+	 */
 	private JTree getGameTree() {
 		return this.gameTree;
 	}
