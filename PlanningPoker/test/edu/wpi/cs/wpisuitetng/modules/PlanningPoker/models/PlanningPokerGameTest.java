@@ -282,21 +282,150 @@ public class PlanningPokerGameTest {
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
-		PlanningPokerGame nulltest = new PlanningPokerGame("null test", null,
-				"fibonacci", null, false, false, new GregorianCalendar(2014, 3,
-						20), new GregorianCalendar(2014, 5, 28), "ajthompson");
 
 		String testString = test.toJSON();
-		String nullString = nulltest.toJSON();
 
 		assertTrue(testString.contains("gameName"));
+		assertTrue(testString.contains("2014-05-28 11:08:15"));
 		assertTrue(testString.contains("moderator"));
+		assertTrue(testString.contains("ajthompson"));
 		assertTrue(testString.contains("description"));
+		assertTrue(testString.contains("test description"));
 		assertTrue(testString.contains("deckType"));
-		assertTrue(testString.contains("rquirements"));
+		assertTrue(testString.contains("fibonacci"));
+		assertTrue(testString.contains("requirements"));
+		assertTrue(testString.contains("[1,2,3,4,5]"));
 		assertTrue(testString.contains("isFinished"));
+		assertTrue(testString.contains("false"));
 		assertTrue(testString.contains("isLive"));
+		assertTrue(testString.contains("false"));
 		assertTrue(testString.contains("startDate"));
+		assertTrue(testString.contains("2014-04-20T00:00:00.000-0400"));
 		assertTrue(testString.contains("endDate"));
+		assertTrue(testString.contains("2014-06-28T00:00:00.000-0400"));
+	}
+
+	@Test
+	public final void toJsonNullTest() {
+		List<Integer> testIds = new ArrayList<Integer>() {
+			{
+				add(1);
+				add(2);
+				add(3);
+				add(4);
+				add(5);
+			}
+		};
+		PlanningPokerGame nulltest = new PlanningPokerGame("null test", null,
+				null, null, false, false, new GregorianCalendar(2014, 3, 20),
+				new GregorianCalendar(2014, 5, 28), null);
+
+		String nullString = nulltest.toJSON();
+		System.out.println(nullString);
+
+		assertTrue(nullString.contains("gameName"));
+		assertTrue(nullString.contains("null test"));
+		assertTrue(nullString.contains("moderator"));
+		assertTrue(nullString.contains("null"));
+		assertTrue(nullString.contains("description"));
+		assertTrue(nullString.contains("deckType"));
+		assertTrue(nullString.contains("requirements"));
+		assertTrue(nullString.contains("[]"));
+		assertTrue(nullString.contains("isFinished"));
+		assertTrue(nullString.contains("false"));
+		assertTrue(nullString.contains("isLive"));
+		assertTrue(nullString.contains("false"));
+		assertTrue(nullString.contains("startDate"));
+		assertTrue(nullString.contains("2014-04-20T00:00:00.000-0400"));
+		assertTrue(nullString.contains("endDate"));
+		assertTrue(nullString.contains("2014-06-28T00:00:00.000-0400"));
+	}
+
+	@Test
+	public final void fromJsonTest() {
+		String jsonString = "{\"gameName\":\"2014-05-28 11:08:15\",\"moderator\":\"ajthompson\",\"description\":\"test description\",\"deckType\":\"fibonacci\",\"requirements\":[1,2,3,4,5],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\"}";
+
+		PlanningPokerGame result = PlanningPokerGame.fromJSON(jsonString);
+
+		assertTrue(result.getGameName().equals("2014-05-28 11:08:15"));
+		assertEquals(null, result.getDescription()); // not currently used
+		assertTrue(result.getDeckType().equals("fibonacci"));
+		assertTrue(result.getRequirementIds().contains(1));
+		assertTrue(result.getRequirementIds().contains(2));
+		assertTrue(result.getRequirementIds().contains(3));
+		assertTrue(result.getRequirementIds().contains(4));
+		assertTrue(result.getRequirementIds().contains(5));
+		assertEquals(false, result.isFinished());
+		assertEquals(false, result.isLive());
+		assertEquals(2014, result.getStartDate().get(GregorianCalendar.YEAR));
+		assertEquals(3, result.getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(20,
+				result.getStartDate().get(GregorianCalendar.DAY_OF_MONTH));
+		assertEquals(2014, result.getEndDate().get(GregorianCalendar.YEAR));
+		assertEquals(5, result.getEndDate().get(GregorianCalendar.MONTH));
+		assertEquals(28, result.getEndDate()
+				.get(GregorianCalendar.DAY_OF_MONTH));
+		assertTrue(result.getModerator().equals("ajthompson"));
+	}
+	
+	@Test
+	public final void fromJsonNullFieldsTest() {
+		String jsonString = "{\"gameName\":\"null test\",\"moderator\":\"\",\"description\":\"\",\"deckType\":\"\",\"requirements\":[],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\"}";
+
+		PlanningPokerGame result2 = PlanningPokerGame.fromJSON(jsonString);
+
+		assertTrue(result2.getGameName().equals("null test"));
+		assertEquals(null, result2.getDescription()); // not currently used
+		assertEquals(null, result2.getDeckType());
+		assertTrue(result2.getRequirementIds().isEmpty());
+		assertEquals(false, result2.isFinished());
+		assertEquals(false, result2.isLive());
+		assertEquals(2014, result2.getStartDate().get(GregorianCalendar.YEAR));
+		assertEquals(3, result2.getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(20,
+				result2.getStartDate().get(GregorianCalendar.DAY_OF_MONTH));
+		assertEquals(2014, result2.getEndDate().get(GregorianCalendar.YEAR));
+		assertEquals(5, result2.getEndDate().get(GregorianCalendar.MONTH));
+		assertEquals(28, result2.getEndDate()
+				.get(GregorianCalendar.DAY_OF_MONTH));
+		assertEquals("", result2.getModerator());
+	}
+	
+	@Test
+	public final void getIDTest() {
+		List<Integer> testIds = new ArrayList<Integer>() {
+			{
+				add(1);
+				add(2);
+				add(3);
+				add(4);
+				add(5);
+			}
+		};
+		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+				"test description", "fibonacci", testIds, false, false,
+				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
+						5, 28), "ajthompson");
+		
+		assertTrue(test.getID().equals("2014-05-28 11:08:15"));
+	}
+	
+	@Test
+	public final void getPrimaryKeyTest() {
+		List<Integer> testIds = new ArrayList<Integer>() {
+			{
+				add(1);
+				add(2);
+				add(3);
+				add(4);
+				add(5);
+			}
+		};
+		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+				"test description", "fibonacci", testIds, false, false,
+				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
+						5, 28), "ajthompson");
+		
+		assertTrue(test.getPrimaryKey().equals("gameName"));
 	}
 }
