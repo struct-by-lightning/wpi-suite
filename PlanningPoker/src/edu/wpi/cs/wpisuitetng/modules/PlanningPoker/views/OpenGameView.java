@@ -80,7 +80,6 @@ public class OpenGameView extends JPanel {
 	 *            JPanel.
 	 */
 	private OpenGameView(PlanningPokerGame game) {
-		System.out.println("OpenGameView(" + game + ")");
 		this.game = game;
 		
 		while (game.getRequirements().get(0) == null) {
