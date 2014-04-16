@@ -124,6 +124,18 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	}
 	
 	/**
+	 * @return gameName
+	 */
+	public String getGameName() {
+		System.out.println(gameName);
+		return gameName;
+	}
+	
+	public int getRequirementID() {
+		return requirementID;
+	}
+	
+	/**
 	 * Method setUserName.
 	 * @param toSet String
 	 */
