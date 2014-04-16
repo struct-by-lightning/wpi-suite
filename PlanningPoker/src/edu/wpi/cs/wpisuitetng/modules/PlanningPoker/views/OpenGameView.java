@@ -82,9 +82,13 @@ public class OpenGameView extends JPanel {
 	private OpenGameView(PlanningPokerGame game) {
 		System.out.println("OpenGameView(" + game + ")");
 		this.game = game;
-		this.requirements = game.getRequirements();
-		this.cards = new ArrayList<>();
 		
+		while (game.getRequirements().get(0) == null) {
+			continue;
+		}
+		this.requirements = game.getRequirements();
+
+		this.cards = new ArrayList<>();
 
 		// Initialize all GUI components. Netbeans generated code.
 		initComponents();
