@@ -10,20 +10,34 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.KeyAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Dimension2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
@@ -50,6 +64,8 @@ import javax.swing.JButton;
  */
 @SuppressWarnings("serial")
 public class OpenGameView extends JPanel {
+	
+	JTextArea textArea;
 
 	/**
 	 * This function is what to call to open up the display for an
@@ -96,13 +112,11 @@ public class OpenGameView extends JPanel {
 		initForGame();
 	}
 
-	/**
-	 * Initializes components based on the given planning poker game.
-	 * 
 	
+	/**
+	 * Populates the allCardsPanel with cards
 	 */
-	private void initForGame() {
-
+	private void populateWithCards() {
 		// Add JPanels for each card available in this game.
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.insets = new Insets(0, 15, 0, 15);
@@ -138,7 +152,109 @@ public class OpenGameView extends JPanel {
 				}
 			});
 		}
+	}
+	
+	/**
+	 * Populates the allCardsPanel with one card and JTextArea for the user to enter the estimation manually
+	 */
+	private void populateWithNoCardDeckPanel() {
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		gridBagConstraints.insets = new Insets(0, 15, 0, 15);		
+		
+		textArea = new JTextArea();
+		textArea.setDocument(new LimitedDocument(textArea));
+		textArea.getDocument().addDocumentListener(new MyDocumentListener());
+		Font bigFont = new Font(null, Font.PLAIN, 32); 
+		textArea.setFont(bigFont);
+		
+		textArea.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		textArea.setColumns(2);
+		textArea.setRows(1);
+		
+		this.allCardsPanel.add(textArea, gridBagConstraints);
+	}
+	
+	class MyDocumentListener implements DocumentListener {
+		public void insertUpdate(DocumentEvent e) {
 
+		estimateNumberLabel.setText(textArea.getText());
+		// Requirement ID
+		// @TODO: Get selected requirement ID
+		int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
+		
+		// Game name
+		String gameName = MainViewController.activeGame.getGameName();
+		
+		// User name
+		String userName = ConfigManager.getConfig().getUserName();
+		
+		ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);
+		
+		submitButton.setEnabled(true);
+		}
+		
+		public void removeUpdate(DocumentEvent e) {
+			String tempString = textArea.getText();
+			
+			estimateNumberLabel.setText(tempString);
+
+			
+			if (textArea.getText().equals("")) {
+				estimateNumberLabel.setText("?");
+				submitButton.setEnabled(false);
+			}
+			else {
+				estimateNumberLabel.setText(textArea.getText());
+				// Requirement ID
+				// @TODO: Get selected requirement ID
+				int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
+				
+				// Game name
+				String gameName = MainViewController.activeGame.getGameName();
+				
+				// User name
+				String userName = ConfigManager.getConfig().getUserName();
+				
+				ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);
+			}
+
+		}
+		
+		public void changedUpdate(DocumentEvent e) {
+			System.out.println("Changed");
+		}
+	}
+	
+	class LimitedDocument extends PlainDocument {
+		private int MAX_LENGTH = 3;
+		private JTextArea field;
+
+		LimitedDocument(JTextArea input) {
+			field = input;
+		}
+		
+		public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+			if(str == null || field.getText().length() >= MAX_LENGTH || !(str.matches("^[0-9]+$") )) {
+				return;
+			}
+			super.insertString(offs, str, a);
+		}
+	}
+	
+	/**
+	 * Initializes components based on the given planning poker game.
+	 * 
+	 * @param game
+	 *            The planning poker game to define this view.
+	 */
+	private void initForGame() {
+		if (game.getDeckType().equals("No Deck")) {
+			populateWithNoCardDeckPanel();
+		}
+		else {
+			populateWithCards();
+		}
+		
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
 
@@ -230,9 +346,14 @@ public class OpenGameView extends JPanel {
 		for (PlayingCardJPanel card : this.cards) {
 			total += card.getValue();
 		}
+		/*if(deckName.equals("No Deck") && estimateNumberLabel.getText().equals("")) {
+			String newText = "?";
+		} else {
+			
+		}*/
 
 		String newText = (total > 0 ? ("" + total) : "?");
-
+		
 		this.estimateNumberLabel.setText(newText);
 	}
 
@@ -274,6 +395,7 @@ public class OpenGameView extends JPanel {
 		estimateNumberLabel = new javax.swing.JLabel();
 		cardsScrollPane = new javax.swing.JScrollPane();
 		allCardsPanel = new javax.swing.JPanel();
+
 		submitButton = new javax.swing.JButton();
 		
 		submitButton.addActionListener(new ActionListener() {
@@ -682,6 +804,7 @@ public class OpenGameView extends JPanel {
 		topRowRequirementPanel.add(rightBlankPanel);
 
 		rowSplitPanel.add(topRowRequirementPanel);
+		
 
 		allCardsPanel.setBackground(Color.white);
 		allCardsPanel.setLayout(new java.awt.GridBagLayout());
@@ -725,9 +848,10 @@ public class OpenGameView extends JPanel {
 
 		add(splitPane, java.awt.BorderLayout.CENTER);
 	}// </editor-fold>//GEN-END:initComponents
-
+	
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JPanel allCardsPanel;
+	private javax.swing.JPanel noCardVotingPanel;
 	private javax.swing.JScrollPane cardsScrollPane;
 	private javax.swing.JPanel estimateCenteringPanel;
 	private javax.swing.JLabel estimateNumberLabel;
