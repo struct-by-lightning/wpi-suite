@@ -284,6 +284,7 @@ public class OpenGameView extends JPanel {
 												!= Integer.MIN_VALUE) {
 							estimateNumberLabel.setText("" + voteNumber);
 						}
+						textArea.setText("");
 					}
 				});
 
