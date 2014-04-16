@@ -80,11 +80,14 @@ public class OpenGameView extends JPanel {
 	 *            JPanel.
 	 */
 	private OpenGameView(PlanningPokerGame game) {
-		System.out.println("OpenGameView(" + game + ")");
 		this.game = game;
-		this.requirements = game.getRequirements();
-		this.cards = new ArrayList<>();
 		
+		while (game.getRequirements().get(0) == null) {
+			continue;
+		}
+		this.requirements = game.getRequirements();
+
+		this.cards = new ArrayList<>();
 
 		// Initialize all GUI components. Netbeans generated code.
 		initComponents();
@@ -412,7 +415,15 @@ public class OpenGameView extends JPanel {
 		    	btnEndGame.setEnabled(false);
 		    	btnEndGame.setText("Game Ended");
 		    	game.setFinished(true);
+		    	game.setLive(false);
 		    	UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+		    	try {
+					new Thread().wait(200);
+				} catch (Exception ex) {
+				}
+		    	
+		    	MainView.getController().refreshGameTree();
+		    	MainView.getController().removeClosableTab();
 		    }
 		});
 		
