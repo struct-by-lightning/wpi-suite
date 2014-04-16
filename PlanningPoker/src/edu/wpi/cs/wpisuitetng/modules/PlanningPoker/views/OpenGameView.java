@@ -4,26 +4,40 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors: Struct-By-Lightning
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.KeyAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Dimension2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
@@ -44,47 +58,53 @@ import javax.swing.JButton;
 /**
  * This JPanel contains the GUI for interacting with a planning poker game which
  * is open for voting.
- * 
+ *
  * @author Austin Rose (arose)
  * @version $Revision: 1.0 $
  */
 @SuppressWarnings("serial")
 public class OpenGameView extends JPanel {
 
+	JTextArea textArea;
+
 	/**
 	 * This function is what to call to open up the display for an
 	 * open-for-voting planning poker game in a new tab.
-	 * 
+	 *
 	 * @param game
 	 *            A planning poker game which is open for voting.
 	 */
 	public static void open(PlanningPokerGame game) {
-		
+
 		OpenGameView view = new OpenGameView(game);
 		MainView.getController().addCloseableTab(game.getGameName(), view);
 	}
 
 	private PlanningPokerGame game;
 	private ArrayList<Requirement> requirements;
+	private Requirement currentlySelectedRequirement;
 	private static PlanningPokerVote ppv;
-	
+
 	// JPanel subclasses for each card in this game's deck.
 	private ArrayList<PlayingCardJPanel> cards;
 
 	/**
 	 * Constructor runs NetBeans generated UI initialization code and then
 	 * updates those components based on the given planning poker game.
-	 * 
+	 *
 	 * @param game
 	 *            The planning poker game whose data will be displayed on this
 	 *            JPanel.
 	 */
 	private OpenGameView(PlanningPokerGame game) {
-		System.out.println("OpenGameView(" + game + ")");
 		this.game = game;
+
+		while (game.getRequirements().get(0) == null) {
+			continue;
+		}
 		this.requirements = game.getRequirements();
+
 		this.cards = new ArrayList<>();
-		
 
 		// Initialize all GUI components. Netbeans generated code.
 		initComponents();
@@ -93,13 +113,11 @@ public class OpenGameView extends JPanel {
 		initForGame();
 	}
 
-	/**
-	 * Initializes components based on the given planning poker game.
-	 * 
-	
-	 */
-	private void initForGame() {
 
+	/**
+	 * Populates the allCardsPanel with cards
+	 */
+	private void populateWithCards() {
 		// Add JPanels for each card available in this game.
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.insets = new Insets(0, 15, 0, 15);
@@ -114,17 +132,17 @@ public class OpenGameView extends JPanel {
 					PlayingCardJPanel clickedCard = (PlayingCardJPanel) evt.getSource();
 					clickedCard.toggle();
 					updateEstimateTotal();// Vote value
-		    		
+
 		    		// Requirement ID
 		    		// @TODO: Get selected requirement ID
 		    		int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
-		    		
+
 		    		// Game name
 		    		String gameName = MainViewController.activeGame.getGameName();
-		    		
+
 		    		// User name
 		    		String userName = ConfigManager.getConfig().getUserName();
-		    		
+
 		    		// Vote
 		    		if(estimateNumberLabel.getText().equals("?"))
 		    			submitButton.setEnabled(false);
@@ -134,6 +152,108 @@ public class OpenGameView extends JPanel {
 		    		}
 				}
 			});
+		}
+	}
+
+	/**
+	 * Populates the allCardsPanel with one card and JTextArea for the user to enter the estimation manually
+	 */
+	private void populateWithNoCardDeckPanel() {
+		GridBagConstraints gridBagConstraints = new GridBagConstraints();
+		gridBagConstraints.insets = new Insets(0, 15, 0, 15);
+
+		textArea = new JTextArea();
+		textArea.setDocument(new LimitedDocument(textArea));
+		textArea.getDocument().addDocumentListener(new MyDocumentListener());
+		Font bigFont = new Font(null, Font.PLAIN, 32);
+		textArea.setFont(bigFont);
+
+		textArea.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		textArea.setColumns(2);
+		textArea.setRows(1);
+
+		this.allCardsPanel.add(textArea, gridBagConstraints);
+	}
+
+	class MyDocumentListener implements DocumentListener {
+		public void insertUpdate(DocumentEvent e) {
+
+		estimateNumberLabel.setText(textArea.getText());
+		// Requirement ID
+		// @TODO: Get selected requirement ID
+		int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
+
+		// Game name
+		String gameName = MainViewController.activeGame.getGameName();
+
+		// User name
+		String userName = ConfigManager.getConfig().getUserName();
+
+		ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);
+
+		submitButton.setEnabled(true);
+		}
+
+		public void removeUpdate(DocumentEvent e) {
+			String tempString = textArea.getText();
+
+			estimateNumberLabel.setText(tempString);
+
+
+			if (textArea.getText().equals("")) {
+				estimateNumberLabel.setText("?");
+				submitButton.setEnabled(false);
+			}
+			else {
+				estimateNumberLabel.setText(textArea.getText());
+				// Requirement ID
+				// @TODO: Get selected requirement ID
+				int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
+
+				// Game name
+				String gameName = MainViewController.activeGame.getGameName();
+
+				// User name
+				String userName = ConfigManager.getConfig().getUserName();
+
+				ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);
+			}
+
+		}
+
+		public void changedUpdate(DocumentEvent e) {
+			System.out.println("Changed");
+		}
+	}
+
+	class LimitedDocument extends PlainDocument {
+		private int MAX_LENGTH = 3;
+		private JTextArea field;
+
+		LimitedDocument(JTextArea input) {
+			field = input;
+		}
+
+		public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+			if(str == null || field.getText().length() >= MAX_LENGTH || !(str.matches("^[0-9]+$") )) {
+				return;
+			}
+			super.insertString(offs, str, a);
+		}
+	}
+
+	/**
+	 * Initializes components based on the given planning poker game.
+	 *
+	 * @param game
+	 *            The planning poker game to define this view.
+	 */
+	private void initForGame() {
+		if (game.getDeckType().equals("No Deck")) {
+			populateWithNoCardDeckPanel();
+		}
+		else {
+			populateWithCards();
 		}
 
 		// Listener which updates the requirement displayed based on what is
@@ -147,6 +267,7 @@ public class OpenGameView extends JPanel {
 						list = (JList) ev.getSource();
 						Requirement selected = requirements.get(list
 								.getSelectedIndex());
+						currentlySelectedRequirement = selected;
 						requirementNameLabel.setText(selected.getName());
 						requirementDescriptionLabel.setText(selected
 								.getDescription());
@@ -165,6 +286,13 @@ public class OpenGameView extends JPanel {
 												!= Integer.MIN_VALUE) {
 							estimateNumberLabel.setText("" + voteNumber);
 						}
+
+						for (PlayingCardJPanel card : cards) {
+							card.deselect();
+						}
+
+						submitButton.setEnabled(true);
+						submitButton.setText("Submit Vote");
 					}
 				});
 
@@ -198,7 +326,7 @@ public class OpenGameView extends JPanel {
 	/**
 	 * Set each of the cards displayed to be either selected or not selected
 	 * based on the votes for the given game and requirement.
-	 * 
+	 *
 	 * @param game
 	 *            Game whose card selection values are in question.
 	 * @param selectedRequirement
@@ -227,10 +355,17 @@ public class OpenGameView extends JPanel {
 		for (PlayingCardJPanel card : this.cards) {
 			total += card.getValue();
 		}
+		if (total > 0) {
+			this.estimateNumberLabel.setText(new Integer(total).toString());
+		}
 
-		String newText = (total > 0 ? ("" + total) : "?");
+		else {
+			int vote = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVote(game.getGameName(), ConfigManager.getConfig().getUserName(), currentlySelectedRequirement.getId());
+			String strVote = vote > 0 ? ((Integer)vote).toString() : "?";
+			this.estimateNumberLabel.setText(strVote);
+		}
 
-		this.estimateNumberLabel.setText(newText);
+
 	}
 
 	/**
@@ -271,18 +406,23 @@ public class OpenGameView extends JPanel {
 		estimateNumberLabel = new javax.swing.JLabel();
 		cardsScrollPane = new javax.swing.JScrollPane();
 		allCardsPanel = new javax.swing.JPanel();
+
 		submitButton = new javax.swing.JButton();
-		
+
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(MainViewController.activeGame.isLive() && !MainViewController.activeGame.isFinished())
+				if(MainViewController.activeGame.isLive() && !MainViewController.activeGame.isFinished()) {
 					AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
+					submitButton.setEnabled(false);
+					submitButton.setText("Submitted");
+				}
+
 			}
 		});
-		
+
 		submitButton.setText("Submit Vote");
-		
+
 		setLayout(new java.awt.BorderLayout());
 
 		requirementsLabelPanel.setBorder(javax.swing.BorderFactory
@@ -357,31 +497,31 @@ public class OpenGameView extends JPanel {
 
 		gameDeadlineDateLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		gameDeadlineDateLabel.setText("game.getDeadlineDate()");
-		
+
 		/**
 		 * Button for starting the game
 		 */
 		btnStartGame = new JButton("Start Game");
-		
+
 		/**
 		 * Button for ending a game
 		 */
 		btnEndGame = new JButton("End Game");
-		
-		
-		
+
+
+
 		if(game.isLive() && !game.isFinished()){
 			btnStartGame.setText("Game Started");
 			btnStartGame.setEnabled(false);
 		}
-		
+
 		if(!game.isLive() && !game.isFinished()){
 			btnStartGame.setText("Game Ended");
 			btnStartGame.setEnabled(false);
 		}
-		
-		
-		
+
+
+
 		if(!game.getModerator().equals(ConfigManager.getConfig().getUserName())){
 			btnStartGame.setEnabled(false);
 			btnEndGame.setEnabled(false);
@@ -398,10 +538,10 @@ public class OpenGameView extends JPanel {
 		        btnStartGame.setText("Game Started");
 		        game.setLive(true);
 		        UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
-		        
+
 		    }
 		});
-		
+
 		/**
 		 * Action listener for end button
 		 */
@@ -412,10 +552,18 @@ public class OpenGameView extends JPanel {
 		    	btnEndGame.setEnabled(false);
 		    	btnEndGame.setText("Game Ended");
 		    	game.setFinished(true);
+		    	game.setLive(false);
 		    	UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+		    	try {
+					new Thread().wait(200);
+				} catch (Exception ex) {
+				}
+
+		    	MainView.getController().refreshGameTree();
+		    	MainView.getController().removeClosableTab();
 		    }
 		});
-		
+
 		javax.swing.GroupLayout gameTitlePanelLayout = new javax.swing.GroupLayout(gameTitlePanel);
 		gameTitlePanelLayout.setHorizontalGroup(
 			gameTitlePanelLayout.createParallelGroup(Alignment.TRAILING)
@@ -672,6 +820,7 @@ public class OpenGameView extends JPanel {
 
 		rowSplitPanel.add(topRowRequirementPanel);
 
+
 		allCardsPanel.setBackground(Color.white);
 		allCardsPanel.setLayout(new java.awt.GridBagLayout());
 		cardsScrollPane.setViewportView(allCardsPanel);
@@ -717,6 +866,7 @@ public class OpenGameView extends JPanel {
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JPanel allCardsPanel;
+	private javax.swing.JPanel noCardVotingPanel;
 	private javax.swing.JScrollPane cardsScrollPane;
 	private javax.swing.JPanel estimateCenteringPanel;
 	private javax.swing.JLabel estimateNumberLabel;

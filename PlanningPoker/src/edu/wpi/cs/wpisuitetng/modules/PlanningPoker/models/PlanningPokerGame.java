@@ -100,11 +100,9 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	}
 	
 	/**
-	
-	 * @return A list of the requirements which are associated with this planning poker game. */
+	 * @return A list of the requirements which are associated with this planning poker game. 
+	 **/
 	public ArrayList<Requirement> getRequirements() {
-		
-
 		
 		ArrayList<Requirement> toReturn = new ArrayList<Requirement>();
 

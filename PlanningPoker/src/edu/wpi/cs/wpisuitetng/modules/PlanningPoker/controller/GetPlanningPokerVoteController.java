@@ -68,10 +68,24 @@ public class GetPlanningPokerVoteController implements ActionListener {
 	/**
 	 * Sends an HTTP request to retrieve all PlanningPokerGames
 	 */
-	public void retrievePlanningPokerVote() {
+	public PlanningPokerVote[] retrievePlanningPokerVote() {
 		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote", HttpMethod.GET); // GET == read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
+		
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(request.getResponse() != null) {
+			//return Integer.MIN_VALUE;
+			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
+			return a;
+		} else {
+			return new PlanningPokerVote[0];
+		}
 	}
 	/**
 	 * Retrieves the planning poker vote from the server
@@ -91,7 +105,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(request.getResponse() != null) {
+		if(request.getResponse() != null && request.getResponse().getStatusCode() == 200) {
 			//return Integer.MIN_VALUE;
 			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
 			PlanningPokerVote ret = new PlanningPokerVote(null, null, 0, 0);

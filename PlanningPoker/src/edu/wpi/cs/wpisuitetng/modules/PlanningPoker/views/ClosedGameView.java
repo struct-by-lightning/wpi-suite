@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,6 +36,7 @@ import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.RequirementManager;
@@ -79,6 +81,7 @@ public class ClosedGameView extends JPanel {
 	private void initForGame() {
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
+		currentID = 0;
 		this.requirements = game.getRequirements();
 		this.requirementList
 				.addListSelectionListener(new ListSelectionListener() {
@@ -89,11 +92,34 @@ public class ClosedGameView extends JPanel {
 						if(list.getSelectedIndex() != -1) {
 							selected = requirements.get(list
 									.getSelectedIndex());
+							currentID = selected.getId();
 							requirementNameLabel.setText(selected.getName());
 							requirementDescriptionLabel.setText(selected
 									.getDescription());
 							updateEstimateTotal(selected);
 						}
+						ArrayList<Double> reqVotes = new ArrayList<Double>();
+						estimateModel = new DefaultListModel<String>();
+						for(PlanningPokerVote v : gameVotes) {
+							if(v.getRequirementID() == currentID) {
+								reqVotes.add((double)v.getVote());
+								estimateModel.addElement("   "+v.getUserName()+": "+v.getVote());
+							}
+						}
+						System.out.println(estimateModel);
+						System.out.println(gameVotes);
+						estimates.setModel(estimateModel);
+						double[] voteNums = new double[reqVotes.size()];
+						for(int i = 0; i< reqVotes.size(); i++) {
+							voteNums[i] = (double)reqVotes.get(i);
+						}
+						mean.setText(meanDef+df.format(Statistics.mean(voteNums)));
+						median.setText(medianDef+df.format(Statistics.median(voteNums)));
+						mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
+						std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
+						max.setText(maxDef+df.format(Statistics.max(voteNums)));
+						min.setText(minDef+df.format(Statistics.min(voteNums)));
+						
 					}
 				});
 		// Populate the list with each requirement.
@@ -103,8 +129,6 @@ public class ClosedGameView extends JPanel {
 			model.addElement(r.getName());
 		}
 		this.requirementList.setModel(model);
-
-
 
 		// Show the name of the game.
 		this.gameNameLabel.setText(game.getGameName());
@@ -152,13 +176,13 @@ public class ClosedGameView extends JPanel {
 		estimateNumberPanel = new javax.swing.JPanel();
 		estimateSubmitPanel = new javax.swing.JPanel();
 		estimateNumberBox = new javax.swing.JTextField();
-		mean = new javax.swing.JLabel("   Mean: ");
-		median = new javax.swing.JLabel("Median: ");
-		mode = new javax.swing.JLabel("   Mode: ");
-		std = new javax.swing.JLabel("Standard Deviation: ");
-		max = new javax.swing.JLabel("   Maximum: ");
-		min = new javax.swing.JLabel("   Minimum: ");
-		stats = new javax.swing.JPanel(new GridLayout(3, 2, 5, 5));
+		mean = new javax.swing.JLabel(meanDef);
+		median = new javax.swing.JLabel(medianDef);
+		mode = new javax.swing.JLabel(modeDef);
+		std = new javax.swing.JLabel(stdDef);
+		max = new javax.swing.JLabel(maxDef);
+		min = new javax.swing.JLabel(minDef);
+		stats = new javax.swing.JPanel(new GridLayout(3, 2));
 		
 		setLayout(new java.awt.BorderLayout());
 
@@ -353,9 +377,9 @@ public class ClosedGameView extends JPanel {
 		estimateTitlePanel.setBorder(new javax.swing.border.SoftBevelBorder(
 				javax.swing.border.BevelBorder.RAISED));
 
-		estimateTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+		estimateTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
 		estimateTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		estimateTitleLabel.setText("<html>Your estimate</html>");
+		estimateTitleLabel.setText("<html>Final estimate</html>");
 
 		javax.swing.GroupLayout estimateTitlePanelLayout = new javax.swing.GroupLayout(
 				estimateTitlePanel);
@@ -418,17 +442,17 @@ public class ClosedGameView extends JPanel {
 						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-		mean.setFont(new java.awt.Font("Tahoma", 0, 18));
-		median.setFont(new java.awt.Font("Tahoma", 0, 18));
-		mode.setFont(new java.awt.Font("Tahoma", 0, 18));
-		std.setFont(new java.awt.Font("Tahoma", 0, 18));
-		max.setFont(new java.awt.Font("Tahoma", 0, 18));
-		min.setFont(new java.awt.Font("Tahoma", 0, 18));
+		mean.setFont(new java.awt.Font("Lucida Console", 0, 28));
+		median.setFont(new java.awt.Font("Lucida Console", 0, 28));
+		mode.setFont(new java.awt.Font("Lucida Console", 0, 28));
+		std.setFont(new java.awt.Font("Lucida Console", 0, 28));
+		max.setFont(new java.awt.Font("Lucida Console", 0, 28));
+		min.setFont(new java.awt.Font("Lucida Console", 0, 28));
 		stats.add(mean);
-		stats.add(median);
-		stats.add(mode);
 		stats.add(std);
+		stats.add(median);
 		stats.add(max);
+		stats.add(mode);
 		stats.add(min);
 		//stats.setPreferredSize(new Dimension(stats.getWidth(), 50));
 		stats.setBorder(javax.swing.BorderFactory
@@ -471,17 +495,23 @@ public class ClosedGameView extends JPanel {
 
 		
 		
-		//allVotes = GetPlanningPokerVotesController.getInstance().getGameVotes(game);
+		allVotes = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVote();
+		gameVotes = new ArrayList<PlanningPokerVote>();
+		for(PlanningPokerVote v : allVotes) {
+			System.out.println("started loop");
+			if(v.getGameName().equalsIgnoreCase(game.getGameName())) {
+				gameVotes.add(v);
+				System.out.println("add"+v.getID());
+			}
+		}
+
+		System.out.println("Game votes: "+gameVotes);
 		estimates = new javax.swing.JList();
 		estimateModel = new DefaultListModel<String>();
-		for(int i = 0; i < 25; i++) {
-			System.out.println("Zak: 9");
-			estimateModel.addElement(new String("   Zak: 9"));
-		}
-		System.out.println(estimateModel);
+		
 		estimates.setModel(estimateModel);
 
-		estimates.setFont(new java.awt.Font("Tahoma", 0, 18));
+		estimates.setFont(new java.awt.Font("Tahoma", 0, 20));
 		JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(estimates);
 		//scroll.setPreferredSize(new Dimension(500, 400));
@@ -559,7 +589,7 @@ public class ClosedGameView extends JPanel {
 
 		estimateCenteringPanel.add(estimatePanel, new java.awt.GridBagConstraints());
 		
-		submitButton.setFont(new java.awt.Font("Tahoma", 0, 48));
+		submitButton.setFont(new java.awt.Font("Tahoma", 0, 28));
 		submitButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -665,6 +695,16 @@ public class ClosedGameView extends JPanel {
 	private javax.swing.JList estimates;
 	private javax.swing.JPanel allEstimates;
 	private DefaultListModel<String> estimateModel;
-	private List<PlanningPokerVote> allVotes;
+	private PlanningPokerVote[] allVotes;
+	private String meanDef = "    Mean: ";
+	private String medianDef = "  Median: ";
+	private String modeDef = "    Mode: ";
+	private String stdDef = "Std Dev: ";
+	private String maxDef = "    Max: ";
+	private String minDef = "    Min: ";
+	private List<PlanningPokerVote> gameVotes;
+	private int currentID;
+	private DecimalFormat df = new DecimalFormat("#.###");
+
 
 }

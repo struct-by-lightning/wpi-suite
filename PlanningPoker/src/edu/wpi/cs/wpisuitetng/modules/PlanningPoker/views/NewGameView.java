@@ -55,6 +55,7 @@ import javax.swing.border.LineBorder;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
@@ -71,15 +72,15 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * 
  * @author Austin Rose (atrose)
  */
-public class CreateGameView extends JPanel {
+public class NewGameView extends JPanel {
 
 	/**
 	 * This method will open up a new tab in the planning poker module with this
 	 * UI for creating a new planning poker game.
 	 */
-	public static void open() {
-		CreateGameView view = new CreateGameView();
-		MainView.getController().addCloseableTab("Create Game", view);
+	public static void open(PlanningPokerGame game) {
+		NewGameView view = new NewGameView(game);
+		MainView.getController().addCloseableTab(game.getGameName(), view);
 	}
 
 	/**
@@ -89,16 +90,43 @@ public class CreateGameView extends JPanel {
 	 * This constructor is private so that this class can only be initialized
 	 * through the static "open" method.
 	 */
-	private CreateGameView() {
-		initComponents();
-		initComponentLogic();
+	private NewGameView(PlanningPokerGame game) {
+		initComponents(game);
+		initComponentLogic(game);
+
+		// Fetch updated set of requirements
+		GetRequirementsController.getInstance().retrieveRequirements();
+		while (game.getRequirements().get(0) == null) {}
+
+		/**
+		 * Adds list of current requirements in requirement model to the list
+		 * that will be added to the JList that will hold the requirements to be
+		 * added to the game
+		 */
+		final List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
+
+		// We iterate through the requirements list and add to that JList.
+		for (int i = 0; i < requirements.size(); i++) {
+			Requirement req = requirements.get(i);
+			if (game.getRequirements().contains(req)) {
+				listModelForThisGame.addElement(req);
+			} else if (req.getIteration().equals("Backlog")) {
+				listModelForBacklog.addElement(req);
+				listModelForReseting.addElement(req);
+			}
+		}
+
+		thisGameRequirementList.setModel(listModelForBacklog);
+		this.btnStartVoting.setEnabled(true);
 	}
 
 	/**
 	 * Fills in all dynamic data displayed by components, and adds appropriate
 	 * listeners.
 	 */
-	private void initComponentLogic() {
+	private void initComponentLogic(PlanningPokerGame game) {
+
+		final boolean gameHasDeadline = game.hasEndDate();
 
 		// Get and add the list of emails to the mailer
 		GetUserController.getInstance().retrieveUser();
@@ -107,29 +135,25 @@ public class CreateGameView extends JPanel {
 		} catch (Exception e) {
 		}
 
-		GetRequirementsController.getInstance().retrieveRequirements();
-		try {
-			Thread.sleep(150);
-		} catch (Exception e) {
-		}
-
 		// The "have a deadline" checkbox listener
 		deadline.addActionListener(new ActionListener() {
-			boolean checked = false;
+
+			boolean checked = gameHasDeadline;
 
 			public void actionPerformed(ActionEvent ae) {
 				viewHasBeenEdited = true;
-				if (!checked) {
+
+				JCheckBox deadlineCheckbox = (JCheckBox) ae.getSource();
+
+				if (deadlineCheckbox.isSelected()) {
 					calendarButton_2.setEnabled(true);
 					endTime.setEnabled(true);
-					checked = true;
 				} else {
 					if (calendarOpen) {
 						calendarButton_2.doClick();
 					}
 					calendarButton_2.setEnabled(false);
 					endTime.setEnabled(false);
-					checked = false;
 				}
 			}
 		});
@@ -155,9 +179,10 @@ public class CreateGameView extends JPanel {
 			}
 		});
 
-		// TODO: 
+		// TODO:
 		// There should be some deck selection logic here.
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] { "Default", "Lightning Deck", "No Deck" }));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] { "Default",
+				"Lightning Deck", "No Deck" }));
 
 		deckType.addActionListener(new ActionListener() {
 
@@ -206,16 +231,17 @@ public class CreateGameView extends JPanel {
 
 				if (currentText.length() < 1) {
 
-					btnCreateGame.setEnabled(false);
+					btnStartVoting.setEnabled(false);
 					createGameErrorText.setText("Session needs a name");
 
 				} else {
 
-					// Don't enable the "Create Game" button if there are no requirements
+					// Don't enable the "Create Game" button if there are no
+					// requirements
 					if (listModelForThisGame.size() == 0) {
-						btnCreateGame.setEnabled(false);
+						btnStartVoting.setEnabled(false);
 					} else {
-						btnCreateGame.setEnabled(true);
+						btnStartVoting.setEnabled(true);
 						createGameErrorText.setText("");
 					}
 				}
@@ -230,52 +256,17 @@ public class CreateGameView extends JPanel {
 		backlogRequirementList.setModel(listModelForThisGame);
 
 		// TODO:
-		// As per a meeting with Pollice, we need to only select users which have been explicitly added to the project through the web-interface.
+		// As per a meeting with Pollice, we need to only select users which
+		// have been explicitly added to the project through the web-interface.
 		userList = UserModel.getInstance().getUsers();
 		mailer.addEmailFromUsers(userList);
-
-		/**
-		 * Adds list of current requirements in requirement model to the list
-		 * that will be added to the JList that will hold the requirements to be
-		 * added to the game
-		 */
-		final List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
-		
-		// We iterate through the requirements list and add to that JList.
-		for (int i = 0; i < requirements.size(); i++) {
-			Requirement req = requirements.get(i);
-			
-			if (req.getIteration().equals("Backlog")) {
-				listModelForBacklog.addElement(req);
-				listModelForReseting.addElement(req);
-			}
-		}
-
-		thisGameRequirementList.setModel(listModelForBacklog);
-
-		thisGameRequirementList.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				btn_addToGame.setEnabled(true);
-				btn_addAll.setEnabled(true);
-				btn_removeFromGame.setEnabled(false);
-			}
-		});
-
-		backlogRequirementList.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				btn_addToGame.setEnabled(false);
-				btn_removeFromGame.setEnabled(true);
-				btn_removeAll.setEnabled(true);
-			}
-		});
 
 		/**
 		 * Saves data entered about the game when 'Create Game' button is
 		 * pressed
 		 */
-		btnCreateGame.addActionListener(new ActionListener() {
+		btnStartVoting.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				viewHasBeenEdited = false;
 
 				enteredName = sessionName.getText();
 				selectedDeckType = (String) deckType.getSelectedItem();
@@ -320,14 +311,11 @@ public class CreateGameView extends JPanel {
 					if (startCal.before(endCal)) {
 
 						PlanningPokerGame game;
-						if (startNow.isSelected()) {
+						if (deadline.isSelected()) {
 							game = new PlanningPokerGame(enteredName, "Default description",
 
 							(String) deckType.getSelectedItem(), gameRequirementIDsList, false,
 									true, startCal, endCal, ConfigManager.getConfig().getUserName());
-							game.setFinished(false);
-							game.setLive(true);
-							
 						} else {
 							game = new PlanningPokerGame(enteredName, "Default description",
 									(String) deckType.getSelectedItem(), gameRequirementIDsList,
@@ -338,9 +326,11 @@ public class CreateGameView extends JPanel {
 						System.out.println("User Moderator: "
 								+ ConfigManager.getConfig().getUserName());
 						System.out.println("Planning Poker Live: " + game.isLive());
-						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
+						game.setLive(true);
+						game.setFinished(false);
+						UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
-						btnCreateGame.setEnabled(false);
+						btnStartVoting.setEnabled(false);
 						mailer.send();
 						
 						MainView.getController().refreshGameTree();
@@ -348,22 +338,23 @@ public class CreateGameView extends JPanel {
 					} else {
 						// Error message when the session name is empty
 						if (sessionName.getText().isEmpty()) {
-							btnCreateGame.setEnabled(false);
+							btnStartVoting.setEnabled(false);
 							JOptionPane emptyNameErrorPanel = new JOptionPane(
 									"You must enter the session name", JOptionPane.ERROR_MESSAGE);
 							JDialog errorDialog = emptyNameErrorPanel.createDialog(null);
 							errorDialog.setLocation(thisPanel.getWidth() / 2,
 									thisPanel.getHeight() / 2);
 							errorDialog.setVisible(true);
-							btnCreateGame.setEnabled(false);
+							btnStartVoting.setEnabled(false);
 						}
 						System.out.println("Start date is after the end date.");
-
+						
 						txtpnLoggedInAs.setText(txtpnLoggedInAs.getText() + " -- INVALID DEADLINE");
+
 					}
 				}
 
-				
+
 			}
 
 		});
@@ -384,13 +375,7 @@ public class CreateGameView extends JPanel {
 				backlogRequirementList.setModel(listModelForThisGame);
 				thisGameRequirementList.setModel(listModelForBacklog);
 
-				btn_removeFromGame.setEnabled(true);
-				btn_removeAll.setEnabled(true);
-				// btnCreateGame.setEnabled(false);
-
-				btn_addAll.setEnabled(false);
-				btn_addToGame.setEnabled(false);
-				btnCreateGame.setEnabled(true);
+				btnStartVoting.setEnabled(true);
 
 			}
 		});
@@ -418,12 +403,12 @@ public class CreateGameView extends JPanel {
 					if (listModelForBacklog.size() == 0) {
 						btn_addToGame.setEnabled(false);
 						btn_addAll.setEnabled(false);
-						btnCreateGame.setEnabled(false);
+						btnStartVoting.setEnabled(false);
 					}
 
 				}
 
-				btnCreateGame.setEnabled(true);
+				btnStartVoting.setEnabled(true);
 			}
 		});
 
@@ -454,7 +439,7 @@ public class CreateGameView extends JPanel {
 				}
 
 				if (listModelForThisGame.size() == 0) {
-					btnCreateGame.setEnabled(false);
+					btnStartVoting.setEnabled(false);
 				}
 
 				btn_addAll.setEnabled(true);
@@ -469,7 +454,7 @@ public class CreateGameView extends JPanel {
 		btn_removeAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				viewHasBeenEdited = true;
-				btnCreateGame.setEnabled(false);
+				btnStartVoting.setEnabled(false);
 
 				while (listModelForThisGame.getSize() > 0) {
 					System.out.println(listModelForThisGame.elementAt(0));
@@ -500,7 +485,7 @@ public class CreateGameView extends JPanel {
 				// Reset start and end date
 				// startDateText.setText(defaultCalendarText);
 				endDateText.setText(defaultCalendarText);
-				btnCreateGame.setEnabled(true);
+				btnStartVoting.setEnabled(true);
 				createGameErrorText.setText("");
 				// Reset start and end time
 				endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
@@ -522,7 +507,7 @@ public class CreateGameView extends JPanel {
 		});
 	}
 
-	private void initComponents() {
+	private void initComponents(PlanningPokerGame game) {
 
 		/**
 		 * A dropdown box that contains the default deck to choose.
@@ -565,25 +550,19 @@ public class CreateGameView extends JPanel {
 		sessionName.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 		date = new Date();
-		sessionName.setText(dateFormat.format(date));
+		sessionName.setText(game.getGameName());
 		sessionName.setColumns(50);
 
 		createGamePane = new JPanel();
 		titlePanel.add(createGamePane);
 		createGamePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
-		btnCreateGame = new JButton("Create");
-		createGamePane.add(btnCreateGame);
-		btnCreateGame.setEnabled(false);
+		btnStartVoting = new JButton("Start voting");
+		createGamePane.add(btnStartVoting);
+		btnStartVoting.setEnabled(false);
 
-		btnResetGame = new JButton("Reset");
+		btnResetGame = new JButton("Default settings");
 		createGamePane.add(btnResetGame);
-
-		btnExport = new JButton("Export requirements");
-		createGamePane.add(btnExport);
-
-		startNow = new JCheckBox("Start Game Now?");
-		createGamePane.add(startNow);
 
 		createGameErrorText = new JLabel("");
 		titlePanel.add(createGameErrorText);
@@ -895,7 +874,7 @@ public class CreateGameView extends JPanel {
 	private JList<Requirement> thisGameRequirementList;
 	private JSpinner endTime;
 	private String enteredName;
-	private JButton btnCreateGame;
+	private JButton btnStartVoting;
 	private JLabel lblGameCreated;
 	private JButton btn_removeFromGame;
 	private JButton btn_addToGame;
