@@ -9,6 +9,7 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +21,7 @@ import edu.wpi.cs.wpisuitetng.exceptions.DatabaseException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 
 /**
  * @author Miguel
@@ -56,7 +58,8 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 		PlanningPokerGame p;
 		p = PlanningPokerGame.fromJSON(content);
 
-		if (getEntity(s, p.getID())[0] == null) {
+		PlanningPokerGame[] existing = getEntity(s, p.getID());
+		if (existing.length == 0 || existing[0] == null) {
 			save(s, p);
 		} else {
 			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerGame creation.");
@@ -77,14 +80,25 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public PlanningPokerGame[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
-		PlanningPokerGame[] m = new PlanningPokerGame[1];
+		PlanningPokerGame[] m = new PlanningPokerGame[0];
 		if(id.equals(""))
 		{
 			return getAll(s);
 		}
 		else
 		{
-			return data.retrieve(ppg, "gameName", id).toArray(m);
+			PlanningPokerGame[] rv = data.retrieve(ppg, "gameName", id).toArray(m);
+			
+			for(PlanningPokerGame game : rv) {
+				if(new Date().after(game.getEndDate().getTime())) {
+					System.out.println("Game \"" + game.getGameName() + "\" has passed its deadline; closing.");
+					game.setFinished(true);
+					game.setLive(false);
+					this.save(s, game);
+				}
+			}
+			
+			return rv;
 		}
 	}
 
@@ -97,8 +111,18 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	 * @return PlanningPokerGame[] * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session) */
 	@Override
 	public PlanningPokerGame[] getAll(Session s) throws WPISuiteException {
-		PlanningPokerGame[] ret = new PlanningPokerGame[1];
+		PlanningPokerGame[] ret = new PlanningPokerGame[0];
 		ret = data.retrieveAll(new PlanningPokerGame(null, null, null, null, false, false, null, null, null)).toArray(ret);
+		
+		for(PlanningPokerGame game : ret) {
+			if(!game.isFinished() && new Date().after(game.getEndDate().getTime())) {
+				System.out.println("Game \"" + game.getGameName() + "\" has passed its deadline; closing.");
+				game.setFinished(true);
+				game.setLive(false);
+				this.save(s, game);
+			}
+		}
+		
 		return ret;
 	}
 
