@@ -92,6 +92,31 @@ public class NewGameView extends JPanel {
 	private NewGameView(PlanningPokerGame game) {
 		initComponents(game);
 		initComponentLogic(game);
+
+		// Fetch updated set of requirements
+		GetRequirementsController.getInstance().retrieveRequirements();
+		while (game.getRequirements().get(0) == null) {}
+
+		/**
+		 * Adds list of current requirements in requirement model to the list
+		 * that will be added to the JList that will hold the requirements to be
+		 * added to the game
+		 */
+		final List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
+
+		// We iterate through the requirements list and add to that JList.
+		for (int i = 0; i < requirements.size(); i++) {
+			Requirement req = requirements.get(i);
+			if (game.getRequirements().contains(req)) {
+				listModelForThisGame.addElement(req);
+			} else if (req.getIteration().equals("Backlog")) {
+				listModelForBacklog.addElement(req);
+				listModelForReseting.addElement(req);
+			}
+		}
+
+		thisGameRequirementList.setModel(listModelForBacklog);
+		this.btnStartVoting.setEnabled(true);
 	}
 
 	/**
@@ -109,15 +134,9 @@ public class NewGameView extends JPanel {
 		} catch (Exception e) {
 		}
 
-		// Fetch updated set of requirements
-		GetRequirementsController.getInstance().retrieveRequirements();
-		try {
-			Thread.sleep(150);
-		} catch (Exception e) {
-		}
-
 		// The "have a deadline" checkbox listener
 		deadline.addActionListener(new ActionListener() {
+
 			boolean checked = gameHasDeadline;
 
 			public void actionPerformed(ActionEvent ae) {
@@ -242,42 +261,6 @@ public class NewGameView extends JPanel {
 		mailer.addEmailFromUsers(userList);
 
 		/**
-		 * Adds list of current requirements in requirement model to the list
-		 * that will be added to the JList that will hold the requirements to be
-		 * added to the game
-		 */
-		final List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
-
-		// We iterate through the requirements list and add to that JList.
-		for (int i = 0; i < requirements.size(); i++) {
-			Requirement req = requirements.get(i);
-			if (game.getRequirements().contains(req)) {
-				listModelForThisGame.addElement(req);
-			} else if (req.getIteration().equals("Backlog")) {
-				listModelForBacklog.addElement(req);
-				listModelForReseting.addElement(req);
-			}
-		}
-
-		thisGameRequirementList.setModel(listModelForBacklog);
-
-		thisGameRequirementList.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				btn_addToGame.setEnabled(true);
-				btn_addAll.setEnabled(true);
-				btn_removeFromGame.setEnabled(false);
-			}
-		});
-
-		backlogRequirementList.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				btn_addToGame.setEnabled(false);
-				btn_removeFromGame.setEnabled(true);
-				btn_removeAll.setEnabled(true);
-			}
-		});
-
-		/**
 		 * Saves data entered about the game when 'Create Game' button is
 		 * pressed
 		 */
@@ -346,6 +329,9 @@ public class NewGameView extends JPanel {
 						lblGameCreated.setVisible(true);
 						btnStartVoting.setEnabled(false);
 						mailer.send();
+						
+						MainView.getController().refreshGameTree();
+						MainView.getController().removeClosableTab();
 					} else {
 						// Error message when the session name is empty
 						if (sessionName.getText().isEmpty()) {
@@ -359,12 +345,13 @@ public class NewGameView extends JPanel {
 							btnStartVoting.setEnabled(false);
 						}
 						System.out.println("Start date is after the end date.");
+						
+						txtpnLoggedInAs.setText(txtpnLoggedInAs.getText() + " -- INVALID DEADLINE");
 
 					}
 				}
 
-				MainView.getController().refreshGameTree();
-				MainView.getController().removeClosableTab();
+
 			}
 
 		});
@@ -385,12 +372,6 @@ public class NewGameView extends JPanel {
 				backlogRequirementList.setModel(listModelForThisGame);
 				thisGameRequirementList.setModel(listModelForBacklog);
 
-				btn_removeFromGame.setEnabled(true);
-				btn_removeAll.setEnabled(true);
-				// btnCreateGame.setEnabled(false);
-
-				btn_addAll.setEnabled(false);
-				btn_addToGame.setEnabled(false);
 				btnStartVoting.setEnabled(true);
 
 			}
