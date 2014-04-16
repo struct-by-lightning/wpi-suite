@@ -66,6 +66,7 @@ public class OpenGameView extends JPanel {
 
 	private PlanningPokerGame game;
 	private ArrayList<Requirement> requirements;
+	private Requirement currentlySelectedRequirement;
 	private static PlanningPokerVote ppv;
 	
 	// JPanel subclasses for each card in this game's deck.
@@ -150,6 +151,7 @@ public class OpenGameView extends JPanel {
 						list = (JList) ev.getSource();
 						Requirement selected = requirements.get(list
 								.getSelectedIndex());
+						currentlySelectedRequirement = selected;
 						requirementNameLabel.setText(selected.getName());
 						requirementDescriptionLabel.setText(selected
 								.getDescription());
@@ -168,6 +170,13 @@ public class OpenGameView extends JPanel {
 												!= Integer.MIN_VALUE) {
 							estimateNumberLabel.setText("" + voteNumber);
 						}
+						
+						for (PlayingCardJPanel card : cards) {
+							card.deselect();
+						}
+						
+						submitButton.setEnabled(true);
+						submitButton.setText("Submit Vote");
 					}
 				});
 
@@ -230,10 +239,18 @@ public class OpenGameView extends JPanel {
 		for (PlayingCardJPanel card : this.cards) {
 			total += card.getValue();
 		}
+		
+		if (total > 0) {
+			this.estimateNumberLabel.setText(new Integer(total).toString());
+		}
+		
+		else {
+			int vote = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVote(game.getGameName(), ConfigManager.getConfig().getUserName(), currentlySelectedRequirement.getId());
+			String strVote = vote > 0 ? ((Integer)vote).toString() : "?";
+			this.estimateNumberLabel.setText(strVote);
+		}
 
-		String newText = (total > 0 ? ("" + total) : "?");
 
-		this.estimateNumberLabel.setText(newText);
 	}
 
 	/**
@@ -279,8 +296,12 @@ public class OpenGameView extends JPanel {
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(MainViewController.activeGame.isLive() && !MainViewController.activeGame.isFinished())
+				if(MainViewController.activeGame.isLive() && !MainViewController.activeGame.isFinished()) {
 					AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
+					submitButton.setEnabled(false);
+					submitButton.setText("Submitted");
+				}
+	
 			}
 		});
 		

@@ -342,6 +342,9 @@ public class CreateGameView extends JPanel {
 						lblGameCreated.setVisible(true);
 						btnCreateGame.setEnabled(false);
 						mailer.send();
+						
+						MainView.getController().refreshGameTree();
+						MainView.getController().removeClosableTab();
 					} else {
 						// Error message when the session name is empty
 						if (sessionName.getText().isEmpty()) {
@@ -356,11 +359,11 @@ public class CreateGameView extends JPanel {
 						}
 						System.out.println("Start date is after the end date.");
 
+						txtpnLoggedInAs.setText(txtpnLoggedInAs.getText() + " -- INVALID DEADLINE");
 					}
 				}
 
-				MainView.getController().refreshGameTree();
-				MainView.getController().removeClosableTab();
+				
 			}
 
 		});
