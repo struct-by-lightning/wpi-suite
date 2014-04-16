@@ -377,9 +377,9 @@ public class ClosedGameView extends JPanel {
 		estimateTitlePanel.setBorder(new javax.swing.border.SoftBevelBorder(
 				javax.swing.border.BevelBorder.RAISED));
 
-		estimateTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+		estimateTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
 		estimateTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		estimateTitleLabel.setText("<html>Your estimate</html>");
+		estimateTitleLabel.setText("<html>Final estimate</html>");
 
 		javax.swing.GroupLayout estimateTitlePanelLayout = new javax.swing.GroupLayout(
 				estimateTitlePanel);
@@ -442,17 +442,17 @@ public class ClosedGameView extends JPanel {
 						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-		mean.setFont(new java.awt.Font("Tahoma", 0, 38));
-		median.setFont(new java.awt.Font("Tahoma", 0, 38));
-		mode.setFont(new java.awt.Font("Tahoma", 0, 38));
-		std.setFont(new java.awt.Font("Tahoma", 0, 38));
-		max.setFont(new java.awt.Font("Tahoma", 0, 38));
-		min.setFont(new java.awt.Font("Tahoma", 0, 38));
+		mean.setFont(new java.awt.Font("Lucida Console", 0, 28));
+		median.setFont(new java.awt.Font("Lucida Console", 0, 28));
+		mode.setFont(new java.awt.Font("Lucida Console", 0, 28));
+		std.setFont(new java.awt.Font("Lucida Console", 0, 28));
+		max.setFont(new java.awt.Font("Lucida Console", 0, 28));
+		min.setFont(new java.awt.Font("Lucida Console", 0, 28));
 		stats.add(mean);
-		stats.add(median);
-		stats.add(mode);
 		stats.add(std);
+		stats.add(median);
 		stats.add(max);
+		stats.add(mode);
 		stats.add(min);
 		//stats.setPreferredSize(new Dimension(stats.getWidth(), 50));
 		stats.setBorder(javax.swing.BorderFactory
@@ -511,7 +511,7 @@ public class ClosedGameView extends JPanel {
 		
 		estimates.setModel(estimateModel);
 
-		estimates.setFont(new java.awt.Font("Tahoma", 0, 18));
+		estimates.setFont(new java.awt.Font("Tahoma", 0, 20));
 		JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(estimates);
 		//scroll.setPreferredSize(new Dimension(500, 400));
@@ -589,7 +589,7 @@ public class ClosedGameView extends JPanel {
 
 		estimateCenteringPanel.add(estimatePanel, new java.awt.GridBagConstraints());
 		
-		submitButton.setFont(new java.awt.Font("Tahoma", 0, 48));
+		submitButton.setFont(new java.awt.Font("Tahoma", 0, 28));
 		submitButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
@@ -696,12 +696,12 @@ public class ClosedGameView extends JPanel {
 	private javax.swing.JPanel allEstimates;
 	private DefaultListModel<String> estimateModel;
 	private PlanningPokerVote[] allVotes;
-	private String meanDef = "   Mean: ";
-	private String medianDef = "Median: ";
-	private String modeDef = "   Mode: ";
-	private String stdDef = "Standard Deviation: ";
-	private String maxDef = "   Maximum: ";
-	private String minDef = "Minimum: ";
+	private String meanDef = "    Mean: ";
+	private String medianDef = "  Median: ";
+	private String modeDef = "    Mode: ";
+	private String stdDef = "Std Dev: ";
+	private String maxDef = "    Max: ";
+	private String minDef = "    Min: ";
 	private List<PlanningPokerVote> gameVotes;
 	private int currentID;
 	private DecimalFormat df = new DecimalFormat("#.###");
