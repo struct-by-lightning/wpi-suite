@@ -173,28 +173,48 @@ public class OpenGameView extends JPanel {
 	
 	class MyDocumentListener implements DocumentListener {
 		public void insertUpdate(DocumentEvent e) {
-<<<<<<< HEAD
-			estimateNumberLabel.setText(textArea.getText());
-=======
-			String tempString = textArea.getText();
-			
-			if (checkInputString(tempString)) {
-				estimateNumberLabel.setText(tempString);
-				textArea.setText(tempString);
-				oldStringForTextArea = tempString;
-			}
->>>>>>> origin/sbl-dev
+
+		estimateNumberLabel.setText(textArea.getText());
+		// Requirement ID
+		// @TODO: Get selected requirement ID
+		int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
+		
+		// Game name
+		String gameName = MainViewController.activeGame.getGameName();
+		
+		// User name
+		String userName = ConfigManager.getConfig().getUserName();
+		
+		ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);
+		
+		submitButton.setEnabled(true);
 		}
 		
 		public void removeUpdate(DocumentEvent e) {
 			String tempString = textArea.getText();
 			
 			estimateNumberLabel.setText(tempString);
-<<<<<<< HEAD
-			if (textArea.getText().equals(""))
+
+			
+			if (textArea.getText().equals("")) {
 				estimateNumberLabel.setText("?");
-=======
->>>>>>> origin/sbl-dev
+				submitButton.setEnabled(false);
+			}
+			else {
+				estimateNumberLabel.setText(textArea.getText());
+				// Requirement ID
+				// @TODO: Get selected requirement ID
+				int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
+				
+				// Game name
+				String gameName = MainViewController.activeGame.getGameName();
+				
+				// User name
+				String userName = ConfigManager.getConfig().getUserName();
+				
+				ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);
+			}
+
 		}
 		
 		public void changedUpdate(DocumentEvent e) {
@@ -211,11 +231,7 @@ public class OpenGameView extends JPanel {
 		}
 		
 		public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-<<<<<<< HEAD
 			if(str == null || field.getText().length() >= MAX_LENGTH || !(str.matches("^[0-9]+$") )) {
-=======
-			if(str == null || field.getText().length() >= MAX_LENGTH || !(field.getText().matches("^[0-9]+$") || field.getText().equals(""))) {
->>>>>>> origin/sbl-dev
 				return;
 			}
 			super.insertString(offs, str, a);
@@ -376,7 +392,6 @@ public class OpenGameView extends JPanel {
 		estimateNumberLabel = new javax.swing.JLabel();
 		cardsScrollPane = new javax.swing.JScrollPane();
 		allCardsPanel = new javax.swing.JPanel();
-<<<<<<< HEAD
 
 		submitButton = new javax.swing.JButton();
 		
@@ -389,8 +404,6 @@ public class OpenGameView extends JPanel {
 		});
 		
 		submitButton.setText("Submit Vote");
-=======
->>>>>>> origin/sbl-dev
 		
 		setLayout(new java.awt.BorderLayout());
 
@@ -854,10 +867,7 @@ public class OpenGameView extends JPanel {
 	private javax.swing.JPanel rowSplitPanel;
 	private javax.swing.JSplitPane splitPane;
 	private javax.swing.JPanel topRowRequirementPanel;
-<<<<<<< HEAD
 	private javax.swing.JButton submitButton;
 	JButton btnStartGame;
 	private JButton btnEndGame;
-=======
->>>>>>> origin/sbl-dev
 }
