@@ -15,7 +15,7 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
- * Description
+ * This class creates a mock request that is never actually sent to the server.
  * 
  * @author Alec Thompson - ajthompson
  * @version Apr 6, 2014
