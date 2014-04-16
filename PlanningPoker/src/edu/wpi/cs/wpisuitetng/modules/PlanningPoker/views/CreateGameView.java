@@ -77,41 +77,21 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * @version $Revision: 1.0 $
  */
 public class CreateGameView {
-	
-	/**
-	 * Static members.
-	 */
-	
-	private static CreateGameView singleInstance;
-
-	
-	/**
-	 * Method getSingleInstance.
-	
-	 * @return CreateGameView */
-	private static CreateGameView getSingleInstance() {
-		if (CreateGameView.singleInstance == null) {
-			CreateGameView.singleInstance = new CreateGameView();
-		}
-		
-		return CreateGameView.singleInstance;
-	}
+	private CreateGameViewController controller;
 	
 	/**
 	 * Method getController.
-	
 	 * @return CreateGameViewController */
-	public static CreateGameViewController getController() {
-		return CreateGameView.getSingleInstance().controller;
+	
+	public CreateGameViewController getController() {
+		return this.controller;
 	}
 	
 	/**
 	 * Instance members.
 	 */
- 	
-	private CreateGameViewController controller;
 	
-	private CreateGameView() {
+	public CreateGameView() {
 		this.controller = new CreateGameViewController(this);
 	}
 	
@@ -122,8 +102,7 @@ public class CreateGameView {
 
  * @return JPanel */
 	public JPanel newCreateGamePanel() {
-		
-		
+
 		listOfRequirementsForReset= new DefaultListModel<Requirement>();
 		listOfRequirementsToAdd= new DefaultListModel<Requirement>();
 		listOfAllRequirements= new DefaultListModel<Requirement>();
