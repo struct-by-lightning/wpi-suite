@@ -55,6 +55,7 @@ import javax.swing.border.LineBorder;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
@@ -325,7 +326,9 @@ public class NewGameView extends JPanel {
 						System.out.println("User Moderator: "
 								+ ConfigManager.getConfig().getUserName());
 						System.out.println("Planning Poker Live: " + game.isLive());
-						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
+						game.setLive(true);
+						game.setFinished(false);
+						UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
 						btnStartVoting.setEnabled(false);
 						mailer.send();
