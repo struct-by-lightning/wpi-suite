@@ -105,7 +105,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(request.getResponse() != null) {
+		if(request.getResponse() != null && request.getResponse().getStatusCode() == 200) {
 			//return Integer.MIN_VALUE;
 			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
 			PlanningPokerVote ret = new PlanningPokerVote(null, null, 0, 0);

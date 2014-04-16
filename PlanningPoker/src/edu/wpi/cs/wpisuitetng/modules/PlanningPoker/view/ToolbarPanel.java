@@ -10,6 +10,10 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
+
+/**
+ * Creates a toolbar panel hosting planning poker buttons.
+ */
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons.PlanningPokerButtonsPanel;
 
 /**
