@@ -360,17 +360,21 @@ public class DeckTest {
 		Deck test = new Deck("test", cardList);
 		Deck test2 = new Deck("test2", cardList2);
 		
-		String serialized = test.toJSON();
-		String serialized2 = test2.toJSON();
+		Deck[] dArr = new Deck[2];
+		
+		dArr[0] = test;
+		dArr[1] = test2;
+		
+		String serialized = Deck.toJSON(dArr);
 		
 		assertTrue(serialized.contains("deckName"));
 		assertTrue(serialized.contains("test"));
 		assertTrue(serialized.contains("cards"));
 		assertTrue(serialized.contains("[1,1,2,3,5,8,13,21]"));
-		assertTrue(serialized2.contains("deckName"));
-		assertTrue(serialized2.contains("test2"));
-		assertTrue(serialized2.contains("cards"));
-		assertTrue(serialized2.contains("[1,2,3,4,5,6,7,8,9,10]"));
+		assertTrue(serialized.contains("deckName"));
+		assertTrue(serialized.contains("test2"));
+		assertTrue(serialized.contains("cards"));
+		assertTrue(serialized.contains("[1,2,3,4,5,6,7,8,9,10]"));
 	}
 	
 	@Test
@@ -394,5 +398,31 @@ public class DeckTest {
 		assertTrue(serialized2.contains("test2"));
 		assertFalse(serialized1.contains("cards"));
 		assertFalse(serialized2.contains("cards"));
+	}
+	
+	@Test
+	public final void toStringTest() {
+		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+
+		ArrayList<Integer> cardList = new ArrayList<Integer>();
+
+		for (Integer i : cards) {
+			cardList.add(i);
+		}
+
+		Deck test = new Deck("test", cardList);
+		
+		assertTrue(test.toString().equals("test"));
+	}
+	
+	@Test
+	public final void removeCardNullTest() {
+		Deck test1 = new Deck("test1");
+		
+		assertEquals(null, test1.getCards());
+		
+		test1.removeCard(1);
+		
+		assertEquals(null, test1.getCards());
 	}
 }
