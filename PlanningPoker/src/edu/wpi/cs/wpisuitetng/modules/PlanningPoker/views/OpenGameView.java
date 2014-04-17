@@ -295,7 +295,10 @@ public class OpenGameView extends JPanel {
 						submitButton.setEnabled(true);
 						submitButton.setText("Submit Vote");
 
-						textArea.setText("");
+						if(game.getDeckType().equals("No Deck")){
+							textArea.setText("");
+						}
+						
 					}
 				});
 
