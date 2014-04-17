@@ -109,17 +109,20 @@ public class ClosedGameView extends JPanel {
 						System.out.println(estimateModel);
 						System.out.println(gameVotes);
 						estimates.setModel(estimateModel);
-						double[] voteNums = new double[reqVotes.size()];
-						for(int i = 0; i< reqVotes.size(); i++) {
-							voteNums[i] = (double)reqVotes.get(i);
+						if(reqVotes.size()!= 0) {
+							double[] voteNums = new double[reqVotes.size()];
+							for(int i = 0; i< reqVotes.size(); i++) {
+								voteNums[i] = (double)reqVotes.get(i);
+							}
+							mean.setText(meanDef+df.format(Statistics.mean(voteNums)));
+							median.setText(medianDef+df.format(Statistics.median(voteNums)));
+							mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
+							if(reqVotes.size()>1) {
+								std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
+							}
+							max.setText(maxDef+df.format(Statistics.max(voteNums)));
+							min.setText(minDef+df.format(Statistics.min(voteNums)));
 						}
-						mean.setText(meanDef+df.format(Statistics.mean(voteNums)));
-						median.setText(medianDef+df.format(Statistics.median(voteNums)));
-						mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
-						std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
-						max.setText(maxDef+df.format(Statistics.max(voteNums)));
-						min.setText(minDef+df.format(Statistics.min(voteNums)));
-						
 					}
 				});
 		// Populate the list with each requirement.
