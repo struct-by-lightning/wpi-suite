@@ -120,8 +120,19 @@ public class ClosedGameView extends JPanel {
 							if(reqVotes.size()>1) {
 								std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
 							}
+							else {
+								std.setText(stdDef+"?");
+							}
 							max.setText(maxDef+df.format(Statistics.max(voteNums)));
 							min.setText(minDef+df.format(Statistics.min(voteNums)));
+						}
+						else {
+							mean.setText(meanDef+"?");
+							median.setText(medianDef+"?");
+							mode.setText(modeDef+"?");
+							std.setText(stdDef+"?");
+							max.setText(maxDef+"?");
+							min.setText(minDef+"?");							
 						}
 					}
 				});
