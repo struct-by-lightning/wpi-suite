@@ -287,12 +287,15 @@ public class OpenGameView extends JPanel {
 							estimateNumberLabel.setText("" + voteNumber);
 						}
 
+
 						for (PlayingCardJPanel card : cards) {
 							card.deselect();
 						}
 
 						submitButton.setEnabled(true);
 						submitButton.setText("Submit Vote");
+
+						textArea.setText("");
 					}
 				});
 
