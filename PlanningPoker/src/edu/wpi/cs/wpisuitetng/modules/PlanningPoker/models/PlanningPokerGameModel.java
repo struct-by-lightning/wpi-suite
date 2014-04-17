@@ -29,19 +29,12 @@ public class PlanningPokerGameModel {
 
 	/**
 	 * Adds a single PlanningPokerGame to the project's set of games.
-	 * 
-	 * Also sets the game finished if it has passed the end date.
 	 *
 	 * @param newGame
 	 *            The PlanningPokerGame to be added to the list of
 	 *            PlanningPokerGames in the project
 	 */
 	public static void addPlanningPokerGame(PlanningPokerGame newGame) {
-		if(new Date().after(newGame.getEndDate().getTime())) {
-			newGame.setFinished(true);
-			UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(newGame);
-		}
-
 		// Add the planning poker game to the local dictionary.
 		PlanningPokerGameModel.planningPokerGamesDict.put(
 				newGame.getGameName(), newGame);
