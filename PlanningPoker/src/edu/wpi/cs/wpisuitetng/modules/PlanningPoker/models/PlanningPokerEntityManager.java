@@ -90,7 +90,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 			PlanningPokerGame[] rv = data.retrieve(ppg, "gameName", id).toArray(m);
 			
 			for(PlanningPokerGame game : rv) {
-				if(new Date().after(game.getEndDate().getTime())) {
+				if(!game.isFinished() && new Date().after(game.getEndDate().getTime())) {
 					System.out.println("Game \"" + game.getGameName() + "\" has passed its deadline; closing.");
 					game.setFinished(true);
 					game.setLive(false);
