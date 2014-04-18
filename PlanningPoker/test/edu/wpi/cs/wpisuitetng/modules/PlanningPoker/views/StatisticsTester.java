@@ -29,6 +29,8 @@ public class StatisticsTester {
 		assertEquals(3.0, Statistics.median(nums), .001);
 		assertEquals(1.0, Statistics.mode(nums), .001);
 		assertEquals(1.581, Statistics.StdDev(nums), .001);
+		assertEquals(5.0, Statistics.max(nums), .001);
+		assertEquals(1.0, Statistics.min(nums), .001);
 	}
 	@Test
 	public void testAll2() {
@@ -37,5 +39,7 @@ public class StatisticsTester {
 		assertEquals(20.9, Statistics.median(nums), .001);
 		assertEquals(20.9, Statistics.mode(nums), .001);
 		assertEquals(29.918, Statistics.StdDev(nums), .001);
+		assertEquals(85.99, Statistics.max(nums), .001);
+		assertEquals(4.26, Statistics.min(nums), .001);
 	}
 }
