@@ -242,13 +242,18 @@ public class CreateGameView extends JPanel {
 		 */
 		final List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
 		
-		// We iterate through the requirements list and add to that JList.
-		for (int i = 0; i < requirements.size(); i++) {
-			Requirement req = requirements.get(i);
-			
-			if (req.getIteration().equals("Backlog")) {
-				listModelForBacklog.addElement(req);
-				listModelForReseting.addElement(req);
+		// Disable the add all button when the requirement size is 0
+		if (requirements.size() == 0) {
+			btn_addAll.setEnabled(false);
+		} else {		
+			// We iterate through the requirements list and add to that JList.
+			for (int i = 0; i < requirements.size(); i++) {
+				Requirement req = requirements.get(i);
+				
+				if (req.getIteration().equals("Backlog")) {
+					listModelForBacklog.addElement(req);
+					listModelForReseting.addElement(req);
+				}
 			}
 		}
 
@@ -801,10 +806,6 @@ public class CreateGameView extends JPanel {
 		btn_addAll = new JButton(">>");
 		topmostButton.add(btn_addAll, BorderLayout.CENTER);
 		
-		// Also, disable the add all button when the requirement size is 0
-		if (listModelForBacklog.size() == 0) {
-			btn_addAll.setEnabled(false);
-		}
 		topButton = new JPanel();
 		buttonsPanel.add(topButton);
 		topButton.setLayout(new BorderLayout(0, 0));
