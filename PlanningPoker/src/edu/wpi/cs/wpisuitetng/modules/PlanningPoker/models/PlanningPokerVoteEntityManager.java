@@ -78,7 +78,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	@Override
 	public PlanningPokerVote[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
-		PlanningPokerVote[] m = new PlanningPokerVote[1];
+		PlanningPokerVote[] m = new PlanningPokerVote[0];
 		if(id.equals(""))
 		{
 			return getAll(s);
@@ -98,7 +98,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	 * @return PlanningPokerVote[] * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session) */
 	@Override
 	public PlanningPokerVote[] getAll(Session s) throws WPISuiteException {
-		PlanningPokerVote[] ret = new PlanningPokerVote[1];
+		PlanningPokerVote[] ret = new PlanningPokerVote[0];
 		ret = data.retrieveAll(new PlanningPokerVote(null, null, 0, 0)).toArray(ret);
 		return ret;
 	}
