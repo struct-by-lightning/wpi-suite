@@ -19,6 +19,7 @@ import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -81,7 +82,6 @@ public class ClosedGameView extends JPanel {
 	private void initForGame() {
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
-		currentID = 0;
 		this.requirements = game.getRequirements();
 		this.requirementList
 				.addListSelectionListener(new ListSelectionListener() {
@@ -106,8 +106,8 @@ public class ClosedGameView extends JPanel {
 								estimateModel.addElement("   "+v.getUserName()+": "+v.getVote());
 							}
 						}
-						System.out.println(estimateModel);
-						System.out.println(gameVotes);
+						System.out.println("est mode: "+estimateModel);
+						System.out.println("g Votes: "+gameVotes);
 						estimates.setModel(estimateModel);
 						if(reqVotes.size()!= 0) {
 							double[] voteNums = new double[reqVotes.size()];
@@ -513,6 +513,7 @@ public class ClosedGameView extends JPanel {
 		
 		
 		allVotes = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVote();
+		
 		gameVotes = new ArrayList<PlanningPokerVote>();
 		for(PlanningPokerVote v : allVotes) {
 			System.out.println("started loop");
