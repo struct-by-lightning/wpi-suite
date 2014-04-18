@@ -86,7 +86,7 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	@Override
 	public Deck[] getEntity(Session s, String id) throws NotFoundException,
 			WPISuiteException {
-		Deck[] m = new Deck[1];
+		Deck[] m = new Deck[0];
 		if (id.equals("")) {
 			return getAll(s);
 		} else {
@@ -103,7 +103,7 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	 * @return Deck[] * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session) */
 	@Override
 	public Deck[] getAll(Session s) throws WPISuiteException {
-		Deck[] ret = new Deck[1];
+		Deck[] ret = new Deck[0];
 		ret = data.retrieveAll(new Deck(null, null)).toArray(ret);
 		return ret;
 	}
