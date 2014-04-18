@@ -74,7 +74,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 		request.send(); // send the request
 		
 		try {
-			Thread.sleep(150);
+			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
