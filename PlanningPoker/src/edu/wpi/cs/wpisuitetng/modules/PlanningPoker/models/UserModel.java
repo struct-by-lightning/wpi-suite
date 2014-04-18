@@ -1,163 +1,133 @@
 /*******************************************************************************
- * Copyright (c) 2012-2014 -- WPI Suite
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * Contributor: team struct-by-lightning
- *******************************************************************************/
+* Copyright (c) 2012-2014 -- WPI Suite
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+* Contributor: team struct-by-lightning
+*******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import com.google.gson.Gson;
 
-import javax.swing.AbstractListModel;
-
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 
 /**
- * List of users pulled from the server.
- * 
- * Add functions only add users to the local instance, as the users already
- * exist on the server
- * 
- * @author Alec Thompson
- * 
- * @version $Revision: 1.0 $
+ * @author sfmailand
+ *
  */
-public class UserModel extends AbstractListModel<User> {
-	/**
-	 * The list in which all the Users for a single project are contained
-	 */
-	private List<User> Users;
+public class UserModel extends RegularAbstractModel<UserModel>{
 
-	/**
-	 * The static object to allow the user model to exist
-	 */
-	private static UserModel instance;
-
-	/**
-	 * Constructs an empty list of users for the project
-	 */
-	private UserModel() {
-		Users = new ArrayList<User>();
-	}
-
-	/**
+	/**The email of the user*/
+	private String userEmail;
 	
-	 * @return the instance of the User model singleton */
-	public static UserModel getInstance() {
-		if (instance == null) {
-			instance = new UserModel();
-		}
-
-		return instance;
-	}
-
-	/**
-	 * Adds a single User to the list of users for the project
-	 * 
-	 * @param newUser
-	 *            The User to be added to the list of Users in the project
-	 */
-	public void addUser(User newUser) {
-		Users.add(newUser);
-	}
-
-	/**
-	 * Gets the User with the given ID
-	 * 
-	 * @param id
-	 *            the ID number of the User to be returned
+	/**The username of the user*/
+	private String userName;
 	
-	 * @return the User for the ID or null if the User is not found */
-	public User getUser(int id) {
-		// iterate through the list of Users until id is found
-		for (int i = 0; i < this.Users.size(); i++) {
-			if (Users.get(i).getIdNum() == id)
-				return Users.get(i);
-		}
-		return null;
+	/**The SMS number of the user*/
+	private String numberSMS;
+	
+	/**The Instant message information of the User*/
+	private String instantMessage;
+	
+
+	public UserModel(String userEmail, String userName, String numberSMS, String instantMessage){
+		super();
+		this.userEmail = userEmail;
+		this.userName = userName;
+		this.numberSMS = numberSMS;
+		this.instantMessage = instantMessage;
 	}
 
-	/**
-	 * Removes the user with the given id
-	 * 
-	 * @param id
-	 *            The id number of the user to be removed from the list of
-	 *            users.
+	/* (non-Javadoc)
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
-	public void removeUser(int id) {
-		// iterate through the list of Users until id is found
-		for (int i = 0; i < this.Users.size(); i++) {
-			if (Users.get(i).getIdNum() == id) {
-				Users.remove(i);
-				break;
-			}
-		}
-	}
-
-	/**
-	 * Provides the number of elements in the list of Users for the project.
-	 * 
-	
-	
-	 * @return the number of Users in the project * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize()
-	 */
-	public int getSize() {
-		return Users.size();
-	}
-
-	/**
-	 * This function takes an index and finds the User in the list of Users for
-	 * the project.
-	 * 
-	
-	
-	 * @param index int
-	 * @return the User associated with the provided index * @see javax.swing.ListModel@getElementAt(int) * @see javax.swing.ListModel#getElementAt(int)
-	 */
-	public User getElementAt(int index) {
-		return Users.get(Users.size() - 1 - index);
-	}
-
-	/**
-	 * Removes all Users from this model
-	 * 
-	 * NOTE: Once does not simply construct a new instance of the model. Other
-	 * classes reference it, so we must manually remove each User from the
-	 * model.
-	 */
-	public void emptyModel() {
-		int oldSize = getSize();
-		Iterator<User> iterator = Users.iterator();
-		while (iterator.hasNext()) {
-			iterator.next();
-			iterator.remove();
-		}
-		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
+	@Override
+	public String toJSON() {
+		return new Gson().toJson(this, UserModel.class);
 	}
 	
 	/**
-	 * Adds the given array of users to the list
-	 *
-	 * @param Users the array of Users to add
+	 * Returns an instance of a User constructed using the given
+	 * Requirement encoded as a JSON string
 	 */
-	public void addUsers(User[] Users) {
-		for (User u : Users) {
-			this.Users.add(u);
-		}
-		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
+	
+	public static UserModel fromJson(String json){
+		final Gson parser = new Gson();
+		return parser.fromJson(json, UserModel.class);
 	}
 	
+
+
+
 	/**
-	 * Returns the list of Users
-	 *
-	
-	 * @return the Users held within the UserModel */
-	public List<User> getUsers() {
-		return Users;
+	 * @return the userEmail
+	 */
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	/**
+	 * @param userEmail the userEmail to set
+	 */
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+
+
+	/**
+	 * @return the numberSMS
+	 */
+	public String getNumberSMS() {
+		return numberSMS;
+	}
+
+	/**
+	 * @param numberSMS the numberSMS to set
+	 */
+	public void setNumberSMS(String numberSMS) {
+		this.numberSMS = numberSMS;
+	}
+
+	/**
+	 * @return the instantMessage
+	 */
+	public String getInstantMessage() {
+		return instantMessage;
+	}
+
+	/**
+	 * @param instantMessage the instantMessage to set
+	 */
+	public void setInstantMessage(String instantMessage) {
+		this.instantMessage = instantMessage;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel#getID()
+	 */
+	@Override
+	public String getID() {
+		return userName;
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel#setID(java.lang.String)
+	 */
+	@Override
+	public void setID(String toSet) {
+		this.userName = toSet;
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel#getPrimaryKey()
+	 */
+	@Override
+	public String getPrimaryKey() {
+		return "username";
 	}
 }
