@@ -42,11 +42,14 @@ import javax.swing.text.PlainDocument;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
@@ -87,6 +90,9 @@ public class OpenGameView extends JPanel {
 
 	// JPanel subclasses for each card in this game's deck.
 	private ArrayList<PlayingCardJPanel> cards;
+	
+	// Mailer for this view
+	private static Mailer closedNotification;
 
 	/**
 	 * Constructor runs NetBeans generated UI initialization code and then
@@ -255,6 +261,9 @@ public class OpenGameView extends JPanel {
 		else {
 			populateWithCards();
 		}
+		
+		// initialize users from server
+		initComponentLogic();
 
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
@@ -287,12 +296,18 @@ public class OpenGameView extends JPanel {
 							estimateNumberLabel.setText("" + voteNumber);
 						}
 
+
 						for (PlayingCardJPanel card : cards) {
 							card.deselect();
 						}
 
 						submitButton.setEnabled(true);
 						submitButton.setText("Submit Vote");
+
+						if(game.getDeckType().equals("No Deck")){
+							textArea.setText("");
+						}
+						
 					}
 				});
 
@@ -368,6 +383,25 @@ public class OpenGameView extends JPanel {
 
 	}
 
+	/**
+	 * Fills in all dynamic data displayed by components, and adds appropriate
+	 * listeners.
+	 */
+	private void initComponentLogic() {
+		// create the instance of the Mailer
+		if (closedNotification == null) {
+			closedNotification = new Mailer("The game " + game.getGameName() + " has closed!", "You can now view the results of the estimation.");
+		}
+		// Get and add the list of emails to the mailer
+		GetUserController.getInstance().retrieveUser();
+		try {
+			Thread.sleep(150);
+		} catch (Exception e) {
+		}
+		
+		closedNotification.addEmailFromUsers(UserModel.getInstance().getUsers());
+	}
+	
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -549,6 +583,7 @@ public class OpenGameView extends JPanel {
 		{
 		    public void actionPerformed(ActionEvent e)
 		    {
+		    	closedNotification.send();
 		    	btnEndGame.setEnabled(false);
 		    	btnEndGame.setText("Game Ended");
 		    	game.setFinished(true);

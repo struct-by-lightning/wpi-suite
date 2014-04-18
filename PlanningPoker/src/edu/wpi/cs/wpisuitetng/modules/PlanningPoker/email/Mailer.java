@@ -49,8 +49,9 @@ public class Mailer {
 	private String host = "mailtrap.io";
 	private String login = "structbylightning-17dcc3f2b944376c";
 	private String pass = "ce1a24cb171342c3";
-	
-	// TODO: Create a wpi-suite email address and mailtrap account that we can give people access to in the documentation.
+
+	// TODO: Create a wpi-suite email address and mailtrap account that we can
+	// give people access to in the documentation.
 
 	private final boolean DEBUG = true;
 
@@ -113,8 +114,9 @@ public class Mailer {
 	 * Alternate constructor that takes an array of email addresses as a
 	 * parameter
 	 * 
-	
-	 * @param emailArray String[]
+	 * 
+	 * @param emailArray
+	 *            String[]
 	 */
 	public Mailer(String[] emailArray) {
 		session = createSmtpSession();
@@ -138,13 +140,38 @@ public class Mailer {
 			mex.printStackTrace();
 		}
 	}
+	
+	public Mailer(String subject, String text) {
+		session = createSmtpSession();
+		session.setDebug(true);
+		message = new MimeMessage(session);
+
+		try {
+			// testing
+			if (DEBUG)
+				transport = session.getTransport("smtp");
+			// release
+			String from = "struct.by.lightning@gmail.com";
+
+			// set the message to be from struct by lightning
+			message.setFrom(new InternetAddress(from));
+
+			// set the header line
+			message.setSubject(subject);
+			message.setText(text);
+		} catch (MessagingException mex) {
+			System.out.println("Message creation failed");
+			mex.printStackTrace();
+		}
+	}
 
 	/**
 	 * Creates an SMTP session, configured for using the Google SMTP server with
 	 * the Struct by Lightning gmail account being used to send the emails
 	 * 
-	
-	 * @return Google SMTP session */
+	 * 
+	 * @return Google SMTP session
+	 */
 	private Session createSmtpSession() {
 		// final version settings
 		if (DEBUG) {
@@ -180,8 +207,9 @@ public class Mailer {
 	/**
 	 * Sends the email to the added recipients
 	 * 
-	
-	 * @return true if the email sends, false otherwise */
+	 * 
+	 * @return true if the email sends, false otherwise
+	 */
 	public boolean send() {
 		try {
 			if (DEBUG)
@@ -210,8 +238,9 @@ public class Mailer {
 	 * 
 	 * @param recipient
 	 *            The target's email address
-	
-	 * @return true if the recipient is added, false otherwise */
+	 * 
+	 * @return true if the recipient is added, false otherwise
+	 */
 	public boolean addEmail(String recipient) {
 		try {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
@@ -229,8 +258,9 @@ public class Mailer {
 	 * 
 	 * @param recArr
 	 *            Array of email addresses (strings!)
-	
-	 * @return true if all addresses were added successfully, false otherwise */
+	 * 
+	 * @return true if all addresses were added successfully, false otherwise
+	 */
 	public boolean addEmailArray(String[] recArr) {
 		boolean isSuccess = true;
 		for (String s : recArr) {
@@ -241,9 +271,12 @@ public class Mailer {
 
 	/**
 	 * Method addEmailFromUsers.
-	 * @param userList List<User>
-	
-	 * @return boolean */
+	 * 
+	 * @param userList
+	 *            List<User>
+	 * 
+	 * @return boolean
+	 */
 	public boolean addEmailFromUsers(List<User> userList) {
 		boolean isSuccess = true;
 		for (User u : userList) {

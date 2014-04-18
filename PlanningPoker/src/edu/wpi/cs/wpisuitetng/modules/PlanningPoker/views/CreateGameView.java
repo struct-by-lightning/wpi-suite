@@ -210,8 +210,9 @@ public class CreateGameView extends JPanel {
 					createGameErrorText.setText("Session needs a name");
 
 				} else {
-
+					
 					// Don't enable the "Create Game" button if there are no requirements
+
 					if (listModelForThisGame.size() == 0) {
 						btnCreateGame.setEnabled(false);
 					} else {
@@ -799,7 +800,11 @@ public class CreateGameView extends JPanel {
 
 		btn_addAll = new JButton(">>");
 		topmostButton.add(btn_addAll, BorderLayout.CENTER);
-
+		
+		// Also, disable the add all button when the requirement size is 0
+		if (listModelForBacklog.size() == 0) {
+			btn_addAll.setEnabled(false);
+		}
 		topButton = new JPanel();
 		buttonsPanel.add(topButton);
 		topButton.setLayout(new BorderLayout(0, 0));

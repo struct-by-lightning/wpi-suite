@@ -159,7 +159,8 @@ public class MainViewController {
 			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(game.getGameName());
 
 			// Conditions for a game to be "New"
-			if (!game.isLive() && !game.isFinished()) {
+			// Long: Only show the new game to its moderator.s
+			if (!game.isLive() && !game.isFinished() && game.getModerator().equals(ConfigManager.getConfig().getUserName())) {
 				newGames.add(nodeToAdd);
 			}
 
