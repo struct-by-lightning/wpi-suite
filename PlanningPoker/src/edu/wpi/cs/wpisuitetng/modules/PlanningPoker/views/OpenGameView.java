@@ -92,7 +92,7 @@ public class OpenGameView extends JPanel {
 	private ArrayList<PlayingCardJPanel> cards;
 	
 	// Mailer for this view
-	private static Mailer closedNotification;
+	private Mailer closedNotification;
 
 	/**
 	 * Constructor runs NetBeans generated UI initialization code and then
