@@ -24,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 
 /**
- * @author Miguel, rbkillea, bbiletch
+ * @author Miguel
  * @version $Revision: 1.0 $
  */
 public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGame> {
@@ -46,7 +46,11 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	 * Method makeEntity.
 	 * @param s Session
 	 * @param content String
-
+	
+	
+	
+	
+	
 	 * @return PlanningPokerGame * @throws BadRequestException * @throws ConflictException * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(Session, String) */
 	@Override
 	public PlanningPokerGame makeEntity(Session s, String content)
@@ -108,7 +112,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public PlanningPokerGame[] getAll(Session s) throws WPISuiteException {
 		PlanningPokerGame[] ret = new PlanningPokerGame[0];
-		ret = data.retrieveAll(new PlanningPokerGame(null, null, null, null, false, false, null, null, null), s.getProject()).toArray(ret);
+		ret = data.retrieveAll(new PlanningPokerGame(null, null, null, null, false, false, null, null, null)).toArray(ret);
 		
 		for(PlanningPokerGame game : ret) {
 			if(!game.isFinished() && new Date().after(game.getEndDate().getTime())) {
@@ -206,7 +210,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
 		logger.log(Level.INFO, "PlanningPokerEntityManager invoking DeleteAll...");
-		data.deleteAll(new PlanningPokerGame(null, null, null, null, false, false, null, null, null),s.getProject());
+		data.deleteAll(new PlanningPokerGame(null, null, null, null, false, false, null, null, null));
 	}
 
 	/**
