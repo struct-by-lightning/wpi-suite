@@ -9,6 +9,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,24 +37,28 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 
 	// initialize the main view toolbar buttons
-	private final JButton newGameButton = new JButton(
-			"<html>Create New Game</html>");
+	private final JButton newGameButton = new JButton("<html>Create New Game</html>");
+	private final JButton refreshButton = new JButton("<html>Refresh</html>");
+	private final JButton helpButton = new JButton("<html>Help</html>");
 	private final JPanel contentPanel = new JPanel();
 
 	public PlanningPokerButtonsPanel() {
 		super("");
 
-		this.contentPanel.setLayout(new BoxLayout(contentPanel,
-				BoxLayout.X_AXIS));
-		this.setPreferredWidth(250);
+		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		this.setPreferredWidth(360);
 
 		this.newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-
+		this.newGameButton.setPreferredSize(new Dimension(150, 50));
+		this.refreshButton.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		try {
 			final Image img = ImageIO.read(getClass()
 					.getResource("new_req.png"));
+			final Image imgRef = ImageIO.read(getClass()
+					.getResource("refresh.png"));
 			this.newGameButton.setIcon(new ImageIcon(img));
-
+			this.refreshButton.setIcon(new ImageIcon(imgRef));
 		} catch (IOException ex) {
 			System.out.print(ex.getMessage());
 
@@ -66,8 +71,16 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 				MainView.getController().createGameButtonClicked();
 			}
 		});
+		
+		refreshButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainView.getController().refreshGameTree();
+			}
+		});
 
 		contentPanel.add(newGameButton);
+		contentPanel.add(refreshButton);
 		contentPanel.setOpaque(true);
 
 		this.add(contentPanel);
