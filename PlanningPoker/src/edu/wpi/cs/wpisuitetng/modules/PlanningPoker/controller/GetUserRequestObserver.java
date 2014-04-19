@@ -22,6 +22,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 public class GetUserRequestObserver implements RequestObserver {
 
 	private GetUserController controller;
+	public static boolean isError = false;
 
 	/**
 	 * Parse the Users out of the response body and pass them the controller
@@ -40,11 +41,8 @@ public class GetUserRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
-		// Convert the JSON array of Users to a User object array
-		User[] users = User.fromJSONArray(iReq.getResponse().getBody());
-
-		// pass these users to the controller
-		controller.receivedUser(users);
+		isError = false;
+		System.out.println("Success!" + iReq.getResponse().getBody());
 	}
 
 	/**
@@ -54,7 +52,8 @@ public class GetUserRequestObserver implements RequestObserver {
 	 *      cs.wpisuitetng.network.models.IRequest) */
 	@Override
 	public void responseError(IRequest iReq) {
-		fail(iReq, null);
+		isError = true;
+		System.out.println("Error!" + iReq.getResponse().getBody());
 	}
 
 	/**
@@ -65,7 +64,6 @@ public class GetUserRequestObserver implements RequestObserver {
 	 *      .network.models.IRequest, java.lang.Exception) */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		// Do something suitable for an error condition.
 	}
 
 }

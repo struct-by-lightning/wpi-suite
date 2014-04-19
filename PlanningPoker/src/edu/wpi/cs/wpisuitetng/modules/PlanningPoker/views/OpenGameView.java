@@ -46,6 +46,9 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Users;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -386,7 +389,8 @@ public class OpenGameView extends JPanel {
 		} catch (Exception e) {
 		}
 
-		closedNotification.addEmailFromUsers(UserModel.getInstance().getUsers());
+		closedNotification.addEmailFromUsers(Users.getUserModels());
+
 	}
 
 	/**

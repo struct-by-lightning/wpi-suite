@@ -18,6 +18,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdateUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Users;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
@@ -86,7 +87,7 @@ public class EmailPopup {
 	 * out, the user on the server is updated.
 	 */
 	private void run() {
-		User user;
+		/*UserModel user;
 		String newEmail = null;
 		// check if the user has an email already
 		user = findUser();
@@ -94,7 +95,7 @@ public class EmailPopup {
 				+ ConfigManager.getConfig().getUserName());
 
 		if (user != null) {
-			if (!this.hasEmail(user)) {
+			if (!this.getUserEmail()) {
 				// get the new email
 				newEmail = JOptionPane
 						.showInputDialog("Enter an email address for notifications");
@@ -105,7 +106,7 @@ public class EmailPopup {
 				// update user on server
 				UpdateUserController.getInstance().update(user);
 			}
-		}
+		}*/
 	}
 
 	/**
@@ -122,7 +123,7 @@ public class EmailPopup {
 	
 	 * @return the list of users updated with the user's new email address. */
 	private List<User> run(List<User> userList) {
-		User user;
+		/*User user;
 		String newEmail = null;
 		// check if the user has an email already
 		user = findUser(userList, ConfigManager.getConfig().getUserName());
@@ -147,7 +148,7 @@ public class EmailPopup {
 				// update user on server
 				UpdateUserController.getInstance().update(user);
 			}
-		}
+		}*/
 
 		return userList;
 	}
@@ -158,7 +159,7 @@ public class EmailPopup {
 	 * 
 	
 	 * @return the currently logged in user. */
-	private User findUser() {
+	private UserModel findUser() {
 		GetUserController.getInstance().retrieveUser();
 
 		try {
@@ -166,11 +167,9 @@ public class EmailPopup {
 		} catch (InterruptedException e2) {
 		}
 
-		for (User u : UserModel.getInstance().getUsers()) {
-			if (u.getUsername().equals(ConfigManager.getConfig().getUserName()))
-				return u;
-		}
-		return null; // this shouldn't happen
+		
+		return Users.getUserModel(ConfigManager.getConfig().getUserName());
+
 	}
 
 	/**
