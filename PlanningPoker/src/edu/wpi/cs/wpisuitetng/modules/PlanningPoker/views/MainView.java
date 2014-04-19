@@ -9,65 +9,390 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
-
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
- * @author Miguel
- * @version $Revision: 1.0 $
+ * A singleton class encapsulating the GUI for the two parts of the planning
+ * poker UI:
+ * 
+ * - The component in the Janeway module toolbar area.
+ * 
+ * - The component in the main dislpay area of the Janeway module.
+ * 
+ * This class is implemented as a singleton because there should only ever be
+ * one instance of each of the main UI components.
+ * 
+ * @author Austin Rose (atrose)
  */
 public class MainView {
-	
+
+	// TODO: Deal with having removes the "activeGame" member due to potential
+	// inaccuracy.
+
 	/**
-	 * Static members.
+	 * This function adds a new closeable tab to the planning poker module's
+	 * inner tab pane.
+	 * 
+	 * @param tabName
+	 *            The title for the tab being added.
+	 * @param tabPanel
+	 *            The JPanel to display as the newly added tab's content.
 	 */
-	
-	private static MainView singleInstance;
-	
+	public void addCloseableTab(String tabName, JPanel tabPanel) {
+		this.mainComponent.addTab(tabName, tabPanel);
+		this.mainComponent.setTabComponentAt(this.mainComponent.indexOfComponent(tabPanel),
+				new ClosableTabComponent(this.mainComponent));
+		this.mainComponent.setSelectedComponent(tabPanel);
+	}
+
 	/**
-	 * Method getSingleInstance.
-	
-	 * @return MainView */
-	private static MainView getSingleInstance() {
+	 * This function closes the tab which is currently open in the planning
+	 * poker module's inner tab pane.
+	 * 
+	 * TODO: Is there any risk of this closing the should-always-be-open
+	 * overview tab?
+	 */
+	public void removeClosableTab() {
+
+		// TODO: Should really figure out all the right places to call for
+		// updating the database, or refreshing the game tree, and whatnot.
+		// Should the list of games ever really update other than when the tree
+		// is refreshed?
+		this.refreshGameTree();
+
+		Component selected = this.mainComponent.getSelectedComponent();
+		if (selected != null) {
+			this.mainComponent.remove(selected);
+		}
+
+		// TODO: Do these do anything?
+		// MainView.getInstance().gameTree.repaint();
+		// MainView.getInstance().gameTree.getParent().repaint();
+	}
+
+	/**
+	 * This method brings the game-displaying tree in the main overview tab up
+	 * to date with the database.
+	 */
+	public void refreshGameTree() {
+
+		// Ensure that games have been retrieved from the database before moving
+		// on.
+		try {
+			GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
+			while (PlanningPokerGameModel.getPlanningPokerGames().get(0) == null
+					|| PlanningPokerGameModel.getPlanningPokerGames().size() < 1) {
+			}
+		} catch (Exception e) {
+			System.out.println("Exception in refreshGameTree() from retrievePlanningPokerGames()");
+		}
+
+		// Instantiate each of the folders which may appear in the tree.
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("All Games");
+		DefaultMutableTreeNode newGames = new DefaultMutableTreeNode("New");
+		DefaultMutableTreeNode openGames = new DefaultMutableTreeNode("Open");
+		DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode("Finished");
+
+		// Potentially add a node to one of the sub folders for each planning
+		// poker game we have.
+		for (PlanningPokerGame game : PlanningPokerGameModel.getPlanningPokerGames()) {
+			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(game.getGameName());
+
+			// Conditions for a game to be "New" and visible to the current
+			// user.
+			if (!game.isLive() && !game.isFinished()
+					&& game.getModerator().equals(ConfigManager.getConfig().getUserName())) {
+				newGames.add(nodeToAdd);
+			}
+
+			// Conditions for a game to be "Open".
+			//
+			// TODO: This should check that the current user has actually been
+			// added to the project as well...
+			//
+			// Maybe when a planning poker game is created it makes a note of
+			// the users associated with the currently open project (add it to
+			// the model), and then we can filter against that here.
+			else if (game.isLive() && !game.isFinished()) {
+				openGames.add(nodeToAdd);
+			}
+
+			// Conditions for a game to be "Finished".
+			// TODO: Same user-project filtering as above needed here too.
+			else if (game.isFinished() && !game.isLive()) {
+				finishedGames.add(nodeToAdd);
+			}
+
+		}
+
+		// Add the "New" folder to the tree so long as it has any games in it.
+		if (!newGames.isLeaf()) {
+			root.add(newGames);
+		}
+
+		// Add the "Open" folder to the tree so long as it has any games in it.
+		if (!openGames.isLeaf()) {
+			root.add(openGames);
+		}
+
+		// Add the "Closed" folder to the tree so long as it has any games in
+		// it.
+		if (!finishedGames.isLeaf()) {
+			root.add(finishedGames);
+		}
+
+		// Get the model for the tree.
+		DefaultTreeModel model = (DefaultTreeModel) this.gameTree.getModel();
+
+		// Set the model's root node to the newly constructed one.
+		model.setRoot(root);
+		model.reload(root);
+
+		// Expand the tree's folders.
+		for (int i = 0; i < this.gameTree.getRowCount(); i++) {
+			this.gameTree.expandRow(i);
+		}
+	}
+
+	/**
+	 * @return The component that should be displayed in the toolbar area of
+	 *         planning poker. This will either be a banner for the contact
+	 *         prompt, or the main toolbar for planning poker.
+	 */
+	public JComponent getToolbarComponent() {
+		return this.cardToolbarComponent;
+	}
+
+	/**
+	 * @return The component that should be displayed in the main area of
+	 *         planning poker. This will either be the form/info for the contact
+	 *         information prompt, or the main tabbed pane for planning poker.
+	 */
+	public JComponent getMainComponent() {
+		return this.cardMainAreaComponent;
+	}
+
+	/**
+	 * This function is called with the appropriate argument whenever the user
+	 * double clicks a game in the tree.
+	 * 
+	 * @param selectedGame
+	 *            The planning poker game which the user has just double clicked
+	 *            in the main view's game tree.
+	 */
+	private static void gameWasDoubleClicked(PlanningPokerGame selectedGame) {
+
+		// Ensure that requirements have been updated from the database before
+		// attempting to display them.
+		try {
+			GetRequirementsController.getInstance().retrieveRequirements();
+			while (RequirementModel.getInstance().getRequirements().get(0) == null
+					|| RequirementModel.getInstance().getRequirements().size() < 1) {
+			}
+		} catch (Exception e) {
+			System.out.println("Exception in gameWasDoubleClicked() from retrieveRequirements()");
+			e.printStackTrace();
+		}
+
+		// Conditions for a game to be "New"
+		if (!selectedGame.isLive() && !selectedGame.isFinished()) {
+			NewGameView.open(selectedGame);
+		}
+
+		// Conditions for a game to be "Open"
+		if (selectedGame.isLive() && !selectedGame.isFinished()) {
+			OpenGameView.open(selectedGame);
+		}
+
+		// Conditions for a game to be "Finished"
+		if (selectedGame.isFinished() && !selectedGame.isLive()) {
+			ClosedGameView.open(selectedGame);
+		}
+	}
+
+	/**
+	 * This method is called whenever the user clicks the "Create New Game"
+	 * button, and opens up a new closeable tab with the UI for creating a new
+	 * game.
+	 */
+	public static void createGameButtonClicked() {
+		CreateGameView.openNewTab();
+	}
+
+	/**
+	 * The name which components related to the contact prompt are indexed by in
+	 * card layouts.
+	 */
+	private final String CONTACT_PROMPT_VIEW = "CONTACT_PROMPT_VIEW";
+
+	/**
+	 * The name which components related to the main area view are indexed by in
+	 * card layouts.
+	 */
+	private final String MAIN_VIEW = "MAIN_VIEW";
+
+	/**
+	 * Triggers the planning poker module to switch from the contact information
+	 * prompt to it's main overview - the default GUI for after a user has
+	 * already provided contact information.
+	 */
+	public void switchToMainOverview() {
+
+		// Make sure the game tree is up to date with the database before
+		// displaying it.
+		this.refreshGameTree();
+
+		// Set the correct active cards on the toolbar and main components.
+		CardLayout toolbar = (CardLayout) this.cardToolbarComponent.getLayout();
+		CardLayout mainArea = (CardLayout) this.cardMainAreaComponent.getLayout();
+		toolbar.show(this.cardToolbarComponent, this.MAIN_VIEW);
+		mainArea.show(this.cardMainAreaComponent, this.MAIN_VIEW);
+	}
+
+	/**
+	 * The single instance of this singleton-pattern class.
+	 */
+	private static MainView singleInstance;
+
+	/**
+	 * @return MainView The single accessible instance of this singleton-pattern
+	 *         class.
+	 */
+	public static MainView getInstance() {
 		if (MainView.singleInstance == null) {
 			MainView.singleInstance = new MainView();
 		}
-		
+
 		return MainView.singleInstance;
 	}
-	
+
 	/**
-	 * Method getController.
-	
-	 * @return MainViewController */
-	public static MainViewController getController() {
-		return MainView.getSingleInstance().controller;
-	}
-	
-	/**
-	 * Instance members.
+	 * The component filling the toolbar area of the planning poker module. It's
+	 * a JPanel with a card layout where the two possible cards are the
+	 * "toolbar" for the contact prompt view, and the toolbar for the main view.
 	 */
- 	
-	private MainViewController controller;
-	
+	private JComponent cardToolbarComponent;
+
+	/**
+	 * The component filling the main area of the planning poker module. It's a
+	 * JPanel with a card layout where the two possible cards are the main area
+	 * component for the contact prompt view, and the the main area component
+	 * for the main view.
+	 */
+	private JComponent cardMainAreaComponent;
+
+	/**
+	 * Constructor initializes all GUI components and starts the UI on the
+	 * contact information prompt. It is a private member so that this class can
+	 * be implemented as a singleton.
+	 */
 	private MainView() {
 		initComponents();
-		this.controller = new MainViewController(this.gameTree, 
-													this.mainComponent, 
-													this.toolbarComponent);
+		setUpCards();
+		initLogic();
 	}
 
-	private void initComponents() {
+	/**
+	 * Initialize the card layout JPanels which will allow switiching between
+	 * the main planning poker view and the prompt for contact information.
+	 */
+	private void setUpCards() {
+		// Initialize the toolbar JPanel with a card layout.
+		this.cardToolbarComponent = new JPanel(new CardLayout());
 
+		// Initialize the main area JPanel with a card layout.
+		this.cardMainAreaComponent = new JPanel(new CardLayout());
+
+		// Add the contact prompt view's toolbar.
+		this.cardToolbarComponent.add(new ContactInformationPromptToolbarView(),
+				this.CONTACT_PROMPT_VIEW);
+
+		// Add the contact prompt view's main area.
+		this.cardMainAreaComponent.add(ContactInformationPromptView.getInstance(),
+				this.CONTACT_PROMPT_VIEW);
+
+		// Add the main view's toolbar.
+		this.cardToolbarComponent.add(this.toolbarComponent, this.MAIN_VIEW);
+
+		// Add the main view's main area.
+		this.cardMainAreaComponent.add(this.mainComponent, this.MAIN_VIEW);
+
+		// Display the contact prompt view first by default.
+		CardLayout toolbar = (CardLayout) this.cardToolbarComponent.getLayout();
+		CardLayout mainArea = (CardLayout) this.cardMainAreaComponent.getLayout();
+		toolbar.show(this.cardToolbarComponent, this.CONTACT_PROMPT_VIEW);
+		mainArea.show(this.cardMainAreaComponent, this.CONTACT_PROMPT_VIEW);
+	}
+
+	/**
+	 * This method adds listeners needed for GUI components.
+	 */
+	private void initLogic() {
+
+		// Listener which triggers an appropriate call to
+		// MainView.gameWasDoubleClicked() when the user double clicks a game in
+		// the game tree.
+		gameTree.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				int selRow = gameTree.getRowForLocation(e.getX(), e.getY());
+				TreePath selPath = gameTree.getPathForLocation(e.getX(), e.getY());
+				if (selRow != -1) {
+					if (e.getClickCount() == 2) {
+						DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
+								.getLastPathComponent();
+						String gameName = (String) node.getUserObject();
+
+						MainView.gameWasDoubleClicked(PlanningPokerGameModel
+								.getPlanningPokerGame(gameName));
+					}
+				}
+			}
+		});
+
+		this.gameTree.addAncestorListener(new AncestorListener() {
+			public void ancestorAdded(AncestorEvent event) {
+				refreshGameTree();
+			}
+
+			public void ancestorMoved(AncestorEvent event) {
+				refreshGameTree();
+			}
+
+			public void ancestorRemoved(AncestorEvent event) {
+				refreshGameTree();
+			}
+		});
+	}
+
+	/**
+	 * THIS METHOD WAS AUTOMATICALLY GENERATED BY NETBEANS.
+	 */
+	private void initComponents() {
 		toolbarComponent = new ToolbarView(true);
-		
+
 		gameTree = new javax.swing.JTree(new DefaultMutableTreeNode("All Games"));
-		
+
 		treeScrollPane = new javax.swing.JScrollPane();
 		treeScrollPane.setMinimumSize(new java.awt.Dimension(200, 384));
 		treeScrollPane.setViewportView(gameTree);
@@ -75,8 +400,7 @@ public class MainView {
 		createGameButton = new javax.swing.JButton();
 		mainComponent = new javax.swing.JTabbedPane();
 		overviewTabSplitPane = new javax.swing.JSplitPane();
-		
-		
+
 		infoPanel = new javax.swing.JPanel();
 		left = new javax.swing.JPanel();
 		whatIsTitle = new javax.swing.JLabel();
@@ -128,8 +452,6 @@ public class MainView {
 		createGameButton.setText("<html>Create a new game</html>");
 
 		mainComponent.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-		
 
 		overviewTabSplitPane.setLeftComponent(treeScrollPane);
 
@@ -656,6 +978,9 @@ public class MainView {
 
 	}
 
+	/**
+	 * THESE DECLARATIONS WERE AUTOMATICALLY GENERATED BY NETBEANS.
+	 */
 	private javax.swing.JButton createGameButton;
 	private javax.swing.JPanel infoPanel;
 	private javax.swing.JButton jButton2;

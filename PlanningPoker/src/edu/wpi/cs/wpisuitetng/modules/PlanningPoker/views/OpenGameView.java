@@ -10,27 +10,25 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.KeyAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Dimension2D;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.border.Border;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -43,61 +41,55 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
-
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
 
 /**
  * This JPanel contains the GUI for interacting with a planning poker game which
  * is open for voting.
- *
- * @author Austin Rose (arose)
- * @version $Revision: 1.0 $
+ * 
+ * @author Austin Rose (atrose)
  */
 @SuppressWarnings("serial")
 public class OpenGameView extends JPanel {
 
-	JTextArea textArea;
-
 	/**
 	 * This function is what to call to open up the display for an
 	 * open-for-voting planning poker game in a new tab.
-	 *
+	 * 
 	 * @param game
 	 *            A planning poker game which is open for voting.
 	 */
 	public static void open(PlanningPokerGame game) {
 
+		while (game.getRequirements().get(0) == null) {
+			continue;
+		}
+
 		OpenGameView view = new OpenGameView(game);
-		MainView.getController().addCloseableTab(game.getGameName(), view);
+		MainView.getInstance().addCloseableTab(game.getGameName(), view);
 	}
 
 	private PlanningPokerGame game;
 	private ArrayList<Requirement> requirements;
 	private Requirement currentlySelectedRequirement;
 	private static PlanningPokerVote ppv;
+	private JTextArea textArea;
 
 	// JPanel subclasses for each card in this game's deck.
 	private ArrayList<PlayingCardJPanel> cards;
-	
+
 	// Mailer for this view
 	private Mailer closedNotification;
 
 	/**
 	 * Constructor runs NetBeans generated UI initialization code and then
 	 * updates those components based on the given planning poker game.
-	 *
+	 * 
 	 * @param game
 	 *            The planning poker game whose data will be displayed on this
 	 *            JPanel.
@@ -105,9 +97,6 @@ public class OpenGameView extends JPanel {
 	private OpenGameView(PlanningPokerGame game) {
 		this.game = game;
 
-		while (game.getRequirements().get(0) == null) {
-			continue;
-		}
 		this.requirements = game.getRequirements();
 
 		this.cards = new ArrayList<>();
@@ -118,7 +107,6 @@ public class OpenGameView extends JPanel {
 		// Fill components with data from the planning poker game.
 		initForGame();
 	}
-
 
 	/**
 	 * Populates the allCardsPanel with cards
@@ -139,30 +127,33 @@ public class OpenGameView extends JPanel {
 					clickedCard.toggle();
 					updateEstimateTotal();// Vote value
 
-		    		// Requirement ID
-		    		// @TODO: Get selected requirement ID
-		    		int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
+					// Requirement ID
+					// @TODO: Get selected requirement ID
+					int requirementID = requirements.get(requirementList.getSelectedIndex())
+							.getId();
 
-		    		// Game name
-		    		String gameName = MainViewController.activeGame.getGameName();
+					// Game name
+					String gameName = game.getGameName();
 
-		    		// User name
-		    		String userName = ConfigManager.getConfig().getUserName();
+					// User name
+					String userName = ConfigManager.getConfig().getUserName();
 
-		    		// Vote
-		    		if(estimateNumberLabel.getText().equals("?"))
-		    			submitButton.setEnabled(false);
-		    		else {
-		    			submitButton.setEnabled(true);
-		    			ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);
-		    		}
+					// Vote
+					if (estimateNumberLabel.getText().equals("?"))
+						submitButton.setEnabled(false);
+					else {
+						submitButton.setEnabled(true);
+						ppv = new PlanningPokerVote(gameName, userName, Integer
+								.parseInt(estimateNumberLabel.getText()), requirementID);
+					}
 				}
 			});
 		}
 	}
 
 	/**
-	 * Populates the allCardsPanel with one card and JTextArea for the user to enter the estimation manually
+	 * Populates the allCardsPanel with one card and JTextArea for the user to
+	 * enter the estimation manually
 	 */
 	private void populateWithNoCardDeckPanel() {
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -184,20 +175,21 @@ public class OpenGameView extends JPanel {
 	class MyDocumentListener implements DocumentListener {
 		public void insertUpdate(DocumentEvent e) {
 
-		estimateNumberLabel.setText(textArea.getText());
-		// Requirement ID
-		// @TODO: Get selected requirement ID
-		int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
+			estimateNumberLabel.setText(textArea.getText());
+			// Requirement ID
+			// @TODO: Get selected requirement ID
+			int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
 
-		// Game name
-		String gameName = MainViewController.activeGame.getGameName();
+			// Game name
+			String gameName = game.getGameName();
 
-		// User name
-		String userName = ConfigManager.getConfig().getUserName();
+			// User name
+			String userName = ConfigManager.getConfig().getUserName();
 
-		ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);
+			ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel
+					.getText()), requirementID);
 
-		submitButton.setEnabled(true);
+			submitButton.setEnabled(true);
 		}
 
 		public void removeUpdate(DocumentEvent e) {
@@ -205,24 +197,23 @@ public class OpenGameView extends JPanel {
 
 			estimateNumberLabel.setText(tempString);
 
-
 			if (textArea.getText().equals("")) {
 				estimateNumberLabel.setText("?");
 				submitButton.setEnabled(false);
-			}
-			else {
+			} else {
 				estimateNumberLabel.setText(textArea.getText());
 				// Requirement ID
 				// @TODO: Get selected requirement ID
 				int requirementID = requirements.get(requirementList.getSelectedIndex()).getId();
 
 				// Game name
-				String gameName = MainViewController.activeGame.getGameName();
+				String gameName = game.getGameName();
 
 				// User name
 				String userName = ConfigManager.getConfig().getUserName();
 
-				ppv = new PlanningPokerVote(gameName, userName, Integer.parseInt(estimateNumberLabel.getText()), requirementID);
+				ppv = new PlanningPokerVote(gameName, userName,
+						Integer.parseInt(estimateNumberLabel.getText()), requirementID);
 			}
 
 		}
@@ -241,7 +232,7 @@ public class OpenGameView extends JPanel {
 		}
 
 		public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-			if(str == null || field.getText().length() >= MAX_LENGTH || !(str.matches("^[0-9]+$") )) {
+			if (str == null || field.getText().length() >= MAX_LENGTH || !(str.matches("^[0-9]+$"))) {
 				return;
 			}
 			super.insertString(offs, str, a);
@@ -250,66 +241,60 @@ public class OpenGameView extends JPanel {
 
 	/**
 	 * Initializes components based on the given planning poker game.
-	 *
+	 * 
 	 * @param game
 	 *            The planning poker game to define this view.
 	 */
 	private void initForGame() {
 		if (game.getDeckType().equals("No Deck")) {
 			populateWithNoCardDeckPanel();
-		}
-		else {
+		} else {
 			populateWithCards();
 		}
-		
+
 		// initialize users from server
 		initComponentLogic();
 
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
 
-		this.requirementList
-				.addListSelectionListener(new ListSelectionListener() {
-					@Override
-					public void valueChanged(ListSelectionEvent ev) {
-						JList list;
-						list = (JList) ev.getSource();
-						Requirement selected = requirements.get(list
-								.getSelectedIndex());
-						currentlySelectedRequirement = selected;
-						requirementNameLabel.setText(selected.getName());
-						requirementDescriptionLabel.setText(selected
-								.getDescription());
-						int vote = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVote(
-								game.getGameName(), ConfigManager.getConfig().getUserName(), selected.getId());
-						String strVote = vote > 0 ? ((Integer)vote).toString() : "?";
-						System.out.println("Retrieved vote: " + vote + ": " + strVote);
-						estimateNumberLabel.setText(strVote);
-						submitButton.setEnabled(false);
-						int voteNumber = GetPlanningPokerVoteController.getInstance()
-								.retrievePlanningPokerVote(
-										MainViewController.activeGame.getGameName(),
-										ConfigManager.getConfig().getUserName(),
-										requirements.get(requirementList.getSelectedIndex()).getId());
-						if (voteNumber
-												!= Integer.MIN_VALUE) {
-							estimateNumberLabel.setText("" + voteNumber);
-						}
+		this.requirementList.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent ev) {
+				JList list;
+				list = (JList) ev.getSource();
+				Requirement selected = requirements.get(list.getSelectedIndex());
+				currentlySelectedRequirement = selected;
+				requirementNameLabel.setText(selected.getName());
+				requirementDescriptionLabel.setText(selected.getDescription());
+				int vote = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVote(
+						game.getGameName(), ConfigManager.getConfig().getUserName(),
+						selected.getId());
+				String strVote = vote > 0 ? ((Integer) vote).toString() : "?";
+				System.out.println("Retrieved vote: " + vote + ": " + strVote);
+				estimateNumberLabel.setText(strVote);
+				submitButton.setEnabled(false);
+				int voteNumber = GetPlanningPokerVoteController.getInstance()
+						.retrievePlanningPokerVote(game.getGameName(),
+								ConfigManager.getConfig().getUserName(),
+								requirements.get(requirementList.getSelectedIndex()).getId());
+				if (voteNumber != Integer.MIN_VALUE) {
+					estimateNumberLabel.setText("" + voteNumber);
+				}
 
+				for (PlayingCardJPanel card : cards) {
+					card.deselect();
+				}
 
-						for (PlayingCardJPanel card : cards) {
-							card.deselect();
-						}
+				submitButton.setEnabled(true);
+				submitButton.setText("Submit Vote");
 
-						submitButton.setEnabled(true);
-						submitButton.setText("Submit Vote");
+				if (game.getDeckType().equals("No Deck")) {
+					textArea.setText("");
+				}
 
-						if(game.getDeckType().equals("No Deck")){
-							textArea.setText("");
-						}
-						
-					}
-				});
+			}
+		});
 
 		// Populate the list with each requirement.
 		DefaultListModel<String> model = new DefaultListModel<String>();
@@ -317,6 +302,7 @@ public class OpenGameView extends JPanel {
 			System.out.println("r: " + r);
 			model.addElement(r.getName());
 		}
+
 		this.requirementList.setModel(model);
 
 		// Initially select the first item in the tree.
@@ -331,8 +317,7 @@ public class OpenGameView extends JPanel {
 			fmt.setCalendar(game.getEndDate());
 			String dateFormatted = fmt.format(game.getEndDate().getTime());
 			this.gameDeadlineDateLabel.setText(dateFormatted);
-		}
-		else {
+		} else {
 			this.gameDeadlineDateLabel.setText("No Deadline");
 		}
 
@@ -341,7 +326,7 @@ public class OpenGameView extends JPanel {
 	/**
 	 * Set each of the cards displayed to be either selected or not selected
 	 * based on the votes for the given game and requirement.
-	 *
+	 * 
 	 * @param game
 	 *            Game whose card selection values are in question.
 	 * @param selectedRequirement
@@ -375,11 +360,12 @@ public class OpenGameView extends JPanel {
 		}
 
 		else {
-			int vote = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVote(game.getGameName(), ConfigManager.getConfig().getUserName(), currentlySelectedRequirement.getId());
-			String strVote = vote > 0 ? ((Integer)vote).toString() : "?";
+			int vote = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVote(
+					game.getGameName(), ConfigManager.getConfig().getUserName(),
+					currentlySelectedRequirement.getId());
+			String strVote = vote > 0 ? ((Integer) vote).toString() : "?";
 			this.estimateNumberLabel.setText(strVote);
 		}
-
 
 	}
 
@@ -390,7 +376,8 @@ public class OpenGameView extends JPanel {
 	private void initComponentLogic() {
 		// create the instance of the Mailer
 		if (closedNotification == null) {
-			closedNotification = new Mailer("The game " + game.getGameName() + " has closed!", "You can now view the results of the estimation.");
+			closedNotification = new Mailer("The game " + game.getGameName() + " has closed!",
+					"You can now view the results of the estimation.");
 		}
 		// Get and add the list of emails to the mailer
 		GetUserController.getInstance().retrieveUser();
@@ -398,10 +385,10 @@ public class OpenGameView extends JPanel {
 			Thread.sleep(150);
 		} catch (Exception e) {
 		}
-		
+
 		closedNotification.addEmailFromUsers(UserModel.getInstance().getUsers());
 	}
-	
+
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -446,7 +433,7 @@ public class OpenGameView extends JPanel {
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(MainViewController.activeGame.isLive() && !MainViewController.activeGame.isFinished()) {
+				if (game.isLive() && !game.isFinished()) {
 					AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
 					submitButton.setEnabled(false);
 					submitButton.setText("Submitted");
@@ -542,21 +529,17 @@ public class OpenGameView extends JPanel {
 		 */
 		btnEndGame = new JButton("End Game");
 
-
-
-		if(game.isLive() && !game.isFinished()){
+		if (game.isLive() && !game.isFinished()) {
 			btnStartGame.setText("Game Started");
 			btnStartGame.setEnabled(false);
 		}
 
-		if(!game.isLive() && !game.isFinished()){
+		if (!game.isLive() && !game.isFinished()) {
 			btnStartGame.setText("Game Ended");
 			btnStartGame.setEnabled(false);
 		}
 
-
-
-		if(!game.getModerator().equals(ConfigManager.getConfig().getUserName())){
+		if (!game.getModerator().equals(ConfigManager.getConfig().getUserName())) {
 			btnStartGame.setEnabled(false);
 			btnEndGame.setEnabled(false);
 		}
@@ -564,66 +547,64 @@ public class OpenGameView extends JPanel {
 		/**
 		 * Action listener for start button
 		 */
-		btnStartGame.addActionListener( new ActionListener()
-		{
-		    public void actionPerformed(ActionEvent e)
-		    {
-		        btnStartGame.setEnabled(false);
-		        btnStartGame.setText("Game Started");
-		        game.setLive(true);
-		        UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+		btnStartGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnStartGame.setEnabled(false);
+				btnStartGame.setText("Game Started");
+				game.setLive(true);
+				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
 
-		    }
+			}
 		});
 
 		/**
 		 * Action listener for end button
 		 */
-		btnEndGame.addActionListener( new ActionListener()
-		{
-		    public void actionPerformed(ActionEvent e)
-		    {
-		    	closedNotification.send();
-		    	btnEndGame.setEnabled(false);
-		    	btnEndGame.setText("Game Ended");
-		    	game.setFinished(true);
-		    	game.setLive(false);
-		    	UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
-		    	try {
+		btnEndGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				closedNotification.send();
+				btnEndGame.setEnabled(false);
+				btnEndGame.setText("Game Ended");
+				game.setFinished(true);
+				game.setLive(false);
+				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+				try {
 					new Thread().wait(200);
 				} catch (Exception ex) {
 				}
 
-		    	MainView.getController().refreshGameTree();
-		    	MainView.getController().removeClosableTab();
-		    }
+				MainView.getInstance().refreshGameTree();
+				MainView.getInstance().removeClosableTab();
+			}
 		});
 
 		javax.swing.GroupLayout gameTitlePanelLayout = new javax.swing.GroupLayout(gameTitlePanel);
-		gameTitlePanelLayout.setHorizontalGroup(
-			gameTitlePanelLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gameTitlePanelLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(gameNameLabel, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(btnStartGame)
-					.addGap(18)
-					.addComponent(btnEndGame)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(gameDeadlineDateLabel, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-		);
-		gameTitlePanelLayout.setVerticalGroup(
-			gameTitlePanelLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(gameTitlePanelLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gameTitlePanelLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(gameNameLabel)
-						.addComponent(gameDeadlineDateLabel)
-						.addComponent(btnEndGame)
-						.addComponent(btnStartGame))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+		gameTitlePanelLayout.setHorizontalGroup(gameTitlePanelLayout.createParallelGroup(
+				Alignment.TRAILING)
+				.addGroup(
+						gameTitlePanelLayout
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(gameNameLabel, GroupLayout.DEFAULT_SIZE, 341,
+										Short.MAX_VALUE)
+								.addGap(18)
+								.addComponent(btnStartGame)
+								.addGap(18)
+								.addComponent(btnEndGame)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(gameDeadlineDateLabel, GroupLayout.PREFERRED_SIZE,
+										160, GroupLayout.PREFERRED_SIZE).addContainerGap()));
+		gameTitlePanelLayout.setVerticalGroup(gameTitlePanelLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				gameTitlePanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								gameTitlePanelLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(gameNameLabel)
+										.addComponent(gameDeadlineDateLabel)
+										.addComponent(btnEndGame).addComponent(btnStartGame))
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		gameTitlePanel.setLayout(gameTitlePanelLayout);
 
 		rowSplitPanel.setLayout(new java.awt.GridLayout(2, 1));
@@ -729,19 +710,18 @@ public class OpenGameView extends JPanel {
 
 		javax.swing.GroupLayout estimateTitlePanelLayout = new javax.swing.GroupLayout(
 				estimateTitlePanel);
-		estimateTitlePanelLayout.setHorizontalGroup(
-			estimateTitlePanelLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, estimateTitlePanelLayout.createSequentialGroup()
-					.addComponent(estimateTitleLabel, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		estimateTitlePanelLayout.setVerticalGroup(
-			estimateTitlePanelLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(estimateTitlePanelLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(estimateTitleLabel)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+		estimateTitlePanelLayout.setHorizontalGroup(estimateTitlePanelLayout.createParallelGroup(
+				Alignment.TRAILING).addGroup(
+				Alignment.LEADING,
+				estimateTitlePanelLayout
+						.createSequentialGroup()
+						.addComponent(estimateTitleLabel, GroupLayout.DEFAULT_SIZE, 108,
+								Short.MAX_VALUE).addContainerGap()));
+		estimateTitlePanelLayout.setVerticalGroup(estimateTitlePanelLayout.createParallelGroup(
+				Alignment.LEADING).addGroup(
+				estimateTitlePanelLayout.createSequentialGroup().addContainerGap()
+						.addComponent(estimateTitleLabel)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		estimateTitlePanel.setLayout(estimateTitlePanelLayout);
 
 		estimateNumberPanel.setBorder(new javax.swing.border.SoftBevelBorder(
@@ -804,8 +784,7 @@ public class OpenGameView extends JPanel {
 						.addComponent(estimateNumberPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addComponent(submitButton,
-								javax.swing.GroupLayout.PREFERRED_SIZE,
+						.addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)));
 
@@ -855,7 +834,6 @@ public class OpenGameView extends JPanel {
 		topRowRequirementPanel.add(rightBlankPanel);
 
 		rowSplitPanel.add(topRowRequirementPanel);
-
 
 		allCardsPanel.setBackground(Color.white);
 		allCardsPanel.setLayout(new java.awt.GridBagLayout());

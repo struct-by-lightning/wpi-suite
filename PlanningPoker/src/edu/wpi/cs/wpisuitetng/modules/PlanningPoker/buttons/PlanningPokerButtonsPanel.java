@@ -23,15 +23,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controllers.MainViewController;
-//import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
+
+//import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 
 /**
  * @author Batyr, cgwalker, Francisco
- * @version $Revision: 1.0 $
- * Sets up toolbar buttons (including the new requirement image) for the main view
- * and handles the initial "Create Game Button" click. 
+ * @version $Revision: 1.0 $ Sets up toolbar buttons (including the new
+ *          requirement image) for the main view and handles the initial
+ *          "Create Game Button" click.
  * 
  */
 public class PlanningPokerButtonsPanel extends ToolbarGroupView {
@@ -51,12 +51,10 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 		this.newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		this.newGameButton.setPreferredSize(new Dimension(150, 50));
 		this.refreshButton.setHorizontalAlignment(SwingConstants.CENTER);
-		
+
 		try {
-			final Image img = ImageIO.read(getClass()
-					.getResource("new_req.png"));
-			final Image imgRef = ImageIO.read(getClass()
-					.getResource("refresh.png"));
+			final Image img = ImageIO.read(getClass().getResource("new_req.png"));
+			final Image imgRef = ImageIO.read(getClass().getResource("refresh.png"));
 			this.newGameButton.setIcon(new ImageIcon(img));
 			this.refreshButton.setIcon(new ImageIcon(imgRef));
 		} catch (IOException ex) {
@@ -68,14 +66,14 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 		newGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MainView.getController().createGameButtonClicked();
+				MainView.createGameButtonClicked();
 			}
 		});
-		
+
 		refreshButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MainView.getController().refreshGameTree();
+				MainView.getInstance().refreshGameTree();
 			}
 		});
 
