@@ -30,23 +30,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextPane;
-import javax.swing.JToolBar;
-import javax.swing.ListModel;
-import javax.swing.SpinnerDateModel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,8 +37,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.LinkedList;
-import java.util.ListIterator;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -86,7 +67,6 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
@@ -639,13 +619,6 @@ public class NewGameTab extends JPanel {
 
 		selectedRequirements.setModel(listOfRequirementsToAdd);
 
-		GetRequirementsController.getInstance().retrieveRequirements();
-
-		try { // We need to sleep for the requirement request to be in
-			Thread.sleep(150);
-		} catch (InterruptedException e1) {
-		}
-
 		/**
 		 * Adds list of current requirements in requirement model to the list
 		 * that will be added to the JList that will hold the requirements to be
@@ -927,7 +900,7 @@ public class NewGameTab extends JPanel {
 		    	btn_removeFromGame.setEnabled(false);
 	    		btn_removeAll.setEnabled(false);
 
-	    		MainView.getController().refreshGameTree();
+	    		MainView.getInstance().refreshGameTree();
 		    }
 		});
 
