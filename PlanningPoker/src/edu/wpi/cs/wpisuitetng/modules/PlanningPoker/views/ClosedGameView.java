@@ -10,75 +10,82 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.InputVerifier;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.RequirementManager;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
- * @author Legion
- * 
- * @version $Revision: 1.0 $
+ * @author ?
  */
 public class ClosedGameView extends JPanel {
+
 	/**
-	 * Method open.
-	 * @param game PlanningPokerGame
+	 * Open up a new closeable tab in the planning poker module with a new
+	 * instanse of this GUI for viewing and interacting with a closed planning
+	 * poker game.
+	 *
+	 * @param game
+	 *            The closed planning poker game to open up a new tab for.
 	 */
 	public static void open(PlanningPokerGame game) {
 		ClosedGameView view = new ClosedGameView(game);
-		MainView.getController().addCloseableTab(game.getGameName(), view);
+		MainView.getInstance().addCloseableTab(game.getGameName(), view);
 	}
 
+	/**
+	 * The game which this instance of a closed game view is created from.
+	 */
 	private PlanningPokerGame game;
+
+	/**
+	 * The list of requirements associated with this instance's game.
+	 */
 	private ArrayList<Requirement> requirements;
 
 	/**
-	 * Constructor for ClosedGameView.
-	 * @param game PlanningPokerGame
+	 * Constructor initializes GUI components, then updates them based on the
+	 * given planning poker game.
+	 *
+	 * @param game
+	 *            PlanningPokerGame
 	 */
 	private ClosedGameView(PlanningPokerGame game) {
-		System.out.println("ClsoedGameView(" + game + ")");
 		this.game = game;
-		this.requirements = game.getRequirements();
+		this.requirements = this.game.getRequirements();
+
 		initComponents();
+		initLogic();
 		initForGame();
 
 		// Initially select the first item in the tree.
 		this.requirementList.setSelectedIndex(0);
 	}
 
+	/**
+	 * Update components based on the given game.
+	 */
 	private void initForGame() {
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
@@ -132,16 +139,17 @@ public class ClosedGameView extends JPanel {
 							mode.setText(modeDef+"?");
 							std.setText(stdDef+"?");
 							max.setText(maxDef+"?");
-							min.setText(minDef+"?");							
+							min.setText(minDef+"?");
 						}
 					}
 				});
+
 		// Populate the list with each requirement.
 		DefaultListModel<String> model = new DefaultListModel<String>();
 		for (Requirement r : this.requirements) {
-			System.out.println("r: " + r);
 			model.addElement(r.getName());
 		}
+
 		this.requirementList.setModel(model);
 
 		// Show the name of the game.
@@ -149,18 +157,81 @@ public class ClosedGameView extends JPanel {
 
 		// Show the deadline of the game if there is one.
 		this.gameDeadlineDateLabel.setText("Game is Finished");
-		
 
 	}
 
 	/**
-	 * Method updateEstimateTotal.
-	 * @param selected Requirement
+	 * Add necesary listeners to GUI components.
+	 */
+	private void initLogic() {
+
+		// Listener which updates the UI each time a requirement is selected
+		// from the list of this game's requirements.
+		this.requirementList.addListSelectionListener(new ListSelectionListener() {
+			int currentID = 0;
+
+			@Override
+			public void valueChanged(ListSelectionEvent ev) {
+				JList list;
+				list = (JList) ev.getSource();
+				if (list.getSelectedIndex() != -1) {
+					selected = requirements.get(list.getSelectedIndex());
+					currentID = selected.getId();
+					requirementNameLabel.setText(selected.getName());
+					requirementDescriptionLabel.setText(selected.getDescription());
+					updateEstimateTotal(selected);
+				}
+				ArrayList<Double> reqVotes = new ArrayList<Double>();
+				estimateModel = new DefaultListModel<String>();
+				for (PlanningPokerVote v : gameVotes) {
+					if (v.getRequirementID() == currentID) {
+						reqVotes.add((double) v.getVote());
+						estimateModel.addElement("   " + v.getUserName() + ": " + v.getVote());
+					}
+				}
+				System.out.println(estimateModel);
+				System.out.println(gameVotes);
+				estimates.setModel(estimateModel);
+				if (reqVotes.size() != 0) {
+					double[] voteNums = new double[reqVotes.size()];
+					for (int i = 0; i < reqVotes.size(); i++) {
+						voteNums[i] = (double) reqVotes.get(i);
+					}
+					mean.setText(meanDef + df.format(Statistics.mean(voteNums)));
+					median.setText(medianDef + df.format(Statistics.median(voteNums)));
+					mode.setText(modeDef + df.format(Statistics.mode(voteNums)));
+					if (reqVotes.size() > 1) {
+						std.setText(stdDef + df.format(Statistics.StdDev(voteNums)));
+					} else {
+						std.setText(stdDef + "?");
+					}
+					max.setText(maxDef + df.format(Statistics.max(voteNums)));
+					min.setText(minDef + df.format(Statistics.min(voteNums)));
+				} else {
+					mean.setText(meanDef + "?");
+					median.setText(medianDef + "?");
+					mode.setText(modeDef + "?");
+					std.setText(stdDef + "?");
+					max.setText(maxDef + "?");
+					min.setText(minDef + "?");
+				}
+			}
+		});
+	}
+
+	/**
+	 * Display the correct estimate in the box based on the given requirement.
+	 *
+	 * @param selected
+	 *            The requriement currently being viewed by the user.
 	 */
 	private void updateEstimateTotal(Requirement selected) {
 		this.estimateNumberBox.setText("" + selected.getEstimate());
 	}
-	
+
+	/**
+	 * THIS METHOD WAS AUTOMATICALLY GENERATED BY NETBEANS.
+	 */
 	private void initComponents() {
 		java.awt.GridBagConstraints gridBagConstraints;
 
@@ -197,7 +268,7 @@ public class ClosedGameView extends JPanel {
 		max = new javax.swing.JLabel(maxDef);
 		min = new javax.swing.JLabel(minDef);
 		stats = new javax.swing.JPanel(new GridLayout(3, 2));
-		
+
 		setLayout(new java.awt.BorderLayout());
 
 		requirementsLabelPanel.setBorder(javax.swing.BorderFactory
@@ -329,7 +400,7 @@ public class ClosedGameView extends JPanel {
 		requirementDescriptionLabel.setLineWrap(true);
 		requirementDescriptionLabel.setEditable(false);
 		requirementDescriptionLabel.setWrapStyleWord(true);
-		
+
 		requirementDescriptionLabelPanel.setBorder(javax.swing.BorderFactory
 				.createLineBorder(new java.awt.Color(153, 153, 153)));
 
@@ -383,7 +454,7 @@ public class ClosedGameView extends JPanel {
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		topRowRequirementPanel.add(requirementPanel);
-		
+
 		instructionsLabel.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
 		instructionsLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 		instructionsLabel
@@ -422,24 +493,21 @@ public class ClosedGameView extends JPanel {
 		estimateNumberBox.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
 		estimateNumberBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		estimateNumberBox.setText("#");
-	    estimateNumberBox.addKeyListener(new KeyAdapter() {
-	        public void keyTyped(KeyEvent e) {
-	          char c = e.getKeyChar();
-	          if (!((c >= '0') && (c <= '9') ||
-	             (c == KeyEvent.VK_BACK_SPACE) ||
-	             (c == KeyEvent.VK_DELETE))) {
-	            getToolkit().beep();
-	            e.consume();
-	            System.out.println("Please enter a number");
-	          }
-	          else if (estimateNumberBox.getText().length() >= 3) {
-		          getToolkit().beep();
-		          e.consume();
-	        	  System.out.println("Character Limited exceeded");
-	          }
-	        }
-	      });
-	    
+		estimateNumberBox.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+					getToolkit().beep();
+					e.consume();
+					System.out.println("Please enter a number");
+				} else if (estimateNumberBox.getText().length() >= 3) {
+					getToolkit().beep();
+					e.consume();
+					System.out.println("Character Limited exceeded");
+				}
+			}
+		});
+
 		javax.swing.GroupLayout estimateNumberPanelLayout = new javax.swing.GroupLayout(
 				estimateNumberPanel);
 		estimateNumberPanel.setLayout(estimateNumberPanelLayout);
@@ -471,34 +539,29 @@ public class ClosedGameView extends JPanel {
 		stats.add(max);
 		stats.add(mode);
 		stats.add(min);
-		//stats.setPreferredSize(new Dimension(stats.getWidth(), 50));
+		// stats.setPreferredSize(new Dimension(stats.getWidth(), 50));
 		stats.setBorder(javax.swing.BorderFactory
 				.createLineBorder(new java.awt.Color(153, 153, 153)));
 
 		javax.swing.GroupLayout rightBlankPanelLayout = new javax.swing.GroupLayout(rightBlankPanel);
 		rightBlankPanel.setLayout(rightBlankPanelLayout);
-		rightBlankPanelLayout
-				.setHorizontalGroup(rightBlankPanelLayout
-						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		rightBlankPanelLayout.setHorizontalGroup(rightBlankPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				rightBlankPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
 						.addGroup(
-								rightBlankPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												rightBlankPanelLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																rightBlankPanelLayout
-																		.createSequentialGroup()
-																		.addContainerGap()
-																		.addComponent(
-																				stats,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)))));
-														
+								rightBlankPanelLayout.createParallelGroup(
+										javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+										javax.swing.GroupLayout.Alignment.TRAILING,
+										rightBlankPanelLayout
+												.createSequentialGroup()
+												.addContainerGap()
+												.addComponent(stats,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)))));
+
 		rightBlankPanelLayout.setVerticalGroup(rightBlankPanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				javax.swing.GroupLayout.Alignment.TRAILING,
@@ -510,43 +573,40 @@ public class ClosedGameView extends JPanel {
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
 
-		
-		
 		allVotes = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVote();
-		
+
 		gameVotes = new ArrayList<PlanningPokerVote>();
-		for(PlanningPokerVote v : allVotes) {
+		for (PlanningPokerVote v : allVotes) {
 			System.out.println("started loop");
-			if(v.getGameName().equalsIgnoreCase(game.getGameName())) {
+			if (v.getGameName().equalsIgnoreCase(game.getGameName())) {
 				gameVotes.add(v);
-				System.out.println("add"+v.getID());
+				System.out.println("add" + v.getID());
 			}
 		}
 
-		System.out.println("Game votes: "+gameVotes);
+		System.out.println("Game votes: " + gameVotes);
 		estimates = new javax.swing.JList();
 		estimateModel = new DefaultListModel<String>();
-		
+
 		estimates.setModel(estimateModel);
 
 		estimates.setFont(new java.awt.Font("Tahoma", 0, 20));
 		JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(estimates);
-		//scroll.setPreferredSize(new Dimension(500, 400));
-		
-		//allEstimates = new javax.swing.JPanel();
-		//allEstimates.add(scroll);
-		scroll.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153,
-				153, 153)));
-		
+		// scroll.setPreferredSize(new Dimension(500, 400));
+
+		// allEstimates = new javax.swing.JPanel();
+		// allEstimates.add(scroll);
+		scroll.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153,
+				153)));
+
 		rowSplitPanel.add(topRowRequirementPanel);
 		rowSplitPanel.add(stats);
 		rowSplitPanel.add(estimateCenteringPanel);
 		rowSplitPanel.add(scroll);
-		
-		
+
 		JButton submitButton = new JButton("Submit");
-		
+
 		javax.swing.GroupLayout estimateSubmitPanelLayout = new javax.swing.GroupLayout(
 				estimateSubmitPanel);
 		estimateSubmitPanel.setLayout(estimateSubmitPanelLayout);
@@ -566,7 +626,7 @@ public class ClosedGameView extends JPanel {
 						.addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-		
+
 		javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(estimatePanel);
 		estimatePanel.setLayout(estimatePanelLayout);
 		estimatePanelLayout.setHorizontalGroup(estimatePanelLayout.createParallelGroup(
@@ -606,21 +666,23 @@ public class ClosedGameView extends JPanel {
 								javax.swing.GroupLayout.PREFERRED_SIZE)));
 
 		estimateCenteringPanel.add(estimatePanel, new java.awt.GridBagConstraints());
-		
+
 		submitButton.setFont(new java.awt.Font("Tahoma", 0, 28));
 		submitButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				List<Requirement> req = RequirementModel.getInstance().getRequirements();
 				int n = 0;
-				for(int i = 0; i < req.size(); i++) {
-					if(req.get(i).getName().equals(selected.getName())) {
+				for (int i = 0; i < req.size(); i++) {
+					if (req.get(i).getName().equals(selected.getName())) {
 						n = i;
 						break;
 					}
 				}
-				System.out.println(RequirementModel.getInstance().getRequirements().get(n).getName() + " set estimate to " + estimateNumberBox.getText());
-				
+				System.out.println(RequirementModel.getInstance().getRequirements().get(n)
+						.getName()
+						+ " set estimate to " + estimateNumberBox.getText());
+
 				Requirement req2set = RequirementModel.getInstance().getRequirement(n);
 				req2set.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
 				UpdateRequirementController.getInstance().updateRequirement(req2set);
@@ -634,7 +696,7 @@ public class ClosedGameView extends JPanel {
 				GetRequirementsController.getInstance().retrieveRequirements();
 			}
 		});
-		if(!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {
+		if (!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {
 			submitButton.setEnabled(false);
 			estimateNumberBox.setEnabled(false);
 			estimateTitleLabel.setEnabled(false);
@@ -670,12 +732,15 @@ public class ClosedGameView extends JPanel {
 						.addComponent(rowSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-		//rowSplitPanel.add(estimateCenteringPanel);
+		// rowSplitPanel.add(estimateCenteringPanel);
 		splitPane.setRightComponent(rightSplitPanel);
 
 		add(splitPane, java.awt.BorderLayout.CENTER);
 	}
 
+	/**
+	 * THESE DECLARATIONS WERE AUTOMATICALLY GENERATED BY NETBEANS.
+	 */
 	private javax.swing.JPanel estimateCenteringPanel;
 	private javax.swing.JTextField estimateNumberBox;
 	private javax.swing.JPanel estimateNumberPanel;
@@ -723,6 +788,5 @@ public class ClosedGameView extends JPanel {
 	private List<PlanningPokerVote> gameVotes;
 	private int currentID;
 	private DecimalFormat df = new DecimalFormat("#.###");
-
 
 }
