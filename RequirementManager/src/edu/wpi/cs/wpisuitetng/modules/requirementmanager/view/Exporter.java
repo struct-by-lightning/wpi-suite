@@ -6,7 +6,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
+package edu.wpi.cs.wpisuitetng.modules.requirementmanager.view;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
