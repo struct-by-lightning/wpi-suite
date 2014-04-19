@@ -22,8 +22,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,7 +51,6 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.border.LineBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
@@ -81,7 +78,7 @@ public class NewGameView extends JPanel {
 	 */
 	public static void open(PlanningPokerGame game) {
 		NewGameView view = new NewGameView(game);
-		MainView.getController().addCloseableTab(game.getGameName(), view);
+		MainView.getInstance().addCloseableTab(game.getGameName(), view);
 	}
 
 	/**
@@ -97,7 +94,8 @@ public class NewGameView extends JPanel {
 
 		// Fetch updated set of requirements
 		GetRequirementsController.getInstance().retrieveRequirements();
-		while (game.getRequirements().get(0) == null) {}
+		while (game.getRequirements().get(0) == null) {
+		}
 
 		/**
 		 * Adds list of current requirements in requirement model to the list
@@ -338,13 +336,14 @@ public class NewGameView extends JPanel {
 						System.out.println("Planning Poker Live: " + game.isLive());
 						game.setLive(true);
 						game.setFinished(false);
-						UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+						UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(
+								game);
 						lblGameCreated.setVisible(true);
 						btnStartVoting.setEnabled(false);
 						mailer.send();
-						
-						MainView.getController().refreshGameTree();
-						MainView.getController().removeClosableTab();
+
+						MainView.getInstance().refreshGameTree();
+						MainView.getInstance().removeClosableTab();
 					} else {
 						// Error message when the session name is empty
 						if (sessionName.getText().isEmpty()) {
@@ -358,12 +357,11 @@ public class NewGameView extends JPanel {
 							btnStartVoting.setEnabled(false);
 						}
 						System.out.println("Start date is after the end date.");
-						
+
 						txtpnLoggedInAs.setText(txtpnLoggedInAs.getText() + " -- INVALID DEADLINE");
 
 					}
 				}
-
 
 			}
 

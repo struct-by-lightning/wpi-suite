@@ -69,7 +69,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 /**
  * This JPanel houses the GUI and logic for allowing a user to create a new
  * planning poker game.
- * 
+ *
  * @author Austin Rose (atrose)
  */
 public class CreateGameView extends JPanel {
@@ -78,15 +78,15 @@ public class CreateGameView extends JPanel {
 	 * This method will open up a new tab in the planning poker module with this
 	 * UI for creating a new planning poker game.
 	 */
-	public static void open() {
+	public static void openNewTab() {
 		CreateGameView view = new CreateGameView();
-		MainView.getController().addCloseableTab("Create Game", view);
+		MainView.getInstance().addCloseableTab("Create Game", view);
 	}
 
 	/**
 	 * Constructor initializes all GUI components, then fills in the logic
 	 * between them.
-	 * 
+	 *
 	 * This constructor is private so that this class can only be initialized
 	 * through the static "open" method.
 	 */
@@ -156,9 +156,10 @@ public class CreateGameView extends JPanel {
 			}
 		});
 
-		// TODO: 
+		// TODO:
 		// There should be some deck selection logic here.
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] { "Default", "Lightning Deck", "No Deck" }));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] { "Default",
+				"Lightning Deck", "No Deck" }));
 
 		deckType.addActionListener(new ActionListener() {
 
@@ -211,8 +212,9 @@ public class CreateGameView extends JPanel {
 					createGameErrorText.setText("Session needs a name");
 
 				} else {
-					
-					// Don't enable the "Create Game" button if there are no requirements
+
+					// Don't enable the "Create Game" button if there are no
+					// requirements
 
 					if (listModelForThisGame.size() == 0) {
 						btnCreateGame.setEnabled(false);
@@ -232,6 +234,7 @@ public class CreateGameView extends JPanel {
 		backlogRequirementList.setModel(listModelForThisGame);
 
 		// TODO:
+
 		// As per a meeting with Pollice, we need to only select users which have been explicitly added to the project through the web-interface.
 		// Get and add the list of emails to the mailer
 		GetUserController.getInstance().retrieveUser();
@@ -243,6 +246,7 @@ public class CreateGameView extends JPanel {
 
 		
 		userList = Users.getUserModels();
+
 		mailer.addEmailFromUsers(userList);
 
 		/**
@@ -251,15 +255,15 @@ public class CreateGameView extends JPanel {
 		 * added to the game
 		 */
 		final List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
-		
+
 		// Disable the add all button when the requirement size is 0
 		if (requirements.size() == 0) {
 			btn_addAll.setEnabled(false);
-		} else {		
+		} else {
 			// We iterate through the requirements list and add to that JList.
 			for (int i = 0; i < requirements.size(); i++) {
 				Requirement req = requirements.get(i);
-				
+
 				if (req.getIteration().equals("Backlog")) {
 					listModelForBacklog.addElement(req);
 					listModelForReseting.addElement(req);
@@ -343,7 +347,7 @@ public class CreateGameView extends JPanel {
 									true, startCal, endCal, ConfigManager.getConfig().getUserName());
 							game.setFinished(false);
 							game.setLive(true);
-							mailer.send();
+
 						} else {
 							game = new PlanningPokerGame(enteredName, "Default description",
 									(String) deckType.getSelectedItem(), gameRequirementIDsList,
@@ -357,9 +361,11 @@ public class CreateGameView extends JPanel {
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
 						btnCreateGame.setEnabled(false);
-						
-						MainView.getController().refreshGameTree();
-						MainView.getController().removeClosableTab();
+
+						mailer.send();
+
+						MainView.getInstance().refreshGameTree();
+						MainView.getInstance().removeClosableTab();
 					} else {
 						// Error message when the session name is empty
 						if (sessionName.getText().isEmpty()) {
@@ -378,7 +384,6 @@ public class CreateGameView extends JPanel {
 					}
 				}
 
-				
 			}
 
 		});
@@ -814,7 +819,7 @@ public class CreateGameView extends JPanel {
 
 		btn_addAll = new JButton(">>");
 		topmostButton.add(btn_addAll, BorderLayout.CENTER);
-		
+
 		topButton = new JPanel();
 		buttonsPanel.add(topButton);
 		topButton.setLayout(new BorderLayout(0, 0));
