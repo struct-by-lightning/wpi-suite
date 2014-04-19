@@ -92,7 +92,7 @@ public class OpenGameView extends JPanel {
 	private ArrayList<PlayingCardJPanel> cards;
 	
 	// Mailer for this view
-	private static Mailer closedNotification;
+	private Mailer closedNotification;
 
 	/**
 	 * Constructor runs NetBeans generated UI initialization code and then
@@ -429,7 +429,7 @@ public class OpenGameView extends JPanel {
 		requirementNamePanel = new javax.swing.JPanel();
 		requirementNameLabel = new javax.swing.JLabel();
 		requirementDescriptionLabelPanel = new javax.swing.JPanel();
-		requirementDescriptionLabel = new javax.swing.JLabel();
+		requirementDescriptionLabel = new javax.swing.JTextArea();
 		rightBlankPanel = new javax.swing.JPanel();
 		instructionsLabel = new javax.swing.JLabel();
 		estimateCenteringPanel = new javax.swing.JPanel();
@@ -604,13 +604,13 @@ public class OpenGameView extends JPanel {
 			gameTitlePanelLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gameTitlePanelLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(gameNameLabel, GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
+					.addComponent(gameNameLabel, GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
 					.addGap(18)
 					.addComponent(btnStartGame)
 					.addGap(18)
 					.addComponent(btnEndGame)
-					.addGap(18)
-					.addComponent(gameDeadlineDateLabel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(gameDeadlineDateLabel, GroupLayout.PREFERRED_SIZE, 160, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		gameTitlePanelLayout.setVerticalGroup(
@@ -655,13 +655,15 @@ public class OpenGameView extends JPanel {
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		requirementDescriptionLabelPanel.setBackground(Color.white);
+		requirementDescriptionLabel.setLineWrap(true);
+		requirementDescriptionLabel.setEditable(false);
+		requirementDescriptionLabel.setWrapStyleWord(true);
 		requirementDescriptionLabelPanel.setBorder(javax.swing.BorderFactory
 				.createLineBorder(new java.awt.Color(153, 153, 153)));
 
 		requirementDescriptionLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		requirementDescriptionLabel
 				.setText("game.getRequirements.get(LIST SELECTION NUM).description()");
-		requirementDescriptionLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
 		javax.swing.GroupLayout requirementDescriptionLabelPanelLayout = new javax.swing.GroupLayout(
 				requirementDescriptionLabelPanel);
@@ -727,21 +729,20 @@ public class OpenGameView extends JPanel {
 
 		javax.swing.GroupLayout estimateTitlePanelLayout = new javax.swing.GroupLayout(
 				estimateTitlePanel);
+		estimateTitlePanelLayout.setHorizontalGroup(
+			estimateTitlePanelLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, estimateTitlePanelLayout.createSequentialGroup()
+					.addComponent(estimateTitleLabel, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		estimateTitlePanelLayout.setVerticalGroup(
+			estimateTitlePanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(estimateTitlePanelLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(estimateTitleLabel)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 		estimateTitlePanel.setLayout(estimateTitlePanelLayout);
-		estimateTitlePanelLayout.setHorizontalGroup(estimateTitlePanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				estimateTitlePanelLayout.createSequentialGroup().addContainerGap()
-						.addComponent(estimateTitleLabel).addContainerGap()));
-		estimateTitlePanelLayout.setVerticalGroup(estimateTitlePanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				estimateTitlePanelLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(estimateTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		estimateNumberPanel.setBorder(new javax.swing.border.SoftBevelBorder(
 				javax.swing.border.BevelBorder.RAISED));
@@ -914,7 +915,7 @@ public class OpenGameView extends JPanel {
 	private javax.swing.JPanel gameTitlePanel;
 	private javax.swing.JLabel instructionsLabel;
 	private javax.swing.JPanel leftSplitPanel;
-	private javax.swing.JLabel requirementDescriptionLabel;
+	private javax.swing.JTextArea requirementDescriptionLabel;
 	private javax.swing.JPanel requirementDescriptionLabelPanel;
 	private javax.swing.JList requirementList;
 	private javax.swing.JScrollPane requirementListScrollPane;

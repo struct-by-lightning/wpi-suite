@@ -180,7 +180,7 @@ public class ClosedGameView extends JPanel {
 		requirementNamePanel = new javax.swing.JPanel();
 		requirementNameLabel = new javax.swing.JLabel();
 		requirementDescriptionLabelPanel = new javax.swing.JPanel();
-		requirementDescriptionLabel = new javax.swing.JLabel();
+		requirementDescriptionLabel = new javax.swing.JTextArea();
 		rightBlankPanel = new javax.swing.JPanel();
 		instructionsLabel = new javax.swing.JLabel();
 		estimateCenteringPanel = new javax.swing.JPanel();
@@ -326,13 +326,16 @@ public class ClosedGameView extends JPanel {
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		requirementDescriptionLabelPanel.setBackground(Color.white);
+		requirementDescriptionLabel.setLineWrap(true);
+		requirementDescriptionLabel.setEditable(false);
+		requirementDescriptionLabel.setWrapStyleWord(true);
+		
 		requirementDescriptionLabelPanel.setBorder(javax.swing.BorderFactory
 				.createLineBorder(new java.awt.Color(153, 153, 153)));
 
 		requirementDescriptionLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		requirementDescriptionLabel
 				.setText("game.getRequirements.get(LIST SELECTION NUM).description()");
-		requirementDescriptionLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
 		javax.swing.GroupLayout requirementDescriptionLabelPanelLayout = new javax.swing.GroupLayout(
 				requirementDescriptionLabelPanel);
@@ -685,7 +688,7 @@ public class ClosedGameView extends JPanel {
 	private javax.swing.JPanel gameTitlePanel;
 	private javax.swing.JLabel instructionsLabel;
 	private javax.swing.JPanel leftSplitPanel;
-	private javax.swing.JLabel requirementDescriptionLabel;
+	private javax.swing.JTextArea requirementDescriptionLabel;
 	private javax.swing.JPanel requirementDescriptionLabelPanel;
 	private javax.swing.JList requirementList;
 	private javax.swing.JScrollPane requirementListScrollPane;

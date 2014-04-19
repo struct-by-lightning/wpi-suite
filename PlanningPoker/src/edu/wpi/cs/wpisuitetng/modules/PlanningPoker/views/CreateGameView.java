@@ -333,7 +333,7 @@ public class CreateGameView extends JPanel {
 									true, startCal, endCal, ConfigManager.getConfig().getUserName());
 							game.setFinished(false);
 							game.setLive(true);
-							
+							mailer.send();
 						} else {
 							game = new PlanningPokerGame(enteredName, "Default description",
 									(String) deckType.getSelectedItem(), gameRequirementIDsList,
@@ -347,7 +347,6 @@ public class CreateGameView extends JPanel {
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
 						btnCreateGame.setEnabled(false);
-						mailer.send();
 						
 						MainView.getController().refreshGameTree();
 						MainView.getController().removeClosableTab();
