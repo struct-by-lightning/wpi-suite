@@ -7,12 +7,12 @@
 * http://www.eclipse.org/legal/epl-v10.html
 * Contributor: team struct-by-lightning
 *******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
+package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 /**
  * @author sfmailand
  *
  */
-public class UpdateUserRequestObserver {
+public class UserEntityManager {
 
 }
