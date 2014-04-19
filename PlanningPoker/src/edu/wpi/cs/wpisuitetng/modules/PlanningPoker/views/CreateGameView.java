@@ -58,6 +58,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Users;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.DatePicker;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
@@ -232,7 +233,16 @@ public class CreateGameView extends JPanel {
 
 		// TODO:
 		// As per a meeting with Pollice, we need to only select users which have been explicitly added to the project through the web-interface.
-		userList = UserModel.getInstance().getUsers();
+		// Get and add the list of emails to the mailer
+		GetUserController.getInstance().retrieveUser();
+
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e2) {
+		}
+
+		
+		userList = Users.getUserModels();
 		mailer.addEmailFromUsers(userList);
 
 		/**
@@ -545,7 +555,7 @@ public class CreateGameView extends JPanel {
 
 		gameRequirementIDsList = new ArrayList<Integer>();
 
-		userList = new ArrayList<User>();
+		userList = new ArrayList<UserModel>();
 
 		mailer = new Mailer();
 
@@ -887,7 +897,7 @@ public class CreateGameView extends JPanel {
 	private String selectedDeckType;
 	private boolean calendarOpen = false;
 	private List<Integer> gameRequirementIDsList;
-	private List<User> userList;
+	private List<UserModel> userList;
 	private Mailer mailer;
 	private boolean viewHasBeenEdited;
 

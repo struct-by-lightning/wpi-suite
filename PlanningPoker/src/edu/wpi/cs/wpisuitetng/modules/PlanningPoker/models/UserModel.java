@@ -130,4 +130,9 @@ public class UserModel extends RegularAbstractModel<UserModel>{
 	public String getPrimaryKey() {
 		return "username";
 	}
+	
+	
+	public String getUserName(){
+		return userName;
+	}
 }

@@ -46,7 +46,7 @@ public class UserEntityManager implements EntityManager<UserModel>{
 	 * Method makeEntity.
 	 * @param s Session
 	 * @param content String
-	 * @return UserModel * @throws BadRequestException * @throws ConflictException * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(Session, String) */
+	 * @return User * @throws BadRequestException * @throws ConflictException * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(Session, String) */
 
 	@Override
 	public UserModel makeEntity(Session s, String content)
@@ -59,7 +59,7 @@ public class UserEntityManager implements EntityManager<UserModel>{
 			save(s,user);
 		}
 		else{
-			logger.log(Level.WARNING, "Conflict Exception during UserModel creation.");
+			logger.log(Level.WARNING, "Conflict Exception during User creation.");
 			throw new ConflictException("A PlanningPokerGame with the given ID already exists. Entity String: " + content);
 		}
 		return user;
@@ -117,13 +117,13 @@ public class UserEntityManager implements EntityManager<UserModel>{
 	@Override
 	public void save(Session s, UserModel model) throws WPISuiteException {
 		if(data.save(model)){
-			logger.log(Level.FINE, "UserModel Saved: " + model);
+			logger.log(Level.FINE, "User Saved: " + model);
 			
 			return ;
 		}
 		else{
-			logger.log(Level.WARNING, "UserModel Save Failure!");
-			throw new DatabaseException("Save fair for UserModel");
+			logger.log(Level.WARNING, "User Save Failure!");
+			throw new DatabaseException("Save fair for User");
 		}
 		
 	}

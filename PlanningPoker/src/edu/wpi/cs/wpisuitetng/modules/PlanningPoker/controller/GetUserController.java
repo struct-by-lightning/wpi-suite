@@ -13,13 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Users;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
- * @author Alec Thompson
+ * @author Sam Mailand
  * 
  * @version $Revision: 1.0 $
  */
@@ -67,7 +68,7 @@ public class GetUserController implements ActionListener {
 	 */
 	public void retrieveUser() {
 		final Request request = Network.getInstance().makeRequest(
-				"planningpoker/user", HttpMethod.GET);
+				"planningpoker/usermodel", HttpMethod.GET);
 		request.addObserver(observer);
 		request.send();
 	}
@@ -78,14 +79,13 @@ public class GetUserController implements ActionListener {
 	
 	 * @param Users array of Users received from the server
 	 */
-	public void receivedUser(User[] Users) {
-		// empty the local model to eliminate duplications
-		UserModel.getInstance().emptyModel();
+	public void receivedUser(UserModel[] UserModels) {
 		
-		// make sure the response was not null
-		if (Users != null) {
-			// add the users to the local model
-			UserModel.getInstance().addUsers(Users);
+		Users.emptyModel();
+		
+		if(UserModels !=null){
+			Users.addUserModels(UserModels);
 		}
+		
 	}
 }

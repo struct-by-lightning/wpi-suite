@@ -10,6 +10,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -19,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * This controller responds when the user updates their information at the
  * pop-up prompt to enter an email.
  * 
- * @author Alec Thompson - ajthompson
+ * @author Sam Mailand - sfmailand
  * @version Apr 8, 2014
  */
 public class UpdateUserController {
@@ -50,7 +51,7 @@ public class UpdateUserController {
 	 * Method update.
 	 * @param newUser User
 	 */
-	public void update(User newUser) {
+	public void update(UserModel newUser) {
 		Request request = Network.getInstance().makeRequest("planningpoker/user", HttpMethod.POST);
 		request.setBody(newUser.toJSON());
 		request.addObserver(observer);

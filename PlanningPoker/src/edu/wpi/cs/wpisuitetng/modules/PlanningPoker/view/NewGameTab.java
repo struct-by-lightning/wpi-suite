@@ -84,6 +84,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Users;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
@@ -160,7 +161,7 @@ public class NewGameTab extends JPanel {
 	 * The list of users to whom emails will be sent (assuming their email
 	 * address has been added to the server)
 	 */
-	List<User> userList = new ArrayList<User>();
+	List<UserModel> userList = new ArrayList<UserModel>();
 
 	/**
 	 * The mailer which will send emails to all users with emails in their account
@@ -674,7 +675,8 @@ public class NewGameTab extends JPanel {
 		} catch (InterruptedException e2) {
 		}
 
-		userList = UserModel.getInstance().getUsers();
+		
+		userList = Users.getUserModels();
 		mailer.addEmailFromUsers(userList);
 
 		/**

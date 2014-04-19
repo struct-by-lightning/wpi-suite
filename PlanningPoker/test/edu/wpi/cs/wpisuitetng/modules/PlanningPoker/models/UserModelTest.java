@@ -27,10 +27,10 @@ public class UserModelTest {
 
 	@Test
 	public void addUserTest() {
-		UserModel model = UserModel.getInstance();
+		Users model = Users.getInstance();
 		model.emptyModel(); // make sure this is a fresh model
 		assertEquals(0, model.getSize());
-		User user = new User("Alec", "ajthompson", "ajthompson@wpi.edu", "password", 8);
+		UserModel user = new UserModel("sam.mailand@gmail.com", "sfmailand", null, null);
 		User user2 = new User("Test", "tester", "test@test.com", "testword", 15);
 		model.addUser(user);
 		assertEquals(1, model.getSize());

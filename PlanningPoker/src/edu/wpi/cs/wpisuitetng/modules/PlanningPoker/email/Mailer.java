@@ -20,6 +20,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
@@ -277,11 +278,11 @@ public class Mailer {
 	 * 
 	 * @return boolean
 	 */
-	public boolean addEmailFromUsers(List<User> userList) {
+	public boolean addEmailFromUsers(List<UserModel> userList) {
 		boolean isSuccess = true;
-		for (User u : userList) {
-			if (u.getEmail() != null)
-				isSuccess &= this.addEmail(u.getEmail());
+		for (UserModel u : userList) {
+			if (u.getUserEmail() != null)
+				isSuccess &= this.addEmail(u.getUserEmail());
 		}
 		return isSuccess;
 	}
