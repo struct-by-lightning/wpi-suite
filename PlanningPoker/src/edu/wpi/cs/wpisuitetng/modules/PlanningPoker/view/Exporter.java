@@ -23,7 +23,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.Transaction;
 
 /**
- * @author Ben
+ * @author Miguel
  * @version $Revision: 1.0 $
  */
 public class Exporter {
