@@ -31,7 +31,7 @@ public class UserModel extends AbstractListModel<User> {
 	/**
 	 * The list in which all the Users for a single project are contained
 	 */
-	private List<User> Users;
+	private List<User> users;
 
 	/**
 	 * The static object to allow the user model to exist
@@ -42,7 +42,7 @@ public class UserModel extends AbstractListModel<User> {
 	 * Constructs an empty list of users for the project
 	 */
 	private UserModel() {
-		Users = new ArrayList<User>();
+		users = new ArrayList<User>();
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class UserModel extends AbstractListModel<User> {
 	 *            The User to be added to the list of Users in the project
 	 */
 	public void addUser(User newUser) {
-		Users.add(newUser);
+		users.add(newUser);
 	}
 
 	/**
@@ -75,9 +75,9 @@ public class UserModel extends AbstractListModel<User> {
 	 * @return the User for the ID or null if the User is not found */
 	public User getUser(int id) {
 		// iterate through the list of Users until id is found
-		for (int i = 0; i < this.Users.size(); i++) {
-			if (Users.get(i).getIdNum() == id)
-				return Users.get(i);
+		for (int i = 0; i < this.users.size(); i++) {
+			if (users.get(i).getIdNum() == id)
+				return users.get(i);
 		}
 		return null;
 	}
@@ -91,9 +91,9 @@ public class UserModel extends AbstractListModel<User> {
 	 */
 	public void removeUser(int id) {
 		// iterate through the list of Users until id is found
-		for (int i = 0; i < this.Users.size(); i++) {
-			if (Users.get(i).getIdNum() == id) {
-				Users.remove(i);
+		for (int i = 0; i < this.users.size(); i++) {
+			if (users.get(i).getIdNum() == id) {
+				users.remove(i);
 				break;
 			}
 		}
@@ -107,7 +107,7 @@ public class UserModel extends AbstractListModel<User> {
 	 * @return the number of Users in the project * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize()
 	 */
 	public int getSize() {
-		return Users.size();
+		return users.size();
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class UserModel extends AbstractListModel<User> {
 	 * @return the User associated with the provided index * @see javax.swing.ListModel@getElementAt(int) * @see javax.swing.ListModel#getElementAt(int)
 	 */
 	public User getElementAt(int index) {
-		return Users.get(Users.size() - 1 - index);
+		return users.get(users.size() - 1 - index);
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class UserModel extends AbstractListModel<User> {
 	 */
 	public void emptyModel() {
 		int oldSize = getSize();
-		Iterator<User> iterator = Users.iterator();
+		Iterator<User> iterator = users.iterator();
 		while (iterator.hasNext()) {
 			iterator.next();
 			iterator.remove();
@@ -145,9 +145,9 @@ public class UserModel extends AbstractListModel<User> {
 	 *
 	 * @param Users the array of Users to add
 	 */
-	public void addUsers(User[] Users) {
-		for (User u : Users) {
-			this.Users.add(u);
+	public void addUsers(User[] users) {
+		for (User u : users) {
+			this.users.add(u);
 		}
 		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
 	}
@@ -158,6 +158,6 @@ public class UserModel extends AbstractListModel<User> {
 	
 	 * @return the Users held within the UserModel */
 	public List<User> getUsers() {
-		return Users;
+		return users;
 	}
 }

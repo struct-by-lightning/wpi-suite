@@ -11,7 +11,14 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
 import static org.junit.Assert.*;
 
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import org.junit.Test;
+
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * Class to test the user controller's functionality.
@@ -19,9 +26,14 @@ import org.junit.Test;
  * @author Alec Thompson - ajthompson
  * @version Apr 4, 2014
  */
+
+
 public class GetUserControllerTest {
 
 	
+	@Test
+	public final void testUserModelDuplicate() {
+	}
 	
 	@Test
 	public void test() {
