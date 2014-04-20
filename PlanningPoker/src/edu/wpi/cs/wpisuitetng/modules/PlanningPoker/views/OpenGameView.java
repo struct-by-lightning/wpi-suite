@@ -39,23 +39,57 @@ import javax.swing.text.PlainDocument;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
- * This JPanel contains the GUI for interacting with a planning poker game which
- * is open for voting.
+ * An instance of this class is a JPanel containing the GUI for interacting with
+ * a planning poker game which is open for voting.
  * 
  * @author Austin Rose (atrose)
  */
 @SuppressWarnings("serial")
 public class OpenGameView extends JPanel {
+
+	// TODO: The transition from this screen to the overview tab appears to be
+	// the only one which doesn't refresh the tree properly.
+
+	/**
+	 * This function is called as appropriate by a listener on the end game
+	 * button.
+	 */
+	private void endGameButtonPressed() {
+		
+		// Send a notification to participants that the game has ended.
+		closedNotification.send();
+		
+		// Mark the game as closed.
+		game.setFinished(true);
+		game.setLive(false);
+		
+		System.out.println("HEY");
+		System.out.println(PlanningPokerGameModel.getPlanningPokerGame(game.getGameName()));
+		
+		// Update the database with the changes.
+		UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+		
+		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
+		try {
+			new Thread().wait(200);
+		} catch (Exception ex) {
+		}
+
+		MainView.getInstance().refreshGameTree();
+		MainView.getInstance().removeClosableTab();
+	}
 
 	/**
 	 * This function is what to call to open up the display for an
@@ -520,61 +554,16 @@ public class OpenGameView extends JPanel {
 		gameDeadlineDateLabel.setText("game.getDeadlineDate()");
 
 		/**
-		 * Button for starting the game
-		 */
-		btnStartGame = new JButton("Start Game");
-
-		/**
 		 * Button for ending a game
 		 */
 		btnEndGame = new JButton("End Game");
-
-		if (game.isLive() && !game.isFinished()) {
-			btnStartGame.setText("Game Started");
-			btnStartGame.setEnabled(false);
-		}
-
-		if (!game.isLive() && !game.isFinished()) {
-			btnStartGame.setText("Game Ended");
-			btnStartGame.setEnabled(false);
-		}
-
-		if (!game.getModerator().equals(ConfigManager.getConfig().getUserName())) {
-			btnStartGame.setEnabled(false);
-			btnEndGame.setEnabled(false);
-		}
-
-		/**
-		 * Action listener for start button
-		 */
-		btnStartGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnStartGame.setEnabled(false);
-				btnStartGame.setText("Game Started");
-				game.setLive(true);
-				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
-
-			}
-		});
 
 		/**
 		 * Action listener for end button
 		 */
 		btnEndGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				closedNotification.send();
-				btnEndGame.setEnabled(false);
-				btnEndGame.setText("Game Ended");
-				game.setFinished(true);
-				game.setLive(false);
-				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
-				try {
-					new Thread().wait(200);
-				} catch (Exception ex) {
-				}
-
-				MainView.getInstance().refreshGameTree();
-				MainView.getInstance().removeClosableTab();
+				endGameButtonPressed();
 			}
 		});
 
@@ -587,8 +576,6 @@ public class OpenGameView extends JPanel {
 								.addContainerGap()
 								.addComponent(gameNameLabel, GroupLayout.DEFAULT_SIZE, 341,
 										Short.MAX_VALUE)
-								.addGap(18)
-								.addComponent(btnStartGame)
 								.addGap(18)
 								.addComponent(btnEndGame)
 								.addPreferredGap(ComponentPlacement.RELATED)
@@ -603,7 +590,7 @@ public class OpenGameView extends JPanel {
 								gameTitlePanelLayout.createParallelGroup(Alignment.BASELINE)
 										.addComponent(gameNameLabel)
 										.addComponent(gameDeadlineDateLabel)
-										.addComponent(btnEndGame).addComponent(btnStartGame))
+										.addComponent(btnEndGame))
 						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		gameTitlePanel.setLayout(gameTitlePanelLayout);
 
@@ -908,6 +895,5 @@ public class OpenGameView extends JPanel {
 	private javax.swing.JSplitPane splitPane;
 	private javax.swing.JPanel topRowRequirementPanel;
 	private javax.swing.JButton submitButton;
-	JButton btnStartGame;
 	private JButton btnEndGame;
 }
