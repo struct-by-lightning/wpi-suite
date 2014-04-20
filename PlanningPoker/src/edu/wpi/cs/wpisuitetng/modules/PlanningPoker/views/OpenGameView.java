@@ -67,43 +67,37 @@ public class OpenGameView extends JPanel {
 	 * button.
 	 */
 	private void endGameButtonPressed() {
-		
+
 		// Send a notification to participants that the game has ended.
 		closedNotification.send();
-		
+
 		// Mark the game as closed.
 		game.setFinished(true);
 		game.setLive(false);
-		
-		System.out.println("HEY");
-		System.out.println(PlanningPokerGameModel.getPlanningPokerGame(game.getGameName()));
-		
+
 		// Update the database with the changes.
 		UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
-		
-		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
-		try {
-			new Thread().wait(200);
-		} catch (Exception ex) {
+
+		// Don't proceed until the changes to this planning poker game have been
+		// recognized by the database.
+		while (PlanningPokerGameModel.getPlanningPokerGame(game.getGameName()).isLive()
+				|| !PlanningPokerGameModel.getPlanningPokerGame(game.getGameName()).isFinished()) {
+			GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
 		}
 
-		MainView.getInstance().refreshGameTree();
+		// Close this tab.
 		MainView.getInstance().removeClosableTab();
 	}
 
 	/**
-	 * This function is what to call to open up the display for an
-	 * open-for-voting planning poker game in a new tab.
+	 * This function will open up a tab in the planning poker module with a new
+	 * instance of this UI for interacting with the given open-for-voting
+	 * planning poker game.
 	 * 
 	 * @param game
 	 *            A planning poker game which is open for voting.
 	 */
 	public static void open(PlanningPokerGame game) {
-
-		while (game.getRequirements().get(0) == null) {
-			continue;
-		}
-
 		OpenGameView view = new OpenGameView(game);
 		MainView.getInstance().addCloseableTab(game.getGameName(), view);
 	}
