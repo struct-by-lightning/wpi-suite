@@ -21,7 +21,9 @@ import edu.wpi.cs.wpisuitetng.exceptions.DatabaseException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 
 /**
  * @author Miguel
@@ -81,6 +83,8 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	public PlanningPokerGame[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
 		PlanningPokerGame[] m = new PlanningPokerGame[0];
+		Mailer close;
+		
 		if(id.equals(""))
 		{
 			return getAll(s);
@@ -92,6 +96,15 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 			for(PlanningPokerGame game : rv) {
 				if(!game.isFinished() && new Date().after(game.getEndDate().getTime())) {
 					System.out.println("Game \"" + game.getGameName() + "\" has passed its deadline; closing.");
+					close = new Mailer("The game " + game.getGameName() + " has closed!",
+							"You can now view the results of the estimation.");
+					GetUserController.getInstance().retrieveUser();
+					try {
+						Thread.sleep(150);
+					} catch (Exception e) {
+					}
+					close.addEmailFromUsers(UserModel.getInstance().getUsers());
+					close.send();
 					game.setFinished(true);
 					game.setLive(false);
 					this.save(s, game);
