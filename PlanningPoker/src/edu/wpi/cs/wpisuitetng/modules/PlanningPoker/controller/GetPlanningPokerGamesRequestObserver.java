@@ -43,6 +43,8 @@ public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 		
 		// Pass these PlanningPokerGames to the controller
 		controller.receivedPlanningPokerGames(PlanningPokerGames);
+		
+		GetPlanningPokerGamesController.waitingOnRequest = false;
 	}
 
 	/**
@@ -51,6 +53,7 @@ public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	@Override
 	public void responseError(IRequest iReq) {
 		fail(iReq, null);
+		GetPlanningPokerGamesController.waitingOnRequest = false;
 	}
 
 	/**
@@ -60,7 +63,7 @@ public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		//Do something suitable for an error condition.
+		GetPlanningPokerGamesController.waitingOnRequest = false;
 	}
 
 }
