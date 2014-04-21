@@ -205,14 +205,21 @@ public class MainView {
 		// attempting to display them.
 		try {
 			GetRequirementsController.getInstance().retrieveRequirements();
-			while (RequirementModel.getInstance().getRequirements().size() < 1
-					|| RequirementModel.getInstance().getRequirements().get(0) == null) {
+			
+			while (true) {		
+				RequirementModel rm = RequirementModel.getInstance();
+				int size = rm.getRequirements().size();		
+				if (size > 0) {
+					if (rm.getRequirements().get(0) != null) {
+						break;
+					}
+				}
 			}
 		} catch (Exception e) {
 			System.out.println("Exception in gameWasDoubleClicked() from retrieveRequirements()");
 			e.printStackTrace();
 		}
-
+		
 		// Conditions for a game to be "New"
 		if (!selectedGame.isLive() && !selectedGame.isFinished()) {
 			NewGameView.open(selectedGame);
@@ -357,10 +364,11 @@ public class MainView {
 				TreePath selPath = gameTree.getPathForLocation(e.getX(), e.getY());
 				if (selRow != -1) {
 					if (e.getClickCount() == 2) {
+						
 						DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
 								.getLastPathComponent();
 						String gameName = (String) node.getUserObject();
-
+						
 						MainView.gameWasDoubleClicked(PlanningPokerGameModel
 								.getPlanningPokerGame(gameName));
 					}
