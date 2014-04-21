@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This singleton is a JPanel with the GUI needed for the main area of the view
@@ -302,8 +304,11 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 	private boolean updateIfValid() {
 		String emailText = this.emailField.getText();
 		String aimText = this.aimField.getText();
-
-		if (emailText.length() != 0 || aimText.length() != 0) {
+		
+		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailText);
+        
+		if (matcher.find() || aimText.length() != 0) {
 			this.submitButton.setEnabled(true);
 			this.errorLabel.setVisible(false);
 			return true;
