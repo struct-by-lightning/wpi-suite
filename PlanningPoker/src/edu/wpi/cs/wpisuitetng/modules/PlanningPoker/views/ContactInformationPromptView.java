@@ -9,6 +9,10 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
+
 /**
  * This singleton is a JPanel with the GUI needed for the main area of the view
  * which prompts a user for contact information before they are able to enter
@@ -55,6 +59,8 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 
 		// TODO: Right now, this button simply transitions from the contact
 		// prompt to the main planning poker view no matter what.
+		User user = new User(emailField.getText(), ConfigManager.getConfig().getUserName(), "1111111111", aimField.getText());
+		AddUserController.getInstance().AddUser(user);
 		MainView.getInstance().switchToMainOverview();
 	}
 
