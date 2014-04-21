@@ -143,9 +143,15 @@ public class User extends RegularAbstractModel<User> {
 	 * @param body
 	 * @return
 	 */
-	public static User[] fromJSONArray(String body) {
-		// TODO Auto-generated method stub
-		return null;
+	public static User[] fromJSONArray(String jsonArr) {
+		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		List<User> users = new ArrayList<User>();
+
+		for (JsonElement json : array) {
+			users.add(User.fromJSON(json.toString()));
+		}
+
+		return users.toArray(new User[0]);
 	}
 
 }
