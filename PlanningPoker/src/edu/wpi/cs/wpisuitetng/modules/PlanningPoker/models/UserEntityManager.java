@@ -44,13 +44,11 @@ public class UserEntityManager implements EntityManager<User> {
 	@Override
 	public User makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
-		User u;
+		User u = User.fromJSON(content);
 		
-		u = User.fromJSON(content);
+
 		
-		User[] existing = getEntity(s, u.getID());
-		
-		if(existing.length == 0 || existing[0] == null){
+		if(getEntity(s, u.getID())[0] == null){
 			save(s,u);
 		}
 		else{
@@ -96,7 +94,7 @@ public class UserEntityManager implements EntityManager<User> {
 		
 		if(true){
 			System.out.println("Started update");
-			deleteEntity(s, changes.getUserName());
+			deleteEntity(s, changes.getID());
 			data.save(changes);
 			System.out.println("Finsihed update");
 			return changes;
