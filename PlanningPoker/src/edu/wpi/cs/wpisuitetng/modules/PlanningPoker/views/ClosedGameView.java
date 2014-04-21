@@ -108,7 +108,7 @@ public class ClosedGameView extends JPanel {
 							requirementNameLabel.setText(selected.getName());
 							requirementDescriptionLabel.setText(selected
 									.getDescription());
-							updateEstimateTotal(selected);
+							updateEstimateTotal(currentID);
 						}
 						ArrayList<Double> reqVotes = new ArrayList<Double>();
 						estimateModel = new DefaultListModel<String>();
@@ -184,7 +184,7 @@ public class ClosedGameView extends JPanel {
 					currentID = selected.getId();
 					requirementNameLabel.setText(selected.getName());
 					requirementDescriptionLabel.setText(selected.getDescription());
-					updateEstimateTotal(selected);
+					updateEstimateTotal(currentID);
 				}
 				ArrayList<Double> reqVotes = new ArrayList<Double>();
 				estimateModel = new DefaultListModel<String>();
@@ -230,8 +230,13 @@ public class ClosedGameView extends JPanel {
 	 * @param selected
 	 *            The requriement currently being viewed by the user.
 	 */
-	private void updateEstimateTotal(Requirement selected) {
-		this.estimateNumberBox.setText("" + selected.getEstimate());
+	private void updateEstimateTotal(int selected) {
+		PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
+		for(PlanningPokerFinalEstimate ppfe : stuff) {
+			if(ppfe.getRequirementID() ==  selected) {
+				this.estimateNumberBox.setText("" + ppfe.getEstimate());
+			}
+		}
 	}
 
 	/**
@@ -692,8 +697,8 @@ public class ClosedGameView extends JPanel {
 				PlanningPokerFinalEstimate ppfe = new PlanningPokerFinalEstimate(game.getGameName(), n);
 				ppfe.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
 				AddPlanningPokerFinalEstimateController.getInstance().addPlanningPokerFinalEstimate(ppfe);
-				//PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
-				//System.out.println(Arrays.asList(stuff));
+				PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
+				System.out.println("These are the current final estimates:" +Arrays.asList(stuff));
 //				req2set.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
 //				UpdateRequirementController.getInstance().updateRequirement(req2set);
 //				try {

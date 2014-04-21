@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEstimate;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
@@ -71,16 +72,18 @@ public class GetPlanningPokerFinalEstimateController {
 		request.send(); // send the request
 		
 		try {
-			Thread.sleep(300);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(request.getResponse() != null) {
 			//return Integer.MIN_VALUE;
+			System.out.println("response exists");
 			PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate.fromJsonArray(request.getResponse().getBody());
 			return a;
 		} else {
+			System.out.println("response is null");
 			return new PlanningPokerFinalEstimate[0];
 		}
 	}
