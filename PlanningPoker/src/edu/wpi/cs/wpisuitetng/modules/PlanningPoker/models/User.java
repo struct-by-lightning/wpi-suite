@@ -138,4 +138,14 @@ public class User extends RegularAbstractModel<User> {
 		this.instantMessage = instantMessage;
 	}
 
+	/**
+	 * Description
+	 * @param body
+	 * @return
+	 */
+	public static User[] fromJSONArray(String body) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
