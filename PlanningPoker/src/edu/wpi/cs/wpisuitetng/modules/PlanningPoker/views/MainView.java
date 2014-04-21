@@ -207,8 +207,8 @@ public class MainView {
 		// attempting to display them.
 		try {
 			GetRequirementsController.getInstance().retrieveRequirements();
-			while (RequirementModel.getInstance().getRequirements().get(0) == null
-					|| RequirementModel.getInstance().getRequirements().size() < 1) {
+			while (RequirementModel.getInstance().getRequirements().size() < 1
+					|| RequirementModel.getInstance().getRequirements().get(0) == null) {
 			}
 		} catch (Exception e) {
 			System.out.println("Exception in gameWasDoubleClicked() from retrieveRequirements()");
