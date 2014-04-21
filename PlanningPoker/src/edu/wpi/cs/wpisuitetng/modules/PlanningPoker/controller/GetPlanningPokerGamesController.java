@@ -26,6 +26,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author justinhess
  **/
 public class GetPlanningPokerGamesController implements ActionListener {
+	
+	public static volatile boolean waitingOnRequest = false;
 
 	private GetPlanningPokerGamesRequestObserver observer;
 	private static GetPlanningPokerGamesController instance;
@@ -75,6 +77,7 @@ public class GetPlanningPokerGamesController implements ActionListener {
 	 * Sends an HTTP request to retrieve all PlanningPokerGames
 	 **/
 	public void retrievePlanningPokerGames() {
+		GetPlanningPokerGamesController.waitingOnRequest = true;
 		final Request request = Network.getInstance().makeRequest(
 				"planningpoker/planningpokergame", HttpMethod.GET); // GET ==
 																	// read

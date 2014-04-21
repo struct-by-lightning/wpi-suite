@@ -104,6 +104,12 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 **/
 	public ArrayList<Requirement> getRequirements() {
 		
+		// Make sure requirements have been loaded from the database.
+		GetRequirementsController.getInstance().retrieveRequirements();
+		while (RequirementModel.getInstance().getRequirements().size() < 1
+				|| RequirementModel.getInstance().getRequirements().get(0) == null) {
+		}
+		
 		ArrayList<Requirement> toReturn = new ArrayList<Requirement>();
 
 		for(int id : this.getRequirementIds()) {
