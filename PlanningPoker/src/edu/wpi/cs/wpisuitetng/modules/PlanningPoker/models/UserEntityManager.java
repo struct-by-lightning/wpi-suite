@@ -47,8 +47,9 @@ public class UserEntityManager implements EntityManager<User> {
 		User u = User.fromJSON(content);
 		
 
+		User[] user = getEntity(s, u.getID());
 		
-		if(getEntity(s, u.getID())[0] == null){
+		if(user.length == 0 || user[0] == null){
 			save(s,u);
 		}
 		else{
