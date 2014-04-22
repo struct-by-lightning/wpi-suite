@@ -27,12 +27,17 @@ public class AddDeckController {
 	/** The observer for this controller */
 	private AddDeckRequestObserver observer;
 
+
+
+
+
 	/**
 	 * Returns the singleton instance of the AddDeckController, or creates it if
 	 * it does not yet exist.
 	 * 
-	
-	 * @return the singleton instance of the addDeckController */
+	 * 
+	 * @return the singleton instance of the addDeckController
+	 */
 	public static AddDeckController getInstance() {
 		if (instance == null){
 			instance = new AddDeckController();
@@ -40,18 +45,26 @@ public class AddDeckController {
 		return instance;
 	}
 
+
 	/** Construct an AddDeckController */
 	private AddDeckController() {
 		observer = new AddDeckRequestObserver(this);
+	
 	}
+
 
 	/**
 	 * Method addDeck.
-	 * @param newDeck Deck
+	 * 
+	 * @param newDeck
+	 *            Deck
 	 */
 	public void addDeck(Deck newDeck) {
+
 		final Request request = Network.getInstance().makeRequest(
 				"planningpoker/deck", HttpMethod.PUT); // PUT equals create
+
+
 		request.setBody(newDeck.toJSON()); // put the new Deck into the request
 		request.addObserver(observer);
 		request.send();

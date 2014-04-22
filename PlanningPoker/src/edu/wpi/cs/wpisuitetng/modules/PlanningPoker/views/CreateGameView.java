@@ -336,6 +336,7 @@ public class CreateGameView extends JPanel {
 									true, startCal, endCal, ConfigManager.getConfig().getUserName());
 							game.setFinished(false);
 							game.setLive(true);
+							mailer.send();
 
 						} else {
 							game = new PlanningPokerGame(enteredName, "Default description",
@@ -350,8 +351,6 @@ public class CreateGameView extends JPanel {
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
 						lblGameCreated.setVisible(true);
 						btnCreateGame.setEnabled(false);
-
-						mailer.send();
 
 						MainView.getInstance().refreshGameTree();
 						MainView.getInstance().removeClosableTab();
@@ -588,8 +587,8 @@ public class CreateGameView extends JPanel {
 		btnResetGame = new JButton("Reset");
 		createGamePane.add(btnResetGame);
 
-		btnExport = new JButton("Export requirements");
-		createGamePane.add(btnExport);
+		//btnExport = new JButton("Export requirements");
+		//createGamePane.add(btnExport);
 
 		startNow = new JCheckBox("Start Game Now?");
 		createGamePane.add(startNow);
@@ -917,7 +916,7 @@ public class CreateGameView extends JPanel {
 	private JLabel lblName;
 	private JPanel createGamePane;
 	private JButton btnResetGame;
-	private JButton btnExport;
+	//private JButton btnExport;
 	private JCheckBox startNow;
 	private JLabel label;
 	private JPanel settingsPanel;

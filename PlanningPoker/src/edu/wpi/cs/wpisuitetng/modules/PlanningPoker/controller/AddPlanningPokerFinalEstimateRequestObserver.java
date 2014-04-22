@@ -24,10 +24,10 @@ public class AddPlanningPokerFinalEstimateRequestObserver implements RequestObse
 	private AddPlanningPokerFinalEstimateController controller;
 
 	/**
-	 * Constructs the observer given an AddPlanningPokerVoteController
+	 * Constructs the observer given an AddPlanningPokerFinalEstimateController
 	 * 
 	 * @param controller
-	 *            the controller used to add PlanningPokerVotes
+	 *            the controller used to add PlanningPokerFinalEstimate
 	 */
 	public AddPlanningPokerFinalEstimateRequestObserver(
 			AddPlanningPokerFinalEstimateController controller) {
@@ -35,7 +35,7 @@ public class AddPlanningPokerFinalEstimateRequestObserver implements RequestObse
 	}
 
 	/**
-	 * Parse the PlanningPokerVote that was received from the server then pass
+	 * Parse the PlanningPokerFinalEstimates that was received from the server then pass
 	 * them to the controller.
 	 * 
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
