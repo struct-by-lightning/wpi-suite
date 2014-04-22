@@ -124,7 +124,7 @@ public class DeckModel extends AbstractListModel<Deck> {
 	 * 
 	 * NOTE: One does not simply walk into Mor- I mean construct a new instance
 	 * of the model. Other classes reference it, so we must manually remove each
-	 * User from the model.
+	 * PlanningPokerUser from the model.
 	 */
 	public void emptyModel() {
 		int oldSize = getSize();

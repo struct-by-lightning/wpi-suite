@@ -10,7 +10,7 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -21,27 +21,27 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @version $Revision: 1.0 $
  * @author justinhess
  */
-public class AddUserController {
+public class AddPlanningPokerUserController {
 
-	private static AddUserController instance;
-	private AddUserRequestObserver observer;
+	private static AddPlanningPokerUserController instance;
+	private AddPlanningPokerUserRequestObserver observer;
 
 	/**
-	 * Construct an AddUserController for the given model, view
+	 * Construct an AddPlanningPokerUserController for the given model, view
 	 * pair
 	 */
-	private AddUserController() {
-		observer = new AddUserRequestObserver(this);
+	private AddPlanningPokerUserController() {
+		observer = new AddPlanningPokerUserRequestObserver(this);
 	}
 
 	/**
 	 * 
-	 * @return the instance of the AddUserController or creates one
+	 * @return the instance of the AddPlanningPokerUserController or creates one
 	 *         if it does not exist.
 	 */
-	public static AddUserController getInstance() {
+	public static AddPlanningPokerUserController getInstance() {
 		if (instance == null) {
-			instance = new AddUserController();
+			instance = new AddPlanningPokerUserController();
 		}
 
 		return instance;
@@ -53,12 +53,12 @@ public class AddUserController {
 	 * @param newPlanningPokerGame
 	 *            is the PlanningPokerGame to be added to the server.
 	 */
-	public void AddUser(User newUser) {
+	public void AddUser(PlanningPokerUser newUser) {
 		final Request request = Network.getInstance().makeRequest(
 				"planningpoker/user", HttpMethod.PUT); // PUT ==
 																	// create
 		request.setBody(newUser.toJSON()); // put the new
-														// User in
+														// PlanningPokerUser in
 														// the body of the
 														// request
 		request.addObserver(observer); // add an observer to process the

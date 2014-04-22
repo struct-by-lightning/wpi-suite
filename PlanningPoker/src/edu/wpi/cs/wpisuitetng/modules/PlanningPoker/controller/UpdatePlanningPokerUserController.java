@@ -10,7 +10,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -22,35 +22,35 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author Alec Thompson - ajthompson
  * @version Apr 8, 2014
  */
-public class UpdateUserController {
+public class UpdatePlanningPokerUserController {
 
-	private static UpdateUserController instance;
-	private UpdateUserRequestObserver observer;
+	private static UpdatePlanningPokerUserController instance;
+	private UpdatePlanningPokerUserRequestObserver observer;
 
 	/**
-	 * Returns the instance of the UpdateUserController, or creates one if it
+	 * Returns the instance of the UpdatePlanningPokerUserController, or creates one if it
 	 * does not exist.
 	 * 
 	
-	 * @return the instance of UpdateUserController */
-	public static UpdateUserController getInstance() {
+	 * @return the instance of UpdatePlanningPokerUserController */
+	public static UpdatePlanningPokerUserController getInstance() {
 		if (instance == null)
-			instance = new UpdateUserController();
+			instance = new UpdatePlanningPokerUserController();
 		return instance;
 	}
 	
 	/**
-	 * Constructs an UpdateUserController
+	 * Constructs an UpdatePlanningPokerUserController
 	 */
-	private UpdateUserController() {
-		observer = new UpdateUserRequestObserver(this);
+	private UpdatePlanningPokerUserController() {
+		observer = new UpdatePlanningPokerUserRequestObserver(this);
 	}
 	
 	/**
 	 * Method update.
-	 * @param newUser User
+	 * @param newUser PlanningPokerUser
 	 */
-	public void update(User newUser) {
+	public void update(PlanningPokerUser newUser) {
 		Request request = Network.getInstance().makeRequest("planningpoker/user", HttpMethod.POST);
 		request.setBody(newUser.toJSON());
 		request.addObserver(observer);

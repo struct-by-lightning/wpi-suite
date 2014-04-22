@@ -26,35 +26,35 @@ import edu.wpi.cs.wpisuitetng.modules.Model;
  * @author sfmailand
  *
  */
-public class UserEntityManager implements EntityManager<User> {
+public class PlanningPokerUserEntityManager implements EntityManager<PlanningPokerUser> {
 	
-	Class<User> usr = User.class;
+	Class<PlanningPokerUser> usr = PlanningPokerUser.class;
 	Data data;
 
 	
-	private static final Logger logger = Logger.getLogger(UserEntityManager.class.getName());
+	private static final Logger logger = Logger.getLogger(PlanningPokerUserEntityManager.class.getName());
 	
 	
-	public UserEntityManager(Data data){
+	public PlanningPokerUserEntityManager(Data data){
 		this.data = data;
 	}
 	/* (non-Javadoc)
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(edu.wpi.cs.wpisuitetng.Session, java.lang.String)
 	 */
 	@Override
-	public User makeEntity(Session s, String content)
+	public PlanningPokerUser makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
-		User u = User.fromJSON(content);
+		PlanningPokerUser u = PlanningPokerUser.fromJSON(content);
 		
 
-		User[] user = getEntity(s, u.getID());
+		PlanningPokerUser[] user = getEntity(s, u.getID());
 		
 		if(user.length == 0 || user[0] == null){
 			save(s,u);
 		}
 		else{
-			logger.log(Level.WARNING, "Conflict Exception during User creation.");
-			throw new ConflictException("A User with the given ID already exists. Entity String "  + content);
+			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerUser creation.");
+			throw new ConflictException("A PlanningPokerUser with the given ID already exists. Entity String "  + content);
 		}
 		
 		return u;
@@ -64,9 +64,9 @@ public class UserEntityManager implements EntityManager<User> {
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(edu.wpi.cs.wpisuitetng.Session, java.lang.String)
 	 */
 	@Override
-	public User[] getEntity(Session s, String id) throws NotFoundException,
+	public PlanningPokerUser[] getEntity(Session s, String id) throws NotFoundException,
 			WPISuiteException {
-		User[] m = new User[0];
+		PlanningPokerUser[] m = new PlanningPokerUser[0];
 		
 		if(id.equals("")){
 			return getAll(s);
@@ -80,9 +80,9 @@ public class UserEntityManager implements EntityManager<User> {
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(edu.wpi.cs.wpisuitetng.Session)
 	 */
 	@Override
-	public User[] getAll(Session s) throws WPISuiteException {
-		User[] ret = new User[0];
-		ret = data.retrieveAll(new User(null, null, null, null)).toArray(ret);
+	public PlanningPokerUser[] getAll(Session s) throws WPISuiteException {
+		PlanningPokerUser[] ret = new PlanningPokerUser[0];
+		ret = data.retrieveAll(new PlanningPokerUser(null, null, null, null)).toArray(ret);
 		return ret;
 	}
 
@@ -90,8 +90,8 @@ public class UserEntityManager implements EntityManager<User> {
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#update(edu.wpi.cs.wpisuitetng.Session, java.lang.String)
 	 */
 	@Override
-	public User update(Session s, String content) throws WPISuiteException {
-		User changes = User.fromJSON(content);
+	public PlanningPokerUser update(Session s, String content) throws WPISuiteException {
+		PlanningPokerUser changes = PlanningPokerUser.fromJSON(content);
 		
 		if(true){
 			System.out.println("Started update");
@@ -109,13 +109,13 @@ public class UserEntityManager implements EntityManager<User> {
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#save(edu.wpi.cs.wpisuitetng.Session, edu.wpi.cs.wpisuitetng.modules.Model)
 	 */
 	@Override
-	public void save(Session s, User model) throws WPISuiteException {
+	public void save(Session s, PlanningPokerUser model) throws WPISuiteException {
 		if(data.save(model)){
-			logger.log(Level.FINE, "User Saved: " + model);
+			logger.log(Level.FINE, "PlanningPokerUser Saved: " + model);
 			return;
 		}
 		else{
-			logger.log(Level.WARNING, "User save Failure!");
+			logger.log(Level.WARNING, "PlanningPokerUser save Failure!");
 			throw new DatabaseException("Save failure for user");
 		}
 		
@@ -127,7 +127,7 @@ public class UserEntityManager implements EntityManager<User> {
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
 		Model m = data.delete(data.retrieve(usr, "username", id).get(0));
-		logger.log(Level.INFO, "UserEntityManager deleting deck < " + id + ">");
+		logger.log(Level.INFO, "PlanningPokerUserEntityManager deleting deck < " + id + ">");
 		return (m !=null) ? true: false;
 	}
 
@@ -146,8 +146,8 @@ public class UserEntityManager implements EntityManager<User> {
 	 */
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
-		logger.log(Level.INFO, "UserEntityManager involking DeleteAll...");
-		data.deleteAll(new User(null, null, null, null));
+		logger.log(Level.INFO, "PlanningPokerUserEntityManager involking DeleteAll...");
+		data.deleteAll(new PlanningPokerUser(null, null, null, null));
 		
 	}
 
