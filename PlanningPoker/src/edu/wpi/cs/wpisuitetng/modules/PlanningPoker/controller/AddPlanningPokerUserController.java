@@ -55,12 +55,12 @@ public class AddPlanningPokerUserController {
 	 */
 	public void AddUser(PlanningPokerUser newUser) {
 		final Request request = Network.getInstance().makeRequest(
-				"planningpoker/user", HttpMethod.PUT); // PUT ==
+				"planningpoker/planningpokeruser", HttpMethod.PUT); // PUT ==
 																	// create
 		request.setBody(newUser.toJSON()); // put the new
-														// PlanningPokerUser in
-														// the body of the
-														// request
+											// PlanningPokerUser in
+											// the body of the
+											// request
 		request.addObserver(observer); // add an observer to process the
 										// response
 		request.send();

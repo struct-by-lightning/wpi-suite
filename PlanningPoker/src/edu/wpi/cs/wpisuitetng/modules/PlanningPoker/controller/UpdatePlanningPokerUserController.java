@@ -28,30 +28,34 @@ public class UpdatePlanningPokerUserController {
 	private UpdatePlanningPokerUserRequestObserver observer;
 
 	/**
-	 * Returns the instance of the UpdatePlanningPokerUserController, or creates one if it
-	 * does not exist.
+	 * Returns the instance of the UpdatePlanningPokerUserController, or creates
+	 * one if it does not exist.
 	 * 
-	
-	 * @return the instance of UpdatePlanningPokerUserController */
+	 * 
+	 * @return the instance of UpdatePlanningPokerUserController
+	 */
 	public static UpdatePlanningPokerUserController getInstance() {
 		if (instance == null)
 			instance = new UpdatePlanningPokerUserController();
 		return instance;
 	}
-	
+
 	/**
 	 * Constructs an UpdatePlanningPokerUserController
 	 */
 	private UpdatePlanningPokerUserController() {
 		observer = new UpdatePlanningPokerUserRequestObserver(this);
 	}
-	
+
 	/**
 	 * Method update.
-	 * @param newUser PlanningPokerUser
+	 * 
+	 * @param newUser
+	 *            PlanningPokerUser
 	 */
 	public void update(PlanningPokerUser newUser) {
-		Request request = Network.getInstance().makeRequest("planningpoker/user", HttpMethod.POST);
+		Request request = Network.getInstance().makeRequest(
+				"planningpoker/planningpokeruser", HttpMethod.POST);
 		request.setBody(newUser.toJSON());
 		request.addObserver(observer);
 		request.send();

@@ -33,9 +33,10 @@ public class GetPlanningPokerUserController implements ActionListener {
 	}
 
 	/**
-	
+	 * 
 	 * @return the instance of the GetUserEmailsController or creates one if it
-	 *         doesn't exist */
+	 *         doesn't exist
+	 */
 	public static GetPlanningPokerUserController getInstance() {
 		if (instance == null) {
 			instance = new GetPlanningPokerUserController();
@@ -51,13 +52,14 @@ public class GetPlanningPokerUserController implements ActionListener {
 	 * @param e
 	 *            ActionEvent
 	 * 
-	
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent) */
+	 * 
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Send a request to the core to get this email
 		final Request request = Network.getInstance().makeRequest(
-				"planningpoker/user", HttpMethod.GET);
+				"planningpoker/planningpokeruser", HttpMethod.GET);
 		request.addObserver(observer);
 		request.send();
 	}
@@ -67,7 +69,7 @@ public class GetPlanningPokerUserController implements ActionListener {
 	 */
 	public void retrieveUser() {
 		final Request request = Network.getInstance().makeRequest(
-				"planningpoker/user", HttpMethod.GET);
+				"planningpoker/planningpokeruser", HttpMethod.GET);
 		request.addObserver(observer);
 		request.send();
 	}
@@ -75,13 +77,14 @@ public class GetPlanningPokerUserController implements ActionListener {
 	/**
 	 * Add the given Users to the local model (they were received from the core
 	 * 
-	
-	 * @param Users array of Users received from the server
+	 * 
+	 * @param Users
+	 *            array of Users received from the server
 	 */
 	public void receivedUser(PlanningPokerUser[] Users) {
 		// empty the local model to eliminate duplications
 		PlanningPokerUserModel.getInstance().emptyModel();
-		
+
 		// make sure the response was not null
 		if (Users != null) {
 			// add the users to the local model
