@@ -31,6 +31,9 @@ public class PlanningPokerGameTest {
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
+	/**
+	 * Method retrieveGameNameTest.
+	 */
 	@Test
 	public final void retrieveGameNameTest() {
 		PlanningPokerGame test = new PlanningPokerGame("test game name",
@@ -41,6 +44,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getGameName().equals("test game name"));
 	}
 
+	/**
+	 * Method retrieveDescriptionTest.
+	 */
 	@Test
 	public final void retrieveDescriptionTest() {
 		PlanningPokerGame test = new PlanningPokerGame("test game name",
@@ -51,6 +57,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getDescription().equals("test description"));
 	}
 
+	/**
+	 * Method retrieveDeckTypeTest.
+	 */
 	@Test
 	public final void retrieveDeckTypeTest() {
 		PlanningPokerGame test = new PlanningPokerGame("test game name",
@@ -61,6 +70,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getDeckType().equals("fibonacci"));
 	}
 
+	/**
+	 * Method retrieveRequirementIdsTest.
+	 */
 	@Test
 	public final void retrieveRequirementIdsTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -84,6 +96,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getRequirementIds().contains(5));
 	}
 
+	/**
+	 * Method retrieveIsFinishedTest.
+	 */
 	@Test
 	public final void retrieveIsFinishedTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -109,6 +124,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test2.isFinished());
 	}
 
+	/**
+	 * Method retrieveIsLiveTest.
+	 */
 	@Test
 	public final void retrieveIsLiveTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -134,6 +152,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test2.isLive());
 	}
 
+	/**
+	 * Method retrieveStartDateTest.
+	 */
 	@Test
 	public final void retrieveStartDateTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -156,6 +177,9 @@ public class PlanningPokerGameTest {
 				.get(GregorianCalendar.DAY_OF_MONTH));
 	}
 
+	/**
+	 * Method retrieveEndDateTest.
+	 */
 	@Test
 	public final void retrieveEndDateTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -177,6 +201,9 @@ public class PlanningPokerGameTest {
 		assertEquals(28, test.getEndDate().get(GregorianCalendar.DAY_OF_MONTH));
 	}
 
+	/**
+	 * Method retrieveModeratorTest.
+	 */
 	@Test
 	public final void retrieveModeratorTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -218,6 +245,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getGameName().equals("2014-05-28 11:08:15"));
 	}
 
+	/**
+	 * Method retrieveDeckValuesTest.
+	 */
 	@Test
 	public final void retrieveDeckValuesTest() {
 		// TODO currently based on the mock data returned by the method
@@ -242,6 +272,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getDeckValues().contains(8));
 	}
 
+	/**
+	 * Method hasEndDateTest.
+	 */
 	@Test
 	public final void hasEndDateTest() {
 		// TODO currently based on the mock data returned by the method
@@ -267,6 +300,9 @@ public class PlanningPokerGameTest {
 		assertEquals(false, test2.hasEndDate());
 	}
 
+	/**
+	 * Method toJsonTest.
+	 */
 	@Test
 	public final void toJsonTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -305,6 +341,9 @@ public class PlanningPokerGameTest {
 		assertTrue(testString.contains("2014-06-28T00:00:00.000-0400"));
 	}
 
+	/**
+	 * Method toJsonNullTest.
+	 */
 	@Test
 	public final void toJsonNullTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -340,6 +379,9 @@ public class PlanningPokerGameTest {
 		assertTrue(nullString.contains("2014-06-28T00:00:00.000-0400"));
 	}
 
+	/**
+	 * Method fromJsonTest.
+	 */
 	@Test
 	public final void fromJsonTest() {
 		String jsonString = "{\"gameName\":\"2014-05-28 11:08:15\",\"moderator\":\"ajthompson\",\"description\":\"test description\",\"deckType\":\"fibonacci\",\"requirements\":[1,2,3,4,5],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\"}";
@@ -367,6 +409,9 @@ public class PlanningPokerGameTest {
 		assertTrue(result.getModerator().equals("ajthompson"));
 	}
 
+	/**
+	 * Method fromJsonNullFieldsTest.
+	 */
 	@Test
 	public final void fromJsonNullFieldsTest() {
 		String jsonString = "{\"gameName\":\"null test\",\"moderator\":\"\",\"description\":\"\",\"deckType\":\"\",\"requirements\":[],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\"}";
@@ -390,6 +435,9 @@ public class PlanningPokerGameTest {
 		assertEquals("", result2.getModerator());
 	}
 
+	/**
+	 * Method retrieveIDTest.
+	 */
 	@Test
 	public final void retrieveIDTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -409,6 +457,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getID().equals("2014-05-28 11:08:15"));
 	}
 
+	/**
+	 * Method retrievePrimaryKeyTest.
+	 */
 	@Test
 	public final void retrievePrimaryKeyTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -428,6 +479,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getPrimaryKey().equals("gameName"));
 	}
 
+	/**
+	 * Method fromJsonArrayTest.
+	 */
 	@Test
 	public final void fromJsonArrayTest() {
 		String jsonString = "[{\"gameName\":\"2014-05-28 11:08:15\",\"moderator\":\"ajthompson\",\"description\":\"test description\",\"deckType\":\"fibonacci\",\"requirements\":[1,2,3,4,5],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\"},{\"gameName\":\"null test\",\"moderator\":\"\",\"description\":\"\",\"deckType\":\"\",\"requirements\":[],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\"}]";
@@ -472,6 +526,9 @@ public class PlanningPokerGameTest {
 		assertEquals("", result[1].getModerator());
 	}
 
+	/**
+	 * Method retrieveSelectedCardIndicesTest.
+	 */
 	@Test
 	public final void retrieveSelectedCardIndicesTest() {
 		// TODO this method returns a placeholder empty arraylist
@@ -492,6 +549,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getSelectedCardIndices(null, null).isEmpty());
 	}
 
+	/**
+	 * Method setIDTest.
+	 */
 	@Test
 	public final void setIDTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -514,6 +574,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getID().equals("test"));
 	}
 
+	/**
+	 * Method setGameNameTest.
+	 */
 	@Test
 	public final void setGameNameTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
@@ -536,6 +599,9 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getGameName().equals("test"));
 	}
 
+	/**
+	 * Method removeRequirementTest.
+	 */
 	@Test
 	public final void removeRequirementTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {

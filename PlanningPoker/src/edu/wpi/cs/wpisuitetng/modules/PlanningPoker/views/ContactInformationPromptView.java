@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
  * planning poker.
  * 
  * @author Austin Rose (atrose)
+ * @version $Revision: 1.0 $
  */
 public class ContactInformationPromptView extends javax.swing.JPanel {
 

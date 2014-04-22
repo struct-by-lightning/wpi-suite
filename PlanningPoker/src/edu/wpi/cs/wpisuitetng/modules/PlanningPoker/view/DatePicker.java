@@ -168,6 +168,9 @@ public class DatePicker {
 		return sdf.format(cal.getTime());
 	}
 	
+	/**
+	 * Method close.
+	 */
 	public void close() {
 		top.remove(p1);
 		top.remove(p2);

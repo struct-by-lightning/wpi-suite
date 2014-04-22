@@ -44,6 +44,7 @@ public class NoCardVoting extends JPanel {
 	 * 
 	 * @param infoContainer
 	 *            JPanel
+	 * @param initialGame PlanningPokerGame
 	 */
 	public NoCardVoting(JPanel infoContainer, PlanningPokerGame initialGame) {
 		this.game = initialGame;
@@ -90,6 +91,9 @@ public class NoCardVoting extends JPanel {
 
 	}
 
+	/**
+	 * Method refresh.
+	 */
 	public void refresh() {
 		ActionListener[] act = textField.getActionListeners();
 		if (act.length > 0) {

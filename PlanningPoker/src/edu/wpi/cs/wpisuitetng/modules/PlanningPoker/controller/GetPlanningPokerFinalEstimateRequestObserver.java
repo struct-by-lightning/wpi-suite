@@ -18,6 +18,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * @author friscis
  * @author swconley
  * @author mamora
+ * @version $Revision: 1.0 $
  */
 public class GetPlanningPokerFinalEstimateRequestObserver implements RequestObserver{
 	public static boolean isError = false;

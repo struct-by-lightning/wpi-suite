@@ -51,6 +51,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * one instance of each of the main UI components.
  * 
  * @author Austin Rose (atrose)
+ * @version $Revision: 1.0 $
  */
 public class MainView {
 

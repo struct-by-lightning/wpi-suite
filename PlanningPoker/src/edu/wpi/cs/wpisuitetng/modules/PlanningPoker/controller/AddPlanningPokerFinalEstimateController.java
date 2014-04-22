@@ -24,6 +24,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author swconley
  * @author mamora
  *
+ * @version $Revision: 1.0 $
  */
 public class AddPlanningPokerFinalEstimateController{
 	private static AddPlanningPokerFinalEstimateController instance;

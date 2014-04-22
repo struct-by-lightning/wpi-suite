@@ -25,6 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
  * @author swconley
  * @author mamora
  *
+ * @version $Revision: 1.0 $
  */
 public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPokerFinalEstimate>{
 	private String gameName;
@@ -32,6 +33,11 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	private int requirementID;
 	private boolean hasEstimate;
 	
+	/**
+	 * Constructor for PlanningPokerFinalEstimate.
+	 * @param gameName String
+	 * @param requirementID int
+	 */
 	public PlanningPokerFinalEstimate(String gameName, int requirementID) {
 		hasEstimate = false;
 		if(gameName != null){
@@ -93,6 +99,10 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		return requirementID;
 	}
 	
+	/**
+	 * Method hasEstimate.
+	 * @return boolean
+	 */
 	public boolean hasEstimate() {
 		return hasEstimate;
 	}

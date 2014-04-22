@@ -28,6 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.Model;
  * @author swconley
  * @author mamora
  *
+ * @version $Revision: 1.0 $
  */
 public class PlanningPokerFinalEstimateEntityManager implements EntityManager<PlanningPokerFinalEstimate>{
 	Class<PlanningPokerFinalEstimate> ppg = PlanningPokerFinalEstimate.class;

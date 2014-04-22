@@ -84,6 +84,9 @@ public class PlanningPokerGameModel {
 		return PlanningPokerGameModel.planningPokerGamesDict.size();
 	}
 
+	/**
+	 * Method emptyModel.
+	 */
 	public static void emptyModel() {
 		PlanningPokerGameModel.planningPokerGamesDict.clear();
 	}

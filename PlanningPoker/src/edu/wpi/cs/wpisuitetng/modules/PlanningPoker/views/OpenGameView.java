@@ -55,6 +55,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * a planning poker game which is open for voting.
  * 
  * @author Austin Rose (atrose)
+ * @version $Revision: 1.0 $
  */
 @SuppressWarnings("serial")
 public class OpenGameView extends JPanel {
@@ -200,6 +201,8 @@ public class OpenGameView extends JPanel {
 		this.allCardsPanel.add(textArea, gridBagConstraints);
 	}
 
+	/**
+	 */
 	class MyDocumentListener implements DocumentListener {
 		public void insertUpdate(DocumentEvent e) {
 
@@ -251,10 +254,16 @@ public class OpenGameView extends JPanel {
 		}
 	}
 
+	/**
+	 */
 	class LimitedDocument extends PlainDocument {
 		private int MAX_LENGTH = 3;
 		private JTextArea field;
 
+		/**
+		 * Constructor for LimitedDocument.
+		 * @param input JTextArea
+		 */
 		LimitedDocument(JTextArea input) {
 			field = input;
 		}

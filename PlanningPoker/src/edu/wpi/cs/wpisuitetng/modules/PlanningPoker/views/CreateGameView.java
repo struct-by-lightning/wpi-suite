@@ -70,6 +70,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * planning poker game.
  *
  * @author Austin Rose (atrose)
+ * @version $Revision: 1.0 $
  */
 public class CreateGameView extends JPanel {
 

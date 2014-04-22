@@ -25,6 +25,9 @@ public class ToolbarPanel extends DefaultToolbarView {
 
 	PlanningPokerButtonsPanel btnsPanel = new PlanningPokerButtonsPanel();
 
+	/**
+	 * Constructor for ToolbarPanel.
+	 */
 	public ToolbarPanel() {
 
 		// Make this panel transparent, we want to see the JToolbar gradient

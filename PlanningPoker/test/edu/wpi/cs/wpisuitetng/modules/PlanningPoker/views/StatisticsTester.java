@@ -20,8 +20,12 @@ import org.junit.Test;
 /**
  * @author friscis, swconley
  *
+ * @version $Revision: 1.0 $
  */
 public class StatisticsTester {
+	/**
+	 * Method testAll1.
+	 */
 	@Test
 	public void testAll1() {
 		double[] nums = {1.0, 2.0, 3.0, 4.0, 5.0};
@@ -32,6 +36,9 @@ public class StatisticsTester {
 		assertEquals(5.0, StatisticsInfo.max(nums), .001);
 		assertEquals(1.0, StatisticsInfo.min(nums), .001);
 	}
+	/**
+	 * Method testAll2.
+	 */
 	@Test
 	public void testAll2() {
 		double[] nums = {48.6, 20.9, 8, 20.9, 11.40, 4.26, 71.45, 85.99, 12};

@@ -18,6 +18,7 @@ import org.junit.Test;
 /**
  * @author lisabatbouta
  *
+ * @version $Revision: 1.0 $
  */
 public class DeckModelTest {
 	/**

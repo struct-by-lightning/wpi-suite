@@ -46,6 +46,9 @@ public class GetUserControllerTest {
 
 
 
+	/**
+	 * Method testReceivedUser.
+	 */
 	@Test
 	public void testReceivedUser() {
 		GetPlanningPokerUserController gc = GetPlanningPokerUserController.getInstance();

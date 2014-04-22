@@ -67,6 +67,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 
 	/**
 	 * Sends an HTTP request to retrieve all PlanningPokerGames
+	 * @return PlanningPokerVote[]
 	 */
 	public PlanningPokerVote[] retrievePlanningPokerVote() {
 		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote", HttpMethod.GET); // GET equals read
@@ -91,8 +92,8 @@ public class GetPlanningPokerVoteController implements ActionListener {
 	 * @param gameName the gameName of the vote to retrieve
 	 * @param userName the userName of the vote to retrieve
 	 * @param requirementID the requirementID of the vote to retrieve
-	 * @return the vote if it exists, Integer.MIN_VALUE otherwise
-	 */
+	
+	 * @return the vote if it exists, Integer.MIN_VALUE otherwise */
 	public int retrievePlanningPokerVote(String gameName, String userName, int requirementID) {
 		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote" , HttpMethod.GET); // GET equals read
 		request.addObserver(observer); // add an observer to process the response

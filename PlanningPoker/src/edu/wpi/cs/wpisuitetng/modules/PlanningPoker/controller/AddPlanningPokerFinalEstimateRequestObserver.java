@@ -18,6 +18,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  * @author friscis
  * @author swconley
  *
+ * @version $Revision: 1.0 $
  */
 public class AddPlanningPokerFinalEstimateRequestObserver implements RequestObserver{
 	

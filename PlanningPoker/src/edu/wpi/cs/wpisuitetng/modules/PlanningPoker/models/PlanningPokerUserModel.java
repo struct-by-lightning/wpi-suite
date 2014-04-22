@@ -25,6 +25,7 @@ import javax.swing.AbstractListModel;
  * exist on the server
  * 
  * @author Alec Thompson
+ * @version $Revision: 1.0 $
  */
 public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser> {
 	/**
@@ -72,8 +73,8 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 * @param id
 	 *            the ID number of the PlanningPokerUser to be returned
 	 * 
-	 * @return the PlanningPokerUser for the ID or null if the PlanningPokerUser is not found
-	 */
+	
+	 * @return the PlanningPokerUser for the ID or null if the PlanningPokerUser is not found */
 	public PlanningPokerUser getUser(String id) {
 		// iterate through the list of Users until id is found
 		for (int i = 0; i < this.planningPokerUsers.size(); i++) {
@@ -145,8 +146,8 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	/**
 	 * Adds the given array of planningPokerUsers to the list
 	 * 
-	 * @param Users
-	 *            the array of Users to add
+	
+	 * @param users *            the array of Users to add
 	 */
 	public void addMultipleUsers(PlanningPokerUser[] users) {
 		for (PlanningPokerUser u : users) {

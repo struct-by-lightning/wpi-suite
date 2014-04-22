@@ -42,6 +42,9 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 	private final JButton helpButton = new JButton("<html>Help</html>");
 	private final JPanel contentPanel = new JPanel();
 
+	/**
+	 * Constructor for PlanningPokerButtonsPanel.
+	 */
 	public PlanningPokerButtonsPanel() {
 		super("");
 
@@ -88,8 +91,8 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 	 * Method getnewGameButton.
 	 * 
 	 * 
-	 * @return JButton
-	 */
+	
+	 * @return JButton */
 	public JButton getnewGameButton() {
 		return newGameButton;
 	}
