@@ -21,6 +21,7 @@ import edu.wpi.cs.wpisuitetng.exceptions.DatabaseException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 
@@ -82,6 +83,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	public PlanningPokerGame[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
 		PlanningPokerGame[] m = new PlanningPokerGame[0];
+		PlanningPokerUser[] u = new PlanningPokerUser[0];
 		Mailer close;
 		
 		if(id.equals(""))
@@ -97,12 +99,13 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 					System.out.println("Game \"" + game.getGameName() + "\" has passed its deadline; closing.");
 					close = new Mailer("The game " + game.getGameName() + " has closed!",
 							"You can now view the results of the estimation.");
-					GetUserController.getInstance().retrieveUser();
-					try {
-						Thread.sleep(150);
-					} catch (Exception e) {
-					}
-					close.addEmailFromUsers(UserModel.getInstance().getUsers());
+					// clear the UserModel
+					PlanningPokerUserModel.getInstance().emptyModel();
+					// add the users to the array
+					data.retrieveAll(PlanningPoker.class).toArray(u);
+					// add the users to the model
+					PlanningPokerUserModel.getInstance().addUsers(u);
+					close.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
 					close.send();
 					game.setFinished(true);
 					game.setLive(false);
@@ -124,6 +127,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public PlanningPokerGame[] getAll(Session s) throws WPISuiteException {
 		PlanningPokerGame[] ret = new PlanningPokerGame[0];
+		PlanningPokerUser[] u = new PlanningPokerUser[0];
 		Mailer close;
 		ret = data.retrieveAll(new PlanningPokerGame(null, null, null, null, false, false, null, null, null)).toArray(ret);
 		
@@ -132,10 +136,13 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 				System.out.println("Game \"" + game.getGameName() + "\" has passed its deadline; closing.");
 				close = new Mailer("The game " + game.getGameName() + " has closed!",
 						"You can now view the results of the estimation.");
-				// add users to userModel
-				UserModel.getInstance().emptyModel();
-				UserModel.getInstance().addUsers((User[]) data.retrieveAll(User.class).toArray()); 
-				close.addEmailFromUsers(data.);
+				// clear the UserModel
+				PlanningPokerUserModel.getInstance().emptyModel();
+				// add the users to the array
+				data.retrieveAll(PlanningPoker.class).toArray(u);
+				// add the users to the model
+				PlanningPokerUserModel.getInstance().addUsers(u);
+				close.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
 				close.send();
 				game.setFinished(true);
 				game.setLive(false);
