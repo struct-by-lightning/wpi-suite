@@ -677,9 +677,14 @@ public class OpenGameView extends JPanel {
 
 		instructionsLabel.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
 		instructionsLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		instructionsLabel
+		if(!game.getDeckType().equals("No Deck")) {
+			instructionsLabel
 				.setText("<html>Click on one or more cards below to sum up your estimate&nbsp</html>");
-
+		} else {
+			instructionsLabel
+				.setText("<html>Enter your estimate into the text field below&nbsp</html>");
+		}
+		
 		estimateCenteringPanel.setLayout(new java.awt.GridBagLayout());
 
 		estimateTitlePanel.setBorder(new javax.swing.border.SoftBevelBorder(
