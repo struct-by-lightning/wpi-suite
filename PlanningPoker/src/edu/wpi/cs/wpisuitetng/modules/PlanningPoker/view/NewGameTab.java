@@ -64,9 +64,9 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerG
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 

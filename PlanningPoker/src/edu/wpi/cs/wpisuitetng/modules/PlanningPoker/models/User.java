@@ -138,4 +138,20 @@ public class User extends RegularAbstractModel<User> {
 		this.instantMessage = instantMessage;
 	}
 
+	/**
+	 * Description
+	 * @param body
+	 * @return
+	 */
+	public static User[] fromJSONArray(String jsonArr) {
+		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		List<User> users = new ArrayList<User>();
+
+		for (JsonElement json : array) {
+			users.add(User.fromJSON(json.toString()));
+		}
+
+		return users.toArray(new User[0]);
+	}
+
 }
