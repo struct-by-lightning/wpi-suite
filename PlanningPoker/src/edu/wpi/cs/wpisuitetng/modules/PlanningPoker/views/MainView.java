@@ -14,11 +14,15 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
@@ -46,9 +50,6 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * @author Austin Rose (atrose)
  */
 public class MainView {
-
-	// TODO: Deal with having removes the "activeGame" member due to potential
-	// inaccuracy.
 
 	/**
 	 * This function adds a new closeable tab to the planning poker module's
@@ -97,16 +98,13 @@ public class MainView {
 	 */
 	public void refreshGameTree() {
 
-		// Ensure that games have been retrieved from the database before moving
-		// on.
-		try {
-			GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
-			while (PlanningPokerGameModel.getPlanningPokerGames().get(0) == null
-					|| PlanningPokerGameModel.getPlanningPokerGames().size() < 1) {
-			}
-		} catch (Exception e) {
-			System.out.println("Exception in refreshGameTree() from retrievePlanningPokerGames()");
+		// Send a request for an updated set of planning poker games and wait
+		// until it is processed.
+		GetPlanningPokerGamesController.getInstance().retrievePlanningPokerGames();
+		while (GetPlanningPokerGamesController.waitingOnRequest) {
+			continue;
 		}
+		ArrayList<PlanningPokerGame> games = PlanningPokerGameModel.getPlanningPokerGames();
 
 		// Instantiate each of the folders which may appear in the tree.
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("All Games");
@@ -116,7 +114,7 @@ public class MainView {
 
 		// Potentially add a node to one of the sub folders for each planning
 		// poker game we have.
-		for (PlanningPokerGame game : PlanningPokerGameModel.getPlanningPokerGames()) {
+		for (PlanningPokerGame game : games) {
 			DefaultMutableTreeNode nodeToAdd = new DefaultMutableTreeNode(game.getGameName());
 
 			// Conditions for a game to be "New" and visible to the current
@@ -207,14 +205,21 @@ public class MainView {
 		// attempting to display them.
 		try {
 			GetRequirementsController.getInstance().retrieveRequirements();
-			while (RequirementModel.getInstance().getRequirements().get(0) == null
-					|| RequirementModel.getInstance().getRequirements().size() < 1) {
+			
+			while (true) {		
+				RequirementModel rm = RequirementModel.getInstance();
+				int size = rm.getRequirements().size();		
+				if (size > 0) {
+					if (rm.getRequirements().get(0) != null) {
+						break;
+					}
+				}
 			}
 		} catch (Exception e) {
 			System.out.println("Exception in gameWasDoubleClicked() from retrieveRequirements()");
 			e.printStackTrace();
 		}
-
+		
 		// Conditions for a game to be "New"
 		if (!selectedGame.isLive() && !selectedGame.isFinished()) {
 			NewGameView.open(selectedGame);
@@ -359,10 +364,11 @@ public class MainView {
 				TreePath selPath = gameTree.getPathForLocation(e.getX(), e.getY());
 				if (selRow != -1) {
 					if (e.getClickCount() == 2) {
+						
 						DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
 								.getLastPathComponent();
 						String gameName = (String) node.getUserObject();
-
+						
 						MainView.gameWasDoubleClicked(PlanningPokerGameModel
 								.getPlanningPokerGame(gameName));
 					}
@@ -370,17 +376,16 @@ public class MainView {
 			}
 		});
 
-		this.gameTree.addAncestorListener(new AncestorListener() {
-			public void ancestorAdded(AncestorEvent event) {
-				refreshGameTree();
-			}
-
-			public void ancestorMoved(AncestorEvent event) {
-				refreshGameTree();
-			}
-
-			public void ancestorRemoved(AncestorEvent event) {
-				refreshGameTree();
+		// This listener updates the overview tab's tree of games before it is
+		// displayed.
+		this.mainComponent.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				if (e.getSource() instanceof JTabbedPane) {
+					JTabbedPane pane = (JTabbedPane) e.getSource();
+					if (pane.getSelectedIndex() == 0) {
+						refreshGameTree();
+					}
+				}
 			}
 		});
 	}

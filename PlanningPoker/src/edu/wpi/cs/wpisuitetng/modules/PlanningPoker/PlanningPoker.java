@@ -24,25 +24,45 @@ import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 
 /**
- * This is the planning poker module. It initializes the Janeway tabs (there is
- * only one).
+ * An instance of this class is what Janeway requires to display the planning
+ * poker module as a tab.
  */
 public class PlanningPoker implements IJanewayModule {
 
+	/**
+	 * The list of tabs to create for the planning poker module. There is only
+	 * one tab to create for the planning poker module.
+	 */
 	private List<JanewayTabModel> tabs;
+
+	/**
+	 * The gui component to display in the toolbar area for the planning poker
+	 * module.
+	 */
 	private JComponent toolbarComponent;
+
+	/**
+	 * The gui component to display in the main area for the planning poker
+	 * module.
+	 */
 	private JComponent mainComponent;
 
+	/**
+	 * Constructor adds a planning poker tab with the necessary gui components.
+	 */
 	public PlanningPoker() {
 
 		// Initialize the list of tabs (however, this module has only one tab).
 		tabs = new ArrayList<JanewayTabModel>();
 
+		// Initialize the gui component for the toolbar area
 		this.toolbarComponent = MainView.getInstance().getToolbarComponent();
+		
+		// Initialize the gui component for the main area
 		this.mainComponent = MainView.getInstance().getMainComponent();
 
-		// Create a tab model that contains the toolbar panel and the main
-		// content panel
+		// Create a tab model that contains the toolbar component and the main
+		// component
 		JanewayTabModel tab = new JanewayTabModel(this.getName(), new ImageIcon(),
 				this.toolbarComponent, this.mainComponent);
 

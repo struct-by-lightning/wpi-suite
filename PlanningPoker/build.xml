@@ -43,7 +43,9 @@
               <jar destfile="${janeway-jar-dest}">
                      <fileset dir="build"/>
                      <fileset file="manifest.txt"/>
+              		<zipgroupfileset dir="lib" includes="*.jar"></zipgroupfileset>
               </jar>
+       		
        </target>
  
        <target name="core-jar" depends="compile-base">
