@@ -110,7 +110,7 @@ public class MockDataStore implements Data {
 
 	/**
 	 * Return a list of all models that match the class, and value of the given
-	 * field name. For example, with the input of User.class(), "name", "Joe", a
+	 * field name. For example, with the input of PlanningPokerUser.class(), "name", "Joe", a
 	 * list of all users of name Joe would be returned.
 	 * 
 	 * @param anObjectQueried
