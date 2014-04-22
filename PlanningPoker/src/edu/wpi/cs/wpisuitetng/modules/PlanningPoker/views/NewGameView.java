@@ -22,6 +22,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,7 +69,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * This JPanel houses the GUI and logic for allowing a user to create a new
  * planning poker game.
  * 
- * @author Austin Rose (atrose)
+ * @author Austin Rose (atrose) and Lisa and Christian
  */
 public class NewGameView extends JPanel {
 
@@ -113,9 +115,22 @@ public class NewGameView extends JPanel {
 				listModelForReseting.addElement(req);
 			}
 		}
-
-		thisGameRequirementList.setModel(listModelForBacklog);
 		this.btnStartVoting.setEnabled(true);
+		thisGameRequirementList.setModel(listModelForBacklog);
+		thisGameRequirementList.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				btn_addToGame.setEnabled(true);
+				btn_addAll.setEnabled(true);
+				btn_removeFromGame.setEnabled(false);}
+		});
+		
+		backlogRequirementList.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				btn_addToGame.setEnabled(false);
+				btn_removeFromGame.setEnabled(true);
+				btn_removeAll.setEnabled(true);
+			}
+		});
 	}
 
 	/**
@@ -374,6 +389,9 @@ public class NewGameView extends JPanel {
 				thisGameRequirementList.setModel(listModelForBacklog);
 
 				btnStartVoting.setEnabled(true);
+				btn_addAll.setEnabled(false);
+				btn_removeAll.setEnabled(true);
+				btn_addToGame.setEnabled(false);
 
 			}
 		});
@@ -395,8 +413,9 @@ public class NewGameView extends JPanel {
 					backlogRequirementList.setModel(listModelForThisGame);
 					thisGameRequirementList.setModel(listModelForBacklog);
 
-					btn_removeFromGame.setEnabled(true);
+					
 					btn_removeAll.setEnabled(true);
+					btn_addToGame.setEnabled(false);
 
 					if (listModelForBacklog.size() == 0) {
 						btn_addToGame.setEnabled(false);
@@ -429,6 +448,7 @@ public class NewGameView extends JPanel {
 
 					btn_addToGame.setEnabled(false);
 					btn_addAll.setEnabled(false);
+					btn_removeFromGame.setEnabled(false);
 
 					if (listModelForThisGame.size() == 0) {
 						btn_removeFromGame.setEnabled(false);
@@ -441,6 +461,7 @@ public class NewGameView extends JPanel {
 				}
 
 				btn_addAll.setEnabled(true);
+				btn_removeAll.setEnabled(false);
 
 			}
 		});
@@ -776,6 +797,7 @@ public class NewGameView extends JPanel {
 
 		btn_addAll = new JButton(">>");
 		topmostButton.add(btn_addAll, BorderLayout.CENTER);
+		btn_addAll.setEnabled(false);
 
 		topButton = new JPanel();
 		buttonsPanel.add(topButton);
@@ -792,7 +814,6 @@ public class NewGameView extends JPanel {
 
 		btn_removeFromGame = new JButton("<");
 		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
-
 		btn_removeFromGame.setEnabled(false);
 
 		bottommostButton = new JPanel();
@@ -801,7 +822,7 @@ public class NewGameView extends JPanel {
 
 		btn_removeAll = new JButton("<<");
 		bottommostButton.add(btn_removeAll);
-		btn_removeAll.setEnabled(false);
+		btn_removeAll.setEnabled(true);
 
 		bottomSpacer = new JPanel();
 		GroupLayout gl_addRemPanel = new GroupLayout(addRemPanel);

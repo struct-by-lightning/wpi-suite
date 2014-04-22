@@ -29,6 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEstimateEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVoteEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.core.entitymanagers.ProjectManager;
@@ -83,7 +84,7 @@ public class ManagerLayer {
 		map.put("planningpoker" + "user", new UserEntityManager(data));
 		map.put("planningpoker" + "planningpokervote", new PlanningPokerVoteEntityManager(data));
 		map.put("planningpoker" + "deck", new DeckEntityManager(data));
-
+		map.put("planningpoker"+"planningpokerfinalestimate", new PlanningPokerFinalEstimateEntityManager(data));
 		//add just your module to this list
 		String[] fullModuleList = {"core","defecttracker","postboard","requirementmanager","planningpoker"};
 		((ProjectManager)map.get("coreproject")).setAllModules(fullModuleList);
