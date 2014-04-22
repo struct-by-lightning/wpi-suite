@@ -384,7 +384,7 @@ public class OpenGameView extends JPanel {
 			total += card.getValue();
 		}
 		if (total > 0) {
-			this.estimateNumberLabel.setText(new Integer(total).toString());
+			this.estimateNumberLabel.setText(Integer.toString(total));
 		}
 
 		else {

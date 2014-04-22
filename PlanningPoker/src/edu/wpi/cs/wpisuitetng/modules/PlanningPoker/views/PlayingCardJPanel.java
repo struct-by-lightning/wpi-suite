@@ -57,19 +57,19 @@ public class PlayingCardJPanel extends JPanel {
 		this.innerCardPanelLayout = new GroupLayout(innerCardPanel);
 		this.thisLayout = new GroupLayout(this);
 
-		setCardlabel();
-		setInnerCardPanelBorder();
-		setInnerCardLayoutVertical();
-		setInnerCardLayoutHorizontal();
-		setThisLayoutHorizontal();
-		setThisLayoutVertical();
+		setupCardlabel();
+		setupInnerCardPanelBorder();
+		setupInnerCardLayoutVertical();
+		setupInnerCardLayoutHorizontal();
+		setupThisLayoutHorizontal();
+		setupThisLayoutVertical();
 
 	}
 	/**
 	 * sets the label format for the cars in the playing card panel
 	 */
 
-	private void setCardlabel() {
+	private void setupCardlabel() {
 		cardLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
 		cardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		cardLabel.setText(Integer.toString(value));
@@ -79,7 +79,7 @@ public class PlayingCardJPanel extends JPanel {
 	/**
 	 * sets the inner card panel border
 	 */
-	private void setInnerCardPanelBorder(){
+	private void setupInnerCardPanelBorder(){
 		innerCardPanel.setBorder(javax.swing.BorderFactory
 				.createLineBorder(new java.awt.Color(153, 153, 153)));
 	}
@@ -87,7 +87,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * sets the horizontal inner card layout
 	 */
 
-	private void setInnerCardLayoutHorizontal() {
+	private void setupInnerCardLayoutHorizontal() {
 		innerCardPanel.setLayout(innerCardPanelLayout);
 		innerCardPanelLayout
 				.setHorizontalGroup(innerCardPanelLayout.createParallelGroup(
@@ -104,7 +104,7 @@ public class PlayingCardJPanel extends JPanel {
 	/**
 	 * sets vertical inner card layout
 	 */
-	private void setInnerCardLayoutVertical() {
+	private void setupInnerCardLayoutVertical() {
 		innerCardPanelLayout
 				.setVerticalGroup(innerCardPanelLayout
 						.createParallelGroup(
@@ -124,7 +124,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * sets the overall panel horizontal layout
 	 */
 
-	private void setThisLayoutHorizontal() {
+	private void setupThisLayoutHorizontal() {
 		this.setLayout(thisLayout);
 		thisLayout.setHorizontalGroup(thisLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
@@ -137,7 +137,7 @@ public class PlayingCardJPanel extends JPanel {
 	/**
 	 * sets the overall vertical layout
 	 */
-	private void setThisLayoutVertical() {
+	private void setupThisLayoutVertical() {
 		thisLayout.setVerticalGroup(thisLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
 				innerCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE,

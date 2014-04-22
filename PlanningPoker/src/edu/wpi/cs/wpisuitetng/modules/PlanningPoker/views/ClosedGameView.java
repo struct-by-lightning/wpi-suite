@@ -173,7 +173,7 @@ public class ClosedGameView extends JPanel {
 		// Listener which updates the UI each time a requirement is selected
 		// from the list of this game's requirements.
 		this.requirementList.addListSelectionListener(new ListSelectionListener() {
-			int currentID = 0;
+			private int currentID = 0;
 
 			@Override
 			public void valueChanged(ListSelectionEvent ev) {
