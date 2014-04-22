@@ -30,6 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVoteEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.core.entitymanagers.ProjectManager;
 import edu.wpi.cs.wpisuitetng.modules.core.entitymanagers.UserManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
@@ -79,7 +80,7 @@ public class ManagerLayer {
 		map.put("requirementmanager" + "requirement", new RequirementEntityManager(data));
 		map.put("requirementmanager" + "iteration", new IterationEntityManager(data));
 		map.put("planningpoker" + "planningpokergame", new PlanningPokerEntityManager(data));
-		map.put("planningpoker" + "user", new UserManager(data));
+		map.put("planningpoker" + "user", new UserEntityManager(data));
 		map.put("planningpoker" + "planningpokervote", new PlanningPokerVoteEntityManager(data));
 		map.put("planningpoker" + "deck", new DeckEntityManager(data));
 

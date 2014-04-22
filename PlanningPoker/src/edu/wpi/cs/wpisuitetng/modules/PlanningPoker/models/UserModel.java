@@ -12,10 +12,11 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
 
 import javax.swing.AbstractListModel;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+
 
 /**
  * List of users pulled from the server.
@@ -73,10 +74,10 @@ public class UserModel extends AbstractListModel<User> {
 	 * 
 	 * @return the User for the ID or null if the User is not found
 	 */
-	public User getUser(int id) {
+	public User getUser(String id) {
 		// iterate through the list of Users until id is found
 		for (int i = 0; i < this.users.size(); i++) {
-			if (users.get(i).getIdNum() == id)
+			if (users.get(i).getID().equals(id));
 				return users.get(i);
 		}
 		return null;
@@ -89,10 +90,10 @@ public class UserModel extends AbstractListModel<User> {
 	 *            The id number of the user to be removed from the list of
 	 *            users.
 	 */
-	public void removeUser(int id) {
+	public void removeUser(String id) {
 		// iterate through the list of Users until id is found
 		for (int i = 0; i < this.users.size(); i++) {
-			if (users.get(i).getIdNum() == id) {
+			if (users.get(i).getID().equals(id)) {
 				users.remove(i);
 				break;
 			}

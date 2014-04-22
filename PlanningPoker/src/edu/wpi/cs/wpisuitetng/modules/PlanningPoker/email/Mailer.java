@@ -20,7 +20,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
+
+
 
 /**
  * A Mailer manages the sending of emails to email addresses added to the

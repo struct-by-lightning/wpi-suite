@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdateUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * If the user does not have an email address, creates a popup window that
@@ -167,7 +167,7 @@ public class EmailPopup {
 		}
 
 		for (User u : UserModel.getInstance().getUsers()) {
-			if (u.getUsername().equals(ConfigManager.getConfig().getUserName()))
+			if (u.getUserName().equals(ConfigManager.getConfig().getUserName()))
 				return u;
 		}
 		return null; // this shouldn't happen
@@ -185,7 +185,7 @@ public class EmailPopup {
 	 * @return the user with the given username */
 	private User findUser(List<User> userList, String username) {
 		for (User u : userList) {
-			if (u.getUsername().equals(username))
+			if (u.getUserName().equals(username))
 				return u;
 		}
 		System.out.println("User not found");
