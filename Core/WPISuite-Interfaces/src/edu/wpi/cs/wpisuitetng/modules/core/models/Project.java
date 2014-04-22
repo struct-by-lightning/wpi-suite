@@ -16,9 +16,13 @@ package edu.wpi.cs.wpisuitetng.modules.core.models;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.Model;
@@ -327,6 +331,24 @@ public class Project extends AbstractModel
 	@Override
 	public void setProject(Project aProject) {
 		//Can't set a project's project
+	}
+
+	/**
+	 * Creates an array of Projects from a JsonArray of Projects
+	 *
+	 * @param jsonArr the JsonArray of projects
+	 * @return the array of Projects
+	 */
+	public static Project[] fromJsonArray(String jsonArr) {
+		ProjectDeserializer pd = new ProjectDeserializer();
+		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		List<Project> projects = new ArrayList<Project>();
+		
+		for (JsonElement json : array) {
+			projects.add(pd.deserialize(json, null, null));
+		}
+		
+		return projects.toArray(new Project[0]);
 	}
 
 }
