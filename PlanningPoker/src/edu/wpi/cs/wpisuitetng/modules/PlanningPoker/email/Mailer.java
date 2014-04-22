@@ -12,6 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email;
 import java.util.List;
 import java.util.Properties;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -20,9 +21,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
-
-
 
 /**
  * A Mailer manages the sending of emails to email addresses added to the
@@ -142,7 +142,7 @@ public class Mailer {
 			mex.printStackTrace();
 		}
 	}
-	
+
 	public Mailer(String subject, String text) {
 		session = createSmtpSession();
 		session.setDebug(true);
@@ -214,25 +214,52 @@ public class Mailer {
 	 */
 	public boolean send() {
 		try {
-			if (DEBUG)
-				transport.connect(host, login, pass);
-			// send the message
-			System.out.println("Ready to send message");
-			// testing
-			if (DEBUG) {
-				transport.sendMessage(message, message.getAllRecipients());
-			} else { // release
-				Transport.send(message);
+			if (message.getAllRecipients() != null) {
+				if (DEBUG)
+					transport.connect(host, login, pass);
+				// send the message
+				System.out.println("Ready to send message");
+				// testing
+				if (DEBUG) {
+					transport.sendMessage(message, message.getAllRecipients());
+				} else { // release
+					Transport.send(message);
+				}
+				System.out.println("Sent message successfully");
+				if (DEBUG)
+					transport.close();
+				return true;
 			}
-			System.out.println("Sent message successfully");
-			if (DEBUG)
-				transport.close();
-			return true;
+			System.out
+					.println("The message has no recipients\nThe email was not sent.");
+			return false;
 		} catch (MessagingException mex) {
 			System.out.println("Send failed");
 			mex.printStackTrace();
 			return false;
 		}
+	}
+
+	/**
+	 * Counts the number of recipients that have been added to the Mailer
+	 * 
+	 * @return the number of recipients added to the Mailer
+	 */
+	public int countRecipients() {
+		int count = 0;
+
+		try {
+			if (message.getAllRecipients() != null) {
+				for (Address a : message.getAllRecipients()) {
+					count++;
+				}
+			}
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return count;
 	}
 
 	/**
@@ -244,15 +271,23 @@ public class Mailer {
 	 * @return true if the recipient is added, false otherwise
 	 */
 	public boolean addEmail(String recipient) {
-		try {
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-					recipient));
-			return true;
-		} catch (MessagingException mex) {
-			System.out.println("Recipient not added");
-			mex.printStackTrace();
-			return false;
+		// debug prints
+		System.out.print("Attempting to add " + recipient);
+		System.out.println(" to message");
+		System.out.println("length of recipient: " + recipient.length());
+		// make sure it isn't an invalid input
+		if (recipient != null && recipient != "" && recipient.length() != 0) {
+			try {
+				message.addRecipient(Message.RecipientType.TO,
+						new InternetAddress(recipient));
+				return true;
+			} catch (MessagingException mex) {
+				System.out.println("Recipient not added");
+				mex.printStackTrace();
+				return false;
+			}
 		}
+		return false;
 	}
 
 	/**

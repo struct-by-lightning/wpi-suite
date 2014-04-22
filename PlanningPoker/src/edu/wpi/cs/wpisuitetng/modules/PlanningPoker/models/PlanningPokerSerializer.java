@@ -49,6 +49,7 @@ public class PlanningPokerSerializer implements JsonSerializer<PlanningPokerGame
 		deflated.add("requirements", deflatedReqs);
 		deflated.addProperty("isFinished", m.isFinished());
 		deflated.addProperty("isLive", m.isLive());
+		deflated.addProperty("isArchived", m.isArchived());
 		deflated.addProperty("startDate", df.format(m.getStartDate().getTime()));
 		deflated.addProperty("endDate", df.format(m.getEndDate().getTime()));
 		return deflated;

@@ -33,6 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerF
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerFinalEstimateController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEstimate;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
@@ -94,57 +95,63 @@ public class ClosedGameView extends JPanel {
 	private void initForGame() {
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
+		System.out.println("**Initforgame was called");
+		
 		this.requirements = game.getRequirements();
 		this.requirementList
 				.addListSelectionListener(new ListSelectionListener() {
 					@Override
 					public void valueChanged(ListSelectionEvent ev) {
+						System.out.println("***The listener has been activated***");
 						JList list;
 						list = (JList) ev.getSource();
 						if(list.getSelectedIndex() != -1) {
 							selected = requirements.get(list
 									.getSelectedIndex());
 							currentID = selected.getId();
+						}
+						if(currentID != previousID) {
 							requirementNameLabel.setText(selected.getName());
 							requirementDescriptionLabel.setText(selected
 									.getDescription());
 							updateEstimateTotal(currentID);
-						}
-						ArrayList<Double> reqVotes = new ArrayList<Double>();
-						estimateModel = new DefaultListModel<String>();
-						for(PlanningPokerVote v : gameVotes) {
-							if(v.getRequirementID() == currentID) {
-								reqVotes.add((double)v.getVote());
-								estimateModel.addElement("   "+v.getUserName()+": "+v.getVote());
+							ArrayList<Double> reqVotes = new ArrayList<Double>();
+							estimateModel = new DefaultListModel<String>();
+							for(PlanningPokerVote v : gameVotes) {
+								if(v.getRequirementID() == currentID) {
+									reqVotes.add((double)v.getVote());
+									estimateModel.addElement("   "+v.getUserName()+": "+v.getVote());
+								}
 							}
-						}
-						System.out.println("est mode: "+estimateModel);
-						System.out.println("g Votes: "+gameVotes);
-						estimates.setModel(estimateModel);
-						if(reqVotes.size()!= 0) {
-							double[] voteNums = new double[reqVotes.size()];
-							for(int i = 0; i< reqVotes.size(); i++) {
-								voteNums[i] = (double)reqVotes.get(i);
-							}
-							mean.setText(meanDef+df.format(Statistics.mean(voteNums)));
-							median.setText(medianDef+df.format(Statistics.median(voteNums)));
-							mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
-							if(reqVotes.size()>1) {
-								std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
+							System.out.println("est mode: "+estimateModel);
+							System.out.println("g Votes: "+gameVotes);
+							estimates.setModel(estimateModel);
+							if(reqVotes.size()!= 0) {
+								double[] voteNums = new double[reqVotes.size()];
+								for(int i = 0; i< reqVotes.size(); i++) {
+									voteNums[i] = (double)reqVotes.get(i);
+								}
+								mean.setText(meanDef+df.format(Statistics.mean(voteNums)));
+								median.setText(medianDef+df.format(Statistics.median(voteNums)));
+								mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
+								if(reqVotes.size()>1) {
+									std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
+								}
+								else {
+									std.setText(stdDef+"?");
+								}
+								max.setText(maxDef+df.format(Statistics.max(voteNums)));
+								min.setText(minDef+df.format(Statistics.min(voteNums)));
 							}
 							else {
+								mean.setText(meanDef+"?");
+								median.setText(medianDef+"?");
+								mode.setText(modeDef+"?");
 								std.setText(stdDef+"?");
+								max.setText(maxDef+"?");
+								min.setText(minDef+"?");
 							}
-							max.setText(maxDef+df.format(Statistics.max(voteNums)));
-							min.setText(minDef+df.format(Statistics.min(voteNums)));
-						}
-						else {
-							mean.setText(meanDef+"?");
-							median.setText(medianDef+"?");
-							mode.setText(modeDef+"?");
-							std.setText(stdDef+"?");
-							max.setText(maxDef+"?");
-							min.setText(minDef+"?");
+							previousID = currentID;
 						}
 					}
 				});
@@ -162,6 +169,17 @@ public class ClosedGameView extends JPanel {
 
 		// Show the deadline of the game if there is one.
 		this.gameDeadlineDateLabel.setText("Game is Finished");
+		if (!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {
+			submitButton.setEnabled(false);
+			estimateNumberBox.setEnabled(false);
+			estimateTitleLabel.setEnabled(false);
+			updateButton.setEnabled(false);
+		}
+		if(game.isArchived()) {
+			updateButton.setEnabled(false);
+			submitButton.setEnabled(false);
+			estimateNumberBox.setEnabled(false);
+		}
 
 	}
 
@@ -172,56 +190,57 @@ public class ClosedGameView extends JPanel {
 
 		// Listener which updates the UI each time a requirement is selected
 		// from the list of this game's requirements.
-		this.requirementList.addListSelectionListener(new ListSelectionListener() {
-			int currentID = 0;
-
-			@Override
-			public void valueChanged(ListSelectionEvent ev) {
-				JList list;
-				list = (JList) ev.getSource();
-				if (list.getSelectedIndex() != -1) {
-					selected = requirements.get(list.getSelectedIndex());
-					currentID = selected.getId();
-					requirementNameLabel.setText(selected.getName());
-					requirementDescriptionLabel.setText(selected.getDescription());
-					updateEstimateTotal(currentID);
-				}
-				ArrayList<Double> reqVotes = new ArrayList<Double>();
-				estimateModel = new DefaultListModel<String>();
-				for (PlanningPokerVote v : gameVotes) {
-					if (v.getRequirementID() == currentID) {
-						reqVotes.add((double) v.getVote());
-						estimateModel.addElement("   " + v.getUserName() + ": " + v.getVote());
-					}
-				}
-				System.out.println(estimateModel);
-				System.out.println(gameVotes);
-				estimates.setModel(estimateModel);
-				if (reqVotes.size() != 0) {
-					double[] voteNums = new double[reqVotes.size()];
-					for (int i = 0; i < reqVotes.size(); i++) {
-						voteNums[i] = (double) reqVotes.get(i);
-					}
-					mean.setText(meanDef + df.format(Statistics.mean(voteNums)));
-					median.setText(medianDef + df.format(Statistics.median(voteNums)));
-					mode.setText(modeDef + df.format(Statistics.mode(voteNums)));
-					if (reqVotes.size() > 1) {
-						std.setText(stdDef + df.format(Statistics.StdDev(voteNums)));
-					} else {
-						std.setText(stdDef + "?");
-					}
-					max.setText(maxDef + df.format(Statistics.max(voteNums)));
-					min.setText(minDef + df.format(Statistics.min(voteNums)));
-				} else {
-					mean.setText(meanDef + "?");
-					median.setText(medianDef + "?");
-					mode.setText(modeDef + "?");
-					std.setText(stdDef + "?");
-					max.setText(maxDef + "?");
-					min.setText(minDef + "?");
-				}
-			}
-		});
+		System.out.println("**InitLogic has been called");
+//		this.requirementList.addListSelectionListener(new ListSelectionListener() {
+//			int currentID = 0;
+//			@Override
+//			public void valueChanged(ListSelectionEvent ev) {
+//				System.out.println("*****Requirement listener called*****");
+//				JList list;
+//				list = (JList) ev.getSource();
+//				if (list.getSelectedIndex() != -1) {
+//					selected = requirements.get(list.getSelectedIndex());
+//					currentID = selected.getId();
+//					requirementNameLabel.setText(selected.getName());
+//					requirementDescriptionLabel.setText(selected.getDescription());
+//					updateEstimateTotal(currentID);
+//				}
+//				ArrayList<Double> reqVotes = new ArrayList<Double>();
+//				estimateModel = new DefaultListModel<String>();
+//				for (PlanningPokerVote v : gameVotes) {
+//					if (v.getRequirementID() == currentID) {
+//						reqVotes.add((double) v.getVote());
+//						estimateModel.addElement("   " + v.getUserName() + ": " + v.getVote());
+//					}
+//				}
+////				System.out.println(estimateModel);
+////				System.out.println(gameVotes);
+//				estimates.setModel(estimateModel);
+//				if (reqVotes.size() != 0) {
+//					double[] voteNums = new double[reqVotes.size()];
+//					for (int i = 0; i < reqVotes.size(); i++) {
+//						voteNums[i] = (double) reqVotes.get(i);
+//					}
+//					mean.setText(meanDef + df.format(Statistics.mean(voteNums)));
+//					median.setText(medianDef + df.format(Statistics.median(voteNums)));
+//					mode.setText(modeDef + df.format(Statistics.mode(voteNums)));
+//					if (reqVotes.size() > 1) {
+//						std.setText(stdDef + df.format(Statistics.StdDev(voteNums)));
+//					} else {
+//						std.setText(stdDef + "?");
+//					}
+//					max.setText(maxDef + df.format(Statistics.max(voteNums)));
+//					min.setText(minDef + df.format(Statistics.min(voteNums)));
+//				} else {
+//					mean.setText(meanDef + "?");
+//					median.setText(medianDef + "?");
+//					mode.setText(modeDef + "?");
+//					std.setText(stdDef + "?");
+//					max.setText(maxDef + "?");
+//					min.setText(minDef + "?");
+//				}
+//			}
+//		});
 	}
 
 	/**
@@ -231,13 +250,47 @@ public class ClosedGameView extends JPanel {
 	 *            The requriement currently being viewed by the user.
 	 */
 	private void updateEstimateTotal(int selected) {
-		PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
-		for(PlanningPokerFinalEstimate ppfe : stuff) {
-			if(ppfe.getRequirementID() ==  selected) {
+		PlanningPokerFinalEstimate[] finalEsts = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
+		this.estimateNumberBox.setText("0");
+		for(PlanningPokerFinalEstimate ppfe : finalEsts) {
+			if(ppfe.getRequirementID() ==  selected && ppfe.getGameName().equals(game.getGameName())) {
 				this.estimateNumberBox.setText("" + ppfe.getEstimate());
 			}
 		}
+		enableUpdateButton(finalEsts);
 	}
+	
+	private void enableUpdateButton(PlanningPokerFinalEstimate[] finalEsts) {
+		if(game.isArchived()) {
+			updateButton.setEnabled(false);
+			submitButton.setEnabled(false);
+			estimateNumberBox.setEnabled(false);
+		}
+		else {
+			List<Integer> gameReqIds = new ArrayList<Integer>();
+			boolean gameHasEstimates = true;
+			for(PlanningPokerFinalEstimate ppfe : finalEsts) {
+				if(ppfe.getGameName().equals(game.getGameName())) {
+					gameReqIds.add(ppfe.getRequirementID());
+					if(!ppfe.hasEstimate()) {
+						gameHasEstimates = false;
+					}
+				}
+			}
+			System.out.println("The game req ids: " +gameReqIds);
+			for(Requirement r : this.requirements){
+				System.out.println("the req id from this game: "+r.getId() +"and has a fianl estimate "+ gameReqIds.contains((Integer)r.getId()));
+				if(gameReqIds.contains((Integer)r.getId())){
+					updateButton.setEnabled(gameHasEstimates);
+				}
+				else {
+					updateButton.setEnabled(false);
+					break;
+				}
+			}
+		}
+	}
+	
 
 	/**
 	 * THIS METHOD WAS AUTOMATICALLY GENERATED BY NETBEANS.
@@ -502,7 +555,7 @@ public class ClosedGameView extends JPanel {
 
 		estimateNumberBox.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
 		estimateNumberBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-		estimateNumberBox.setText("#");
+		estimateNumberBox.setText("0");
 		estimateNumberBox.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
@@ -587,10 +640,8 @@ public class ClosedGameView extends JPanel {
 
 		gameVotes = new ArrayList<PlanningPokerVote>();
 		for (PlanningPokerVote v : allVotes) {
-			System.out.println("started loop");
 			if (v.getGameName().equalsIgnoreCase(game.getGameName())) {
 				gameVotes.add(v);
-				System.out.println("add" + v.getID());
 			}
 		}
 
@@ -615,8 +666,41 @@ public class ClosedGameView extends JPanel {
 		rowSplitPanel.add(estimateCenteringPanel);
 		rowSplitPanel.add(scroll);
 
-		JButton submitButton = new JButton("Submit");
-
+		submitButton = new JButton("Submit");
+		updateButton = new JButton("Update All Estimates");
+		updateButton.setFont(new java.awt.Font("Tahoma", 0, 28));
+		if(game.isArchived()) {
+			submitButton.setEnabled(false);
+			estimateNumberBox.setEnabled(false);
+		}
+		updateButton.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
+				System.out.println("These are the current final estimates:" +Arrays.asList(stuff));
+				for(PlanningPokerFinalEstimate ppfe : stuff) {
+					if(ppfe.getGameName().equals(game.getGameName())) {
+						Requirement req2set = RequirementModel.getInstance().getRequirement(ppfe.getRequirementID());
+						req2set.setEstimate(ppfe.getEstimate());
+						UpdateRequirementController.getInstance().updateRequirement(req2set);
+					}
+				}
+				game.setArchived(true);
+				submitButton.setEnabled(false);
+				updateButton.setEnabled(false);
+				estimateNumberBox.setEnabled(false);
+				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				GetRequirementsController.getInstance().retrieveRequirements();
+			}
+		});
+		updateButton.setEnabled(false);
+		
 		javax.swing.GroupLayout estimateSubmitPanelLayout = new javax.swing.GroupLayout(
 				estimateSubmitPanel);
 		estimateSubmitPanel.setLayout(estimateSubmitPanelLayout);
@@ -659,7 +743,12 @@ public class ClosedGameView extends JPanel {
 										.addComponent(estimateSubmitPanel,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(updateButton,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE))));
+								
 		estimatePanelLayout.setVerticalGroup(estimatePanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				estimatePanelLayout
@@ -672,6 +761,9 @@ public class ClosedGameView extends JPanel {
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addComponent(estimateSubmitPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)));
 
@@ -697,24 +789,22 @@ public class ClosedGameView extends JPanel {
 				PlanningPokerFinalEstimate ppfe = new PlanningPokerFinalEstimate(game.getGameName(), n);
 				ppfe.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
 				AddPlanningPokerFinalEstimateController.getInstance().addPlanningPokerFinalEstimate(ppfe);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
 				System.out.println("These are the current final estimates:" +Arrays.asList(stuff));
-//				req2set.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
-//				UpdateRequirementController.getInstance().updateRequirement(req2set);
-//				try {
-//					Thread.sleep(150);
-//				} catch (InterruptedException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//				initForGame();
-//				GetRequirementsController.getInstance().retrieveRequirements();
+				enableUpdateButton(stuff);
 			}
 		});
 		if (!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {
 			submitButton.setEnabled(false);
 			estimateNumberBox.setEnabled(false);
 			estimateTitleLabel.setEnabled(false);
+			updateButton.setEnabled(false);
 		}
 		javax.swing.GroupLayout rightSplitPanelLayout = new javax.swing.GroupLayout(rightSplitPanel);
 		rightSplitPanel.setLayout(rightSplitPanelLayout);
@@ -803,5 +893,7 @@ public class ClosedGameView extends JPanel {
 	private List<PlanningPokerVote> gameVotes;
 	private int currentID;
 	private DecimalFormat df = new DecimalFormat("#.###");
-
+	private int previousID = -1;
+	private JButton submitButton;
+	private JButton updateButton;
 }

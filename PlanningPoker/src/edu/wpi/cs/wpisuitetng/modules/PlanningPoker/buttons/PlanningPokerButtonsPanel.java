@@ -62,7 +62,9 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 
 		}
 
-		// the action listener for the New Game Button
+		/**
+		 *  the action listener for the New Game Button
+		 */
 		newGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
