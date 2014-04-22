@@ -32,7 +32,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerEntityMa
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEstimateEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVoteEntityManager;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.core.entitymanagers.ProjectManager;
 import edu.wpi.cs.wpisuitetng.modules.core.entitymanagers.UserManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
