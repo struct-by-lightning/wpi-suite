@@ -85,6 +85,10 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 			throw new JsonParseException(
 					"The serialized PlanningPokerModel did not contain the required endData field.");
 		}
+		if (!deflated.has("isArchived")) {
+			throw new JsonParseException(
+					"The serialized PlanningPokerModel did not contain the required isArchived field.");
+		}
 		// for all other attributes: instantiate as null, fill in if given.
 
 		String gameName = deflated.get("gameName").getAsString();
@@ -92,6 +96,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 		String deckType = null;
 		List<Integer> requirements = new ArrayList<Integer>();
 		boolean isFinished = false;
+		boolean isArchived = false;
 		boolean isLive = false;
 		GregorianCalendar startDate = null;
 		GregorianCalendar endDate = null;
@@ -151,12 +156,19 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 			endDate = null;
 		}
 		
+		try {
+			isArchived = deflated.get("isArchived").getAsBoolean();
+		} catch (java.lang.ClassCastException e) {
+			logger.log(Level.FINER,
+					"PlanningPokerModel transmitted with String in isArchived field");
+		}
+		
 		moderator = deflated.get("moderator").getAsString();
 		
 		
 		PlanningPokerGame inflated = new PlanningPokerGame(gameName, description,
 				deckType, requirements, isFinished, isLive, startDate, endDate, moderator);
-
+		inflated.setArchived(isArchived);
 		return inflated;
 	}
 
