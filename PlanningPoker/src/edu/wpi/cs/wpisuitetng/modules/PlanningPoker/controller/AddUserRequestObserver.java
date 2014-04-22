@@ -48,8 +48,7 @@ public class AddUserRequestObserver implements RequestObserver {
 		// Get the response to the given request
 		final ResponseModel response = iReq.getResponse();
 
-		// Parse the PlanningPokerGame out of the response body
-		final User user = User.fromJSON(response.getBody());
+		
 	}
 
 	/**
