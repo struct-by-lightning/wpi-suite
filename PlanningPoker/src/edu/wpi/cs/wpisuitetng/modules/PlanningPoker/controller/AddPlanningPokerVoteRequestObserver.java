@@ -47,9 +47,7 @@ public class AddPlanningPokerVoteRequestObserver implements RequestObserver {
 		// Get the response to the given request
 		final ResponseModel response = iReq.getResponse();
 
-		// Parse the PlanningPokerVote out of the response body
-		// final PlanningPokerVote planningPokerVote =
-		// PlanningPokerVote.fromJSON(response.getBody());
+
 	}
 
 	/**

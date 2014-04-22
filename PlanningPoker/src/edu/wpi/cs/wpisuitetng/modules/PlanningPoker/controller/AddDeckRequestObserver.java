@@ -45,8 +45,8 @@ public class AddDeckRequestObserver implements RequestObserver {
 	 *            the request that was made to the controller
 	 * 
 	 * 
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi
-	 *      .cs.wpisuitetng.network.models.IRequest)
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess
+	 * (edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
@@ -65,8 +65,7 @@ public class AddDeckRequestObserver implements RequestObserver {
 	 *            the request that was made
 	 * 
 	 * 
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.
-	 *      cs.wpisuitetng.network.models.IRequest)
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseErro(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
@@ -84,8 +83,8 @@ public class AddDeckRequestObserver implements RequestObserver {
 	 *            the exception that occurred
 	 * 
 	 * 
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng
-	 *      .network.models.IRequest, java.lang.Exception)
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail
+	 * (edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
