@@ -50,8 +50,8 @@ public class AddPlanningPokerUserController {
 	/**
 	 * This method adds a PlanningPokerGame to the server.
 	 * 
-	 * @param newPlanningPokerGame
-	 *            is the PlanningPokerGame to be added to the server.
+	
+	 * @param newUser PlanningPokerUser
 	 */
 	public void AddUser(PlanningPokerUser newUser) {
 		final Request request = Network.getInstance().makeRequest(

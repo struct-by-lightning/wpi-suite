@@ -87,9 +87,8 @@ public class NewGameTab extends JPanel {
 	JLabel createGameErrorText;
 
 	// indicates whether the user edited the new game tab
-	/*
-	 * **THE FOLLOWING CODE NEEDS TO BE ADDED TO EVERY USER ACTION LISTENER:***
-	 * isTabEditedByUser = true;
+	/**
+	 * indicates whether the user edited the new game tab
 	 */
 	public boolean isTabEditedByUser;
 
@@ -376,14 +375,10 @@ public class NewGameTab extends JPanel {
 		JPanel cardDeckPane = new JPanel();
 
 		calendarOverview.add(deckPanel);
-		// JPanel deckDisplayPane = new JPanel();
-
-		// calendarOverview.add(deckDisplayPane);
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
 
 		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "Lightning Deck", "No Deck"}));
-		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
 
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
@@ -437,20 +432,6 @@ public class NewGameTab extends JPanel {
 
 		});
 
-		// JPanel panel_20 = new JPanel();
-		// panel_15.add(panel_20);
-		//
-		//
-		//
-		// textField_1 = new JTextField();
-		// panel_21.add(textField_1);
-		// textField_1.setColumns(10);
-		//
-		// JPanel panel_22 = new JPanel();
-		// panel_15.add(panel_22);
-		//
-		// JPanel panel_23 = new JPanel();
-		// panel_15.add(panel_23);
 
 		JPanel requirementsPanel = new JPanel();
 		requirementsPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -647,7 +628,7 @@ public class NewGameTab extends JPanel {
 		} catch (InterruptedException e2) {
 		}
 
-		userList = PlanningPokerUserModel.getInstance().getUsers();
+		userList = PlanningPokerUserModel.getInstance().getAllUsers();
 		mailer.addEmailFromUsers(userList);
 
 		/**
@@ -668,7 +649,6 @@ public class NewGameTab extends JPanel {
 						&& deadline.isSelected()) {
 					System.out.println("Please enter a valid date");
 				} else {
-					// String[] startDate = startDateText.getText().split("-");
 					String[] endDate = endDateText.getText().split("-");
 
 					Date endVal = (Date) endTime.getValue();
@@ -875,8 +855,7 @@ public class NewGameTab extends JPanel {
 		    	// Reset game name
 		    	sessionName.setText(dateFormat.format(date));
 
-		    	// Reset start and end date
-		    	//startDateText.setText(defaultCalendarText);
+
 		    	endDateText.setText(defaultCalendarText);
 		    	btnCreateGame.setEnabled(true);
 	        	createGameErrorText.setText("");

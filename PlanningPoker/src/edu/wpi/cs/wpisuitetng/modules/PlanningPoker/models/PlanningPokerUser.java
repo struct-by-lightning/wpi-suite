@@ -40,6 +40,13 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 
 	
 	
+	/**
+	 * Constructor for PlanningPokerUser.
+	 * @param email String
+	 * @param userName String
+	 * @param sms String
+	 * @param instantMessage String
+	 */
 	public PlanningPokerUser(String email, String userName, String sms, String instantMessage) {
 		super();
 		this.email = email;
@@ -52,6 +59,11 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 		return new Gson().toJson(this, PlanningPokerUser.class);
 	}
 
+	/**
+	 * Method fromJSON.
+	 * @param json String
+	 * @return PlanningPokerUser
+	 */
 	public static PlanningPokerUser fromJSON(String json){
 		final Gson parser = new Gson();
 		return parser.fromJson(json, PlanningPokerUser.class);
@@ -140,8 +152,10 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 
 	/**
 	 * Description
-	 * @param body
-	 * @return
+	
+	
+	 * @param jsonArr String
+	 * @return PlanningPokerUser[]
 	 */
 	public static PlanningPokerUser[] fromJSONArray(String jsonArr) {
 		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();

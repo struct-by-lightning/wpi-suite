@@ -41,6 +41,7 @@ public class Deck extends AbstractModel {
 	 * 
 	 * @param deckName
 	 *            the name of the Deck
+	 * @throws NullPointerException
 	 */
 	public Deck(String deckName) throws NullPointerException {
 		if (deckName == null)
@@ -57,6 +58,7 @@ public class Deck extends AbstractModel {
 	 * 
 	 * @param deckName
 	 * @param cards
+	 * @throws NullPointerException
 	 */
 	public Deck(String deckName, List<Integer> cards) throws NullPointerException {
 		if (deckName == null)
@@ -86,6 +88,9 @@ public class Deck extends AbstractModel {
 			this.cards.remove((Integer) card);
 	}
 
+	/**
+	 * Method sortDeck.
+	 */
 	public void sortDeck() {
 		if (this.cards != null)
 			Collections.sort(this.cards);

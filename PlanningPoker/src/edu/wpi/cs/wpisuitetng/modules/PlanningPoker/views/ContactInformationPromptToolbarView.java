@@ -15,6 +15,7 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
  * This is a JPanel which just has a header reading "Welcome to Planning Poker" it is needed because 
  * 
  * @author Austin Rose (atrose)
+ * @version $Revision: 1.0 $
  */
 public class ContactInformationPromptToolbarView extends javax.swing.JPanel {
 

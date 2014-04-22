@@ -12,13 +12,13 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.google.gson.JsonElement;
+
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
 
@@ -320,6 +320,9 @@ public class DeckTest {
 		}
 	}
 
+	/**
+	 * Method testSerialize.
+	 */
 	@Test
 	public void testSerialize() {
 		// set up ordered list of cards in deck
@@ -340,6 +343,9 @@ public class DeckTest {
 		assertTrue(serialized.contains("[1,1,2,3,5,8,13,21]"));
 	}
 
+	/**
+	 * Method testSerializeArray.
+	 */
 	@Test
 	public void testSerializeArray() {
 		// set up ordered list of cards in deck
@@ -377,6 +383,9 @@ public class DeckTest {
 		assertTrue(serialized.contains("[1,2,3,4,5,6,7,8,9,10]"));
 	}
 	
+	/**
+	 * Method constructorNullName.
+	 */
 	@Test
 	public void constructorNullName() { 
 		thrown.expect(NullPointerException.class);
@@ -384,6 +393,9 @@ public class DeckTest {
 		Deck test = new Deck(null, null);
 	}
 	
+	/**
+	 * Method serializeNullCards.
+	 */
 	@Test
 	public void serializeNullCards() {
 		Deck test1 = new Deck("test1");
@@ -400,6 +412,9 @@ public class DeckTest {
 		assertFalse(serialized2.contains("cards"));
 	}
 	
+	/**
+	 * Method toStringTest.
+	 */
 	@Test
 	public final void toStringTest() {
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
@@ -415,6 +430,9 @@ public class DeckTest {
 		assertTrue(test.toString().equals("test"));
 	}
 	
+	/**
+	 * Method removeCardNullTest.
+	 */
 	@Test
 	public final void removeCardNullTest() {
 		Deck test1 = new Deck("test1");

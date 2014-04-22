@@ -13,11 +13,12 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
+
 
 /**
  * @author lisabatbouta
  *
+ * @version $Revision: 1.0 $
  */
 public class DeckModelTest {
 	/**

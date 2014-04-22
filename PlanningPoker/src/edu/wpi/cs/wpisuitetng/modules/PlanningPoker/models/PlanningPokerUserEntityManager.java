@@ -25,6 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.Model;
 /**
  * @author sfmailand
  *
+ * @version $Revision: 1.0 $
  */
 public class PlanningPokerUserEntityManager implements EntityManager<PlanningPokerUser> {
 	
@@ -35,6 +36,10 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	private static final Logger logger = Logger.getLogger(PlanningPokerUserEntityManager.class.getName());
 	
 	
+	/**
+	 * Constructor for PlanningPokerUserEntityManager.
+	 * @param data Data
+	 */
 	public PlanningPokerUserEntityManager(Data data){
 		this.data = data;
 	}
@@ -50,7 +55,7 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 		PlanningPokerUser[] user = getEntity(s, u.getID());
 		
 		if(user.length == 0 || user[0] == null){
-			save(s,u);
+			save(s, u);
 		}
 		else{
 			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerUser creation.");
@@ -108,6 +113,12 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	/* (non-Javadoc)
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#save(edu.wpi.cs.wpisuitetng.Session, edu.wpi.cs.wpisuitetng.modules.Model)
 	 */
+	/**
+	 * Method save.
+	 * @param s Session
+	 * @param model PlanningPokerUser
+	 * @throws WPISuiteException
+	 */
 	@Override
 	public void save(Session s, PlanningPokerUser model) throws WPISuiteException {
 		if(data.save(model)){
@@ -128,7 +139,7 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
 		Model m = data.delete(data.retrieve(usr, "username", id).get(0));
 		logger.log(Level.INFO, "PlanningPokerUserEntityManager deleting deck < " + id + ">");
-		return (m !=null) ? true: false;
+		return (m != null) ? true: false;
 	}
 
 	/* (non-Javadoc)

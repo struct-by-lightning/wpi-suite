@@ -148,8 +148,8 @@ public class MockDataStore implements Data {
 					try {
 						if (m.invoke(o).equals(theGivenValue)) {
 							/*
-							 * the value retrieved by the getter matches the
-							 * given value
+							 * the value retrieved by the getter matches 
+							 * the given value
 							 */
 							returnVal.add((Model) o);
 						}

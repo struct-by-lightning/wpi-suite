@@ -26,6 +26,8 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 /**
  * An instance of this class is what Janeway requires to display the planning
  * poker module as a tab.
+ * @author sammailand
+ * @version $Revision: 1.0 $
  */
 public class PlanningPoker implements IJanewayModule {
 

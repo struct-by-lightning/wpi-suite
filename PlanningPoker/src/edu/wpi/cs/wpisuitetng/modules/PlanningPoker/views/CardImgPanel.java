@@ -34,6 +34,9 @@ public class CardImgPanel extends JPanel {
         }
     }
     
+    /**
+     * Constructor for CardImgPanel.
+     */
     public CardImgPanel() {
     	// Load the background image
         try {

@@ -166,7 +166,7 @@ public class EmailPopup {
 		} catch (InterruptedException e2) {
 		}
 
-		for (PlanningPokerUser u : PlanningPokerUserModel.getInstance().getUsers()) {
+		for (PlanningPokerUser u : PlanningPokerUserModel.getInstance().getAllUsers()) {
 			if (u.getUserName().equals(ConfigManager.getConfig().getUserName()))
 				return u;
 		}

@@ -9,8 +9,8 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
+
+
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -18,6 +18,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * @author friscis
  * @author swconley
  * @author mamora
+ * @version $Revision: 1.0 $
  */
 public class GetPlanningPokerFinalEstimateRequestObserver implements RequestObserver{
 	public static boolean isError = false;

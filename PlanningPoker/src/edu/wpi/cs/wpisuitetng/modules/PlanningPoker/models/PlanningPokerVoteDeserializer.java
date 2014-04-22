@@ -10,17 +10,17 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.lang.reflect.Type;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+
+
+
+
+
+
 import java.util.Scanner;
-import java.util.logging.Level;
+
 import java.util.logging.Logger;
 
-import com.google.gson.JsonArray;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -45,7 +45,8 @@ public class PlanningPokerVoteDeserializer {
 	 * @param context JsonDeserializationContext
 	
 	
-	 * @return PlanningPokerVote * @throws JsonParseException */
+	 * @return PlanningPokerVote * @throws JsonParseException * @throws JsonParseException
+	 */
 	public PlanningPokerVote deserialize(JsonElement ppmElement, Type ppmType,
 			JsonDeserializationContext context) throws JsonParseException {
 		

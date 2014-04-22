@@ -70,6 +70,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * planning poker game.
  *
  * @author Austin Rose (atrose)
+ * @version $Revision: 1.0 $
  */
 public class CreateGameView extends JPanel {
 
@@ -115,7 +116,7 @@ public class CreateGameView extends JPanel {
 
 		// The "have a deadline" checkbox listener
 		deadline.addActionListener(new ActionListener() {
-			boolean checked = false;
+			private boolean checked = false;
 
 			public void actionPerformed(ActionEvent ae) {
 				viewHasBeenEdited = true;
@@ -135,8 +136,8 @@ public class CreateGameView extends JPanel {
 		});
 
 		calendarButton_2.addActionListener(new ActionListener() {
-			boolean open = false;
-			DatePicker dp;
+			private boolean open = false;
+			private DatePicker dp;
 
 			/**
 			 * action for using the calendar method for enabling it and
@@ -235,7 +236,7 @@ public class CreateGameView extends JPanel {
 		// TODO:
 		// As per a meeting with Pollice, we need to only select users which
 		// have been explicitly added to the project through the web-interface.
-		userList = PlanningPokerUserModel.getInstance().getUsers();
+		userList = PlanningPokerUserModel.getInstance().getAllUsers();
 		mailer.addEmailFromUsers(userList);
 
 		/**
@@ -296,7 +297,6 @@ public class CreateGameView extends JPanel {
 						&& deadline.isSelected()) {
 					System.out.println("Please enter a valid date");
 				} else {
-					// String[] startDate = startDateText.getText().split("-");
 					String[] endDate = endDateText.getText().split("-");
 
 					Date endVal = (Date) endTime.getValue();
@@ -395,7 +395,6 @@ public class CreateGameView extends JPanel {
 
 				btn_removeFromGame.setEnabled(true);
 				btn_removeAll.setEnabled(true);
-				// btnCreateGame.setEnabled(false);
 
 				btn_addAll.setEnabled(false);
 				btn_addToGame.setEnabled(false);
@@ -506,8 +505,7 @@ public class CreateGameView extends JPanel {
 				// Reset game name
 				sessionName.setText(dateFormat.format(date));
 
-				// Reset start and end date
-				// startDateText.setText(defaultCalendarText);
+
 				endDateText.setText(defaultCalendarText);
 				btnCreateGame.setEnabled(true);
 				createGameErrorText.setText("");

@@ -12,8 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+
+
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -67,9 +67,10 @@ public class GetPlanningPokerVoteController implements ActionListener {
 
 	/**
 	 * Sends an HTTP request to retrieve all PlanningPokerGames
+	 * @return PlanningPokerVote[]
 	 */
 	public PlanningPokerVote[] retrievePlanningPokerVote() {
-		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote", HttpMethod.GET); // GET == read
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote", HttpMethod.GET); // GET equals read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 		
@@ -80,7 +81,6 @@ public class GetPlanningPokerVoteController implements ActionListener {
 			e.printStackTrace();
 		}
 		if(request.getResponse() != null) {
-			//return Integer.MIN_VALUE;
 			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
 			return a;
 		} else {
@@ -92,10 +92,10 @@ public class GetPlanningPokerVoteController implements ActionListener {
 	 * @param gameName the gameName of the vote to retrieve
 	 * @param userName the userName of the vote to retrieve
 	 * @param requirementID the requirementID of the vote to retrieve
-	 * @return the vote if it exists, Integer.MIN_VALUE otherwise
-	 */
+	
+	 * @return the vote if it exists, Integer.MIN_VALUE otherwise */
 	public int retrievePlanningPokerVote(String gameName, String userName, int requirementID) {
-		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote" /*+ new PlanningPokerVote(gameName, userName, 0, requirementID).getID()*/, HttpMethod.GET); // GET == read
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote" , HttpMethod.GET); // GET equals read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 		
@@ -106,7 +106,6 @@ public class GetPlanningPokerVoteController implements ActionListener {
 			e.printStackTrace();
 		}
 		if(request.getResponse() != null && request.getResponse().getStatusCode() == 200) {
-			//return Integer.MIN_VALUE;
 			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
 			PlanningPokerVote ret = new PlanningPokerVote(null, null, 0, 0);
 			for(PlanningPokerVote v : a) {

@@ -70,12 +70,14 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * planning poker game.
  * 
  * @author Austin Rose (atrose) and Lisa and Christian
+ * @version $Revision: 1.0 $
  */
 public class NewGameView extends JPanel {
 
 	/**
 	 * This method will open up a new tab in the planning poker module with this
 	 * UI for creating a new planning poker game.
+	 * @param game PlanningPokerGame
 	 */
 	public static void open(PlanningPokerGame game) {
 		NewGameView view = new NewGameView(game);
@@ -151,7 +153,7 @@ public class NewGameView extends JPanel {
 		// The "have a deadline" checkbox listener
 		deadline.addActionListener(new ActionListener() {
 
-			boolean checked = gameHasDeadline;
+			private boolean checked = gameHasDeadline;
 
 			public void actionPerformed(ActionEvent ae) {
 				viewHasBeenEdited = true;
@@ -172,8 +174,8 @@ public class NewGameView extends JPanel {
 		});
 
 		calendarButton_2.addActionListener(new ActionListener() {
-			boolean open = false;
-			DatePicker dp;
+			private boolean open = false;
+			private DatePicker dp;
 
 			/**
 			 * action for using the calendar method for enabling it and
@@ -271,7 +273,7 @@ public class NewGameView extends JPanel {
 		// TODO:
 		// As per a meeting with Pollice, we need to only select users which
 		// have been explicitly added to the project through the web-interface.
-		userList = PlanningPokerUserModel.getInstance().getUsers();
+		userList = PlanningPokerUserModel.getInstance().getAllUsers();
 		mailer.addEmailFromUsers(userList);
 
 		/**
@@ -291,7 +293,6 @@ public class NewGameView extends JPanel {
 						&& deadline.isSelected()) {
 					System.out.println("Please enter a valid date");
 				} else {
-					// String[] startDate = startDateText.getText().split("-");
 					String[] endDate = endDateText.getText().split("-");
 
 					Date endVal = (Date) endTime.getValue();
@@ -501,8 +502,6 @@ public class NewGameView extends JPanel {
 				// Reset game name
 				sessionName.setText(dateFormat.format(date));
 
-				// Reset start and end date
-				// startDateText.setText(defaultCalendarText);
 				endDateText.setText(defaultCalendarText);
 				btnStartVoting.setEnabled(true);
 				createGameErrorText.setText("");

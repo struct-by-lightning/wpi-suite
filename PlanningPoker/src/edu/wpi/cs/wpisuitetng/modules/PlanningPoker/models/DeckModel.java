@@ -155,7 +155,7 @@ public class DeckModel extends AbstractListModel<Deck> {
 	 * 
 	
 	 * @return the Decks held within the DeckModel */
-	public List<Deck> getDecks() {
+	public List<Deck> getAllDecks() {
 		return Decks;
 	}
 }

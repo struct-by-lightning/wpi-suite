@@ -146,7 +146,7 @@ public class DatePicker {
 				button[x].setEnabled(true);
 			button[x].setText("" + day);
 			if(day == daysInMonth) {
-				for(int y = x+1; y < button.length; y++) {
+				for(int y = x + 1; y < button.length; y++) {
 					button[y].setEnabled(false);
 				}
 			}
@@ -168,6 +168,9 @@ public class DatePicker {
 		return sdf.format(cal.getTime());
 	}
 	
+	/**
+	 * Method close.
+	 */
 	public void close() {
 		top.remove(p1);
 		top.remove(p2);

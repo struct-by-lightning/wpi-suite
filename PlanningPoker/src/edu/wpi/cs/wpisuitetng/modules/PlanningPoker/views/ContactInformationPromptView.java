@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
  * planning poker.
  * 
  * @author Austin Rose (atrose)
+ * @version $Revision: 1.0 $
  */
 public class ContactInformationPromptView extends javax.swing.JPanel {
 
@@ -301,21 +302,19 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 		this.submitButtonPressed(this.emailField.getText(), this.aimField.getText());
 	}
 
-	private boolean updateIfValid() {
+	private void updateIfValid() {
 		String emailText = this.emailField.getText();
 		String aimText = this.aimField.getText();
 		
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailText);
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailText);
         
 		if (matcher.find() || aimText.length() != 0) {
 			this.submitButton.setEnabled(true);
 			this.errorLabel.setVisible(false);
-			return true;
 		} else {
 			this.submitButton.setEnabled(false);
 			this.errorLabel.setVisible(true);
-			return false;
 		}
 	}
 

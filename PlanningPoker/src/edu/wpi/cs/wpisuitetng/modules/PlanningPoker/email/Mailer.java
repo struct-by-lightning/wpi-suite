@@ -57,6 +57,9 @@ public class Mailer {
 
 	private final boolean DEBUG = true;
 
+	/**
+	 * Constructor for Mailer.
+	 */
 	public Mailer() {
 		session = createSmtpSession();
 		session.setDebug(true);
@@ -143,6 +146,11 @@ public class Mailer {
 		}
 	}
 	
+	/**
+	 * Constructor for Mailer.
+	 * @param subject String
+	 * @param text String
+	 */
 	public Mailer(String subject, String text) {
 		session = createSmtpSession();
 		session.setDebug(true);
@@ -175,7 +183,6 @@ public class Mailer {
 	 * @return Google SMTP session
 	 */
 	private Session createSmtpSession() {
-		// final version settings
 		if (DEBUG) {
 			// test with mailtrap
 			Properties props = System.getProperties();
@@ -210,8 +217,8 @@ public class Mailer {
 	 * Sends the email to the added recipients
 	 * 
 	 * 
-	 * @return true if the email sends, false otherwise
-	 */
+	
+	 * @return true if the email sends, false otherwise */
 	public boolean send() {
 		try {
 			if (DEBUG)
@@ -241,8 +248,8 @@ public class Mailer {
 	 * @param recipient
 	 *            The target's email address
 	 * 
-	 * @return true if the recipient is added, false otherwise
-	 */
+	
+	 * @return true if the recipient is added, false otherwise */
 	public boolean addEmail(String recipient) {
 		try {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
@@ -261,8 +268,8 @@ public class Mailer {
 	 * @param recArr
 	 *            Array of email addresses (strings!)
 	 * 
-	 * @return true if all addresses were added successfully, false otherwise
-	 */
+	
+	 * @return true if all addresses were added successfully, false otherwise */
 	public boolean addEmailArray(String[] recArr) {
 		boolean isSuccess = true;
 		for (String s : recArr) {
@@ -277,8 +284,8 @@ public class Mailer {
 	 * @param userList
 	 *            List<PlanningPokerUser>
 	 * 
-	 * @return boolean
-	 */
+	
+	 * @return boolean */
 	public boolean addEmailFromUsers(List<PlanningPokerUser> userList) {
 		boolean isSuccess = true;
 		for (PlanningPokerUser u : userList) {

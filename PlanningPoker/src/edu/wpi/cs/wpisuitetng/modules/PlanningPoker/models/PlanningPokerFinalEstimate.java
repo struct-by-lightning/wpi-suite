@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+
 import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
@@ -25,6 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
  * @author swconley
  * @author mamora
  *
+ * @version $Revision: 1.0 $
  */
 public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPokerFinalEstimate>{
 	private String gameName;
@@ -32,6 +33,11 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	private int requirementID;
 	private boolean hasEstimate;
 	
+	/**
+	 * Constructor for PlanningPokerFinalEstimate.
+	 * @param gameName String
+	 * @param requirementID int
+	 */
 	public PlanningPokerFinalEstimate(String gameName, int requirementID) {
 		hasEstimate = false;
 		if(gameName != null){
@@ -93,6 +99,10 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		return requirementID;
 	}
 	
+	/**
+	 * Method hasEstimate.
+	 * @return boolean
+	 */
 	public boolean hasEstimate() {
 		return hasEstimate;
 	}
@@ -114,7 +124,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	 * @return the object form of the JSON */
 	public static PlanningPokerFinalEstimate fromJSON(String json) {
 		Scanner scTemp = new Scanner(json);
-		System.out.println("This is the json" +json);
+		System.out.println("This is the json" + json);
 		// skip the boilerplate
 		scTemp.useDelimiter("\\\"?[:,{}]\\\"?");
 		scTemp.next();
@@ -130,7 +140,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		
 		 PlanningPokerFinalEstimate est = new PlanningPokerFinalEstimate(retGameName, retRequirementID);
 		 est.setEstimate(retEstimate);
-		 System.out.println("This is the final estimate that has been parsed:"+est);
+		 System.out.println("This is the final estimate that has been parsed:" + est);
 		 return est;
 	}
 	
