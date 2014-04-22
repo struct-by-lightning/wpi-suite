@@ -15,10 +15,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdateUserController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 
 /**
  * If the user does not have an email address, creates a popup window that
@@ -38,7 +38,7 @@ public class EmailPopup {
 	 * exist, and then calls run on it.
 	 * 
 	 * For use anywhere, with a method path that has its own user of
-	 * GetUserController.
+	 * GetPlanningPokerUserController.
 	 */
 	public static void checkUserEmail() {
 		if (instance == null)
@@ -52,10 +52,10 @@ public class EmailPopup {
 	 * 
 	 * This is for use in NewGameTab, to run after a list of users have already
 	 * been retrieved, for efficiency reasons.
-	 * @param userList List<User>
+	 * @param userList List<PlanningPokerUser>
 	
-	 * @return List<User> */
-	public static List<User> checkUserEmail(List<User> userList) {
+	 * @return List<PlanningPokerUser> */
+	public static List<PlanningPokerUser> checkUserEmail(List<PlanningPokerUser> userList) {
 		if (instance == null)
 			instance = new EmailPopup();
 		return instance.run(userList);
@@ -71,10 +71,10 @@ public class EmailPopup {
 	 * Checks if a user has an email address.
 	 * 
 	
-	 * @param user User
+	 * @param planningPokerUser PlanningPokerUser
 	 * @return false if the user's email is null, otherwise true. */
-	private boolean hasEmail(User user) {
-		if (user.getEmail() == null)
+	private boolean hasEmail(PlanningPokerUser planningPokerUser) {
+		if (planningPokerUser.getEmail() == null)
 			return false;
 		return true;
 	}
@@ -86,24 +86,24 @@ public class EmailPopup {
 	 * out, the user on the server is updated.
 	 */
 	private void run() {
-		User user;
+		PlanningPokerUser planningPokerUser;
 		String newEmail = null;
 		// check if the user has an email already
-		user = findUser();
+		planningPokerUser = findUser();
 		System.out.println("Config username: "
 				+ ConfigManager.getConfig().getUserName());
 
-		if (user != null) {
-			if (!this.hasEmail(user)) {
+		if (planningPokerUser != null) {
+			if (!this.hasEmail(planningPokerUser)) {
 				// get the new email
 				newEmail = JOptionPane
 						.showInputDialog("Enter an email address for notifications");
 
 				// update the user locally
-				user.setEmail(newEmail);
+				planningPokerUser.setEmail(newEmail);
 
 				// update user on server
-				UpdateUserController.getInstance().update(user);
+				UpdatePlanningPokerUserController.getInstance().update(planningPokerUser);
 			}
 		}
 	}
@@ -114,38 +114,38 @@ public class EmailPopup {
 	 * do not. After the prompt is filled out, the user on the server is
 	 * updated, as well as the user in the list.
 	 * 
-	 * For use with a pre-existing GetUserController/List =
-	 * UserModel.getInstance().getUsers() set.
+	 * For use with a pre-existing GetPlanningPokerUserController/List =
+	 * PlanningPokerUserModel.getInstance().getUsers() set.
 	 * 
 	 * @param userList
 	 *            the list of users retrieved from the server.
 	
 	 * @return the list of users updated with the user's new email address. */
-	private List<User> run(List<User> userList) {
-		User user;
+	private List<PlanningPokerUser> run(List<PlanningPokerUser> userList) {
+		PlanningPokerUser planningPokerUser;
 		String newEmail = null;
 		// check if the user has an email already
-		user = findUser(userList, ConfigManager.getConfig().getUserName());
+		planningPokerUser = findUser(userList, ConfigManager.getConfig().getUserName());
 		System.out.println("Config username: "
 				+ ConfigManager.getConfig().getUserName());
 
-		if (user != null) {
-			if (!this.hasEmail(user)) {
+		if (planningPokerUser != null) {
+			if (!this.hasEmail(planningPokerUser)) {
 				// get the new email
 				newEmail = JOptionPane
 						.showInputDialog("Enter an email address for notifications");
 
 				// remove the user from the userList
-				userList.remove(user);
+				userList.remove(planningPokerUser);
 
 				// update the user locally
-				user.setEmail(newEmail);
+				planningPokerUser.setEmail(newEmail);
 
 				// re-add to list
-				userList.add(user);
+				userList.add(planningPokerUser);
 
 				// update user on server
-				UpdateUserController.getInstance().update(user);
+				UpdatePlanningPokerUserController.getInstance().update(planningPokerUser);
 			}
 		}
 
@@ -158,16 +158,16 @@ public class EmailPopup {
 	 * 
 	
 	 * @return the currently logged in user. */
-	private User findUser() {
-		GetUserController.getInstance().retrieveUser();
+	private PlanningPokerUser findUser() {
+		GetPlanningPokerUserController.getInstance().retrieveUser();
 
 		try {
 			Thread.sleep(150);
 		} catch (InterruptedException e2) {
 		}
 
-		for (User u : UserModel.getInstance().getUsers()) {
-			if (u.getUsername().equals(ConfigManager.getConfig().getUserName()))
+		for (PlanningPokerUser u : PlanningPokerUserModel.getInstance().getUsers()) {
+			if (u.getUserName().equals(ConfigManager.getConfig().getUserName()))
 				return u;
 		}
 		return null; // this shouldn't happen
@@ -183,12 +183,12 @@ public class EmailPopup {
 	 *            The username of the desired user
 	
 	 * @return the user with the given username */
-	private User findUser(List<User> userList, String username) {
-		for (User u : userList) {
-			if (u.getUsername().equals(username))
+	private PlanningPokerUser findUser(List<PlanningPokerUser> userList, String username) {
+		for (PlanningPokerUser u : userList) {
+			if (u.getUserName().equals(username))
 				return u;
 		}
-		System.out.println("User not found");
+		System.out.println("PlanningPokerUser not found");
 		return null; // should never happen
 	}
 }

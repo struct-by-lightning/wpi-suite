@@ -41,13 +41,13 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -408,13 +408,13 @@ public class OpenGameView extends JPanel {
 					"You can now view the results of the estimation.");
 		}
 		// Get and add the list of emails to the mailer
-		GetUserController.getInstance().retrieveUser();
+		GetPlanningPokerUserController.getInstance().retrieveUser();
 		try {
 			Thread.sleep(150);
 		} catch (Exception e) {
 		}
 
-		closedNotification.addEmailFromUsers(UserModel.getInstance().getUsers());
+		closedNotification.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
 	}
 
 	/**

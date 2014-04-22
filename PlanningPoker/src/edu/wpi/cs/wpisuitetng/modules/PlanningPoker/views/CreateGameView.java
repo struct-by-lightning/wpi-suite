@@ -54,13 +54,13 @@ import javax.swing.border.LineBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.DatePicker;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -101,7 +101,7 @@ public class CreateGameView extends JPanel {
 	private void initComponentLogic() {
 
 		// Get and add the list of emails to the mailer
-		GetUserController.getInstance().retrieveUser();
+		GetPlanningPokerUserController.getInstance().retrieveUser();
 		try {
 			Thread.sleep(150);
 		} catch (Exception e) {
@@ -177,7 +177,7 @@ public class CreateGameView extends JPanel {
 				else if (selection.contentEquals("Lightning Deck")) {
 					deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
 				} else if (selection.contentEquals("No Deck")) {
-					deckOverview.setText("User will be able to enter their own estimation");
+					deckOverview.setText("PlanningPokerUser will be able to enter their own estimation");
 				}
 			}
 
@@ -235,7 +235,7 @@ public class CreateGameView extends JPanel {
 		// TODO:
 		// As per a meeting with Pollice, we need to only select users which
 		// have been explicitly added to the project through the web-interface.
-		userList = UserModel.getInstance().getUsers();
+		userList = PlanningPokerUserModel.getInstance().getUsers();
 		mailer.addEmailFromUsers(userList);
 
 		/**
@@ -344,7 +344,7 @@ public class CreateGameView extends JPanel {
 											.getUserName());
 
 						}
-						System.out.println("User Moderator: "
+						System.out.println("PlanningPokerUser Moderator: "
 								+ ConfigManager.getConfig().getUserName());
 						System.out.println("Planning Poker Live: " + game.isLive());
 						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
@@ -549,7 +549,7 @@ public class CreateGameView extends JPanel {
 
 		gameRequirementIDsList = new ArrayList<Integer>();
 
-		userList = new ArrayList<User>();
+		userList = new ArrayList<PlanningPokerUser>();
 
 		mailer = new Mailer();
 
@@ -891,7 +891,7 @@ public class CreateGameView extends JPanel {
 	private String selectedDeckType;
 	private boolean calendarOpen = false;
 	private List<Integer> gameRequirementIDsList;
-	private List<User> userList;
+	private List<PlanningPokerUser> userList;
 	private Mailer mailer;
 	private boolean viewHasBeenEdited;
 

@@ -9,6 +9,9 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -58,6 +61,8 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 
 		// TODO: Right now, this button simply transitions from the contact
 		// prompt to the main planning poker view no matter what.
+		PlanningPokerUser user = new PlanningPokerUser(emailField.getText(), ConfigManager.getConfig().getUserName(), "1111111111", aimField.getText());
+		AddPlanningPokerUserController.getInstance().AddUser(user);
 		MainView.getInstance().switchToMainOverview();
 	}
 

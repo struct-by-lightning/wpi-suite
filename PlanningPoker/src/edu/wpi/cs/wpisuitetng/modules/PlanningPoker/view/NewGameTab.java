@@ -61,12 +61,12 @@ import javax.swing.border.LineBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
@@ -140,7 +140,7 @@ public class NewGameTab extends JPanel {
 	 * The list of users to whom emails will be sent (assuming their email
 	 * address has been added to the server)
 	 */
-	List<User> userList = new ArrayList<User>();
+	List<PlanningPokerUser> userList = new ArrayList<PlanningPokerUser>();
 
 	/**
 	 * The mailer which will send emails to all users with emails in their account
@@ -431,7 +431,7 @@ public class NewGameTab extends JPanel {
 		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
 		                }
 		                else if(selection.contentEquals("No Deck")){
-		                	deckOverview.setText("User will be able to enter their own estimation");
+		                	deckOverview.setText("PlanningPokerUser will be able to enter their own estimation");
 		                }
 		   }
 
@@ -640,14 +640,14 @@ public class NewGameTab extends JPanel {
 		gameList.add(selectedRequirements);
 
 		// Get and add the list of emails to the mailer
-		GetUserController.getInstance().retrieveUser();
+		GetPlanningPokerUserController.getInstance().retrieveUser();
 
 		try {
 			Thread.sleep(150);
 		} catch (InterruptedException e2) {
 		}
 
-		userList = UserModel.getInstance().getUsers();
+		userList = PlanningPokerUserModel.getInstance().getUsers();
 		mailer.addEmailFromUsers(userList);
 
 		/**
@@ -719,7 +719,7 @@ public class NewGameTab extends JPanel {
 									startCal, endCal, ConfigManager.getConfig().getUserName());
 
 						}
-						System.out.println("User Moderator: "
+						System.out.println("PlanningPokerUser Moderator: "
 								+ ConfigManager.getConfig().getUserName());
 						System.out.println("Planning Poker Live: "
 								+ game.isLive());

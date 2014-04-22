@@ -20,7 +20,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
+
+
 
 /**
  * A Mailer manages the sending of emails to email addresses added to the
@@ -273,13 +275,13 @@ public class Mailer {
 	 * Method addEmailFromUsers.
 	 * 
 	 * @param userList
-	 *            List<User>
+	 *            List<PlanningPokerUser>
 	 * 
 	 * @return boolean
 	 */
-	public boolean addEmailFromUsers(List<User> userList) {
+	public boolean addEmailFromUsers(List<PlanningPokerUser> userList) {
 		boolean isSuccess = true;
-		for (User u : userList) {
+		for (PlanningPokerUser u : userList) {
 			if (u.getEmail() != null)
 				isSuccess &= this.addEmail(u.getEmail());
 		}

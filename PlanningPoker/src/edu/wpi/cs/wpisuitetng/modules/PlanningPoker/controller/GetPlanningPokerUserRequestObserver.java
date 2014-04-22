@@ -9,19 +9,20 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
- * Controller that sends requests to and extracts users from the GetUserController controller.
+ * Controller that sends requests to and extracts users from the GetPlanningPokerUserController controller.
  * @author Alec Thompson
  * 
  * @version $Revision: 1.0 $
  */
-public class GetUserRequestObserver implements RequestObserver {
+public class GetPlanningPokerUserRequestObserver implements RequestObserver {
 
-	private GetUserController controller;
+	private GetPlanningPokerUserController controller;
 
 	/**
 	 * Parse the Users out of the response body and pass them the controller
@@ -29,7 +30,7 @@ public class GetUserRequestObserver implements RequestObserver {
 	 * @param controller
 	 *            the controller used to retrieve users
 	 */
-	public GetUserRequestObserver(GetUserController controller) {
+	public GetPlanningPokerUserRequestObserver(GetPlanningPokerUserController controller) {
 		this.controller = controller;
 	}
 
@@ -40,8 +41,8 @@ public class GetUserRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
-		// Convert the JSON array of Users to a User object array
-		User[] users = User.fromJSONArray(iReq.getResponse().getBody());
+		// Convert the JSON array of Users to a PlanningPokerUser object array
+		PlanningPokerUser[] users = PlanningPokerUser.fromJSONArray(iReq.getResponse().getBody());
 
 		// pass these users to the controller
 		controller.receivedUser(users);

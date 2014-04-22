@@ -29,8 +29,11 @@ import javax.swing.tree.TreePath;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
@@ -329,6 +332,8 @@ public class MainView {
 		// Initialize the main area JPanel with a card layout.
 		this.cardMainAreaComponent = new JPanel(new CardLayout());
 
+
+		
 		// Add the contact prompt view's toolbar.
 		this.cardToolbarComponent.add(new ContactInformationPromptToolbarView(),
 				this.CONTACT_PROMPT_VIEW);
@@ -344,10 +349,14 @@ public class MainView {
 		this.cardMainAreaComponent.add(this.mainComponent, this.MAIN_VIEW);
 
 		// Display the contact prompt view first by default.
+		
+		
 		CardLayout toolbar = (CardLayout) this.cardToolbarComponent.getLayout();
 		CardLayout mainArea = (CardLayout) this.cardMainAreaComponent.getLayout();
 		toolbar.show(this.cardToolbarComponent, this.CONTACT_PROMPT_VIEW);
 		mainArea.show(this.cardMainAreaComponent, this.CONTACT_PROMPT_VIEW);
+		
+		
 	}
 
 	/**

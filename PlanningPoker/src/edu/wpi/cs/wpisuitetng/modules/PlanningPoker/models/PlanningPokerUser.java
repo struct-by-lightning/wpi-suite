@@ -28,7 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * @author sfmailand, rbkillea
  * @version $Revision: 1.0 $
  */
-public class User extends RegularAbstractModel<User> {
+public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 	
 	private String email;
 	
@@ -40,7 +40,7 @@ public class User extends RegularAbstractModel<User> {
 
 	
 	
-	public User(String email, String userName, String sms, String instantMessage) {
+	public PlanningPokerUser(String email, String userName, String sms, String instantMessage) {
 		super();
 		this.email = email;
 		this.userName = userName;
@@ -49,12 +49,12 @@ public class User extends RegularAbstractModel<User> {
 	}
 
 	public String toJSON(){
-		return new Gson().toJson(this, User.class);
+		return new Gson().toJson(this, PlanningPokerUser.class);
 	}
 
-	public static User fromJSON(String json){
+	public static PlanningPokerUser fromJSON(String json){
 		final Gson parser = new Gson();
-		return parser.fromJson(json, User.class);
+		return parser.fromJson(json, PlanningPokerUser.class);
 	}
 
 	/* (non-Javadoc)
@@ -136,6 +136,22 @@ public class User extends RegularAbstractModel<User> {
 	 */
 	public void setInstantMessage(String instantMessage) {
 		this.instantMessage = instantMessage;
+	}
+
+	/**
+	 * Description
+	 * @param body
+	 * @return
+	 */
+	public static PlanningPokerUser[] fromJSONArray(String jsonArr) {
+		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		List<PlanningPokerUser> planningPokerUsers = new ArrayList<PlanningPokerUser>();
+
+		for (JsonElement json : array) {
+			planningPokerUsers.add(PlanningPokerUser.fromJSON(json.toString()));
+		}
+
+		return planningPokerUsers.toArray(new PlanningPokerUser[0]);
 	}
 
 }
