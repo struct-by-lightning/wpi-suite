@@ -29,16 +29,8 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
  */
 public class ProjectModel extends AbstractListModel<Project> {
 
-	/** The list of all projects on the server */
-	private List<Project> projects;
 	/** the singleton instance of the ProjectModel */
 	private static ProjectModel instance;
-
-	/** Constructs an empty project model */
-	private ProjectModel() {
-		projects = new ArrayList<Project>();
-	}
-
 	/**
 	 * Returns the singleton instance of the ProjectModel, or creates one if it
 	 * does not yet exist.
@@ -49,6 +41,14 @@ public class ProjectModel extends AbstractListModel<Project> {
 		if (instance == null)
 			instance = new ProjectModel();
 		return instance;
+	}
+
+	/** The list of all projects on the server */
+	private List<Project> projects;
+
+	/** Constructs an empty project model */
+	private ProjectModel() {
+		projects = new ArrayList<Project>();
 	}
 
 	/**
@@ -62,61 +62,16 @@ public class ProjectModel extends AbstractListModel<Project> {
 	}
 
 	/**
-	 * Gets the Project with the given name
+	 * Adds the given array of Projects to the list
 	 * 
-	 * @param name
-	 *            the name of the Project to be returned
-	 * @return the Project with the given name, or null if it is not found
+	 * @param Projects
+	 *            the array of Projects to add
 	 */
-	public Project getProject(String name) {
-		// iterate through the list of Projects until name is found
+	public void addProjects(Project[] projects) {
 		for (Project p : projects) {
-			if (p.getName().equals(name))
-				return p;
+			this.projects.add(p);
 		}
-		return null;
-	}
-
-	/**
-	 * Removes the Project with the given name
-	 * 
-	 * @param name
-	 *            The name of the Project to be removed from the list of
-	 *            Projects.
-	 */
-	public void removeUser(String name) {
-		// iterate through the list of Users until id is found
-		for (int i = 0; i < projects.size(); i++) {
-			if (projects.get(i).getName().equals(name)) {
-				projects.remove(i);
-				break;
-			}
-		}
-	}
-
-	/**
-	 * Take an index and finds the Project at the given index in the list of
-	 * Projects.
-	 * 
-	 * @param index
-	 *            the index to retrieve from
-	 * @return the Project at the given index
-	 * @see javax.swing.ListModel#getElementAt(int)
-	 */
-	@Override
-	public Project getElementAt(int index) {
-		return projects.get(projects.size() - 1 - index);
-	}
-
-	/**
-	 * Provides the number of elements in the list of Projects
-	 * 
-	 * @return the number Projects in the list of Projects
-	 * @see javax.swing.ListModel#getSize()
-	 */
-	@Override
-	public int getSize() {
-		return projects.size();
+		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
 	}
 
 	/**
@@ -137,16 +92,33 @@ public class ProjectModel extends AbstractListModel<Project> {
 	}
 
 	/**
-	 * Adds the given array of Projects to the list
+	 * Take an index and finds the Project at the given index in the list of
+	 * Projects.
 	 * 
-	 * @param Projects
-	 *            the array of Projects to add
+	 * @param index
+	 *            the index to retrieve from
+	 * @return the Project at the given index
+	 * @see javax.swing.ListModel#getElementAt(int)
 	 */
-	public void addUsers(Project[] projects) {
+	@Override
+	public Project getElementAt(int index) {
+		return projects.get(projects.size() - 1 - index);
+	}
+
+	/**
+	 * Gets the Project with the given name
+	 * 
+	 * @param name
+	 *            the name of the Project to be returned
+	 * @return the Project with the given name, or null if it is not found
+	 */
+	public Project getProject(String name) {
+		// iterate through the list of Projects until name is found
 		for (Project p : projects) {
-			this.projects.add(p);
+			if (p.getName().equals(name))
+				return p;
 		}
-		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
+		return null;
 	}
 
 	/**
@@ -156,5 +128,33 @@ public class ProjectModel extends AbstractListModel<Project> {
 	 */
 	public List<Project> getProjects() {
 		return projects;
+	}
+
+	/**
+	 * Provides the number of elements in the list of Projects
+	 * 
+	 * @return the number Projects in the list of Projects
+	 * @see javax.swing.ListModel#getSize()
+	 */
+	@Override
+	public int getSize() {
+		return projects.size();
+	}
+
+	/**
+	 * Removes the Project with the given name
+	 * 
+	 * @param name
+	 *            The name of the Project to be removed from the list of
+	 *            Projects.
+	 */
+	public void removeProject(String name) {
+		// iterate through the list of Users until id is found
+		for (int i = 0; i < projects.size(); i++) {
+			if (projects.get(i).getName().equals(name)) {
+				projects.remove(i);
+				break;
+			}
+		}
 	}
 }
