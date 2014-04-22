@@ -125,11 +125,21 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public PlanningPokerGame[] getAll(Session s) throws WPISuiteException {
 		PlanningPokerGame[] ret = new PlanningPokerGame[0];
+		Mailer close;
 		ret = data.retrieveAll(new PlanningPokerGame(null, null, null, null, false, false, null, null, null)).toArray(ret);
 		
 		for(PlanningPokerGame game : ret) {
 			if(!game.isFinished() && new Date().after(game.getEndDate().getTime())) {
 				System.out.println("Game \"" + game.getGameName() + "\" has passed its deadline; closing.");
+				close = new Mailer("The game " + game.getGameName() + " has closed!",
+						"You can now view the results of the estimation.");
+				GetUserController.getInstance().retrieveUser();
+				try {
+					Thread.sleep(150);
+				} catch (Exception e) {
+				}
+				close.addEmailFromUsers(UserModel.getInstance().getUsers());
+				close.send();
 				game.setFinished(true);
 				game.setLive(false);
 				this.save(s, game);
