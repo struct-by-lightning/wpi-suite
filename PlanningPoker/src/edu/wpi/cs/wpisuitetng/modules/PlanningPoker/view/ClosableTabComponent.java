@@ -81,7 +81,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 			//default icon, custom title
 			int n = JOptionPane.showConfirmDialog(
 			    this.getParent().getParent(),
-			    "Are you sure, you want to close the current tab?",
+			    "Are you sure you want to close the current tab?",
 			    "Warning",
 			    JOptionPane.YES_NO_OPTION);
 			
