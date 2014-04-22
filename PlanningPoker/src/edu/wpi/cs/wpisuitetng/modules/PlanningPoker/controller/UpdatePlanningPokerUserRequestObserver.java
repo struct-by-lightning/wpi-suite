@@ -10,7 +10,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -21,22 +21,22 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  * @author Alec Thompson - ajthompson
  * @version Apr 8, 2014
  */
-public class UpdateUserRequestObserver implements RequestObserver {
+public class UpdatePlanningPokerUserRequestObserver implements RequestObserver {
 
-	private final UpdateUserController controller;
+	private final UpdatePlanningPokerUserController controller;
 
 	/**
-	 * Contsructs the observer given an UpdateUserController
+	 * Contsructs the observer given an UpdatePlanningPokerUserController
 	 * 
 	 * @param controller
 	 *            the controller used to update Users
 	 */
-	public UpdateUserRequestObserver(UpdateUserController controller) {
+	public UpdatePlanningPokerUserRequestObserver(UpdatePlanningPokerUserController controller) {
 		this.controller = controller;
 	}
 
 	/**
-	 * Parse the User that was received from the server then pass it to the
+	 * Parse the PlanningPokerUser that was received from the server then pass it to the
 	 * controller.
 	 * 
 	 * @param iReq
@@ -50,7 +50,7 @@ public class UpdateUserRequestObserver implements RequestObserver {
 		final ResponseModel response = iReq.getResponse();
 
 		// parse the requirement out of the response body
-		final User user = User.fromJSON(response.getBody());
+		final PlanningPokerUser planningPokerUser = PlanningPokerUser.fromJSON(response.getBody());
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class UpdateUserRequestObserver implements RequestObserver {
 	@Override
 	public void responseError(IRequest iReq) {
 		System.err.println(iReq.getResponse().getStatusMessage());
-		System.err.println("The request to update a User failed.");
+		System.err.println("The request to update a PlanningPokerUser failed.");
 	}
 
 	/**
