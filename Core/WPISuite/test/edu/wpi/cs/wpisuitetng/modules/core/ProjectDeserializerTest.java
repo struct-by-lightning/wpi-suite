@@ -110,8 +110,8 @@ public class ProjectDeserializerTest {
 		 * if the user itself is null
 		 */
 		for (User u : test.getTeam()) {
-			assertNotEquals(null, u.getName());
-			assertNotEquals(null, u.getUsername());
+			assertTrue(null != u.getName());
+			assertTrue(null != u.getUsername());
 		}
 	}
 
