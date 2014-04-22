@@ -12,8 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -23,22 +23,23 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * 
  * @version $Revision: 1.0 $
  */
-public class GetUserController implements ActionListener {
+public class GetPlanningPokerUserController implements ActionListener {
 
-	private GetUserRequestObserver observer;
-	private static GetUserController instance;
+	private GetPlanningPokerUserRequestObserver observer;
+	private static GetPlanningPokerUserController instance;
 
-	private GetUserController() {
-		observer = new GetUserRequestObserver(this);
+	private GetPlanningPokerUserController() {
+		observer = new GetPlanningPokerUserRequestObserver(this);
 	}
 
 	/**
-	
+	 * 
 	 * @return the instance of the GetUserEmailsController or creates one if it
-	 *         doesn't exist */
-	public static GetUserController getInstance() {
+	 *         doesn't exist
+	 */
+	public static GetPlanningPokerUserController getInstance() {
 		if (instance == null) {
-			instance = new GetUserController();
+			instance = new GetPlanningPokerUserController();
 		}
 
 		return instance;
@@ -51,13 +52,14 @@ public class GetUserController implements ActionListener {
 	 * @param e
 	 *            ActionEvent
 	 * 
-	
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent) */
+	 * 
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Send a request to the core to get this email
 		final Request request = Network.getInstance().makeRequest(
-				"planningpoker/user", HttpMethod.GET);
+				"planningpoker/planningpokeruser", HttpMethod.GET);
 		request.addObserver(observer);
 		request.send();
 	}
@@ -67,7 +69,7 @@ public class GetUserController implements ActionListener {
 	 */
 	public void retrieveUser() {
 		final Request request = Network.getInstance().makeRequest(
-				"planningpoker/user", HttpMethod.GET);
+				"planningpoker/planningpokeruser", HttpMethod.GET);
 		request.addObserver(observer);
 		request.send();
 	}
@@ -75,17 +77,18 @@ public class GetUserController implements ActionListener {
 	/**
 	 * Add the given Users to the local model (they were received from the core
 	 * 
-	
-	 * @param Users array of Users received from the server
+	 * 
+	 * @param Users
+	 *            array of Users received from the server
 	 */
-	public void receivedUser(User[] Users) {
+	public void receivedUser(PlanningPokerUser[] Users) {
 		// empty the local model to eliminate duplications
-		UserModel.getInstance().emptyModel();
-		
+		PlanningPokerUserModel.getInstance().emptyModel();
+
 		// make sure the response was not null
 		if (Users != null) {
 			// add the users to the local model
-			UserModel.getInstance().addUsers(Users);
+			PlanningPokerUserModel.getInstance().addUsers(Users);
 		}
 	}
 }

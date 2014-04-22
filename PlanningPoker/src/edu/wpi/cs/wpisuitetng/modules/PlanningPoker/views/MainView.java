@@ -29,11 +29,11 @@ import javax.swing.tree.TreePath;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
