@@ -50,7 +50,7 @@ public class AddDeckController {
 	 */
 	public void addDeck(Deck newDeck) {
 		final Request request = Network.getInstance().makeRequest(
-				"planningpoker/deck", HttpMethod.PUT); // PUT == create
+				"planningpoker/deck", HttpMethod.PUT); // PUT equals create
 		request.setBody(newDeck.toJSON()); // put the new Deck into the request
 		request.addObserver(observer);
 		request.send();

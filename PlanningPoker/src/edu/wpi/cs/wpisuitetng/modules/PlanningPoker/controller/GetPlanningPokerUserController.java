@@ -88,7 +88,7 @@ public class GetPlanningPokerUserController implements ActionListener {
 		// make sure the response was not null
 		if (Users != null) {
 			// add the users to the local model
-			PlanningPokerUserModel.getInstance().addUsers(Users);
+			PlanningPokerUserModel.getInstance().addMultipleUsers(Users);
 		}
 	}
 }

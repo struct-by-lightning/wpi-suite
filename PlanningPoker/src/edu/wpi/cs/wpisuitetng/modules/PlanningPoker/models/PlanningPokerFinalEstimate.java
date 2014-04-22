@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+
 import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
@@ -114,7 +114,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	 * @return the object form of the JSON */
 	public static PlanningPokerFinalEstimate fromJSON(String json) {
 		Scanner scTemp = new Scanner(json);
-		System.out.println("This is the json" +json);
+		System.out.println("This is the json" + json);
 		// skip the boilerplate
 		scTemp.useDelimiter("\\\"?[:,{}]\\\"?");
 		scTemp.next();
@@ -130,7 +130,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		
 		 PlanningPokerFinalEstimate est = new PlanningPokerFinalEstimate(retGameName, retRequirementID);
 		 est.setEstimate(retEstimate);
-		 System.out.println("This is the final estimate that has been parsed:"+est);
+		 System.out.println("This is the final estimate that has been parsed:" + est);
 		 return est;
 	}
 	

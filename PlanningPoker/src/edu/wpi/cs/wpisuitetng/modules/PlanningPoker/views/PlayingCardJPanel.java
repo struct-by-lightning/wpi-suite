@@ -9,13 +9,13 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import java.awt.Image;
+
+
+
+
+
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;

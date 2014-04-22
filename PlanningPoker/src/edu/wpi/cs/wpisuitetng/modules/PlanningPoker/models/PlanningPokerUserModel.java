@@ -12,7 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
+
 
 import javax.swing.AbstractListModel;
 
@@ -148,7 +148,7 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 * @param Users
 	 *            the array of Users to add
 	 */
-	public void addUsers(PlanningPokerUser[] users) {
+	public void addMultipleUsers(PlanningPokerUser[] users) {
 		for (PlanningPokerUser u : users) {
 			this.planningPokerUsers.add(u);
 		}
@@ -160,7 +160,7 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 * 
 	 * @return the Users held within the PlanningPokerUserModel
 	 */
-	public List<PlanningPokerUser> getUsers() {
+	public List<PlanningPokerUser> getAllUsers() {
 		return planningPokerUsers;
 	}
 }

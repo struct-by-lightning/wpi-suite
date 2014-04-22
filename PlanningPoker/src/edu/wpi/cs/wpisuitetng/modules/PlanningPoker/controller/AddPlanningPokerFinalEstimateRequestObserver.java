@@ -9,7 +9,7 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
+
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -45,9 +45,7 @@ public class AddPlanningPokerFinalEstimateRequestObserver implements RequestObse
 		// Get the response to the given request
 		final ResponseModel response = iReq.getResponse();
 
-		// Parse the PlanningPokerVote out of the response body
-		// final PlanningPokerVote planningPokerVote =
-		// PlanningPokerVote.fromJSON(response.getBody());
+
 	}
 
 	/**

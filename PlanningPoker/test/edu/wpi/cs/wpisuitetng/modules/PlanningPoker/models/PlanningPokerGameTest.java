@@ -32,7 +32,7 @@ public class PlanningPokerGameTest {
 	public ExpectedException thrown = ExpectedException.none();
 
 	@Test
-	public final void getGameNameTest() {
+	public final void retrieveGameNameTest() {
 		PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", null, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
@@ -42,7 +42,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getDescriptionTest() {
+	public final void retrieveDescriptionTest() {
 		PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", null, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
@@ -52,7 +52,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getDeckTypeTest() {
+	public final void retrieveDeckTypeTest() {
 		PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", null, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
@@ -62,7 +62,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getRequirementIdsTest() {
+	public final void retrieveRequirementIdsTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
@@ -85,7 +85,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getIsFinishedTest() {
+	public final void retrieveIsFinishedTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
@@ -110,7 +110,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getIsLiveTest() {
+	public final void retrieveIsLiveTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
@@ -135,7 +135,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getStartDateTest() {
+	public final void retrieveStartDateTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
@@ -157,7 +157,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getEndDateTest() {
+	public final void retrieveEndDateTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
@@ -178,7 +178,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getModeratorTest() {
+	public final void retrieveModeratorTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
@@ -219,7 +219,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getDeckValuesTest() {
+	public final void retrieveDeckValuesTest() {
 		// TODO currently based on the mock data returned by the method
 		List<Integer> testIds = new ArrayList<Integer>() {
 			{
@@ -391,7 +391,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getIDTest() {
+	public final void retrieveIDTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
@@ -410,7 +410,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getPrimaryKeyTest() {
+	public final void retrievePrimaryKeyTest() {
 		List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
@@ -473,7 +473,7 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getSelectedCardIndicesTest() {
+	public final void retrieveSelectedCardIndicesTest() {
 		// TODO this method returns a placeholder empty arraylist
 		List<Integer> testIds = new ArrayList<Integer>() {
 			{

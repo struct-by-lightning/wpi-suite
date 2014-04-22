@@ -67,7 +67,7 @@ public class GetPlanningPokerFinalEstimateController {
 	 * Sends an HTTP request to retrieve all PlanningPokerGames
 	 */
 	public PlanningPokerFinalEstimate[] retrievePlanningPokerFinalEstimate() {
-		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokerfinalestimate", HttpMethod.GET); // GET == read
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokerfinalestimate", HttpMethod.GET); // GET equals read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 		
@@ -78,7 +78,6 @@ public class GetPlanningPokerFinalEstimateController {
 			e.printStackTrace();
 		}
 		if(request.getResponse() != null) {
-			//return Integer.MIN_VALUE;
 			System.out.println("response exists");
 			PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate.fromJsonArray(request.getResponse().getBody());
 			return a;
@@ -95,7 +94,7 @@ public class GetPlanningPokerFinalEstimateController {
 	 * @return the vote if it exists, Integer.MIN_VALUE otherwise
 	 */
 	public int retrievePlanningPokerFinalEstimate(String gameName, int requirementID) {
-		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokerfinalestimate" /*+ new PlanningPokerVote(gameName, userName, 0, requirementID).getID()*/, HttpMethod.GET); // GET == read
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokerfinalestimate" , HttpMethod.GET); // GET equals read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 		
@@ -106,7 +105,6 @@ public class GetPlanningPokerFinalEstimateController {
 			e.printStackTrace();
 		}
 		if(request.getResponse() != null && request.getResponse().getStatusCode() == 200) {
-			//return Integer.MIN_VALUE;
 			PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate.fromJsonArray(request.getResponse().getBody());
 			PlanningPokerFinalEstimate ret = new PlanningPokerFinalEstimate(null, 0);
 			for(PlanningPokerFinalEstimate fe : a) {

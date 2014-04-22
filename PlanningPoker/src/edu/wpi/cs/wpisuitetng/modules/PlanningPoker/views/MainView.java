@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
+
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -29,11 +29,11 @@ import javax.swing.tree.TreePath;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
+
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
+
+
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
@@ -90,9 +90,7 @@ public class MainView {
 			this.mainComponent.remove(selected);
 		}
 
-		// TODO: Do these do anything?
-		// MainView.getInstance().gameTree.repaint();
-		// MainView.getInstance().gameTree.getParent().repaint();
+
 	}
 
 	/**
@@ -107,7 +105,7 @@ public class MainView {
 		while (GetPlanningPokerGamesController.waitingOnRequest) {
 			continue;
 		}
-		ArrayList<PlanningPokerGame> games = PlanningPokerGameModel.getPlanningPokerGames();
+		ArrayList<PlanningPokerGame> games = PlanningPokerGameModel.getAllPlanningPokerGames();
 
 		// Instantiate each of the folders which may appear in the tree.
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("All Games");
@@ -317,7 +315,7 @@ public class MainView {
 	 */
 	private MainView() {
 		initComponents();
-		setUpCards();
+		setupCards();
 		initLogic();
 	}
 
@@ -325,7 +323,7 @@ public class MainView {
 	 * Initialize the card layout JPanels which will allow switiching between
 	 * the main planning poker view and the prompt for contact information.
 	 */
-	private void setUpCards() {
+	private void setupCards() {
 		// Initialize the toolbar JPanel with a card layout.
 		this.cardToolbarComponent = new JPanel(new CardLayout());
 

@@ -7,11 +7,11 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
+
 
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.mockobjects.MockNetwork;
+
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 
@@ -46,10 +46,10 @@ public class GetPlanningPokerGamesControllerTest {
 		};
 		gc.receivedPlanningPokerGames(games);
 		
-		ArrayList<PlanningPokerGame> pgm = PlanningPokerGameModel.getPlanningPokerGames();
+		ArrayList<PlanningPokerGame> pgm = PlanningPokerGameModel.getAllPlanningPokerGames();
 		assertTrue(pgm.size() == games.length);
 		for (int x = 0; x < pgm.size(); x++) {
-			PlanningPokerGame s1 = pgm.get(pgm.size()-x-1);
+			PlanningPokerGame s1 = pgm.get(pgm.size() - x - 1);
 			PlanningPokerGame s2 = games[x];
 			
 		assertEquals(s2.getID(), s1.getID());

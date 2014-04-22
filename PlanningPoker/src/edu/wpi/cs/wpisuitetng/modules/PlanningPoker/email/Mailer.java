@@ -175,7 +175,6 @@ public class Mailer {
 	 * @return Google SMTP session
 	 */
 	private Session createSmtpSession() {
-		// final version settings
 		if (DEBUG) {
 			// test with mailtrap
 			Properties props = System.getProperties();

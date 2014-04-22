@@ -109,7 +109,7 @@ public class GetPlanningPokerGamesController implements ActionListener {
 			/**
 			 * add the PlanningPokerGames to the local model
 			 **/
-			PlanningPokerGameModel.addPlanningPokerGames(PlanningPokerGames);
+			PlanningPokerGameModel.addMultiplePlanningPokerGames(PlanningPokerGames);
 		}
 	}
 }

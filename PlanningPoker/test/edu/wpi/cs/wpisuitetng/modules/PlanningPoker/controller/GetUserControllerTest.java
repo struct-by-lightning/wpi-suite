@@ -12,14 +12,14 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
+
+
 import java.util.List;
 
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+
+
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 
@@ -55,7 +55,7 @@ public class GetUserControllerTest {
 		};
 		gc.receivedUser(users);
 		
-		List<PlanningPokerUser> pgm = PlanningPokerUserModel.getInstance().getUsers();
+		List<PlanningPokerUser> pgm = PlanningPokerUserModel.getInstance().getAllUsers();
 		assertTrue(pgm.size() == users.length);
 		for (int x = 0; x < pgm.size(); x++) {
 			PlanningPokerUser s1 = pgm.get(x);

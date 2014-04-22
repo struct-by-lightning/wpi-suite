@@ -271,7 +271,7 @@ public class NewGameView extends JPanel {
 		// TODO:
 		// As per a meeting with Pollice, we need to only select users which
 		// have been explicitly added to the project through the web-interface.
-		userList = PlanningPokerUserModel.getInstance().getUsers();
+		userList = PlanningPokerUserModel.getInstance().getAllUsers();
 		mailer.addEmailFromUsers(userList);
 
 		/**
@@ -291,7 +291,6 @@ public class NewGameView extends JPanel {
 						&& deadline.isSelected()) {
 					System.out.println("Please enter a valid date");
 				} else {
-					// String[] startDate = startDateText.getText().split("-");
 					String[] endDate = endDateText.getText().split("-");
 
 					Date endVal = (Date) endTime.getValue();
@@ -501,8 +500,6 @@ public class NewGameView extends JPanel {
 				// Reset game name
 				sessionName.setText(dateFormat.format(date));
 
-				// Reset start and end date
-				// startDateText.setText(defaultCalendarText);
 				endDateText.setText(defaultCalendarText);
 				btnStartVoting.setEnabled(true);
 				createGameErrorText.setText("");

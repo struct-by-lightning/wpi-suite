@@ -30,14 +30,11 @@ import javax.swing.event.ListSelectionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerFinalEstimateController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerFinalEstimateController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEstimate;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
@@ -115,36 +112,36 @@ public class ClosedGameView extends JPanel {
 						for(PlanningPokerVote v : gameVotes) {
 							if(v.getRequirementID() == currentID) {
 								reqVotes.add((double)v.getVote());
-								estimateModel.addElement("   "+v.getUserName()+": "+v.getVote());
+								estimateModel.addElement("   " + v.getUserName() + ": " + v.getVote());
 							}
 						}
-						System.out.println("est mode: "+estimateModel);
-						System.out.println("g Votes: "+gameVotes);
+						System.out.println("est mode: " + estimateModel);
+						System.out.println("g Votes: " + gameVotes);
 						estimates.setModel(estimateModel);
-						if(reqVotes.size()!= 0) {
+						if(reqVotes.size() != 0) {
 							double[] voteNums = new double[reqVotes.size()];
-							for(int i = 0; i< reqVotes.size(); i++) {
+							for(int i = 0; i < reqVotes.size(); i++) {
 								voteNums[i] = (double)reqVotes.get(i);
 							}
-							mean.setText(meanDef+df.format(Statistics.mean(voteNums)));
-							median.setText(medianDef+df.format(Statistics.median(voteNums)));
-							mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
-							if(reqVotes.size()>1) {
-								std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
+							mean.setText(meanDef + df.format(StatisticsInfo.mean(voteNums)));
+							median.setText(medianDef + df.format(StatisticsInfo.median(voteNums)));
+							mode.setText(modeDef + df.format(StatisticsInfo.mode(voteNums)));
+							if(reqVotes.size() > 1) {
+								std.setText(stdDef + df.format(StatisticsInfo.StdDev(voteNums)));
 							}
 							else {
-								std.setText(stdDef+"?");
+								std.setText(stdDef + "?");
 							}
-							max.setText(maxDef+df.format(Statistics.max(voteNums)));
-							min.setText(minDef+df.format(Statistics.min(voteNums)));
+							max.setText(maxDef + df.format(StatisticsInfo.max(voteNums)));
+							min.setText(minDef + df.format(StatisticsInfo.min(voteNums)));
 						}
 						else {
-							mean.setText(meanDef+"?");
-							median.setText(medianDef+"?");
-							mode.setText(modeDef+"?");
-							std.setText(stdDef+"?");
-							max.setText(maxDef+"?");
-							min.setText(minDef+"?");
+							mean.setText(meanDef + "?");
+							median.setText(medianDef + "?");
+							mode.setText(modeDef + "?");
+							std.setText(stdDef + "?");
+							max.setText(maxDef + "?");
+							min.setText(minDef + "?");
 						}
 					}
 				});
@@ -202,16 +199,16 @@ public class ClosedGameView extends JPanel {
 					for (int i = 0; i < reqVotes.size(); i++) {
 						voteNums[i] = (double) reqVotes.get(i);
 					}
-					mean.setText(meanDef + df.format(Statistics.mean(voteNums)));
-					median.setText(medianDef + df.format(Statistics.median(voteNums)));
-					mode.setText(modeDef + df.format(Statistics.mode(voteNums)));
+					mean.setText(meanDef + df.format(StatisticsInfo.mean(voteNums)));
+					median.setText(medianDef + df.format(StatisticsInfo.median(voteNums)));
+					mode.setText(modeDef + df.format(StatisticsInfo.mode(voteNums)));
 					if (reqVotes.size() > 1) {
-						std.setText(stdDef + df.format(Statistics.StdDev(voteNums)));
+						std.setText(stdDef + df.format(StatisticsInfo.StdDev(voteNums)));
 					} else {
 						std.setText(stdDef + "?");
 					}
-					max.setText(maxDef + df.format(Statistics.max(voteNums)));
-					min.setText(minDef + df.format(Statistics.min(voteNums)));
+					max.setText(maxDef + df.format(StatisticsInfo.max(voteNums)));
+					min.setText(minDef + df.format(StatisticsInfo.min(voteNums)));
 				} else {
 					mean.setText(meanDef + "?");
 					median.setText(medianDef + "?");
@@ -549,7 +546,6 @@ public class ClosedGameView extends JPanel {
 		stats.add(max);
 		stats.add(mode);
 		stats.add(min);
-		// stats.setPreferredSize(new Dimension(stats.getWidth(), 50));
 		stats.setBorder(javax.swing.BorderFactory
 				.createLineBorder(new java.awt.Color(153, 153, 153)));
 
@@ -603,10 +599,7 @@ public class ClosedGameView extends JPanel {
 		estimates.setFont(new java.awt.Font("Tahoma", 0, 20));
 		JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(estimates);
-		// scroll.setPreferredSize(new Dimension(500, 400));
 
-		// allEstimates = new javax.swing.JPanel();
-		// allEstimates.add(scroll);
 		scroll.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153,
 				153)));
 
@@ -698,17 +691,7 @@ public class ClosedGameView extends JPanel {
 				ppfe.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
 				AddPlanningPokerFinalEstimateController.getInstance().addPlanningPokerFinalEstimate(ppfe);
 				PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
-				System.out.println("These are the current final estimates:" +Arrays.asList(stuff));
-//				req2set.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
-//				UpdateRequirementController.getInstance().updateRequirement(req2set);
-//				try {
-//					Thread.sleep(150);
-//				} catch (InterruptedException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
-//				initForGame();
-//				GetRequirementsController.getInstance().retrieveRequirements();
+				System.out.println("These are the current final estimates:" + Arrays.asList(stuff));
 			}
 		});
 		if (!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {
@@ -747,7 +730,6 @@ public class ClosedGameView extends JPanel {
 						.addComponent(rowSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-		// rowSplitPanel.add(estimateCenteringPanel);
 		splitPane.setRightComponent(rightSplitPanel);
 
 		add(splitPane, java.awt.BorderLayout.CENTER);

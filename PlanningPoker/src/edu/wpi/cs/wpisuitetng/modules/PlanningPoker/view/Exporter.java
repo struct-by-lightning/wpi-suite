@@ -28,10 +28,6 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.
  */
 public class Exporter {
 
-	public Exporter() {
-		
-	}
-	
 	/**
 	 * Exports the input list of selected requirements to a file as a string
 	 * @param listOfRequirementsToAdd DefaultListModel<Requirement>
@@ -106,16 +102,16 @@ public class Exporter {
 			return;
 		}
 		
-		out.print("[");
+		out.print('[');
 		// Iterate over the list of requirements
 		for(int i = 0; i < listOfRequirementsToAdd.size(); i++) {
 			if(i != 0) {
-				out.println(",");
+				out.println(',');
 			}
 			// Export the current requirement
 			out.print(listOfRequirementsToAdd.get(i).toJSON());
 		}
-		out.println("]");
+		out.println(']');
 		
 		// Close the file
 		out.close();
