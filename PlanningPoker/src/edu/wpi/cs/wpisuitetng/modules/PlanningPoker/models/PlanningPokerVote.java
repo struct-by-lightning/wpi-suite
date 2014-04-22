@@ -140,7 +140,7 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	 * @param toSet String
 	 */
 	public void setUserName(String toSet) {
-		userName = toSet.toLowerCase();
+		userName = toSet;
 	}
 	/**
 	 * This method makes a JSON string into a votemodel.
