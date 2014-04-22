@@ -356,17 +356,7 @@ public class MainView {
 		toolbar.show(this.cardToolbarComponent, this.CONTACT_PROMPT_VIEW);
 		mainArea.show(this.cardMainAreaComponent, this.CONTACT_PROMPT_VIEW);
 		
-		GetUserController.getInstance().retrieveUser();
-		try {
-			Thread.sleep(150);
-		} catch (Exception e) {
-		}
-
-		User currentUser =UserModel.getInstance().getUser(ConfigManager.getConfig().getUserName());
 		
-		if(currentUser != null){
-			switchToMainOverview();
-		}
 	}
 
 	/**
