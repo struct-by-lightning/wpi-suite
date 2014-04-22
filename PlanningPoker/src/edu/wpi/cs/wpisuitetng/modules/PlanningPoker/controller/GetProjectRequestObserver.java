@@ -10,6 +10,8 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -23,41 +25,50 @@ public class GetProjectRequestObserver implements RequestObserver {
 	/** the controller associated with this observer */
 	private GetProjectController controller;
 
+	/**
+	 * Construct the observer given a GetProjectController
+	 * 
+	 * @param controller
+	 *            the controller used to retrieve Projects
+	 */
 	public GetProjectRequestObserver(GetProjectController controller) {
 		this.controller = controller;
 	}
 
-	/*
-	 * @see
-	 * edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi
-	 * .cs.wpisuitetng.network.models.IRequest)
+	/**
+	 * Parse the Projects out of the response body and pass them to the
+	 * controller
+	 * 
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
-		// TODO Auto-generated method stub
+		// Convert the JSON array of PlanningPokerGames to a PlanningPokerGame
+		// object array
+		Project[] projects = Project
+				.fromJsonArray(iReq.getResponse().getBody());
 
+		// Pass these PlanningPokerGames to the controller
+		controller.receivedPlanningPokerGames(projects);
 	}
 
-	/*
-	 * @see
-	 * edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.
-	 * cs.wpisuitetng.network.models.IRequest)
+	/**
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		// TODO Auto-generated method stub
-
+		System.err.println("The request to retrieve Projects has encountered an error and had to close.");
 	}
 
-	/*
-	 * @see
-	 * edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng
-	 * .network.models.IRequest, java.lang.Exception)
-	 */
+/**
+	
+	 * @param iReq IRequest
+	 * @param exception Exception
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng
+	 *      .network.models.IRequest, java.lang.Exception) */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		// TODO Auto-generated method stub
-
+		System.err.println("The request to retrieve Projects has failed.");
 	}
 
 }
