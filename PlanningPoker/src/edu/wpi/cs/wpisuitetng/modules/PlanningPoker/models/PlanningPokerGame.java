@@ -54,6 +54,8 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	/**The moderator of the planning poker game*/
 	private String moderator;
+	
+	private boolean isArchived;
 
 	/**
 	 * Constructor for the game
@@ -97,6 +99,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 		this.setStartDate(startDate);
 		this.setEndDate(endDate);
 		this.setModerator(moderator);
+		isArchived = false;
 	}
 	
 	/**
@@ -406,7 +409,12 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 		this.endDate = endDate;
 	}
 
-
-
+	public void setArchived(boolean isArchived) {
+		this.isArchived = isArchived;
+	}
+	
+	public boolean isArchived() {
+		return this.isArchived;
+	}
 
 }

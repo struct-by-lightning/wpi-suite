@@ -114,7 +114,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	 * @return the object form of the JSON */
 	public static PlanningPokerFinalEstimate fromJSON(String json) {
 		Scanner scTemp = new Scanner(json);
-		System.out.println("This is the json" +json);
+		//System.out.println("This is the json" +json);
 		// skip the boilerplate
 		scTemp.useDelimiter("\\\"?[:,{}]\\\"?");
 		scTemp.next();
@@ -130,7 +130,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		
 		 PlanningPokerFinalEstimate est = new PlanningPokerFinalEstimate(retGameName, retRequirementID);
 		 est.setEstimate(retEstimate);
-		 System.out.println("This is the final estimate that has been parsed:"+est);
+		 //System.out.println("This is the final estimate that has been parsed:"+est);
 		 return est;
 	}
 	
@@ -143,7 +143,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	 * @return An array of reconstructed PlanningPokerGames */
 	public static PlanningPokerFinalEstimate[] fromJsonArray(String jsonArr) {
 		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
-		System.out.println(array);
+		//System.out.println(array);
 		List<PlanningPokerFinalEstimate> ppnes = new ArrayList<PlanningPokerFinalEstimate>();
 
 		for (JsonElement json : array) {

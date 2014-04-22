@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
+
+import java.awt.Color;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -97,6 +99,9 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 
 		aimFieldPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("AIM"));
 
+		aimField.setEnabled(false);
+		aimField.setBackground(Color.lightGray);
+		
 		aimField.addKeyListener(new java.awt.event.KeyAdapter() {
 			public void keyTyped(java.awt.event.KeyEvent evt) {
 				aimFieldKeyTyped(evt);
