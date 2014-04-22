@@ -20,8 +20,8 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.UserModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * Class to test the user controller's functionality.
@@ -50,8 +50,8 @@ public class GetUserControllerTest {
 	public void testReceivedUser() {
 		GetUserController gc = GetUserController.getInstance();
 		User[] users = new User[]{
-				 new User("James Bond", "jbond", "jbond@test.com", null, 7),
-				new User("M", "m", "m@m.com", null, 0)
+				 new User("jbond@test.com", "jbond", "1111111111", "jbond@aim.com"),
+				new User("m@m.com", "m", "2222222222", "m@aim.com")
 		};
 		gc.receivedUser(users);
 		
@@ -61,7 +61,7 @@ public class GetUserControllerTest {
 			User s1 = pgm.get(x);
 			User s2 = users[x];
 			
-		assertEquals(s2.getIdNum(), s1.getIdNum());
+		assertEquals(s2.getID(), s1.getID());
 		
 		}
 	}
