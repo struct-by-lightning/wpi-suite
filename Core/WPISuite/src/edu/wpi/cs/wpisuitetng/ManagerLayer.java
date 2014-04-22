@@ -86,6 +86,7 @@ public class ManagerLayer {
 		map.put("planningpoker" + "planningpokervote", new PlanningPokerVoteEntityManager(data));
 		map.put("planningpoker" + "deck", new DeckEntityManager(data));
 		map.put("planningpoker"+"planningpokerfinalestimate", new PlanningPokerFinalEstimateEntityManager(data));
+		map.put("planningpoker" + "project", new ProjectManager(data));
 		//add just your module to this list
 		String[] fullModuleList = {"core","defecttracker","postboard","requirementmanager","planningpoker"};
 		((ProjectManager)map.get("coreproject")).setAllModules(fullModuleList);
