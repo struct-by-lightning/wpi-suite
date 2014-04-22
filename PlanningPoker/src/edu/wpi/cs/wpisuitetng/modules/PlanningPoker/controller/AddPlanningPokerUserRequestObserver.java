@@ -10,7 +10,7 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.User;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -22,18 +22,18 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  * @version $Revision: 1.0 $
  * @author sfmailand
  */
-public class AddUserRequestObserver implements RequestObserver {
+public class AddPlanningPokerUserRequestObserver implements RequestObserver {
 
-	private AddUserController controller;
+	private AddPlanningPokerUserController controller;
 
 	/**
-	 * Constructs the observer given an AddUserController
+	 * Constructs the observer given an AddPlanningPokerUserController
 	 * 
 	 * @param controller
 	 *            the controller used to add PlanningPokerGames
 	 */
-	public AddUserRequestObserver(
-			AddUserController controller) {
+	public AddPlanningPokerUserRequestObserver(
+			AddPlanningPokerUserController controller) {
 		this.controller = controller;
 	}
 
@@ -62,7 +62,7 @@ public class AddUserRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("The request to add a User failed.");
+		System.err.println("The request to add a PlanningPokerUser failed.");
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class AddUserRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err.println("The request to add a User failed.");
+		System.err.println("The request to add a PlanningPokerUser failed.");
 	}
 
 }

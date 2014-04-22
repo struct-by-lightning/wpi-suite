@@ -8,7 +8,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -22,99 +21,171 @@ import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 /**
- * @author Miguel
+ * @author Miguel and Lisa and Christian
  * @version $Revision: 1.0 $
  */
 public class PlayingCardJPanel extends JPanel {
 
-    private final int value;
-    private boolean selected;
-    private Image img;
+	private final int value;
+	private boolean selected;
+	private Image img;
+	private GroupLayout innerCardPanelLayout;
+	private GroupLayout thisLayout;
 
-    /**
-     * Inner panels for displaying this card.
-     */
-    private final JPanel innerCardPanel;
-    private final JLabel cardLabel;
+	/**
+	 * Inner panels for displaying this card.
+	 */
+	private final JPanel innerCardPanel;
+	private final JLabel cardLabel;
 
-    /**
-     * Constructor for PlayingCardJPanel.
-     * @param value int
-     * @param selected boolean
-     */
-    public PlayingCardJPanel(int value, boolean selected) {
-        this.value = value;
-        this.selected = selected;
-        
-        this.updateBorder();
+	/**
+	 * Constructor for PlayingCardJPanel.
+	 * 
+	 * @param value
+	 *            int
+	 * @param selected
+	 *            boolean
+	 */
 
-        this.innerCardPanel = new CardImgPanel();
-        this.cardLabel = new JLabel();
+	public PlayingCardJPanel(int value, boolean selected) {
+		this.value = value;
+		this.selected = selected;
+		this.updateBorder();
+		this.innerCardPanel = new CardImgPanel();
+		this.cardLabel = new JLabel();
+		this.innerCardPanelLayout = new GroupLayout(innerCardPanel);
+		this.thisLayout = new GroupLayout(this);
 
-        innerCardPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+		setCardlabel();
+		setInnerCardPanelBorder();
+		setInnerCardLayoutVertical();
+		setInnerCardLayoutHorizontal();
+		setThisLayoutHorizontal();
+		setThisLayoutVertical();
 
-        cardLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        cardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cardLabel.setText(Integer.toString(value));
+	}
+	/**
+	 * sets the label format for the cars in the playing card panel
+	 */
 
-       GroupLayout innerCardPanelLayout = new GroupLayout(innerCardPanel);
-        innerCardPanel.setLayout(innerCardPanelLayout);
-        innerCardPanelLayout.setHorizontalGroup(
-                innerCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(innerCardPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
-                        .addContainerGap())
-        );
-        
-        innerCardPanelLayout.setVerticalGroup(
-                innerCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(innerCardPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(cardLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                        .addContainerGap())
-        );
+	private void setCardlabel() {
+		cardLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+		cardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		cardLabel.setText(Integer.toString(value));
 
-        GroupLayout thisLayout = new GroupLayout(this);
-        this.setLayout(thisLayout);
-        thisLayout.setHorizontalGroup(
-                thisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(innerCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        thisLayout.setVerticalGroup(
-                thisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(innerCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-    }
+	}
+	
+	/**
+	 * sets the inner card panel border
+	 */
+	private void setInnerCardPanelBorder(){
+		innerCardPanel.setBorder(javax.swing.BorderFactory
+				.createLineBorder(new java.awt.Color(153, 153, 153)));
+	}
+	/**
+	 * sets the horizontal inner card layout
+	 */
 
-    public void toggle() {
-        this.selected = !this.selected;
-        this.updateBorder();
-    }
-    
-    public void select() {
-        this.selected = true;
-        this.updateBorder();
-    }
-    
-    public void deselect() {
-        this.selected = false;
-        this.updateBorder();
-    }
+	private void setInnerCardLayoutHorizontal() {
+		innerCardPanel.setLayout(innerCardPanelLayout);
+		innerCardPanelLayout
+				.setHorizontalGroup(innerCardPanelLayout.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+						innerCardPanelLayout
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(cardLabel,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										92, Short.MAX_VALUE).addContainerGap()));
 
-    private void updateBorder() {
-        Color borderColor = (this.selected ? new Color(204, 255, 204) : Color.white);
-        this.setBorder(BorderFactory.createLineBorder(borderColor, 10));
-    }
+	}
 
-    /**
-     * Method getValue.
-    
-     * @return int */
-    public int getValue() {
-        return (this.selected ? value : 0);
-    }
+	/**
+	 * sets vertical inner card layout
+	 */
+	private void setInnerCardLayoutVertical() {
+		innerCardPanelLayout
+				.setVerticalGroup(innerCardPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								innerCardPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(
+												cardLabel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												131, Short.MAX_VALUE)
+										.addContainerGap()));
+	}
+	
+	/**
+	 * sets the overall panel horizontal layout
+	 */
+
+	private void setThisLayoutHorizontal() {
+		this.setLayout(thisLayout);
+		thisLayout.setHorizontalGroup(thisLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+				innerCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+				javax.swing.GroupLayout.DEFAULT_SIZE,
+				javax.swing.GroupLayout.PREFERRED_SIZE));
+
+	}
+
+	/**
+	 * sets the overall vertical layout
+	 */
+	private void setThisLayoutVertical() {
+		thisLayout.setVerticalGroup(thisLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+				innerCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+				javax.swing.GroupLayout.DEFAULT_SIZE,
+				javax.swing.GroupLayout.PREFERRED_SIZE));
+	}
+	
+	/**
+	 * allows you to toggle
+	 */
+
+	public void toggle() {
+		this.selected = !this.selected;
+		this.updateBorder();
+	}
+
+	/**
+	 * allows user to select
+	 */
+	public void select() {
+		this.selected = true;
+		this.updateBorder();
+	}
+
+	/**
+	 * allows you to deselect
+	 */
+	public void deselect() {
+		this.selected = false;
+		this.updateBorder();
+	}
+
+	/** 
+	 * updates the border
+	 */
+	private void updateBorder() {
+		Color borderColor = (this.selected ? new Color(204, 255, 204)
+				: Color.white);
+		this.setBorder(BorderFactory.createLineBorder(borderColor, 10));
+	}
+
+	/**
+	 * Method getValue.
+	 * 
+	 * @return int
+	 */
+	public int getValue() {
+		return (this.selected ? value : 0);
+	}
 
 }
