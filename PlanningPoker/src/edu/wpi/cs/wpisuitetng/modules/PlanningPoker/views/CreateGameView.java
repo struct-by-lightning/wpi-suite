@@ -286,6 +286,7 @@ public class CreateGameView extends JPanel {
 		 */
 		btnCreateGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				gameRequirementIDsList.clear();
 				viewHasBeenEdited = false;
 
 				enteredName = sessionName.getText();
