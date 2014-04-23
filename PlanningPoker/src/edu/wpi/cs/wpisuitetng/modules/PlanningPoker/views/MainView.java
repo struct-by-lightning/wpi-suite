@@ -53,6 +53,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * @author Austin Rose (atrose)
  */
 public class MainView {
+	private ArrayList<PlanningPokerGame> games;
 
 	/**
 	 * This function adds a new closeable tab to the planning poker module's
@@ -107,7 +108,7 @@ public class MainView {
 		while (GetPlanningPokerGamesController.waitingOnRequest) {
 			continue;
 		}
-		ArrayList<PlanningPokerGame> games = PlanningPokerGameModel.getPlanningPokerGames();
+		games = PlanningPokerGameModel.getPlanningPokerGames();
 
 		// Instantiate each of the folders which may appear in the tree.
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("All Games");
@@ -418,13 +419,14 @@ public class MainView {
 				TreePath selPath = gameTree.getPathForLocation(e.getX(), e.getY());
 				if (selRow != -1) {
 					if (e.getClickCount() == 2) {
-						
-						DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
-								.getLastPathComponent();
-						String gameName = (String) node.getUserObject();
-						
-						MainView.gameWasDoubleClicked(PlanningPokerGameModel
-								.getPlanningPokerGame(gameName));
+						if (games.size() != 0) {
+							DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
+									.getLastPathComponent();
+							String gameName = (String) node.getUserObject();
+							
+							MainView.gameWasDoubleClicked(PlanningPokerGameModel
+									.getPlanningPokerGame(gameName));
+						}
 					}
 				}
 			}
