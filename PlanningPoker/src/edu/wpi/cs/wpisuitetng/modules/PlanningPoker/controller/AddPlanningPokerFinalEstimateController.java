@@ -20,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 
 /**
- * This class constructs a vote controller model and adds the planning poker vote to the server.
+ * This class constructs a final estimate controller model and adds the planning poker final estimate to the server.
  * @author friscis
  * @author swconley
  * @author mamora
@@ -31,7 +31,7 @@ public class AddPlanningPokerFinalEstimateController{
 	private AddPlanningPokerFinalEstimateRequestObserver observer;
 
 	/**
-	 * Construct an AddPlanningPokerVoteController for the given model, view
+	 * Construct an AddPlanningPokerFinalEstimateController for the given model, view
 	 * pair
 	 */
 	private AddPlanningPokerFinalEstimateController() {
@@ -40,7 +40,7 @@ public class AddPlanningPokerFinalEstimateController{
 
 	/**
 	 * 
-	 * @return the instance of the AddPlanningPokerVoteController or creates one
+	 * @return the instance of the AddPlanningPokerFinalEstimateController or creates one
 	 *         if it does not exist.
 	 */
 	public static AddPlanningPokerFinalEstimateController getInstance() {
@@ -52,17 +52,17 @@ public class AddPlanningPokerFinalEstimateController{
 	}
 
 	/**
-	 * This method adds a PlanningPokerVote to the server.
+	 * This method adds a PlanningPokerFinalEstimate to the server.
 	 * 
 	 * @param newPlanningPokerFinalEstimate
-	 *            is the PlanningPokerVote to be added to the server.
+	 *            is the PlanningPokerFinalEstimate to be added to the server.
 	 */
 	public void addPlanningPokerFinalEstimate(PlanningPokerFinalEstimate newPlanningPokerFinalEstimate) {
 		final Request request = Network.getInstance().makeRequest(
 				"planningpoker/planningpokerfinalestimate", HttpMethod.POST); // PUT ==
 																		// create
 		request.setBody(newPlanningPokerFinalEstimate.toJSON()); // put the new
-														// PlanningPokerVote in
+														// PlanningPokerFinalEstimate in
 														// the body of the
 														// request
 		request.addObserver(observer); // add an observer to process the
