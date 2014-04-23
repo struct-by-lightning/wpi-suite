@@ -894,7 +894,7 @@ public class CreateGameView extends JPanel {
 	private List<Integer> gameRequirementIDsList;
 	private List<PlanningPokerUser> userList;
 	private Mailer mailer;
-	private boolean viewHasBeenEdited;
+	private boolean viewHasBeenEdited = false;
 
 	private DateFormat dateFormat;
 	private Date date;
@@ -965,4 +965,9 @@ public class CreateGameView extends JPanel {
 	private JTextPane txtpnLoggedInAs;
 	private JComboBox<String> deckType;
 	private GridBagConstraints constraints14;
+	
+	public boolean isViewHasBeenEdited() {
+		// TODO Auto-generated method stub
+		return viewHasBeenEdited;
+	}
 }
