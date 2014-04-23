@@ -428,7 +428,7 @@ public class CreateGameView extends JPanel {
 
 				}
 				btn_addToGame.setEnabled(false);
-				//btnCreateGame.setEnabled(true);
+				btnCreateGame.setEnabled(true);
 			}
 		});
 
