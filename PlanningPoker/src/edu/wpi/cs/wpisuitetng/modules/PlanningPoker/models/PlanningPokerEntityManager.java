@@ -83,7 +83,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	public PlanningPokerGame[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
 		PlanningPokerGame[] m = new PlanningPokerGame[0];
-		PlanningPokerUser[] u = new PlanningPokerUser[0];
+		PlanningPokerUser[] u;
 		Mailer close;
 		
 		if(id.equals(""))
@@ -102,7 +102,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 					// clear the UserModel
 					PlanningPokerUserModel.getInstance().emptyModel();
 					// add the users to the array
-					data.retrieveAll(PlanningPoker.class).toArray(u);
+					u = data.retrieveAll(new PlanningPokerUser(null, null, null, null)).toArray(new PlanningPokerUser[0]);
 					// add the users to the model
 					PlanningPokerUserModel.getInstance().addUsers(u);
 					close.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
@@ -127,7 +127,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public PlanningPokerGame[] getAll(Session s) throws WPISuiteException {
 		PlanningPokerGame[] ret = new PlanningPokerGame[0];
-		PlanningPokerUser[] u = new PlanningPokerUser[0];
+		PlanningPokerUser[] u;
 		Mailer close;
 		ret = data.retrieveAll(new PlanningPokerGame(null, null, null, null, false, false, null, null, null)).toArray(ret);
 		
@@ -139,7 +139,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 				// clear the UserModel
 				PlanningPokerUserModel.getInstance().emptyModel();
 				// add the users to the array
-				data.retrieveAll(PlanningPoker.class).toArray(u);
+				u = data.retrieveAll(new PlanningPokerUser(null, null, null, null)).toArray(new PlanningPokerUser[0]);
 				// add the users to the model
 				PlanningPokerUserModel.getInstance().addUsers(u);
 				close.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
