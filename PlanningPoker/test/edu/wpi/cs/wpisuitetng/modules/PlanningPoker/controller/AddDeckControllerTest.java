@@ -14,7 +14,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.mockobjects.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckModel;
 
 /**
