@@ -51,8 +51,8 @@ public class GetPlanningPokerUserRequestObserver implements RequestObserver {
 	/**
 	
 	 * @param iReq IRequest
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.
-	 *      cs.wpisuitetng.network.models.IRequest) */
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError
+	 * (edu.wpi.cs.wpisuitetng.network.models.IRequest) */
 	@Override
 	public void responseError(IRequest iReq) {
 		fail(iReq, null);
@@ -62,8 +62,8 @@ public class GetPlanningPokerUserRequestObserver implements RequestObserver {
 	
 	 * @param iReq IRequest
 	 * @param exception Exception
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng
-	 *      .network.models.IRequest, java.lang.Exception) */
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail
+	 * (edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception) */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
 		// Do something suitable for an error condition.
