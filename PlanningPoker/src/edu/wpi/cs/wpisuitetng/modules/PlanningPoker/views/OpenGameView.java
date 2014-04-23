@@ -575,6 +575,12 @@ public class OpenGameView extends JPanel {
 		btnEndGame = new JButton("End Game");
 
 		/**
+		 * Disables endGame button if use is not the moderator of the game
+		 */
+		if(!ConfigManager.getConfig().getUserName().equals(game.getModerator())){
+			btnEndGame.setEnabled(false);
+		}
+		/**
 		 * Action listener for end button
 		 */
 		btnEndGame.addActionListener(new ActionListener() {

@@ -160,7 +160,17 @@ public class ClosedGameView extends JPanel {
 							}
 							previousID = currentID;
 						}
+						
+						if(!ConfigManager.getConfig().getUserName().equals(game.getModerator())){
+							submitButton.setEnabled(false);
+							updateButton.setEnabled(false);
+							submitButton.setText("Submit");
+						}
+						else{
+							submitButton.setEnabled(true);
+						}
 					}
+					
 				});
 
 		// Populate the list with each requirement.
@@ -805,6 +815,9 @@ public class ClosedGameView extends JPanel {
 				PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
 				System.out.println("These are the current final estimates:" +Arrays.asList(stuff));
 				enableUpdateButton(stuff);
+				
+				submitButton.setEnabled(false);
+				submitButton.setText("Submitted");
 			}
 		});
 		if (!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {

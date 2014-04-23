@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -28,6 +26,8 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.janeway.gui.container.TabPanel;
+import edu.wpi.cs.wpisuitetng.janeway.interfaces.ContactChecker;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
@@ -336,7 +336,35 @@ public class MainView {
 		initComponents();
 		setUpCards();
 		initLogic();
+		
+		ContactChecker checker = new ContactChecker() {
+			
+			@Override
+			public void verifyContactInfo() {
+				
+				boolean userHasInfo = false;
+				
+				GetPlanningPokerUserController.getInstance().retrieveUser();
+				try {
+					Thread.sleep(150);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				
+				PlanningPokerUser user = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName());
+				
+				userHasInfo = (user != null);
+				
+				if (userHasInfo) {
+					switchToMainOverview();
+				}
+				
+			}
+		};
+		TabPanel.setContactChecker(checker);
 	}
+
 
 	/**
 	 * Initialize the card layout JPanels which will allow switiching between

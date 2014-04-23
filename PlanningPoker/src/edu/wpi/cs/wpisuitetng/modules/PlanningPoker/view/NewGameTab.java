@@ -382,7 +382,7 @@ public class NewGameTab extends JPanel {
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
 
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "Lightning Deck", "No Deck"}));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "No Deck"}));
 		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
 
 		cardDeckPane.add(deckType);
@@ -426,10 +426,7 @@ public class NewGameTab extends JPanel {
 		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
 		                }
 
-		                else if(selection.contentEquals("Lightning Deck")) {
-		                // Replace this with button contents
-		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
-		                }
+		               
 		                else if(selection.contentEquals("No Deck")){
 		                	deckOverview.setText("PlanningPokerUser will be able to enter their own estimation");
 		                }

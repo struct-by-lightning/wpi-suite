@@ -157,8 +157,7 @@ public class CreateGameView extends JPanel {
 
 		// TODO:
 		// There should be some deck selection logic here.
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] { "Default",
-				"Lightning Deck", "No Deck" }));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] { "Default", "No Deck" }));
 
 		deckType.addActionListener(new ActionListener() {
 
@@ -174,9 +173,7 @@ public class CreateGameView extends JPanel {
 					deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
 				}
 
-				else if (selection.contentEquals("Lightning Deck")) {
-					deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
-				} else if (selection.contentEquals("No Deck")) {
+				else if (selection.contentEquals("No Deck")) {
 					deckOverview.setText("PlanningPokerUser will be able to enter their own estimation");
 				}
 			}
@@ -210,8 +207,13 @@ public class CreateGameView extends JPanel {
 					btnCreateGame.setEnabled(false);
 					createGameErrorText.setText("Session needs a name");
 
-				} else {
-
+				} else if (!currentText.trim().equals(currentText))
+				{
+					btnCreateGame.setEnabled(false);
+					createGameErrorText.setText("Session name cannot start or end with whitespace");
+				}
+				else
+				{
 					// Don't enable the "Create Game" button if there are no
 					// requirements
 
@@ -284,6 +286,7 @@ public class CreateGameView extends JPanel {
 		 */
 		btnCreateGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				gameRequirementIDsList.clear();
 				viewHasBeenEdited = false;
 
 				enteredName = sessionName.getText();
@@ -392,13 +395,14 @@ public class CreateGameView extends JPanel {
 				backlogRequirementList.setModel(listModelForThisGame);
 				thisGameRequirementList.setModel(listModelForBacklog);
 
-				btn_removeFromGame.setEnabled(true);
+				btn_removeFromGame.setEnabled(false);
 				btn_removeAll.setEnabled(true);
 				// btnCreateGame.setEnabled(false);
 
 				btn_addAll.setEnabled(false);
 				btn_addToGame.setEnabled(false);
 				btnCreateGame.setEnabled(true);
+				
 
 			}
 		});
@@ -420,17 +424,16 @@ public class CreateGameView extends JPanel {
 					backlogRequirementList.setModel(listModelForThisGame);
 					thisGameRequirementList.setModel(listModelForBacklog);
 
-					btn_removeFromGame.setEnabled(true);
+					//btn_removeFromGame.setEnabled(true);
 					btn_removeAll.setEnabled(true);
 
 					if (listModelForBacklog.size() == 0) {
-						btn_addToGame.setEnabled(false);
 						btn_addAll.setEnabled(false);
 						btnCreateGame.setEnabled(false);
 					}
 
 				}
-
+				btn_addToGame.setEnabled(false);
 				btnCreateGame.setEnabled(true);
 			}
 		});
@@ -464,7 +467,7 @@ public class CreateGameView extends JPanel {
 				if (listModelForThisGame.size() == 0) {
 					btnCreateGame.setEnabled(false);
 				}
-
+				btn_removeFromGame.setEnabled(false);
 				btn_addAll.setEnabled(true);
 
 			}
@@ -892,7 +895,7 @@ public class CreateGameView extends JPanel {
 	private List<Integer> gameRequirementIDsList;
 	private List<PlanningPokerUser> userList;
 	private Mailer mailer;
-	private boolean viewHasBeenEdited;
+	private boolean viewHasBeenEdited = false;
 
 	private DateFormat dateFormat;
 	private Date date;
@@ -963,4 +966,9 @@ public class CreateGameView extends JPanel {
 	private JTextPane txtpnLoggedInAs;
 	private JComboBox<String> deckType;
 	private GridBagConstraints constraints14;
+	
+	public boolean isViewHasBeenEdited() {
+		// TODO Auto-generated method stub
+		return viewHasBeenEdited;
+	}
 }
