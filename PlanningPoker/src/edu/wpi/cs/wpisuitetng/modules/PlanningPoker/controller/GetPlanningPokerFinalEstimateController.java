@@ -71,11 +71,19 @@ public class GetPlanningPokerFinalEstimateController {
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		Object o = request.getResponse();
+		while(true) {
+			o = request.getResponse();
+			try {
+				Thread.sleep(3);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(o != null) {
+				break;
+			}
 		}
 		if(request.getResponse() != null) {
 			//return Integer.MIN_VALUE;

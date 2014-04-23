@@ -70,7 +70,7 @@ public class PlanningPoker implements IJanewayModule {
 		tabs.add(tab);
 	}
 
-	/*
+	/**
 	 * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName()
 	 */
 	@Override
@@ -78,7 +78,7 @@ public class PlanningPoker implements IJanewayModule {
 		return "PlanningPoker";
 	}
 
-	/*
+	/**
 	 * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs()
 	 */
 	@Override

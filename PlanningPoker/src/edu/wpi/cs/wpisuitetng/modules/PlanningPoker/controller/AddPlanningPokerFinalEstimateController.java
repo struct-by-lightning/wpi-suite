@@ -20,6 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 
 /**
+ * This class constructs a vote controller model and adds the planning poker vote to the server.
  * @author friscis
  * @author swconley
  * @author mamora
