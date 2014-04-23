@@ -44,9 +44,6 @@ public class GetUserControllerTest {
 	}
 	
 	
-	@Test
-	public void testActionPerformed() {
-	}
 
 
 	@Test

@@ -342,7 +342,7 @@ public class PlanningPokerGameTest {
 
 	@Test
 	public final void fromJsonTest() {
-		String jsonString = "{\"gameName\":\"2014-05-28 11:08:15\",\"moderator\":\"ajthompson\",\"description\":\"test description\",\"deckType\":\"fibonacci\",\"requirements\":[1,2,3,4,5],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\"}";
+		String jsonString = "{\"gameName\":\"2014-05-28 11:08:15\",\"moderator\":\"ajthompson\",\"description\":\"test description\",\"deckType\":\"fibonacci\",\"requirements\":[1,2,3,4,5],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\",\"isArchived\":\"false\"}";
 
 		PlanningPokerGame result = PlanningPokerGame.fromJSON(jsonString);
 
@@ -369,7 +369,7 @@ public class PlanningPokerGameTest {
 
 	@Test
 	public final void fromJsonNullFieldsTest() {
-		String jsonString = "{\"gameName\":\"null test\",\"moderator\":\"\",\"description\":\"\",\"deckType\":\"\",\"requirements\":[],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\"}";
+		String jsonString = "{\"gameName\":\"null test\",\"moderator\":\"\",\"description\":\"\",\"deckType\":\"\",\"requirements\":[],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\",\"isArchived\":\"false\"}";
 
 		PlanningPokerGame result2 = PlanningPokerGame.fromJSON(jsonString);
 
@@ -430,7 +430,8 @@ public class PlanningPokerGameTest {
 
 	@Test
 	public final void fromJsonArrayTest() {
-		String jsonString = "[{\"gameName\":\"2014-05-28 11:08:15\",\"moderator\":\"ajthompson\",\"description\":\"test description\",\"deckType\":\"fibonacci\",\"requirements\":[1,2,3,4,5],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\"},{\"gameName\":\"null test\",\"moderator\":\"\",\"description\":\"\",\"deckType\":\"\",\"requirements\":[],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\"}]";
+		String jsonString = "[{\"gameName\":\"2014-05-28 11:08:15\",\"moderator\":\"ajthompson\",\"description\":\"test description\",\"deckType\":\"fibonacci\",\"requirements\":[1,2,3,4,5],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\",\"isArchived\":\"false\"},"
+				+ "{\"gameName\":\"null test\",\"moderator\":\"\",\"description\":\"\",\"deckType\":\"\",\"requirements\":[],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\",\"isArchived\":\"false\"}]";
 
 		PlanningPokerGame[] result = PlanningPokerGame
 				.fromJsonArray(jsonString);

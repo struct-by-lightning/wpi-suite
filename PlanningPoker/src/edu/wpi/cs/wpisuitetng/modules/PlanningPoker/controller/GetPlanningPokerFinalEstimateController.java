@@ -43,7 +43,7 @@ public class GetPlanningPokerFinalEstimateController {
 	
 	private GetPlanningPokerFinalEstimateController(boolean isMockNetwork) {
 		if(isMockNetwork) {
-			network = MockNetwork.getInstance();
+			network = new MockNetwork();
 		} else {
 			network = Network.getInstance();
 		}
@@ -72,16 +72,6 @@ public class GetPlanningPokerFinalEstimateController {
 		}
 
 		return instance;
-	}
-
-	/**
-	 * Sends an HTTP request to store a PlanningPokerGame when the
-	 * update button is pressed
-	 * @param e ActionEvent
-	
-	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent) */
-	public void actionPerformed(ActionEvent e) {
-		this.retrievePlanningPokerFinalEstimate();
 	}
 
 	/**
