@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -46,6 +47,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPok
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
@@ -134,6 +136,13 @@ public class OpenGameView extends JPanel {
 
 		// Fill components with data from the planning poker game.
 		initForGame();
+	}
+	/**
+	 * 
+	 * @return A Planning Poker Game of this View
+	 */
+	public PlanningPokerGame getGame() {
+		return game;
 	}
 
 	/**
@@ -463,8 +472,17 @@ public class OpenGameView extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				if (game.isLive() && !game.isFinished()) {
 					AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
+					
+					// List the users first
+					/*List<PlanningPokerUser> userList = PlanningPokerUserModel.getInstance().getUsers();
+					
+					for(PlanningPokerUser user: userList) {
+						System.out.println("User " + user.getID());
+					}
+					System.out.println("Test output");*/
+					// Submit button disable
 					submitButton.setEnabled(false);
-					submitButton.setText("Submitted");
+					submitButton.setText("Submitted!");
 				}
 
 			}
