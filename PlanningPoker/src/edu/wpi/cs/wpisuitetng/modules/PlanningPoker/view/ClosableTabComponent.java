@@ -9,6 +9,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -23,7 +24,6 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 	
 /**
  * This class closes open tabs
@@ -79,12 +79,15 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// close this tab when close button is clicked
 		final int index = tabbedPane.indexOfTabComponent(this);
+
 		if(index > -1) {
-			System.out.println(MainView.getInstance().getTabComponent().getComponent(index));
-			if (MainView.getInstance().getTabComponent().getComponent(index) instanceof CreateGameView) {
-				System.out.println("+++++++++++++++++++++++++++++");
-				if (((CreateGameView)MainView.getInstance().getTabComponent().getComponent(index)).isViewHasBeenEdited()) {
-					System.out.println("------------------------------");
+			System.out.println(index);
+			System.out.println(tabbedPane);
+			System.out.println(tabbedPane.getComponentAt(index));
+			Component tabView = tabbedPane.getComponentAt(index);
+			
+			if (tabView instanceof CreateGameView) {
+				if (((CreateGameView) tabView).isViewHasBeenEdited()) {
 					//default icon, custom title
 					int n = JOptionPane.showConfirmDialog(
 					    this.getParent().getParent(),
@@ -99,9 +102,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 				else {
 					tabbedPane.removeTabAt(index);
 				}
-			}
-			
-			else {
+			} else {
 				tabbedPane.removeTabAt(index);
 			}
 		}

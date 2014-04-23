@@ -22,8 +22,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -72,7 +70,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * @author Austin Rose (atrose) and Lisa and Christian
  */
 public class NewGameView extends JPanel {
-
+	private PlanningPokerGame game;
+	
 	/**
 	 * This method will open up a new tab in the planning poker module with this
 	 * UI for creating a new planning poker game.
@@ -90,6 +89,7 @@ public class NewGameView extends JPanel {
 	 * through the static "open" method.
 	 */
 	private NewGameView(PlanningPokerGame game) {
+		this.game = game;
 		initComponents(game);
 		initComponentLogic(game);
 
@@ -117,22 +117,7 @@ public class NewGameView extends JPanel {
 		}
 		this.btnStartVoting.setEnabled(true);
 		thisGameRequirementList.setModel(listModelForBacklog);
-		thisGameRequirementList.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				btn_addToGame.setEnabled(true);
-				btn_addAll.setEnabled(true);
-				btn_removeFromGame.setEnabled(false);}
-		});
-		
-		backlogRequirementList.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				btn_addToGame.setEnabled(false);
-				btn_removeFromGame.setEnabled(true);
-				btn_removeAll.setEnabled(true);
-			}
-		});
 	}
-
 	/**
 	 * Fills in all dynamic data displayed by components, and adds appropriate
 	 * listeners.
@@ -194,8 +179,7 @@ public class NewGameView extends JPanel {
 
 		// TODO:
 		// There should be some deck selection logic here.
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] { "Default",
-				"Lightning Deck", "No Deck" }));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] { "Default", "No Deck" }));
 
 		deckType.addActionListener(new ActionListener() {
 
@@ -211,9 +195,7 @@ public class NewGameView extends JPanel {
 					deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
 				}
 
-				else if (selection.contentEquals("Lightning Deck")) {
-					deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
-				} else if (selection.contentEquals("No Deck")) {
+				else if (selection.contentEquals("No Deck")) {
 					deckOverview.setText("PlanningPokerUser will be able to enter their own estimation");
 				}
 			}
@@ -373,125 +355,6 @@ public class NewGameView extends JPanel {
 		});
 
 		/**
-		 * Removes all items from box of all requirements and adds them to the
-		 * box of requirements that will be used in the session
-		 */
-		btn_addAll.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				viewHasBeenEdited = true;
-
-				while (listModelForBacklog.getSize() > 0) {
-					System.out.println(listModelForBacklog.elementAt(0));
-					listModelForThisGame.addElement(listModelForBacklog.remove(0));
-				}
-
-				backlogRequirementList.setModel(listModelForThisGame);
-				thisGameRequirementList.setModel(listModelForBacklog);
-
-				btnStartVoting.setEnabled(true);
-				btn_addAll.setEnabled(false);
-				btn_removeAll.setEnabled(true);
-				btn_addToGame.setEnabled(false);
-
-			}
-		});
-
-		/**
-		 * Removes selected item from box of all requirements and adds it to the
-		 * box of requirements that will be used in the session
-		 */
-		btn_addToGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				viewHasBeenEdited = true;
-
-				for (Requirement req : thisGameRequirementList.getSelectedValuesList()) {
-
-					System.out.println("Added " + req + "to selected requirements");
-
-					listModelForThisGame.addElement(req);
-					listModelForBacklog.removeElement(req);
-					backlogRequirementList.setModel(listModelForThisGame);
-					thisGameRequirementList.setModel(listModelForBacklog);
-
-					
-					btn_removeAll.setEnabled(true);
-					btn_addToGame.setEnabled(false);
-
-					if (listModelForBacklog.size() == 0) {
-						btn_addToGame.setEnabled(false);
-						btn_addAll.setEnabled(false);
-						btnStartVoting.setEnabled(false);
-					}
-
-				}
-
-				btnStartVoting.setEnabled(true);
-			}
-		});
-
-		/**
-		 * Removes selected item from box of selected requirements for session
-		 * and adds it back to the total list of requirements
-		 */
-		btn_removeFromGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				viewHasBeenEdited = true;
-
-				for (Requirement req : backlogRequirementList.getSelectedValuesList()) {
-
-					System.out.println("Added " + req + "to selected requirements");
-
-					listModelForBacklog.addElement(req);
-					listModelForThisGame.removeElement(req);
-					thisGameRequirementList.setModel(listModelForBacklog);
-					backlogRequirementList.setModel(listModelForThisGame);
-
-					btn_addToGame.setEnabled(false);
-					btn_addAll.setEnabled(false);
-					btn_removeFromGame.setEnabled(false);
-
-					if (listModelForThisGame.size() == 0) {
-						btn_removeFromGame.setEnabled(false);
-						btn_removeAll.setEnabled(false);
-					}
-				}
-
-				if (listModelForThisGame.size() == 0) {
-					btnStartVoting.setEnabled(false);
-				}
-
-				btn_addAll.setEnabled(true);
-				btn_removeAll.setEnabled(false);
-
-			}
-		});
-
-		/**
-		 * Removes selected item from box of selected requirements for session
-		 * and adds it back to the total list of requirements
-		 */
-		btn_removeAll.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				viewHasBeenEdited = true;
-				btnStartVoting.setEnabled(false);
-
-				while (listModelForThisGame.getSize() > 0) {
-					System.out.println(listModelForThisGame.elementAt(0));
-					listModelForBacklog.addElement(listModelForThisGame.remove(0));
-				}
-
-				backlogRequirementList.setModel(listModelForThisGame);
-				thisGameRequirementList.setModel(listModelForBacklog);
-
-				btn_addToGame.setEnabled(false);
-				btn_addAll.setEnabled(true);
-				btn_removeFromGame.setEnabled(false);
-				btn_removeAll.setEnabled(false);
-
-			}
-		});
-
-		/**
 		 * Reset the input field after the user changed the data.
 		 */
 
@@ -532,9 +395,12 @@ public class NewGameView extends JPanel {
 		 * A dropdown box that contains the default deck to choose.
 		 */
 		deckType = new JComboBox<String>();
+		deckType.setEnabled(false);
 
 		backlogRequirementList = new JList<Requirement>();
+		backlogRequirementList.setEnabled(false);
 		thisGameRequirementList = new JList<Requirement>();
+		thisGameRequirementList.setEnabled(false);
 
 		// List models for the two lists of requirements, and one backup to
 		// reset from
@@ -565,6 +431,7 @@ public class NewGameView extends JPanel {
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		sessionName = new JTextField();
+		sessionName.setEnabled(false);
 		namePane.add(sessionName);
 		sessionName.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
@@ -581,6 +448,7 @@ public class NewGameView extends JPanel {
 		btnStartVoting.setEnabled(false);
 
 		btnResetGame = new JButton("Default settings");
+		btnResetGame.setEnabled(false);
 		createGamePane.add(btnResetGame);
 
 		createGameErrorText = new JLabel("");
@@ -624,6 +492,7 @@ public class NewGameView extends JPanel {
 		endDateText.setMinimumSize(new Dimension(endDateText.getPreferredSize().width, endDateText
 				.getPreferredSize().height));
 		calendarButton_2 = new JButton("Calendar");
+		calendarButton_2.setEnabled(false);
 		endPanel = new JPanel(new GridBagLayout());
 		endPanel.setPreferredSize(new Dimension(350, 220));
 
@@ -635,6 +504,7 @@ public class NewGameView extends JPanel {
 		constraints1.gridwidth = 3;
 		constraints1.anchor = GridBagConstraints.LINE_START;
 		deadline = new JCheckBox("Have a Deadline?");
+		deadline.setEnabled(false);
 		endPanel.add(deadline, constraints1);
 
 		final GridBagConstraints constraints8 = new GridBagConstraints();
@@ -764,6 +634,7 @@ public class NewGameView extends JPanel {
 
 		projectRequirements = new JPanel();
 		projectRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		projectRequirements.setEnabled(false);
 		requirementsSelector.add(projectRequirements);
 		projectRequirements.setLayout(new BorderLayout(0, 0));
 
@@ -822,7 +693,7 @@ public class NewGameView extends JPanel {
 
 		btn_removeAll = new JButton("<<");
 		bottommostButton.add(btn_removeAll);
-		btn_removeAll.setEnabled(true);
+		btn_removeAll.setEnabled(false);
 
 		bottomSpacer = new JPanel();
 		GroupLayout gl_addRemPanel = new GroupLayout(addRemPanel);
@@ -851,6 +722,7 @@ public class NewGameView extends JPanel {
 
 		gameRequirements = new JPanel();
 		gameRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		gameRequirements.setEnabled(false);
 		requirementsSelector.add(gameRequirements);
 		gameRequirements.setLayout(new BorderLayout(0, 0));
 
@@ -873,6 +745,14 @@ public class NewGameView extends JPanel {
 		settingsPanel.add(txtpnLoggedInAs, BorderLayout.SOUTH);
 
 		gameList.add(backlogRequirementList);
+	}
+	
+	/**
+	 * 
+	 * @return A Planning Poker Game of this View
+	 */
+	public PlanningPokerGame getGame() {
+		return game;
 	}
 
 	private final String defaultCalendarText = "Click Calendar to set date";

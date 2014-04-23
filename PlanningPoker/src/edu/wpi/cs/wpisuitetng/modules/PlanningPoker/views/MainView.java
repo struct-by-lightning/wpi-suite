@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -28,6 +26,8 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.janeway.gui.container.TabPanel;
+import edu.wpi.cs.wpisuitetng.janeway.interfaces.ContactChecker;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
@@ -196,7 +196,7 @@ public class MainView {
 	public JComponent getMainComponent() {
 		return this.cardMainAreaComponent;
 	}
-
+	
 	/**
 	 * This function is called with the appropriate argument whenever the user
 	 * double clicks a game in the tree.
@@ -224,6 +224,23 @@ public class MainView {
 		} catch (Exception e) {
 			System.out.println("Exception in gameWasDoubleClicked() from retrieveRequirements()");
 			e.printStackTrace();
+		}
+		
+		// Search for selected game tab that already exists.
+		// If it is, remove that game tab, recreate one so that the requirements are updated.
+		Component[] tabInstances = mainComponent.getComponents();
+		for(Component c: tabInstances) {
+			if (c instanceof OpenGameView || c instanceof NewGameView || c instanceof ClosedGameView) {
+				String gameName = "";
+				if (c instanceof OpenGameView) gameName = ((OpenGameView) c).getGame().getID();
+				if (c instanceof NewGameView) gameName = ((NewGameView) c).getGame().getID();
+				if (c instanceof ClosedGameView) gameName = ((ClosedGameView) c).getGame().getID();
+				
+				if (selectedGame.getID().equals(gameName)) {
+					mainComponent.setSelectedComponent(c);
+					return;
+				}
+			}
 		}
 		
 		// Conditions for a game to be "New"
@@ -322,11 +339,39 @@ public class MainView {
 		initComponents();
 		setUpCards();
 		initLogic();
+		
+		ContactChecker checker = new ContactChecker() {
+			
+			@Override
+			public void verifyContactInfo() {
+				
+				boolean userHasInfo = false;
+				
+				GetPlanningPokerUserController.getInstance().retrieveUser();
+				try {
+					Thread.sleep(150);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				
+				PlanningPokerUser user = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName());
+				
+				userHasInfo = (user != null);
+				
+				if (userHasInfo) {
+					switchToMainOverview();
+				}
+				
+			}
+		};
+		TabPanel.setContactChecker(checker);
 	}
 	
 	public JTabbedPane getTabComponent() {
 		return mainComponent;
 	}
+
 
 	/**
 	 * Initialize the card layout JPanels which will allow switiching between
@@ -1044,7 +1089,7 @@ public class MainView {
 	private javax.swing.JPanel left;
 	private javax.swing.JSeparator leftHorizontalSeparator;
 	private javax.swing.JSeparator leftHorizontalSeparator1;
-	private javax.swing.JTabbedPane mainComponent;
+	private static javax.swing.JTabbedPane mainComponent;
 	private javax.swing.JPanel newGameTabPanel;
 	private javax.swing.JSplitPane overviewTabSplitPane;
 	private javax.swing.JPanel right;

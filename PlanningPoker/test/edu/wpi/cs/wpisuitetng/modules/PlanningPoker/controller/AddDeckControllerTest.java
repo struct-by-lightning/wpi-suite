@@ -32,6 +32,8 @@ public class AddDeckControllerTest {
 		AddDeckController gc = AddDeckController.getInstance();
 		assertEquals(gc.hashCode(), AddDeckController.getInstance().hashCode());
 	}
+	
+
 
 	}
 

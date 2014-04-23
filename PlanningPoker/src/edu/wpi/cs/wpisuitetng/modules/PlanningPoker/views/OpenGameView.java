@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
@@ -46,6 +47,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPok
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
@@ -135,6 +137,13 @@ public class OpenGameView extends JPanel {
 		// Fill components with data from the planning poker game.
 		initForGame();
 	}
+	/**
+	 * 
+	 * @return A Planning Poker Game of this View
+	 */
+	public PlanningPokerGame getGame() {
+		return game;
+	}
 
 	/**
 	 * Populates the allCardsPanel with cards
@@ -198,6 +207,8 @@ public class OpenGameView extends JPanel {
 		textArea.setRows(1);
 
 		this.allCardsPanel.add(textArea, gridBagConstraints);
+		
+		allCardsPanel.setBackground(new Color(232, 232, 232));
 	}
 
 	class MyDocumentListener implements DocumentListener {
@@ -454,8 +465,10 @@ public class OpenGameView extends JPanel {
 		estimateNumberPanel = new javax.swing.JPanel();
 		estimateNumberLabel = new javax.swing.JLabel();
 		cardsScrollPane = new javax.swing.JScrollPane();
+		cardsScrollPane.setBackground(Color.gray);
 		allCardsPanel = new javax.swing.JPanel();
-
+		allCardsPanel.setBackground(Color.gray);
+		
 		submitButton = new javax.swing.JButton();
 
 		submitButton.addActionListener(new ActionListener() {
@@ -463,8 +476,17 @@ public class OpenGameView extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				if (game.isLive() && !game.isFinished()) {
 					AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
+					
+					// List the users first
+					/*List<PlanningPokerUser> userList = PlanningPokerUserModel.getInstance().getUsers();
+					
+					for(PlanningPokerUser user: userList) {
+						System.out.println("User " + user.getID());
+					}
+					System.out.println("Test output");*/
+					// Submit button disable
 					submitButton.setEnabled(false);
-					submitButton.setText("Submitted");
+					submitButton.setText("Submitted!");
 				}
 
 			}
@@ -552,6 +574,12 @@ public class OpenGameView extends JPanel {
 		 */
 		btnEndGame = new JButton("End Game");
 
+		/**
+		 * Disables endGame button if use is not the moderator of the game
+		 */
+		if(!ConfigManager.getConfig().getUserName().equals(game.getModerator())){
+			btnEndGame.setEnabled(false);
+		}
 		/**
 		 * Action listener for end button
 		 */
@@ -677,9 +705,14 @@ public class OpenGameView extends JPanel {
 
 		instructionsLabel.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
 		instructionsLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-		instructionsLabel
+		if(!game.getDeckType().equals("No Deck")) {
+			instructionsLabel
 				.setText("<html>Click on one or more cards below to sum up your estimate&nbsp</html>");
-
+		} else {
+			instructionsLabel
+				.setText("<html>Enter your estimate into the text field below&nbsp</html>");
+		}
+		
 		estimateCenteringPanel.setLayout(new java.awt.GridBagLayout());
 
 		estimateTitlePanel.setBorder(new javax.swing.border.SoftBevelBorder(

@@ -202,8 +202,8 @@ public class NewGameTab extends JPanel {
 		JButton btnResetGame = new JButton("Reset");
 		createGamePane.add(btnResetGame);
 
-		JButton btnExport = new JButton("Export requirements");
-		createGamePane.add(btnExport);
+		//JButton btnExport = new JButton("Export requirements");
+		//createGamePane.add(btnExport);
 
 		final JCheckBox startNow = new JCheckBox("Start Game Now?");
 		createGamePane.add(startNow);
@@ -382,7 +382,7 @@ public class NewGameTab extends JPanel {
 		JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
 
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "Lightning Deck", "No Deck"}));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "No Deck"}));
 		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
 
 		cardDeckPane.add(deckType);
@@ -426,10 +426,7 @@ public class NewGameTab extends JPanel {
 		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
 		                }
 
-		                else if(selection.contentEquals("Lightning Deck")) {
-		                // Replace this with button contents
-		                deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
-		                }
+		               
 		                else if(selection.contentEquals("No Deck")){
 		                	deckOverview.setText("PlanningPokerUser will be able to enter their own estimation");
 		                }
@@ -907,8 +904,8 @@ public class NewGameTab extends JPanel {
 		/**
 		 * Exports the list of selected requirements to a file when btnExport is
 		 * pressed
-		 */
-		btnExport.addActionListener(new ActionListener() {
+		 */ // Removed
+		/*btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Create a file chooser
 				final JFileChooser fc = new JFileChooser();
@@ -922,7 +919,7 @@ public class NewGameTab extends JPanel {
 					System.out.println("Exported all selected requirements\n");
 				}
 			}
-		});
+		});*/
 	}
 
 	/**

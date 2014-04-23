@@ -24,15 +24,15 @@ public class GetPlanningPokerFinalEstimateRequestObserver implements RequestObse
 	private GetPlanningPokerFinalEstimateController controller;
 	
 	/**
-	 * Constructs the observer given a GetPlanningPokerGamesController
-	 * @param controller the controller used to retrieve PlanningPokerGames
+	 * Constructs the observer given a GetPlanningPokerFinalEstimateController
+	 * @param controller the controller used to retrieve PlanningPokerFinalEstimates
 	 */
 	public GetPlanningPokerFinalEstimateRequestObserver(GetPlanningPokerFinalEstimateController controller) {
 		this.controller = controller;
 	}
 
 	/**
-	 * Parse the PlanningPokerGames out of the response body and pass them to the controller
+	 * Parse the PlanningPokerFinalEstimate out of the response body and pass them to the controller
 	 * 
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
@@ -52,7 +52,7 @@ public class GetPlanningPokerFinalEstimateRequestObserver implements RequestObse
 	}
 
 	/**
-	 * Put an error PlanningPokerGame in the PostBoardPanel if the request fails.
+	 * Put an error PlanningPokerFinalEstimate in the PostBoardPanel if the request fails.
 	 * 
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
 	 */
