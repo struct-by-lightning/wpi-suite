@@ -207,7 +207,7 @@ public class CreateGameView extends JPanel {
 					btnCreateGame.setEnabled(false);
 					createGameErrorText.setText("Session needs a name");
 
-				} else if (currentText.trim() != currentText)
+				} else if (!currentText.trim().equals(currentText))
 				{
 					btnCreateGame.setEnabled(false);
 					createGameErrorText.setText("Session name cannot start or end with whitespace");
