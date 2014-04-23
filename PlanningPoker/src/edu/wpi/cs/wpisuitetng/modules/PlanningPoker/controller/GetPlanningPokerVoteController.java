@@ -119,4 +119,30 @@ public class GetPlanningPokerVoteController implements ActionListener {
 			return Integer.MIN_VALUE;
 		}
 	}
+	
+	public int retrievePlanningPokerVoteFromGame(String gameName) {
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokervote" /*+ new PlanningPokerVote(gameName, userName, 0, requirementID).getID()*/, HttpMethod.GET); // GET == read
+		request.addObserver(observer); // add an observer to process the response
+		request.send(); // send the request
+		
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(request.getResponse() != null && request.getResponse().getStatusCode() == 200) {
+			//return Integer.MIN_VALUE;
+			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
+			int ret = 0;
+			for(PlanningPokerVote v : a) {
+				if(v.getID().toLowerCase().contains(gameName.toLowerCase())) {
+						ret++;
+				}
+			}
+			return ret;
+		} else {
+			return Integer.MIN_VALUE;
+		}		
+	}
 }

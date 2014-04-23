@@ -39,6 +39,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.PlanningPoker;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
@@ -473,18 +474,28 @@ public class OpenGameView extends JPanel {
 				if (game.isLive() && !game.isFinished()) {
 					AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
 					
-					// List the users first
-					/*List<PlanningPokerUser> userList = PlanningPokerUserModel.getInstance().getUsers();
-					
-					for(PlanningPokerUser user: userList) {
-						System.out.println("User " + user.getID());
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					System.out.println("Test output");*/
+					
 					// Submit button disable
 					submitButton.setEnabled(false);
-					submitButton.setText("Submitted!");
+					//submitButton.setText("Submitted!");
+					// List the users first
+					List<PlanningPokerUser> userList = PlanningPokerUserModel.getInstance().getUsers();
+					
+					int nUser = userList.size();
+					int nReq = requirements.size();
+					int nVote = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVoteFromGame(game.getID());
+					
+					if (nVote == nUser * nReq) {
+						endGameButtonPressed();
+						submitButton.setText("Enough vote");
+					}
 				}
-
 			}
 		});
 
