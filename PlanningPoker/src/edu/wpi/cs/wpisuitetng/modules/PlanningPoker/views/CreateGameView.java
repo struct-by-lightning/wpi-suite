@@ -888,10 +888,6 @@ public class CreateGameView extends JPanel {
 		gameList.add(backlogRequirementList);
 	}
 
-	public boolean isViewHasBeenEdited() {
-		return viewHasBeenEdited;
-	}
-
 	private final String defaultCalendarText = "Click Calendar to set date";
 
 	private String selectedDeckType;
