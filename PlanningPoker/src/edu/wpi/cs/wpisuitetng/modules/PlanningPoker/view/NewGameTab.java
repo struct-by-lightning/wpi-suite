@@ -202,8 +202,8 @@ public class NewGameTab extends JPanel {
 		JButton btnResetGame = new JButton("Reset");
 		createGamePane.add(btnResetGame);
 
-		JButton btnExport = new JButton("Export requirements");
-		createGamePane.add(btnExport);
+		//JButton btnExport = new JButton("Export requirements");
+		//createGamePane.add(btnExport);
 
 		final JCheckBox startNow = new JCheckBox("Start Game Now?");
 		createGamePane.add(startNow);
@@ -907,8 +907,8 @@ public class NewGameTab extends JPanel {
 		/**
 		 * Exports the list of selected requirements to a file when btnExport is
 		 * pressed
-		 */
-		btnExport.addActionListener(new ActionListener() {
+		 */ // Removed
+		/*btnExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Create a file chooser
 				final JFileChooser fc = new JFileChooser();
@@ -922,7 +922,7 @@ public class NewGameTab extends JPanel {
 					System.out.println("Exported all selected requirements\n");
 				}
 			}
-		});
+		});*/
 	}
 
 	/**

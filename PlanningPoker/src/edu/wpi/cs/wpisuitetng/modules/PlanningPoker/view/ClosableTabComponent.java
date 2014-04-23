@@ -21,7 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-
+	
 /**
  * This class closes open tabs
  * @author bnurbekov
@@ -77,8 +77,17 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 		// close this tab when close button is clicked
 		final int index = tabbedPane.indexOfTabComponent(this);
 		if(index > -1) { 
-
-			tabbedPane.removeTabAt(index);
+			
+			//default icon, custom title
+			int n = JOptionPane.showConfirmDialog(
+			    this.getParent().getParent(),
+			    "Are you sure, you want to close the current tab?",
+			    "Warning",
+			    JOptionPane.YES_NO_OPTION);
+			
+			if (n == JOptionPane.YES_OPTION) {
+				tabbedPane.removeTabAt(index);
+			}
 
 		}
 	}
