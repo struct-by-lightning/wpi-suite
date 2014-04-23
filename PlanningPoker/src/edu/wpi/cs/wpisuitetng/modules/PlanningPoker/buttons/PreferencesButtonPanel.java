@@ -64,7 +64,20 @@ public class PreferencesButtonPanel extends ToolbarGroupView {
 		contentPanel.setOpaque(true);
 
 		this.add(contentPanel);
+		
+
+		/**
+		 *  the action listener for the Preferences Button
+		 */
+		prefButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainView.preferencesButtonClicked();
+			}
+		});
 	}
+	
+
 
 
 
