@@ -39,8 +39,9 @@ public class GetDeckController implements ActionListener {
 	 * @return the singleton instance of the DeckController
 	 */
 	public static GetDeckController getInstance() {
-		if (instance == null)
+		if (instance == null){
 			instance = new GetDeckController();
+		}
 		return instance;
 	}
 
@@ -91,7 +92,8 @@ public class GetDeckController implements ActionListener {
 		DeckModel.getInstance().emptyModel();
 
 		// make sure the response was not null
-		if (decks != null)
+		if (decks != null){
 			DeckModel.getInstance().addDeck(decks);
+		}
 	}
 }
