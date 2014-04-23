@@ -36,7 +36,7 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	private static final Logger logger = Logger.getLogger(PlanningPokerEntityManager.class.getName());
 
 	/**
-	 * Constructor for PlanningPokerVoteEntityManager.
+	 * Constructor for PlanningPokerFinalEstimateEntityManager.
 	 * @param data Data
 	 */
 	public PlanningPokerFinalEstimateEntityManager(Data data) {
@@ -46,13 +46,12 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	/**
 	 * Method makeEntity.
 	 * @param s Session
-	 * @param content String
-	
-	
-	
-	
-	
-	 * @return PlanningPokerVote * @throws BadRequestException * @throws ConflictException * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(Session, String) */
+	 * @param content String	
+	 * @return PlanningPokerFinalEstimate 
+	 * @throws BadRequestException 
+	 * @throws ConflictException 
+	 * @throws WPISuiteException 
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(Session, String) */
 	@Override
 	public PlanningPokerFinalEstimate makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
@@ -71,11 +70,9 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	 * Method getEntity.
 	 * @param s Session
 	 * @param id String
-	
-	
-	
-	
-	 * @return PlanningPokerVote[] * @throws NotFoundException * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String) */
+	 * @return PlanningPokerFinalEstimate[] * @throws NotFoundException 
+	 * @throws WPISuiteException 
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String) */
 	@Override
 	public PlanningPokerFinalEstimate[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
@@ -93,10 +90,8 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	/**
 	 * Method getAll.
 	 * @param s Session
-	
-	
-	
-	 * @return PlanningPokerVote[] * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session) */
+	 * @return PlanningPokerFinalEstimate[] * @throws WPISuiteException 
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session) */
 	@Override
 	public PlanningPokerFinalEstimate[] getAll(Session s) throws WPISuiteException {
 		PlanningPokerFinalEstimate[] ret = new PlanningPokerFinalEstimate[0];
@@ -108,10 +103,8 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	 * Method update.
 	 * @param s Session
 	 * @param content String
-	
-	
-	
-	 * @return PlanningPokerVote * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#update(Session, String) */
+	 * @return PlanningPokerFinalEstimate * @throws WPISuiteException 
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#update(Session, String) */
 	@Override
 	public PlanningPokerFinalEstimate update(Session s, String content)
 			throws WPISuiteException {
@@ -129,8 +122,7 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	/**
 	 * Method save.
 	 * @param s Session
-	 * @param model PlanningPokerVote
-	
+	 * @param model PlanningPokerFinalEstimate
 	 * @throws WPISuiteException */
 	@Override
 	public void save(Session s, PlanningPokerFinalEstimate model)
@@ -152,10 +144,8 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	 * Method deleteEntity.
 	 * @param s Session
 	 * @param id String
-	
-	
-	
-	 * @return boolean * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String) */
+	 * @return boolean * @throws WPISuiteException 
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String) */
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
 		List<Model> retrieval = data.retrieve(ppg, "id", id);
@@ -168,10 +158,8 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	 * Method advancedGet.
 	 * @param s Session
 	 * @param args String[]
-	
-	
-	
-	 * @return String * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedGet(Session, String[]) */
+	 * @return String * @throws WPISuiteException 
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedGet(Session, String[]) */
 	@Override
 	public String advancedGet(Session s, String[] args)
 			throws WPISuiteException {
@@ -182,9 +170,8 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	/**
 	 * Method deleteAll.
 	 * @param s Session
-	
-	
-	 * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteAll(Session) */
+	 * @throws WPISuiteException 
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteAll(Session) */
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
 		logger.log(Level.INFO, "PlanningPokerEntityManager invoking DeleteAll...");
@@ -193,9 +180,6 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 
 	/**
 	 * Method Count.
-	
-	
-	
 	 * @return int * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count() */
 	@Override
 	public int Count() throws WPISuiteException {
@@ -208,10 +192,9 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	 * @param s Session
 	 * @param args String[]
 	 * @param content String
-	
-	
-	
-	 * @return String * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPut(Session, String[], String) */
+	 * @return String 
+	 * @throws WPISuiteException 
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPut(Session, String[], String) */
 	@Override
 	public String advancedPut(Session s, String[] args, String content)
 			throws WPISuiteException {
@@ -224,10 +207,8 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	 * @param s Session
 	 * @param string String
 	 * @param content String
-	
-	
-	
-	 * @return String * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPost(Session, String, String) */
+	 * @return String * @throws WPISuiteException 
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPost(Session, String, String) */
 	@Override
 	public String advancedPost(Session s, String string, String content)
 			throws WPISuiteException {
