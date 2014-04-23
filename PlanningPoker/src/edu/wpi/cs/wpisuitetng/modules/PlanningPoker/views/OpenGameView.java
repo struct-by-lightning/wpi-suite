@@ -198,6 +198,8 @@ public class OpenGameView extends JPanel {
 		textArea.setRows(1);
 
 		this.allCardsPanel.add(textArea, gridBagConstraints);
+		
+		allCardsPanel.setBackground(new Color(232, 232, 232));
 	}
 
 	class MyDocumentListener implements DocumentListener {
@@ -454,8 +456,10 @@ public class OpenGameView extends JPanel {
 		estimateNumberPanel = new javax.swing.JPanel();
 		estimateNumberLabel = new javax.swing.JLabel();
 		cardsScrollPane = new javax.swing.JScrollPane();
+		cardsScrollPane.setBackground(Color.gray);
 		allCardsPanel = new javax.swing.JPanel();
-
+		allCardsPanel.setBackground(Color.gray);
+		
 		submitButton = new javax.swing.JButton();
 
 		submitButton.addActionListener(new ActionListener() {
