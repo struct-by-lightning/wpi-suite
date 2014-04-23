@@ -228,10 +228,14 @@ public class MainView {
 		Component[] tabInstances = mainComponent.getComponents();
 		for(Component c: tabInstances) {
 			if (c instanceof OpenGameView || c instanceof NewGameView || c instanceof ClosedGameView) {
-				String gameName = ((OpenGameView) c).getGame().getID();
+				String gameName = "";
+				if (c instanceof OpenGameView) gameName = ((OpenGameView) c).getGame().getID();
+				if (c instanceof NewGameView) gameName = ((NewGameView) c).getGame().getID();
+				if (c instanceof ClosedGameView) gameName = ((ClosedGameView) c).getGame().getID();
 				
 				if (selectedGame.getID().equals(gameName)) {
-					mainComponent.remove(c);
+					mainComponent.setSelectedComponent(c);
+					return;
 				}
 			}
 		}
