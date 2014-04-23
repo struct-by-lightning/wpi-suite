@@ -82,11 +82,13 @@ public class GetPlanningPokerUserController implements ActionListener {
 	 *            array of Users received from the server
 	 */
 	public void receivedUser(PlanningPokerUser[] Users) {
-		// empty the local model to eliminate duplications
-		PlanningPokerUserModel.getInstance().emptyModel();
 
 		// make sure the response was not null
-		if (Users != null) {
+		if (Users != null && Users.length != 0) {
+
+			// empty the local model to eliminate duplications
+			PlanningPokerUserModel.getInstance().emptyModel();
+			
 			// add the users to the local model
 			PlanningPokerUserModel.getInstance().addUsers(Users);
 		}

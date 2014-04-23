@@ -76,10 +76,12 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 */
 	public PlanningPokerUser getUser(String id) {
 		// iterate through the list of Users until id is found
-		for (int i = 0; i < this.planningPokerUsers.size(); i++) {
-			if (planningPokerUsers.get(i).getID().equals(id));
-				return planningPokerUsers.get(i);
+		for (PlanningPokerUser user : this.planningPokerUsers) {
+			if (user.getUserName().equals(id)) {
+				return user;
+			}
 		}
+		
 		return null;
 	}
 
