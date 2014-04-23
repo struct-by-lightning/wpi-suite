@@ -10,8 +10,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.Test;
-
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.mockobjects.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 
