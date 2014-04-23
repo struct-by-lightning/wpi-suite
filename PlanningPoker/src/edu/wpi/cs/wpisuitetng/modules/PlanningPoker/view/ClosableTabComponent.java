@@ -77,9 +77,8 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 		// close this tab when close button is clicked
 		final int index = tabbedPane.indexOfTabComponent(this);
 		if(index > -1) { 
-
+			tabbedPane.setSelectedIndex(0);
 			tabbedPane.removeTabAt(index);
-
 		}
 	}
 	

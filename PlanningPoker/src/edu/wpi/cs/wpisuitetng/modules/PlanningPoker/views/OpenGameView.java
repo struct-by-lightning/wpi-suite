@@ -483,7 +483,8 @@ public class OpenGameView extends JPanel {
 					
 					// Submit button disable
 					submitButton.setEnabled(false);
-					//submitButton.setText("Submitted!");
+					submitButton.setText("Submitted!");
+					
 					// List the users first
 					List<PlanningPokerUser> userList = PlanningPokerUserModel.getInstance().getUsers();
 					
@@ -493,7 +494,8 @@ public class OpenGameView extends JPanel {
 					
 					if (nVote == nUser * nReq) {
 						endGameButtonPressed();
-						submitButton.setText("Enough vote");
+						submitButton.setText("Voting ended!");
+						System.out.println("nVote = " + nVote + " ; nUser = " + nUser + " nReq = " + nReq);
 					}
 				}
 			}

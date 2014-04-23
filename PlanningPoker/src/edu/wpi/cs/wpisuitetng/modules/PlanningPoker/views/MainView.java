@@ -89,6 +89,9 @@ public class MainView {
 		if (selected != null) {
 			this.mainComponent.remove(selected);
 		}
+		
+		// Go back to the overview tab
+		this.mainComponent.setSelectedIndex(0);
 
 		// TODO: Do these do anything?
 		// MainView.getInstance().gameTree.repaint();

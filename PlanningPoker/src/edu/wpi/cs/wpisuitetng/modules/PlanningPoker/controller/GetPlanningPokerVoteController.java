@@ -136,7 +136,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
 			int ret = 0;
 			for(PlanningPokerVote v : a) {
-				if(v.getID().toLowerCase().contains(gameName.toLowerCase())) {
+				if(v.getID().toLowerCase().contains(gameName.toLowerCase().replace(':', ';'))) {
 						ret++;
 				}
 			}
