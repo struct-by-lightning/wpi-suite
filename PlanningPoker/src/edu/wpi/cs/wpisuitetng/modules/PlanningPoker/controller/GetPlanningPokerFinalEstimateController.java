@@ -17,6 +17,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEst
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.MockNetwork;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -28,6 +29,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  *
  */
 public class GetPlanningPokerFinalEstimateController {
+	private Network network;
 	private GetPlanningPokerFinalEstimateRequestObserver observer;
 	private static GetPlanningPokerFinalEstimateController instance;
 
@@ -35,7 +37,16 @@ public class GetPlanningPokerFinalEstimateController {
 	 * Constructs the controller given a PlanningPokerFinalEstimateModel
 	 */
 	private GetPlanningPokerFinalEstimateController() {
-
+		network = Network.getInstance();
+		observer = new GetPlanningPokerFinalEstimateRequestObserver(this);
+	}
+	
+	private GetPlanningPokerFinalEstimateController(boolean isMockNetwork) {
+		if(isMockNetwork) {
+			network = new MockNetwork();
+		} else {
+			network = Network.getInstance();
+		}
 		observer = new GetPlanningPokerFinalEstimateRequestObserver(this);
 	}
 
@@ -57,17 +68,22 @@ public class GetPlanningPokerFinalEstimateController {
 	 * Sends an HTTP request to store a PlanningPokerFinalEstimate when the
 	 * update button is pressed
 	 * @param e ActionEvent
-	
-	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent) */
-	public void actionPerformed(ActionEvent e) {
-		this.retrievePlanningPokerFinalEstimate();
+	*/
+	public static GetPlanningPokerFinalEstimateController getInstance(boolean isMockNetwork)
+	{
+		if(instance == null)
+		{
+			instance = new GetPlanningPokerFinalEstimateController(isMockNetwork);
+		}
+
+		return instance;
 	}
 
 	/**
 	 * Sends an HTTP request to retrieve all PlanningPokerFinalEstimates
 	 */
 	public PlanningPokerFinalEstimate[] retrievePlanningPokerFinalEstimate() {
-		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokerfinalestimate", HttpMethod.GET); // GET equals read
+		final Request request = network.makeRequest("planningpoker/planningpokerfinalestimate", HttpMethod.GET); // GET == read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 		
