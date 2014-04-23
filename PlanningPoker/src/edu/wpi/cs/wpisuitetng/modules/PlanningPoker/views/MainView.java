@@ -193,7 +193,7 @@ public class MainView {
 	public JComponent getMainComponent() {
 		return this.cardMainAreaComponent;
 	}
-
+	
 	/**
 	 * This function is called with the appropriate argument whenever the user
 	 * double clicks a game in the tree.
@@ -221,6 +221,19 @@ public class MainView {
 		} catch (Exception e) {
 			System.out.println("Exception in gameWasDoubleClicked() from retrieveRequirements()");
 			e.printStackTrace();
+		}
+		
+		// Search for selected game tab that already exists.
+		// If it is, remove that game tab, recreate one so that the requirements are updated.
+		Component[] tabInstances = mainComponent.getComponents();
+		for(Component c: tabInstances) {
+			if (c instanceof OpenGameView || c instanceof NewGameView || c instanceof ClosedGameView) {
+				String gameName = ((OpenGameView) c).getGame().getID();
+				
+				if (selectedGame.getID().equals(gameName)) {
+					mainComponent.remove(c);
+				}
+			}
 		}
 		
 		// Conditions for a game to be "New"
@@ -1037,7 +1050,7 @@ public class MainView {
 	private javax.swing.JPanel left;
 	private javax.swing.JSeparator leftHorizontalSeparator;
 	private javax.swing.JSeparator leftHorizontalSeparator1;
-	private javax.swing.JTabbedPane mainComponent;
+	private static javax.swing.JTabbedPane mainComponent;
 	private javax.swing.JPanel newGameTabPanel;
 	private javax.swing.JSplitPane overviewTabSplitPane;
 	private javax.swing.JPanel right;
