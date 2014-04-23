@@ -392,13 +392,14 @@ public class CreateGameView extends JPanel {
 				backlogRequirementList.setModel(listModelForThisGame);
 				thisGameRequirementList.setModel(listModelForBacklog);
 
-				btn_removeFromGame.setEnabled(true);
+				btn_removeFromGame.setEnabled(false);
 				btn_removeAll.setEnabled(true);
 				// btnCreateGame.setEnabled(false);
 
 				btn_addAll.setEnabled(false);
 				btn_addToGame.setEnabled(false);
 				btnCreateGame.setEnabled(true);
+				
 
 			}
 		});
@@ -420,18 +421,17 @@ public class CreateGameView extends JPanel {
 					backlogRequirementList.setModel(listModelForThisGame);
 					thisGameRequirementList.setModel(listModelForBacklog);
 
-					btn_removeFromGame.setEnabled(true);
+					//btn_removeFromGame.setEnabled(true);
 					btn_removeAll.setEnabled(true);
 
 					if (listModelForBacklog.size() == 0) {
-						btn_addToGame.setEnabled(false);
 						btn_addAll.setEnabled(false);
 						btnCreateGame.setEnabled(false);
 					}
 
 				}
-
-				btnCreateGame.setEnabled(true);
+				btn_addToGame.setEnabled(false);
+				//btnCreateGame.setEnabled(true);
 			}
 		});
 
@@ -464,7 +464,7 @@ public class CreateGameView extends JPanel {
 				if (listModelForThisGame.size() == 0) {
 					btnCreateGame.setEnabled(false);
 				}
-
+				btn_removeFromGame.setEnabled(false);
 				btn_addAll.setEnabled(true);
 
 			}
