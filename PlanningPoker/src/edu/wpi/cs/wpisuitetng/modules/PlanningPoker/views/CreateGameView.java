@@ -116,7 +116,7 @@ public class CreateGameView extends JPanel {
 		// The "have a deadline" checkbox listener
 		deadline.addActionListener(new ActionListener() {
 			boolean checked = false;
-
+			
 			public void actionPerformed(ActionEvent ae) {
 				viewHasBeenEdited = true;
 				if (!checked) {
@@ -531,7 +531,7 @@ public class CreateGameView extends JPanel {
 	}
 
 	private void initComponents() {
-
+		
 		/**
 		 * A dropdown box that contains the default deck to choose.
 		 */
@@ -883,6 +883,10 @@ public class CreateGameView extends JPanel {
 		settingsPanel.add(txtpnLoggedInAs, BorderLayout.SOUTH);
 
 		gameList.add(backlogRequirementList);
+	}
+
+	public boolean isViewHasBeenEdited() {
+		return viewHasBeenEdited;
 	}
 
 	private final String defaultCalendarText = "Click Calendar to set date";

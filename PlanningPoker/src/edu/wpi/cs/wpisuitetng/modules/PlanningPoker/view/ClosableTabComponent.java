@@ -21,6 +21,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 	
 /**
  * This class closes open tabs
@@ -76,19 +79,31 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// close this tab when close button is clicked
 		final int index = tabbedPane.indexOfTabComponent(this);
-		if(index > -1) { 
+		if(index > -1) {
+			System.out.println(MainView.getInstance().getTabComponent().getComponent(index));
+			if (MainView.getInstance().getTabComponent().getComponent(index) instanceof CreateGameView) {
+				System.out.println("+++++++++++++++++++++++++++++");
+				if (((CreateGameView)MainView.getInstance().getTabComponent().getComponent(index)).isViewHasBeenEdited()) {
+					System.out.println("------------------------------");
+					//default icon, custom title
+					int n = JOptionPane.showConfirmDialog(
+					    this.getParent().getParent(),
+					    "Are you sure, you want to close the current tab?",
+					    "Warning",
+					    JOptionPane.YES_NO_OPTION);
+					
+					if (n == JOptionPane.YES_OPTION) {
+						tabbedPane.removeTabAt(index);
+					}
+				}
+				else {
+					tabbedPane.removeTabAt(index);
+				}
+			}
 			
-			//default icon, custom title
-			int n = JOptionPane.showConfirmDialog(
-			    this.getParent().getParent(),
-			    "Are you sure, you want to close the current tab?",
-			    "Warning",
-			    JOptionPane.YES_NO_OPTION);
-			
-			if (n == JOptionPane.YES_OPTION) {
+			else {
 				tabbedPane.removeTabAt(index);
 			}
-
 		}
 	}
 	
