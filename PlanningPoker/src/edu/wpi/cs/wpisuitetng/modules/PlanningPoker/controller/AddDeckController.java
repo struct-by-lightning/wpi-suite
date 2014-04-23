@@ -27,17 +27,10 @@ public class AddDeckController {
 	private static AddDeckController instance;
 	/** The observer for this controller */
 	private AddDeckRequestObserver observer;
-	private Network network;
 
 
 
-	/**
-	 * only use setter for tests
-	 * @param n1 the n1 to set
-	 */
-	public void setN1(Network network) {
-		this.network = network;
-	}
+
 
 	/**
 	 * Returns the singleton instance of the AddDeckController, or creates it if
@@ -53,21 +46,13 @@ public class AddDeckController {
 		return instance;
 	}
 
+
 	/** Construct an AddDeckController */
 	private AddDeckController() {
 		observer = new AddDeckRequestObserver(this);
-		network = Network.getInstance();
+	
 	}
-	/**
-	 * adds constructor 
-	 * @param isMock checks to see if it is Mock
-	 */
-	 public AddDeckController(boolean isMock){
-		 if (isMock){
-			 network = MockNetwork.getInstance();
-		 }
-		 
-	 }
+
 
 	/**
 	 * Method addDeck.
@@ -76,8 +61,10 @@ public class AddDeckController {
 	 *            Deck
 	 */
 	public void addDeck(Deck newDeck) {
+
 		final Request request = Network.getInstance().makeRequest(
 				"planningpoker/deck", HttpMethod.PUT); // PUT equals create
+
 
 		request.setBody(newDeck.toJSON()); // put the new Deck into the request
 		request.addObserver(observer);
