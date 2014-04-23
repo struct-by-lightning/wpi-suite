@@ -140,7 +140,7 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	 * @param toSet String
 	 */
 	public void setUserName(String toSet) {
-		userName = toSet.toLowerCase();
+		userName = toSet;
 	}
 	/**
 	 * This method makes a JSON string into a votemodel.
@@ -154,13 +154,13 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 		// skip the boilerplate
 		scTemp.useDelimiter("\\\"?[:,{}]\\\"?");
 		scTemp.next();
-		// get the userName
-		String retUserName = scTemp.next();
 		// get the gameName
 		String retGameName = scTemp.next();
 		// check if the gameName is null
 		if(retGameName.equals("null"))
 			retGameName = null;
+		// get the userName
+		String retUserName = scTemp.next();
 		
 		// get the requirement ID
 		Integer retRequirementID = Integer.parseInt(scTemp.next());
