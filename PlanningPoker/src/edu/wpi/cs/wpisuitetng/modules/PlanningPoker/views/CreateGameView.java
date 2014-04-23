@@ -157,8 +157,7 @@ public class CreateGameView extends JPanel {
 
 		// TODO:
 		// There should be some deck selection logic here.
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] { "Default",
-				"Lightning Deck", "No Deck" }));
+		deckType.setModel(new DefaultComboBoxModel<String>(new String[] { "Default", "No Deck" }));
 
 		deckType.addActionListener(new ActionListener() {
 
@@ -174,9 +173,7 @@ public class CreateGameView extends JPanel {
 					deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
 				}
 
-				else if (selection.contentEquals("Lightning Deck")) {
-					deckOverview.setText("0, 0.5, 1, 2, 3, 5, 8, 13, 20 40, 100");
-				} else if (selection.contentEquals("No Deck")) {
+				else if (selection.contentEquals("No Deck")) {
 					deckOverview.setText("PlanningPokerUser will be able to enter their own estimation");
 				}
 			}
