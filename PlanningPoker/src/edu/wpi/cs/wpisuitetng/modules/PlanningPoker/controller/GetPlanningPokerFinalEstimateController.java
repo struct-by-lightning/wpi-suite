@@ -32,7 +32,7 @@ public class GetPlanningPokerFinalEstimateController {
 	private static GetPlanningPokerFinalEstimateController instance;
 
 	/**
-	 * Constructs the controller given a PlanningPokerVoteModel
+	 * Constructs the controller given a PlanningPokerFinalEstimateModel
 	 */
 	private GetPlanningPokerFinalEstimateController() {
 
@@ -41,7 +41,7 @@ public class GetPlanningPokerFinalEstimateController {
 
 	/**
 	
-	 * @return the instance of the GetPlanningPokerGameController or creates one if it does not
+	 * @return the instance of the GetPlanningPokerFinalEstimateController or creates one if it does not
 	 * exist. */
 	public static GetPlanningPokerFinalEstimateController getInstance()
 	{
@@ -54,7 +54,7 @@ public class GetPlanningPokerFinalEstimateController {
 	}
 
 	/**
-	 * Sends an HTTP request to store a PlanningPokerGame when the
+	 * Sends an HTTP request to store a PlanningPokerFinalEstimate when the
 	 * update button is pressed
 	 * @param e ActionEvent
 	
@@ -64,7 +64,7 @@ public class GetPlanningPokerFinalEstimateController {
 	}
 
 	/**
-	 * Sends an HTTP request to retrieve all PlanningPokerGames
+	 * Sends an HTTP request to retrieve all PlanningPokerFinalEstimates
 	 */
 	public PlanningPokerFinalEstimate[] retrievePlanningPokerFinalEstimate() {
 		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokerfinalestimate", HttpMethod.GET); // GET == read
@@ -73,9 +73,9 @@ public class GetPlanningPokerFinalEstimateController {
 		
 
 		Object o = request.getResponse();
-		while(true) {
+		while(true) { //enter a loop until you get a response
 			o = request.getResponse();
-			try {
+			try { //wait a small time between updates
 				Thread.sleep(3);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -88,7 +88,7 @@ public class GetPlanningPokerFinalEstimateController {
 		if(request.getResponse() != null) {
 			//return Integer.MIN_VALUE;
 			System.out.println("response exists");
-			PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate.fromJsonArray(request.getResponse().getBody());
+			PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate.fromJsonArray(request.getResponse().getBody()); //return the response
 			return a;
 		} else {
 			System.out.println("response is null");
@@ -96,14 +96,14 @@ public class GetPlanningPokerFinalEstimateController {
 		}
 	}
 	/**
-	 * Retrieves the planning poker vote from the server
-	 * @param gameName the gameName of the vote to retrieve
-	 * @param userName the userName of the vote to retrieve
+	 * Retrieves the planning poker final estimates from the server
+	 * @param gameName the gameName of the final estimate to retrieve
+	 * @param userName the userName of the final estimate to retrieve
 	 * @param requirementID the requirementID of the vote to retrieve
 	 * @return the vote if it exists, Integer.MIN_VALUE otherwise
 	 */
 	public int retrievePlanningPokerFinalEstimate(String gameName, int requirementID) {
-		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokerfinalestimate" /*+ new PlanningPokerVote(gameName, userName, 0, requirementID).getID()*/, HttpMethod.GET); // GET == read
+		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokerfinalestimate", HttpMethod.GET); // GET == read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 		
