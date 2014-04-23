@@ -47,8 +47,9 @@ public class AddDeckController {
 	 * @return the singleton instance of the addDeckController
 	 */
 	public static AddDeckController getInstance() {
-		if (instance == null)
+		if (instance == null){
 			instance = new AddDeckController();
+		}
 		return instance;
 	}
 
@@ -75,9 +76,11 @@ public class AddDeckController {
 	 *            Deck
 	 */
 	public void addDeck(Deck newDeck) {
+
 		
 		final Request request = network.makeRequest("planningpoker/deck",
 				HttpMethod.PUT); // PUT == create
+
 		request.setBody(newDeck.toJSON()); // put the new Deck into the request
 		request.addObserver(observer);
 		request.send();

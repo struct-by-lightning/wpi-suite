@@ -45,18 +45,18 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 	public PlanningPokerButtonsPanel() {
 		super("");
 
-		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredWidth(360);
 
-		this.newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-		this.newGameButton.setPreferredSize(new Dimension(150, 50));
-		this.refreshButton.setHorizontalAlignment(SwingConstants.CENTER);
+		newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+		newGameButton.setPreferredSize(new Dimension(150, 50));
+		refreshButton.setHorizontalAlignment(SwingConstants.CENTER);
 
 		try {
 			final Image img = ImageIO.read(getClass().getResource("new_req.png"));
 			final Image imgRef = ImageIO.read(getClass().getResource("refresh.png"));
-			this.newGameButton.setIcon(new ImageIcon(img));
-			this.refreshButton.setIcon(new ImageIcon(imgRef));
+			newGameButton.setIcon(new ImageIcon(img));
+			refreshButton.setIcon(new ImageIcon(imgRef));
 		} catch (IOException ex) {
 			System.out.print(ex.getMessage());
 

@@ -35,8 +35,9 @@ public class UpdatePlanningPokerUserController {
 	 * @return the instance of UpdatePlanningPokerUserController
 	 */
 	public static UpdatePlanningPokerUserController getInstance() {
-		if (instance == null)
+		if (instance == null){
 			instance = new UpdatePlanningPokerUserController();
+		}
 		return instance;
 	}
 

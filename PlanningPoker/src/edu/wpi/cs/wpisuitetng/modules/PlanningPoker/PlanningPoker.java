@@ -33,19 +33,19 @@ public class PlanningPoker implements IJanewayModule {
 	 * The list of tabs to create for the planning poker module. There is only
 	 * one tab to create for the planning poker module.
 	 */
-	private List<JanewayTabModel> tabs;
+	private final List<JanewayTabModel> tabs;
 
 	/**
 	 * The gui component to display in the toolbar area for the planning poker
 	 * module.
 	 */
-	private JComponent toolbarComponent;
+	private final JComponent toolbarComponent;
 
 	/**
 	 * The gui component to display in the main area for the planning poker
 	 * module.
 	 */
-	private JComponent mainComponent;
+	private final JComponent mainComponent;
 
 	/**
 	 * Constructor adds a planning poker tab with the necessary gui components.
@@ -56,15 +56,15 @@ public class PlanningPoker implements IJanewayModule {
 		tabs = new ArrayList<JanewayTabModel>();
 
 		// Initialize the gui component for the toolbar area
-		this.toolbarComponent = MainView.getInstance().getToolbarComponent();
+		toolbarComponent = MainView.getInstance().getToolbarComponent();
 		
 		// Initialize the gui component for the main area
-		this.mainComponent = MainView.getInstance().getMainComponent();
+		mainComponent = MainView.getInstance().getMainComponent();
 
 		// Create a tab model that contains the toolbar component and the main
 		// component
-		JanewayTabModel tab = new JanewayTabModel(this.getName(), new ImageIcon(),
-				this.toolbarComponent, this.mainComponent);
+		final JanewayTabModel tab = new JanewayTabModel(this.getName(), new ImageIcon(),
+				toolbarComponent, mainComponent);
 
 		// Add the tab to the list of tabs owned by this module
 		tabs.add(tab);
