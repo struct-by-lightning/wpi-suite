@@ -88,6 +88,13 @@ public class ClosedGameView extends JPanel {
 		// Initially select the first item in the tree.
 		this.requirementList.setSelectedIndex(0);
 	}
+	/**
+	 * 
+	 * @return A Planning Poker Game of this View
+	 */
+	public PlanningPokerGame getGame() {
+		return game;
+	}
 
 	/**
 	 * Update components based on the given game.
