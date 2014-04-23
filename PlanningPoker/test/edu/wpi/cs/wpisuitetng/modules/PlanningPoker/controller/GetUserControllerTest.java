@@ -43,7 +43,10 @@ public class GetUserControllerTest {
 		assertEquals(guc.hashCode(), GetPlanningPokerUserController.getInstance().hashCode());
 	}
 	
-
+	
+	@Test
+	public void testActionPerformed() {
+	}
 
 
 	@Test
