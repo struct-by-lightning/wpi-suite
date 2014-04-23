@@ -88,6 +88,13 @@ public class ClosedGameView extends JPanel {
 		// Initially select the first item in the tree.
 		this.requirementList.setSelectedIndex(0);
 	}
+	/**
+	 * 
+	 * @return A Planning Poker Game of this View
+	 */
+	public PlanningPokerGame getGame() {
+		return game;
+	}
 
 	/**
 	 * Update components based on the given game.
@@ -590,12 +597,12 @@ public class ClosedGameView extends JPanel {
 						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-		mean.setFont(new java.awt.Font("Lucida Console", 0, 28));
-		median.setFont(new java.awt.Font("Lucida Console", 0, 28));
-		mode.setFont(new java.awt.Font("Lucida Console", 0, 28));
-		std.setFont(new java.awt.Font("Lucida Console", 0, 28));
-		max.setFont(new java.awt.Font("Lucida Console", 0, 28));
-		min.setFont(new java.awt.Font("Lucida Console", 0, 28));
+		mean.setFont(new java.awt.Font("Tahoma", 0, 28));
+		median.setFont(new java.awt.Font("Tahoma", 0, 28));
+		mode.setFont(new java.awt.Font("Tahoma", 0, 28));
+		std.setFont(new java.awt.Font("Tahoma", 0, 28));
+		max.setFont(new java.awt.Font("Tahoma", 0, 28));
+		min.setFont(new java.awt.Font("Tahoma", 0, 28));
 		stats.add(mean);
 		stats.add(std);
 		stats.add(median);

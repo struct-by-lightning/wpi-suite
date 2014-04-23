@@ -72,7 +72,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * @author Austin Rose (atrose) and Lisa and Christian
  */
 public class NewGameView extends JPanel {
-
+	private PlanningPokerGame game;
+	
 	/**
 	 * This method will open up a new tab in the planning poker module with this
 	 * UI for creating a new planning poker game.
@@ -90,6 +91,7 @@ public class NewGameView extends JPanel {
 	 * through the static "open" method.
 	 */
 	private NewGameView(PlanningPokerGame game) {
+		this.game = game;
 		initComponents(game);
 		initComponentLogic(game);
 
@@ -132,7 +134,6 @@ public class NewGameView extends JPanel {
 			}
 		});
 	}
-
 	/**
 	 * Fills in all dynamic data displayed by components, and adds appropriate
 	 * listeners.
@@ -873,6 +874,14 @@ public class NewGameView extends JPanel {
 		settingsPanel.add(txtpnLoggedInAs, BorderLayout.SOUTH);
 
 		gameList.add(backlogRequirementList);
+	}
+	
+	/**
+	 * 
+	 * @return A Planning Poker Game of this View
+	 */
+	public PlanningPokerGame getGame() {
+		return game;
 	}
 
 	private final String defaultCalendarText = "Click Calendar to set date";
