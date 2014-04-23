@@ -21,6 +21,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckDeserializer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckSerializer;
 
@@ -30,7 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckSerializer;
  * @author Alec Thompson - ajthompson
  * @version Apr 10, 2014
  */
-public class Deck extends AbstractModel {
+public class Deck extends RegularAbstractModel<Deck> {
 	/** The name of the deck */
 	private String deckName;
 	/** The numbers for the cards in the decks */
@@ -203,30 +204,30 @@ public class Deck extends AbstractModel {
 		return decks.toArray(new Deck[0]);
 	}
 
-	/*
-	 * @see edu.wpi.cs.wpisuitetng.modules.Model#save()
+	/* (non-Javadoc)
+	 * @see edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel#getID()
 	 */
 	@Override
-	public void save() {
+	public String getID() {
 		// TODO Auto-generated method stub
-
+		return deckName;
 	}
 
-	/*
-	 * @see edu.wpi.cs.wpisuitetng.modules.Model#delete()
+	/* (non-Javadoc)
+	 * @see edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel#setID(java.lang.String)
 	 */
 	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-
+	public void setID(String toSet) {
+		deckName = toSet;
+		
 	}
 
-	/*
-	 * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(java.lang.Object)
+	/* (non-Javadoc)
+	 * @see edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel#getPrimaryKey()
 	 */
 	@Override
-	public Boolean identify(Object o) {
+	public String getPrimaryKey() {
 		// TODO Auto-generated method stub
-		return null;
+		return "deckName";
 	}
 }
