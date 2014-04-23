@@ -145,18 +145,18 @@ public class ClosedGameView extends JPanel {
 									std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
 								}
 								else {
-									std.setText(stdDef+"?");
+									std.setText(stdDef+"N/A");
 								}
 								max.setText(maxDef+df.format(Statistics.max(voteNums)));
 								min.setText(minDef+df.format(Statistics.min(voteNums)));
 							}
 							else {
-								mean.setText(meanDef+"?");
-								median.setText(medianDef+"?");
-								mode.setText(modeDef+"?");
-								std.setText(stdDef+"?");
-								max.setText(maxDef+"?");
-								min.setText(minDef+"?");
+								mean.setText(meanDef+"N/A");
+								median.setText(medianDef+"N/A");
+								mode.setText(modeDef+"N/A");
+								std.setText(stdDef+"N/A");
+								max.setText(maxDef+"N/A");
+								min.setText(minDef+"N/A");
 							}
 							previousID = currentID;
 						}
