@@ -51,6 +51,7 @@
        <target name="core-jar" depends="compile-base">
               <jar destfile="${core-jar-dest}">
                      <fileset dir="build"/>
+              		 <zipgroupfileset dir="lib" includes="*.jar"></zipgroupfileset>
               </jar>
        </target>
  
