@@ -84,6 +84,9 @@ public class MainView {
 		// Should the list of games ever really update other than when the tree
 		// is refreshed?
 		this.refreshGameTree();
+		
+		
+		
 
 		Component selected = this.mainComponent.getSelectedComponent();
 		if (selected != null) {
@@ -319,6 +322,10 @@ public class MainView {
 		initComponents();
 		setUpCards();
 		initLogic();
+	}
+	
+	public JTabbedPane getTabComponent() {
+		return mainComponent;
 	}
 
 	/**
