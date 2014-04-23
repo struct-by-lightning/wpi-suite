@@ -15,6 +15,7 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
  * Creates a toolbar panel hosting planning poker buttons.
  */
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons.PlanningPokerButtonsPanel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons.PreferencesButtonPanel;
 
 /**
  * @author Miguel
@@ -24,6 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons.PlanningPokerButtons
 public class ToolbarPanel extends DefaultToolbarView {
 
 	PlanningPokerButtonsPanel btnsPanel = new PlanningPokerButtonsPanel();
+	PreferencesButtonPanel prefPanel = new PreferencesButtonPanel();
 
 	public ToolbarPanel() {
 

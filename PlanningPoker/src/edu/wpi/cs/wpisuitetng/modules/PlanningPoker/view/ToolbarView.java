@@ -12,6 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons.PlanningPokerButtonsPanel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons.PreferencesButtonPanel;
 
 /**
  * @author Miguel
@@ -20,7 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons.PlanningPokerButtons
 public class ToolbarView extends DefaultToolbarView {
 
 	PlanningPokerButtonsPanel buttonsPanel = new PlanningPokerButtonsPanel();
-
+	PreferencesButtonPanel preferenesPanel = new PreferencesButtonPanel();
 	/**
 	 * Constructor for ToolbarView.
 	 * @param visible boolean
@@ -28,6 +29,7 @@ public class ToolbarView extends DefaultToolbarView {
 	public ToolbarView(boolean visible) {
 
 		this.addGroup(buttonsPanel);
+		this.addGroup(preferenesPanel);
 
 	}
 }
