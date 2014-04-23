@@ -161,8 +161,14 @@ public class ClosedGameView extends JPanel {
 							previousID = currentID;
 						}
 						
-						submitButton.setEnabled(true);
-						submitButton.setText("Submit");
+						if(!ConfigManager.getConfig().getUserName().equals(game.getModerator())){
+							submitButton.setEnabled(false);
+							updateButton.setEnabled(false);
+							submitButton.setText("Submit");
+						}
+						else{
+							submitButton.setEnabled(true);
+						}
 					}
 					
 				});
