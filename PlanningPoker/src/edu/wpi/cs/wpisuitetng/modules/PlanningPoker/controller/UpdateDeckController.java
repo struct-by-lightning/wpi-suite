@@ -35,8 +35,9 @@ public class UpdateDeckController {
 	
 	 * @return the singleton instance of the UpdateDeckController */
 	public static UpdateDeckController getInstance() {
-		if (instance == null)
+		if (instance == null){
 			instance = new UpdateDeckController();
+		}
 		return instance;
 	}
 
