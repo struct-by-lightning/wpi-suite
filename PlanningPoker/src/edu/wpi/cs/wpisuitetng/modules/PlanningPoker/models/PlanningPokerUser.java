@@ -37,15 +37,20 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 	private String sms;
 	
 	private String instantMessage;
+	
+	private boolean sendSms, sendEmail, sendAim;
 
 	
 	
-	public PlanningPokerUser(String email, String userName, String sms, String instantMessage) {
+	public PlanningPokerUser(String email, String userName, String sms, String instantMessage, boolean sendSms, boolean sendEmail, boolean sendAim) {
 		super();
 		this.email = email;
 		this.userName = userName;
 		this.sms = sms;
 		this.instantMessage = instantMessage;
+		this.sendEmail = sendEmail;
+		this.sendSms = sendSms;
+		this.sendAim = sendAim;
 	}
 
 	public String toJSON(){
@@ -136,6 +141,48 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 	 */
 	public void setInstantMessage(String instantMessage) {
 		this.instantMessage = instantMessage;
+	}
+
+	/**
+	 * @return the sendSms
+	 */
+	public boolean isSendSms() {
+		return sendSms;
+	}
+
+	/**
+	 * @param sendSms the sendSms to set
+	 */
+	public void setSendSms(boolean sendSms) {
+		this.sendSms = sendSms;
+	}
+
+	/**
+	 * @return the sendEmail
+	 */
+	public boolean isSendEmail() {
+		return sendEmail;
+	}
+
+	/**
+	 * @param sendEmail the sendEmail to set
+	 */
+	public void setSendEmail(boolean sendEmail) {
+		this.sendEmail = sendEmail;
+	}
+
+	/**
+	 * @return the sendAim
+	 */
+	public boolean isSendAim() {
+		return sendAim;
+	}
+
+	/**
+	 * @param sendAim the sendAim to set
+	 */
+	public void setSendAim(boolean sendAim) {
+		this.sendAim = sendAim;
 	}
 
 	/**
