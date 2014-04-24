@@ -412,7 +412,7 @@ public class NewGameView extends JPanel {
 
 		userList = new ArrayList<PlanningPokerUser>();
 
-		mailer = new Mailer();
+		mailer = new Mailer(game);
 
 		this.setBorder(new LineBorder(Color.DARK_GRAY));
 		this.setLayout(new BorderLayout(0, 0));

@@ -97,8 +97,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 			for(PlanningPokerGame game : rv) {
 				if(!game.isFinished() && new Date().after(game.getEndDate().getTime())) {
 					System.out.println("Game \"" + game.getGameName() + "\" has passed its deadline; closing.");
-					close = new Mailer("The game " + game.getGameName() + " has closed!",
-							"You can now view the results of the estimation.");
+					close = new Mailer(game);
 					// clear the UserModel
 					PlanningPokerUserModel.getInstance().emptyModel();
 					// add the users to the array
@@ -134,8 +133,10 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 		for(PlanningPokerGame game : ret) {
 			if(!game.isFinished() && new Date().after(game.getEndDate().getTime())) {
 				System.out.println("Game \"" + game.getGameName() + "\" has passed its deadline; closing.");
-				close = new Mailer("The game " + game.getGameName() + " has closed!",
-						"You can now view the results of the estimation.");
+				game.setFinished(true);
+				game.setLive(false);
+				
+				close = new Mailer(game);
 				// clear the UserModel
 				PlanningPokerUserModel.getInstance().emptyModel();
 				// add the users to the array
@@ -144,8 +145,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 				PlanningPokerUserModel.getInstance().addUsers(u);
 				close.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
 				close.send();
-				game.setFinished(true);
-				game.setLive(false);
+
 				this.save(s, game);
 			}
 		}

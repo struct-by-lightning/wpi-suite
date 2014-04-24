@@ -9,6 +9,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -22,7 +23,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * A Mailer manages the sending of emails to email addresses added to the
@@ -165,6 +168,170 @@ public class Mailer {
 			System.out.println("Message creation failed");
 			mex.printStackTrace();
 		}
+	}
+
+	/**
+	 * Creates an email notification with the name of the game, the requirements
+	 * being estimated, and the deadline if the game has one from a given
+	 * PlanningPokerGame. If this occurs at a change in state of the game, the
+	 * mailer must be constructed AFTER the change in state.
+	 * 
+	 * @param game
+	 *            the given PlanningPokerGame
+	 */
+	public Mailer(PlanningPokerGame game) {
+		session = createSmtpSession();
+		session.setDebug(true);
+		message = new MimeMessage(session);
+
+		// set up the subject
+		String subject = "The Planning Poker Game " + game.getGameName()
+				+ " Has ";
+
+		if (game.isFinished()) {
+			subject += "Ended";
+		} else {
+			subject += "Started";
+		}
+
+		// set up the text
+		String text = ConfigManager.getConfig().getUserName()
+				+ ",\n\nA planning poker game has ";
+
+		if (game.isLive()) {
+			text += "started.\n\n";
+		} else {
+			text += "ended.\n\n";
+		}
+
+		text += "Requirements:\n";
+		// add the requirement names
+		for (Requirement r : game.getRequirements()) {
+			text += "-" + r.getName() + "\n";
+		}
+		text += "\n";
+
+		if (game.isLive()) {
+			text += "You can now submit estimates on these requirements!"
+					+ formatEndTime(game);
+		} else {
+			text += "You can now view the results in Janeway!";
+		}
+
+		System.out.println(subject);
+		System.out.println(text);
+
+		try {
+			// testing
+			if (DEBUG)
+				transport = session.getTransport("smtp");
+			// release
+			String from = "struct.by.lightning@gmail.com";
+
+			// set the message to be from struct by lightning
+			message.setFrom(new InternetAddress(from));
+
+			// set the header line
+			message.setSubject(subject);
+			message.setText(text);
+		} catch (MessagingException mex) {
+			System.out.println("Message creation failed");
+			mex.printStackTrace();
+		}
+	}
+
+	/**
+	 * Formats the deadline for the email, if the game has a legitimate
+	 * deadline, and not a placeholder of November 18th, 9999.
+	 * 
+	 * @param game
+	 *            the Planning Poker Game
+	 * @return a formatted date notification string.
+	 */
+	private String formatEndTime(PlanningPokerGame game) {
+		String text = "";
+
+		// check if the date is real or a placeholder
+		if (game.getEndDate().get(GregorianCalendar.YEAR) != 9999) {
+			text += " Make sure to vote before the game closes at "
+					+ game.getEndDate().get(GregorianCalendar.HOUR) + ":";
+			if (game.getEndDate().get(GregorianCalendar.MINUTE) < 10)
+				text += "0";
+			text += game.getEndDate().get(GregorianCalendar.MINUTE) + " ";
+
+			// control whether it is AM or PM
+			switch (game.getEndDate().get(GregorianCalendar.AM_PM)) {
+			case 0:
+				text += "AM";
+				break;
+			case 1:
+				text += "PM";
+				break;
+			}
+
+			text += " on ";
+
+			// control month
+			switch (game.getEndDate().get(GregorianCalendar.MONTH)) {
+			case 0:
+				text += "January";
+				break;
+			case 1:
+				text += "February";
+				break;
+			case 2:
+				text += "March";
+				break;
+			case 3:
+				text += "April";
+				break;
+			case 4:
+				text += "May";
+				break;
+			case 5:
+				text += "June";
+				break;
+			case 6:
+				text += "July";
+				break;
+			case 7:
+				text += "August";
+				break;
+			case 8:
+				text += "September";
+				break;
+			case 9:
+				text += "October";
+				break;
+			case 10:
+				text += "November";
+				break;
+			case 11:
+				text += "December";
+				break;
+			}
+			text += " " + game.getEndDate().get(GregorianCalendar.DATE);
+
+			// control suffix for date
+			switch (game.getEndDate().get(GregorianCalendar.DATE)) {
+			case 1:
+				text += "st";
+				break;
+			case 2:
+				text += "nd";
+				break;
+			case 3:
+				text += "rd";
+				break;
+			default:
+				text += "th";
+				break;
+			}
+
+			text += "!";
+		}
+
+		return text;
 	}
 
 	/**
