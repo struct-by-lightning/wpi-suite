@@ -63,7 +63,7 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 
 		// TODO: Right now, this button simply transitions from the contact
 		// prompt to the main planning poker view no matter what.
-		PlanningPokerUser user = new PlanningPokerUser(emailField.getText(), ConfigManager.getConfig().getUserName(), aimField.getText(), false, true, false);
+		PlanningPokerUser user = new PlanningPokerUser(emailField.getText(), ConfigManager.getConfig().getUserName(), aimField.getText(), true, false);
 		AddPlanningPokerUserController.getInstance().AddUser(user);
 		MainView.getInstance().switchToMainOverview();
 	}

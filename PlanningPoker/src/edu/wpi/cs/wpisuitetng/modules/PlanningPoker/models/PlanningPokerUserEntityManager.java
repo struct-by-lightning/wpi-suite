@@ -82,7 +82,7 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	@Override
 	public PlanningPokerUser[] getAll(Session s) throws WPISuiteException {
 		PlanningPokerUser[] ret = new PlanningPokerUser[0];
-		ret = data.retrieveAll(new PlanningPokerUser(null, null, null, false, false, false)).toArray(ret);
+		ret = data.retrieveAll(new PlanningPokerUser(null, null, null, false, false)).toArray(ret);
 		return ret;
 	}
 
@@ -147,7 +147,7 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
 		logger.log(Level.INFO, "PlanningPokerUserEntityManager involking DeleteAll...");
-		data.deleteAll(new PlanningPokerUser(null, null, null, false, false, false));
+		data.deleteAll(new PlanningPokerUser(null, null, null, false, false));
 		
 	}
 
