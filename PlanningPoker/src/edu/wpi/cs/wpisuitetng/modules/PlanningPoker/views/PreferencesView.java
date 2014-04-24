@@ -281,12 +281,16 @@ public class PreferencesView extends JPanel {
     	currentUser.setSendAim(sendAIM.isSelected());
     	currentUser.setSendEmail(sendEmail.isSelected());
     	UpdatePlanningPokerUserController.getInstance().update(currentUser);
+    	updateUser.setText("Saved!");
+    	updateUser.setEnabled(false);
     }
 
 
     
     private void checkAllFields(){
     	
+    	updateUser.setText("Save Changes");
+    	updateUser.setEnabled(true);
     	boolean emailEntered = isValidEmail();
     	boolean aimEntered = !(aimField.getText().length() == 0) && !aimField.getText().contains(" ");
     	boolean oneOptionSelected = sendEmail.isSelected() || sendAIM.isSelected();
@@ -300,7 +304,7 @@ public class PreferencesView extends JPanel {
     	}
 
     	if(!emailEntered && sendEmail.isSelected()){
-    		errorMessage.setText("Emailed check, but no valid email entered");
+    		errorMessage.setText("Emailed checked, but no valid email entered");
     		emailChecked = false;
     	}
     	if(!oneOptionSelected){
@@ -314,6 +318,7 @@ public class PreferencesView extends JPanel {
     	}
     	
     	updateUser.setEnabled(canUpdate);
+    	
     
 
 
