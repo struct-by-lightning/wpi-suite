@@ -63,7 +63,8 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 
 		// TODO: Right now, this button simply transitions from the contact
 		// prompt to the main planning poker view no matter what.
-		PlanningPokerUser user = new PlanningPokerUser(emailField.getText(), ConfigManager.getConfig().getUserName(), aimField.getText(), true, false);
+		boolean aimEntered = (aimField.getText().length() > 0) && !(aimField.getText().contains(" "));
+		PlanningPokerUser user = new PlanningPokerUser(emailField.getText(), ConfigManager.getConfig().getUserName(), aimField.getText(), isValidEmail() , aimEntered);
 		AddPlanningPokerUserController.getInstance().AddUser(user);
 		MainView.getInstance().switchToMainOverview();
 	}
@@ -99,8 +100,6 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 
 		aimFieldPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("AIM"));
 
-		aimField.setEnabled(false);
-		aimField.setBackground(Color.lightGray);
 		
 		aimField.addKeyListener(new java.awt.event.KeyAdapter() {
 			public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -320,6 +319,20 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 		} else {
 			this.submitButton.setEnabled(false);
 			this.errorLabel.setVisible(true);
+			return false;
+		}
+	}
+	
+	private boolean isValidEmail(){
+		String emailText = this.emailField.getText();
+		
+		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailText);
+        
+		if (matcher.find()) {
+			return true;
+		} 
+		else {
 			return false;
 		}
 	}

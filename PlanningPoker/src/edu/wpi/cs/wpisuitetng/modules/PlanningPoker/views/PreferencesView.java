@@ -24,6 +24,7 @@ import javax.swing.JTextField;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 
 /**
@@ -34,6 +35,7 @@ public class PreferencesView extends JPanel {
 
 	
 	
+	PlanningPokerUser currentUser;
 	
 	public static void openNewTab() {
 		PreferencesView view = new PreferencesView();
@@ -69,8 +71,8 @@ public class PreferencesView extends JPanel {
         errorMessage = new javax.swing.JLabel();
 
         
-		setEmailField();
-		setAimField();
+
+		setAllFields();
         
 
 
@@ -221,41 +223,8 @@ public class PreferencesView extends JPanel {
                      
 
     
-    /**
-	 * Sets the email field to the current user email
-	 */
-	private void setEmailField() {
-		GetPlanningPokerUserController.getInstance().retrieveUser();
-		
-		try {
-			Thread.sleep(150);
-		} catch (InterruptedException e) {
-		}
 
-		String userEmail = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName()).getEmail();
-		if(userEmail != null){
-			emailField.setText(userEmail);
-		}
-		
-	}
-	
-    /**
-	 * Sets the aim field to the current user aim
-	 */
-	private void setAimField() {
-		GetPlanningPokerUserController.getInstance().retrieveUser();
-		
-		try {
-			Thread.sleep(150);
-		} catch (InterruptedException e) {
-		}
 
-		String userAIM = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName()).getInstantMessage();
-		if(userAIM != null){
-			aimField.setText(userAIM);
-		}
-		
-	}
 	
 	
 	
@@ -289,7 +258,7 @@ public class PreferencesView extends JPanel {
 
 
     
-    public void checkAllFields(){
+    private void checkAllFields(){
     	
     	boolean emailEntered = isValidEmail();
     	boolean aimEntered = !(aimField.getText().length() == 0) && !aimField.getText().contains(" ");
@@ -323,7 +292,7 @@ public class PreferencesView extends JPanel {
 
     }
     
-    public boolean isValidEmail(){
+    private boolean isValidEmail(){
     	String emailText = emailField.getText();
     	Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
     	Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailText);
@@ -334,6 +303,30 @@ public class PreferencesView extends JPanel {
     	else {
     		return false;
     	}
+    }
+    
+    
+    private void setAllFields(){
+    	GetPlanningPokerUserController.getInstance().retrieveUser();
+		try {
+			Thread.sleep(150);
+		} catch (Exception e) {
+		}
+		
+		currentUser = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName());
+		
+		if(currentUser.getEmail() != null){
+			emailField.setText(currentUser.getEmail());
+		}
+		if(currentUser.getInstantMessage() != null){
+			aimField.setText(currentUser.getInstantMessage());
+		}
+		
+		sendEmail.setSelected(currentUser.canSendEmail());
+		sendAIM.setSelected(currentUser.canSendAim());
+		checkAllFields();
+
+		
     }
     
 
