@@ -71,6 +71,7 @@ public class PreferencesView extends JPanel {
         emailWarning = new javax.swing.JLabel();
         aimWarning = new javax.swing.JLabel();
         smsWarning = new javax.swing.JLabel();
+        sendWarning = new javax.swing.JLabel();
 
         
         emailLabel.setText("Email:");
@@ -143,27 +144,29 @@ public class PreferencesView extends JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(sendSms)
                         .addComponent(sendEmail)
-                        .addComponent(preferenceLabel)
                         .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(emailLabel)
-                                        .addComponent(aimLabel)
-                                        .addComponent(smsLabel))
-                                    .addGap(18, 18, 18)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(emailField)
-                                        .addComponent(aimField)
-                                        .addComponent(smsField, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(updateUser)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(sendAIM)
-                                        .addComponent(cancelBtn))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(emailLabel)
+                                            .addComponent(aimLabel)
+                                            .addComponent(smsLabel))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(emailField)
+                                            .addComponent(aimField)
+                                            .addComponent(smsField, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(updateUser)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(sendAIM)
+                                            .addComponent(cancelBtn))))
+                                .addComponent(preferenceLabel))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(sendWarning)
                                 .addComponent(emailWarning)
                                 .addComponent(aimWarning)
                                 .addComponent(smsWarning))))
@@ -188,7 +191,9 @@ public class PreferencesView extends JPanel {
                         .addComponent(smsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(smsWarning))
                     .addGap(18, 18, 18)
-                    .addComponent(preferenceLabel)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(preferenceLabel)
+                        .addComponent(sendWarning))
                     .addGap(18, 18, 18)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(sendEmail)
@@ -327,7 +332,14 @@ public class PreferencesView extends JPanel {
     		smsWarning.setText("");
     	}
     	
-    	boolean canUpdate = ((emailEntered || aimEntered || smsEntered) && oneOptionSelected && emailChecked && smsChecked && aimChecked);
+    	if(!sendSms.isSelected() && !sendEmail.isSelected() && ! sendAIM.isSelected()){
+    		sendWarning.setText("At least one method of contact must be selected");
+    	}
+    	else{
+    		sendWarning.setText("");
+    	}
+    	boolean canUpdate = ((emailEntered || aimEntered || smsEntered) 
+    						&& oneOptionSelected && emailChecked && smsChecked && aimChecked);
     	updateUser.setEnabled(canUpdate);
 
     
@@ -371,6 +383,7 @@ public class PreferencesView extends JPanel {
     private javax.swing.JLabel smsLabel;
     private javax.swing.JLabel smsWarning;
     private javax.swing.JButton updateUser;
+    private javax.swing.JLabel sendWarning;
     // End of variables declaration         
 	
 
