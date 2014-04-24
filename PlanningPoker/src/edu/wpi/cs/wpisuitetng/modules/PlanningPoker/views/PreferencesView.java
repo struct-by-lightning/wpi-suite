@@ -9,7 +9,22 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 
 /**
  * @author sfmailand
@@ -24,7 +39,8 @@ public class PreferencesView extends JPanel {
 		PreferencesView view = new PreferencesView();
 		MainView.getInstance().addCloseableTab("Preferences", view);
 	}
-	/**
+
+    /**
      * Creates new form PreferencesWindow
      */
     public PreferencesView() {
@@ -41,24 +57,32 @@ public class PreferencesView extends JPanel {
     private void initComponents() {
 
         emailLabel = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        emailField = new javax.swing.JTextField();
         aimLabel = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        aimField = new javax.swing.JTextField();
         smsLabel = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        smsField = new javax.swing.JTextField();
         preferenceLabel = new javax.swing.JLabel();
         sendEmail = new javax.swing.JRadioButton();
-        sendSMS = new javax.swing.JRadioButton();
+        sendSms = new javax.swing.JRadioButton();
         sendAIM = new javax.swing.JRadioButton();
         updateUser = new javax.swing.JButton();
         cancelBtn = new javax.swing.JToggleButton();
+        emailWarning = new javax.swing.JLabel();
+        aimWarning = new javax.swing.JLabel();
+        smsWarning = new javax.swing.JLabel();
 
+        
         emailLabel.setText("Email:");
 
         aimLabel.setText("AIM:");
 
         smsLabel.setText("SMS:");
-
+        
+		setEmailField();
+		setAimField();
+		setSmsField();
+        
         preferenceLabel.setText("How would you like to recieve notifications?");
 
         sendEmail.setText("Email");
@@ -68,19 +92,47 @@ public class PreferencesView extends JPanel {
             }
         });
 
-        sendSMS.setText("SMS");
-        sendSMS.addActionListener(new java.awt.event.ActionListener() {
+        sendSms.setText("Sms");
+        sendSms.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendSMSActionPerformed(evt);
+                sendSmsActionPerformed(evt);
             }
         });
 
         sendAIM.setText("AIM");
         sendAIM.setActionCommand("");
+        sendAIM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendAIMActionPerformed(evt);
+            }
+        });
+        
 
+        emailField.addKeyListener(new KeyAdapter(){
+        	public void keyReleased(KeyEvent evt){
+        		emailFieldKeyTyped(evt);
+        	}
+        });
+        
+        smsField.addKeyListener(new KeyAdapter(){
+        	public void keyReleased(KeyEvent evt){
+        		smsFieldKeyTyped(evt);
+        	}
+        });
+        
+        aimField.addKeyListener(new KeyAdapter(){
+        	public void keyReleased(KeyEvent evt){
+        		aimFieldKeyTyped(evt);
+        	}
+        });
+    	
+    	
+    	
         updateUser.setText("Save Changes");
 
         cancelBtn.setText("Cancel Changes");
+
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -89,29 +141,35 @@ public class PreferencesView extends JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sendSMS)
+                    .addComponent(sendSms)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addComponent(sendEmail)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(sendAIM))
                         .addComponent(preferenceLabel, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(updateUser)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                            .addComponent(cancelBtn))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(emailLabel)
-                                .addComponent(aimLabel)
-                                .addComponent(smsLabel))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField1)
-                                .addComponent(jTextField2)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)))))
-                .addContainerGap(620, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(updateUser)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                                .addComponent(cancelBtn))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(emailLabel)
+                                    .addComponent(aimLabel)
+                                    .addComponent(smsLabel))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(emailField)
+                                    .addComponent(aimField)
+                                    .addComponent(smsField, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(emailWarning)
+                            .addComponent(aimWarning)
+                            .addComponent(smsWarning))))
+                .addContainerGap(569, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,15 +177,18 @@ public class PreferencesView extends JPanel {
                 .addGap(86, 86, 86)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(emailLabel)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(emailWarning))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aimLabel)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(aimField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(aimWarning))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(smsLabel)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(smsField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(smsWarning))
                 .addGap(18, 18, 18)
                 .addComponent(preferenceLabel)
                 .addGap(18, 18, 18)
@@ -135,7 +196,7 @@ public class PreferencesView extends JPanel {
                     .addComponent(sendEmail)
                     .addComponent(sendAIM))
                 .addGap(18, 18, 18)
-                .addComponent(sendSMS)
+                .addComponent(sendSms)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(updateUser)
@@ -144,29 +205,151 @@ public class PreferencesView extends JPanel {
         );
     }// </editor-fold>                        
 
-    private void sendEmailActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
+    
+    /**
+	 * Sets the email field to the current user email
+	 */
+	private void setEmailField() {
+		GetPlanningPokerUserController.getInstance().retrieveUser();
+		
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+		}
+
+		String userEmail = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName()).getEmail();
+		if(userEmail != null){
+			emailField.setText(userEmail);
+		}
+		
+	}
+	
+    /**
+	 * Sets the aim field to the current user aim
+	 */
+	private void setAimField() {
+		GetPlanningPokerUserController.getInstance().retrieveUser();
+		
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+		}
+
+		String userAIM = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName()).getInstantMessage();
+		if(userAIM != null){
+			aimField.setText(userAIM);
+		}
+		
+	}
+	
+	
+	
+    /**
+	 * Sets the sms field to the current user sms
+	 */
+	private void setSmsField() {
+		GetPlanningPokerUserController.getInstance().retrieveUser();
+		
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+		}
+
+		String userSms = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName()).getSms();
+		if(userSms != null){
+			smsField.setText(userSms);
+		}
+		
+	}
+
+	
+	/**
+	 * Description
+	 * @param evt
+	 */
+	protected void emailFieldKeyTyped(KeyEvent evt) {
+		checkAllFields();
+	}
+	
+	protected void smsFieldKeyTyped(KeyEvent evt) {
+		checkAllFields();
+	}
+	
+	protected void aimFieldKeyTyped(KeyEvent evt){
+		checkAllFields();
+	}
+
+	private void sendEmailActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        checkAllFields();
     }                                         
 
-    private void sendSMSActionPerformed(java.awt.event.ActionEvent evt) {                                        
-        // TODO add your handling code here:
+    private void sendSmsActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        checkAllFields();
+    }                                       
+
+    private void sendAIMActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        checkAllFields();
     }                                       
 
 
+    
+    public void checkAllFields(){
+    	
+    	boolean emailEntered = isValidEmail();
+    	boolean aimEntered = !aimField.getText().equals("");
+    	boolean smsEntered = smsField.getText().length() == 10;
+    	
+    	boolean oneOptionSelected = sendEmail.isSelected() || sendSms.isSelected() || sendAIM.isSelected();
+    	
+    	boolean canUpdate = ((emailEntered || aimEntered || smsEntered) && oneOptionSelected);
+    	
+    	updateUser.setEnabled(canUpdate);
+
+    
+
+
+    }
+    
+    public boolean isValidEmail(){
+    	String emailText = emailField.getText();
+    	Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
+    	Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailText);
+
+    	if (matcher.find()) {
+    		return true;
+    	} 
+    	else {
+    		return false;
+    	}
+    }
+    
+	/**
+	 * Listens to the session name field and disables "Create Game" button
+	 * if the field is empty.
+	 */
+
+
+    
     // Variables declaration - do not modify                     
     private javax.swing.JLabel aimLabel;
+    private javax.swing.JLabel aimWarning;
     private javax.swing.JToggleButton cancelBtn;
     private javax.swing.JLabel emailLabel;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel emailWarning;
+    private javax.swing.JTextField emailField;
+    private javax.swing.JTextField aimField;
+    private javax.swing.JTextField smsField;
     private javax.swing.JLabel preferenceLabel;
     private javax.swing.JRadioButton sendAIM;
     private javax.swing.JRadioButton sendEmail;
-    private javax.swing.JRadioButton sendSMS;
+    private javax.swing.JRadioButton sendSms;
     private javax.swing.JLabel smsLabel;
+    private javax.swing.JLabel smsWarning;
     private javax.swing.JButton updateUser;
-    // End of variables declaration    
+    // End of variables declaration         
 	
+
 	
 }
+
+
