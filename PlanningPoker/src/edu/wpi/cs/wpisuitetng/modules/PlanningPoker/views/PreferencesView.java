@@ -63,9 +63,9 @@ public class PreferencesView extends JPanel {
         smsLabel = new javax.swing.JLabel();
         smsField = new javax.swing.JTextField();
         preferenceLabel = new javax.swing.JLabel();
-        sendEmail = new javax.swing.JRadioButton();
-        sendSms = new javax.swing.JRadioButton();
-        sendAIM = new javax.swing.JRadioButton();
+        sendEmail = new javax.swing.JCheckBox();
+        sendSms = new javax.swing.JCheckBox();
+        sendAIM = new javax.swing.JCheckBox();
         updateUser = new javax.swing.JButton();
         cancelBtn = new javax.swing.JToggleButton();
         emailWarning = new javax.swing.JLabel();
@@ -301,8 +301,35 @@ public class PreferencesView extends JPanel {
     	
     	boolean oneOptionSelected = sendEmail.isSelected() || sendSms.isSelected() || sendAIM.isSelected();
     	
-    	boolean canUpdate = ((emailEntered || aimEntered || smsEntered) && oneOptionSelected);
+    	boolean aimChecked = true;
+    	boolean emailChecked = true;
+    	boolean smsChecked = true;
     	
+    	if(sendAIM.isSelected() && !aimEntered){
+    		aimChecked = false;
+    		aimWarning.setText("Required to send AIM messages as notifications");
+    	}
+    	else{
+    		aimWarning.setText("");
+    	}
+    	
+    	if(sendEmail.isSelected() && !emailEntered){
+    		emailChecked = false;
+    		emailWarning.setText("Required to send email notifications");
+    	}
+    	else{
+    		emailWarning.setText("");
+    	}
+    	
+    	if(sendSms.isSelected() && !smsEntered){
+    		smsChecked = false;
+    		smsWarning.setText("Required to send SMS notifications");
+    	}
+    	else{
+    		smsWarning.setText("");
+    	}
+    	
+    	boolean canUpdate = ((emailEntered || aimEntered || smsEntered) && oneOptionSelected && emailChecked && smsChecked && aimChecked);
     	updateUser.setEnabled(canUpdate);
 
     
@@ -340,9 +367,9 @@ public class PreferencesView extends JPanel {
     private javax.swing.JTextField aimField;
     private javax.swing.JTextField smsField;
     private javax.swing.JLabel preferenceLabel;
-    private javax.swing.JRadioButton sendAIM;
-    private javax.swing.JRadioButton sendEmail;
-    private javax.swing.JRadioButton sendSms;
+    private javax.swing.JCheckBox sendAIM;
+    private javax.swing.JCheckBox sendEmail;
+    private javax.swing.JCheckBox sendSms;
     private javax.swing.JLabel smsLabel;
     private javax.swing.JLabel smsWarning;
     private javax.swing.JButton updateUser;
