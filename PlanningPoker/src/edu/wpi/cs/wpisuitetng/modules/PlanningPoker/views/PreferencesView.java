@@ -324,7 +324,6 @@ public class PreferencesView extends JPanel {
 		
 		sendEmail.setSelected(currentUser.canSendEmail());
 		sendAIM.setSelected(currentUser.canSendAim());
-		checkAllFields();
 
 		
     }
