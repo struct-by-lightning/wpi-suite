@@ -1101,4 +1101,12 @@ public class MainView {
 	private javax.swing.JLabel whatIsBody1;
 	private javax.swing.JLabel whatIsTitle;
 	private javax.swing.JLabel whatIsTitle1;
+
+	/**
+	 * Description
+	 */
+	public static void preferencesButtonClicked() {
+		PreferencesView.openNewTab();
+		
+	}
 }
