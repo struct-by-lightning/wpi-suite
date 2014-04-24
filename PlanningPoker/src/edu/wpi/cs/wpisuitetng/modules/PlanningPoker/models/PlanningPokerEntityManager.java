@@ -102,7 +102,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 					// clear the UserModel
 					PlanningPokerUserModel.getInstance().emptyModel();
 					// add the users to the array
-					u = data.retrieveAll(new PlanningPokerUser(null, null, null, null, false, false, false)).toArray(new PlanningPokerUser[0]);
+					u = data.retrieveAll(new PlanningPokerUser(null, null, null, false, false, false)).toArray(new PlanningPokerUser[0]);
 					// add the users to the model
 					PlanningPokerUserModel.getInstance().addUsers(u);
 					close.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
@@ -139,7 +139,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 				// clear the UserModel
 				PlanningPokerUserModel.getInstance().emptyModel();
 				// add the users to the array
-				u = data.retrieveAll(new PlanningPokerUser(null, null, null, null, false, false, false)).toArray(new PlanningPokerUser[0]);
+				u = data.retrieveAll(new PlanningPokerUser(null, null, null, false, false, false)).toArray(new PlanningPokerUser[0]);
 				// add the users to the model
 				PlanningPokerUserModel.getInstance().addUsers(u);
 				close.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());

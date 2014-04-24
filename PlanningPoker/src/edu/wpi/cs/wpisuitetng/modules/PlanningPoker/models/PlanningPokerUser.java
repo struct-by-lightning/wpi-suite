@@ -34,19 +34,16 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 	
 	private String userName;
 	
-	private String sms;
-	
 	private String instantMessage;
 	
 	private boolean sendSms, sendEmail, sendAim;
 
 	
 	
-	public PlanningPokerUser(String email, String userName, String sms, String instantMessage, boolean sendSms, boolean sendEmail, boolean sendAim) {
+	public PlanningPokerUser(String email, String userName, String instantMessage, boolean sendSms, boolean sendEmail, boolean sendAim) {
 		super();
 		this.email = email;
 		this.userName = userName;
-		this.sms = sms;
 		this.instantMessage = instantMessage;
 		this.sendEmail = sendEmail;
 		this.sendSms = sendSms;
@@ -115,19 +112,6 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 		this.userName = userName;
 	}
 
-	/**
-	 * @return the sms
-	 */
-	public String getSms() {
-		return sms;
-	}
-
-	/**
-	 * @param sms the sms to set
-	 */
-	public void setSms(String sms) {
-		this.sms = sms;
-	}
 
 	/**
 	 * @return the instantMessage

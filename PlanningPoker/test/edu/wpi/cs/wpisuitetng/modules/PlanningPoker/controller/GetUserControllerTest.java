@@ -50,8 +50,8 @@ public class GetUserControllerTest {
 	public void testReceivedUser() {
 		GetPlanningPokerUserController gc = GetPlanningPokerUserController.getInstance();
 		PlanningPokerUser[] users = new PlanningPokerUser[]{
-				 new PlanningPokerUser("jbond@test.com", "jbond", "1111111111", "jbond@aim.com", false, false, false),
-				new PlanningPokerUser("m@m.com", "m", "2222222222", "m@aim.com", false, false, false)
+				 new PlanningPokerUser("jbond@test.com", "jbond", "jbond@aim.com", false, false, false),
+				new PlanningPokerUser("m@m.com", "m", "m@aim.com", false, false, false)
 		};
 		gc.receivedUser(users);
 		
