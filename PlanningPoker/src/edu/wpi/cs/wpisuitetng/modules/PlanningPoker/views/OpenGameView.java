@@ -70,12 +70,13 @@ public class OpenGameView extends JPanel {
 	 */
 	private void endGameButtonPressed() {
 
-		// Send a notification to participants that the game has ended.
-		closedNotification.send();
-
 		// Mark the game as closed.
 		game.setFinished(true);
 		game.setLive(false);
+		
+		closedNotification = new Mailer(game);
+		closedNotification.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
+		closedNotification.send();
 
 		// Update the database with the changes.
 		UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
@@ -413,19 +414,12 @@ public class OpenGameView extends JPanel {
 	 * listeners.
 	 */
 	private void initComponentLogic() {
-		// create the instance of the Mailer
-		if (closedNotification == null) {
-			closedNotification = new Mailer("The game " + game.getGameName() + " has closed!",
-					"You can now view the results of the estimation.");
-		}
 		// Get and add the list of emails to the mailer
 		GetPlanningPokerUserController.getInstance().retrieveUser();
 		try {
 			Thread.sleep(150);
 		} catch (Exception e) {
 		}
-
-		closedNotification.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
 	}
 
 	/**

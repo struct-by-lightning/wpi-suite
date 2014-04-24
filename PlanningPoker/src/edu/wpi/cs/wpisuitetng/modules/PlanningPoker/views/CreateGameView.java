@@ -237,8 +237,6 @@ public class CreateGameView extends JPanel {
 		// TODO:
 		// As per a meeting with Pollice, we need to only select users which
 		// have been explicitly added to the project through the web-interface.
-		userList = PlanningPokerUserModel.getInstance().getUsers();
-		mailer.addEmailFromUsers(userList);
 
 		/**
 		 * Adds list of current requirements in requirement model to the list
@@ -339,6 +337,8 @@ public class CreateGameView extends JPanel {
 									true, startCal, endCal, ConfigManager.getConfig().getUserName());
 							game.setFinished(false);
 							game.setLive(true);
+							mailer = new Mailer(game);
+							mailer.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
 							mailer.send();
 
 						} else {
@@ -552,8 +552,6 @@ public class CreateGameView extends JPanel {
 		gameRequirementIDsList = new ArrayList<Integer>();
 
 		userList = new ArrayList<PlanningPokerUser>();
-
-		mailer = new Mailer();
 
 		this.setBorder(new LineBorder(Color.DARK_GRAY));
 		this.setLayout(new BorderLayout(0, 0));
