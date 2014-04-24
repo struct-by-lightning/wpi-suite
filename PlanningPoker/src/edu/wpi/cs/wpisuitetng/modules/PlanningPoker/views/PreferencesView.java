@@ -300,14 +300,13 @@ public class PreferencesView extends JPanel {
     	
     	boolean emailEntered = isValidEmail();
     	boolean aimEntered = !aimField.getText().equals("");
-    	boolean smsEntered = smsField.getText().length() == 10;
-    	
+    	boolean smsEntered = isPhoneNumber();
     	boolean oneOptionSelected = sendEmail.isSelected() || sendSms.isSelected() || sendAIM.isSelected();
     	
     	boolean aimChecked = true;
     	boolean emailChecked = true;
     	boolean smsChecked = true;
-    	
+
     	if(sendAIM.isSelected() && !aimEntered){
     		aimChecked = false;
     		aimWarning.setText("Required to send AIM messages as notifications");
@@ -338,6 +337,14 @@ public class PreferencesView extends JPanel {
     	else{
     		sendWarning.setText("");
     	}
+    	
+    	
+    	
+		if(!smsEntered && (smsField.getText().length() > 0)){
+			smsWarning.setText("Not a valid phone number");
+			smsChecked = false;
+		}
+    	
     	boolean canUpdate = ((emailEntered || aimEntered || smsEntered) 
     						&& oneOptionSelected && emailChecked && smsChecked && aimChecked);
     	updateUser.setEnabled(canUpdate);
@@ -358,6 +365,16 @@ public class PreferencesView extends JPanel {
     	else {
     		return false;
     	}
+    }
+    
+    
+    public boolean isPhoneNumber(){
+    	String smsText = smsField.getText();
+    	
+    	if(smsText.matches("(\\d{3}-){1,2}\\d{4}") || smsText.matches("(\\d{10})")){
+    		return true;
+    	}
+    	return false;
     }
     
 	/**
