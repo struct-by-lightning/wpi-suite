@@ -10,6 +10,7 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,11 +23,14 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerFinalEstimateController;
@@ -113,26 +117,53 @@ public class ClosedGameView extends JPanel {
 						JList list;
 						list = (JList) ev.getSource();
 						if(list.getSelectedIndex() != -1) {
+							
 							selected = requirements.get(list
 									.getSelectedIndex());
 							currentID = selected.getId();
 						}
+						
 						if(currentID != previousID) {
 							requirementNameLabel.setText(selected.getName());
 							requirementDescriptionLabel.setText(selected
 									.getDescription());
 							updateEstimateTotal(currentID);
 							ArrayList<Double> reqVotes = new ArrayList<Double>();
-							estimateModel = new DefaultListModel<String>();
+							
+							estimateModel = new TeamEstimateTableModel();
+							
 							for(PlanningPokerVote v : gameVotes) {
 								if(v.getRequirementID() == currentID) {
 									reqVotes.add((double)v.getVote());
-									estimateModel.addElement("   "+v.getUserName()+": "+v.getVote());
+									estimateModel.addRow(Arrays.asList(v.getUserName(), v.getVote()));
 								}
 							}
-							System.out.println("est mode: "+estimateModel);
-							System.out.println("g Votes: "+gameVotes);
+							
 							estimates.setModel(estimateModel);
+							
+							// Resize the table row height
+						    try
+						    {
+						        for (int row = 0; row < estimates.getRowCount(); row++)
+						        {
+						            int rowHeight = estimates.getRowHeight();
+
+						            for (int column = 0; column < estimates.getColumnCount(); column++)
+						            {
+						                Component comp = estimates.prepareRenderer(estimates.getCellRenderer(row, column), row, column);
+						                rowHeight = Math.max(rowHeight, comp.getPreferredSize().height) + 5;
+						            }
+
+						            estimates.setRowHeight(row, rowHeight);
+						        }
+						    }
+						    catch(ClassCastException e) {}
+						    // Align text center
+						    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+						    centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+						    estimates.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+						    estimates.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+						    // Statistics
 							if(reqVotes.size()!= 0) {
 								double[] voteNums = new double[reqVotes.size()];
 								for(int i = 0; i< reqVotes.size(); i++) {
@@ -663,12 +694,14 @@ public class ClosedGameView extends JPanel {
 		}
 
 		System.out.println("Game votes: " + gameVotes);
-		estimates = new javax.swing.JList();
-		estimateModel = new DefaultListModel<String>();
+		
+		estimates = new JTable();
+		estimateModel = new TeamEstimateTableModel();
 
 		estimates.setModel(estimateModel);
 
 		estimates.setFont(new java.awt.Font("Tahoma", 0, 20));
+		
 		JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(estimates);
 		// scroll.setPreferredSize(new Dimension(500, 400));
@@ -900,9 +933,9 @@ public class ClosedGameView extends JPanel {
 	private javax.swing.JLabel max;
 	private javax.swing.JLabel min;
 	private javax.swing.JPanel stats;
-	private javax.swing.JList estimates;
+	private javax.swing.JTable estimates;
 	private javax.swing.JPanel allEstimates;
-	private DefaultListModel<String> estimateModel;
+	private TeamEstimateTableModel  estimateModel;
 	private PlanningPokerVote[] allVotes;
 	private String meanDef = "    Mean: ";
 	private String medianDef = "  Median: ";
