@@ -22,8 +22,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 
@@ -106,6 +108,13 @@ public class PreferencesView extends JPanel {
         		aimFieldKeyTyped(evt);
         	}
         });
+        
+		updateUser.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent evt) {
+				updateUserPressed(evt);
+			}
+		});
     	
     	
     	
@@ -247,14 +256,32 @@ public class PreferencesView extends JPanel {
 		checkAllFields();
 	}
 
-	private void sendEmailActionPerformed(java.awt.event.ActionEvent evt) {                                          
+	private void sendEmailActionPerformed(ActionEvent evt) {                                          
         checkAllFields();
     }                                         
                                      
 
-    private void sendAIMActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    private void sendAIMActionPerformed(ActionEvent evt) {                                        
         checkAllFields();
-    }                                       
+    }       
+    
+    
+    private void updateUserPressed(ActionEvent evt){
+    	if(isValidEmail()){
+    		currentUser.setEmail(emailField.getText());
+    	}
+    	
+    	String aimText = aimField.getText();
+    	boolean validAim = (aimText.length() >0) && !(aimText.contains(" "));
+    	
+    	if(validAim){
+    		currentUser.setInstantMessage(aimText);
+    	}
+    	
+    	currentUser.setSendAim(sendAIM.isSelected());
+    	currentUser.setSendEmail(sendEmail.isSelected());
+    	UpdatePlanningPokerUserController.getInstance().update(currentUser);
+    }
 
 
     
