@@ -15,7 +15,7 @@ public class PermissionTest {
 
 	AbstractModel perm;
 	User u;
-	
+
 	@Before
 	public void setUp() throws Exception 
 	{
@@ -47,17 +47,17 @@ public class PermissionTest {
 			@Override
 			public void setProject(Project aProject) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		};
-		u = new User("ted", "tdude", "tdude@cool.com", "nothing", 1);
+		u = new User("ted", "tdude", "nothing", 1);
 	}
 
 	@Test
 	public void testPermission() {
 		perm.setPermission(Permission.READ, u);
-		
+
 		assertEquals(perm.getPermission(u), Permission.READ);
 	}
 
