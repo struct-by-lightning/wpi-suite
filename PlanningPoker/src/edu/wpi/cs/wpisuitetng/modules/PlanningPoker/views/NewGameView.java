@@ -633,13 +633,13 @@ public class NewGameView extends JPanel {
 		requirementsSelector.setLayout(new BoxLayout(requirementsSelector, BoxLayout.X_AXIS));
 
 		projectRequirements = new JPanel();
-		projectRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		projectRequirements.setBorder(null);
 		projectRequirements.setEnabled(false);
 		requirementsSelector.add(projectRequirements);
 		projectRequirements.setLayout(new BorderLayout(0, 0));
 
 		projectHeader = new JPanel();
-		projectHeader.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		projectHeader.setBorder(null);
 		projectRequirements.add(projectHeader, BorderLayout.NORTH);
 
 		lblAllProjectRequirements = new JLabel("All project requirements");
@@ -721,13 +721,13 @@ public class NewGameView extends JPanel {
 		addRemPanel.setLayout(gl_addRemPanel);
 
 		gameRequirements = new JPanel();
-		gameRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		gameRequirements.setBorder(null);
 		gameRequirements.setEnabled(false);
 		requirementsSelector.add(gameRequirements);
 		gameRequirements.setLayout(new BorderLayout(0, 0));
 
 		gameHeader = new JPanel();
-		gameHeader.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		gameHeader.setBorder(null);
 		gameRequirements.add(gameHeader, BorderLayout.NORTH);
 
 		lblRequirementsToEstimate = new JLabel("Requirements to estimate");
