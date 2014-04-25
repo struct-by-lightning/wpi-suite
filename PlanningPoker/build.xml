@@ -9,6 +9,8 @@
 	
        <path id="classpath">
               <pathelement path="../PlanningPoker/lib/mail.jar"/>
+       		  <pathelement path="../PlanningPoker/lib/smack-3.4.1-0cec571.jar"/>
+       		  <pathelement path="../PlanningPoker/lib/smackx-3.4.1-0cec571.jar"/>
        	      <pathelement path="../RequirementManager/build"/>
               <pathelement path="../Janeway/build"/>
               <pathelement path="../Network/build"/>

@@ -45,6 +45,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerV
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im.InstantMessenger;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
@@ -77,6 +78,8 @@ public class OpenGameView extends JPanel {
 		closedNotification = new Mailer(game);
 		closedNotification.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
 		closedNotification.send();
+		im = new InstantMessenger(game);
+		im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());
 
 		// Update the database with the changes.
 		UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
@@ -116,6 +119,9 @@ public class OpenGameView extends JPanel {
 
 	// Mailer for this view
 	private Mailer closedNotification;
+	
+	// instant messenger
+	private InstantMessenger im;
 
 	/**
 	 * Constructor runs NetBeans generated UI initialization code and then

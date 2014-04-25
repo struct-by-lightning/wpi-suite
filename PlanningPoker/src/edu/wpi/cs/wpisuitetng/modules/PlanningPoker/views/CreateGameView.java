@@ -56,6 +56,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im.InstantMessenger;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
@@ -340,6 +341,8 @@ public class CreateGameView extends JPanel {
 							mailer = new Mailer(game);
 							mailer.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
 							mailer.send();
+							im = new InstantMessenger(game);
+							im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());
 
 						} else {
 							game = new PlanningPokerGame(enteredName, "Default description",
@@ -893,6 +896,7 @@ public class CreateGameView extends JPanel {
 	private List<Integer> gameRequirementIDsList;
 	private List<PlanningPokerUser> userList;
 	private Mailer mailer;
+	private InstantMessenger im;
 	private boolean viewHasBeenEdited = false;
 
 	private DateFormat dateFormat;

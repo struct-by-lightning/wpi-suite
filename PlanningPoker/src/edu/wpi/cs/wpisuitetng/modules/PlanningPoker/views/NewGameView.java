@@ -54,6 +54,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im.InstantMessenger;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
@@ -253,8 +254,6 @@ public class NewGameView extends JPanel {
 		// TODO:
 		// As per a meeting with Pollice, we need to only select users which
 		// have been explicitly added to the project through the web-interface.
-		userList = PlanningPokerUserModel.getInstance().getUsers();
-		mailer.addEmailFromUsers(userList);
 
 		/**
 		 * Saves data entered about the game when 'Create Game' button is
@@ -327,7 +326,10 @@ public class NewGameView extends JPanel {
 								game);
 						lblGameCreated.setVisible(true);
 						btnStartVoting.setEnabled(false);
+						mailer = new Mailer(game);
 						mailer.send();
+						im = new InstantMessenger(game);
+						im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());
 
 						MainView.getInstance().refreshGameTree();
 						MainView.getInstance().removeClosableTab();
@@ -409,10 +411,6 @@ public class NewGameView extends JPanel {
 		listModelForBacklog = new DefaultListModel<Requirement>();
 
 		gameRequirementIDsList = new ArrayList<Integer>();
-
-		userList = new ArrayList<PlanningPokerUser>();
-
-		mailer = new Mailer(game);
 
 		this.setBorder(new LineBorder(Color.DARK_GRAY));
 		this.setLayout(new BorderLayout(0, 0));
@@ -760,8 +758,8 @@ public class NewGameView extends JPanel {
 	private String selectedDeckType;
 	private boolean calendarOpen = false;
 	private List<Integer> gameRequirementIDsList;
-	private List<PlanningPokerUser> userList;
 	private Mailer mailer;
+	private InstantMessenger im;
 	private boolean viewHasBeenEdited;
 
 	private DateFormat dateFormat;
