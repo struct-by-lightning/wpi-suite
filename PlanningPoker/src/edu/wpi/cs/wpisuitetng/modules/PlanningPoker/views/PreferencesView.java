@@ -111,95 +111,198 @@ public class PreferencesView extends JPanel {
 
 		updateUser.setText("Save Changes");
 
-        emailPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Email"));
+		emailPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
+				javax.swing.BorderFactory.createLineBorder(new java.awt.Color(
+						0, 0, 0)), "Email"));
 
-        javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(emailPanel);
-        emailPanel.setLayout(emailPanelLayout);
-        emailPanelLayout.setHorizontalGroup(
-            emailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(emailPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sendEmail)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        emailPanelLayout.setVerticalGroup(
-            emailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(emailPanelLayout.createSequentialGroup()
-                .addGroup(emailPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(emailField)
-                    .addComponent(sendEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 6, Short.MAX_VALUE))
-        );
+		javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(
+				emailPanel);
+		emailPanel.setLayout(emailPanelLayout);
+		emailPanelLayout
+				.setHorizontalGroup(emailPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								emailPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(
+												emailField,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												264,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(sendEmail)
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
+		emailPanelLayout
+				.setVerticalGroup(emailPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								emailPanelLayout
+										.createSequentialGroup()
+										.addGroup(
+												emailPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING,
+																false)
+														.addComponent(
+																emailField)
+														.addComponent(
+																sendEmail,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))
+										.addGap(0, 6, Short.MAX_VALUE)));
 
-        aimPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Instant Message"));
+		aimPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
+				javax.swing.BorderFactory.createLineBorder(new java.awt.Color(
+						0, 0, 0)), "Instant Message"));
 
-        sendAIM.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sendAIMActionPerformed(evt);
-            }
-        });
+		sendAIM.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				sendAIMActionPerformed(evt);
+			}
+		});
 
-        javax.swing.GroupLayout aimPanelLayout = new javax.swing.GroupLayout(aimPanel);
-        aimPanel.setLayout(aimPanelLayout);
-        aimPanelLayout.setHorizontalGroup(
-            aimPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(aimPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(aimField, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sendAIM)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        aimPanelLayout.setVerticalGroup(
-            aimPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, aimPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(aimPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(sendAIM, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(aimPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(aimField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
+		javax.swing.GroupLayout aimPanelLayout = new javax.swing.GroupLayout(
+				aimPanel);
+		aimPanel.setLayout(aimPanelLayout);
+		aimPanelLayout
+				.setHorizontalGroup(aimPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								aimPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(
+												aimField,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												264,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(sendAIM)
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
+		aimPanelLayout
+				.setVerticalGroup(aimPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								javax.swing.GroupLayout.Alignment.TRAILING,
+								aimPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												aimPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																sendAIM,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addGroup(
+																aimPanelLayout
+																		.createSequentialGroup()
+																		.addGap(0,
+																				0,
+																				Short.MAX_VALUE)
+																		.addComponent(
+																				aimField,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)))
+										.addContainerGap()));
 
-        updateUser.setText("Update");
+		updateUser.setText("Update");
 
-        infoLabel.setText("<html>Please check the method you'd like <br> to use for recieving notifications.</html>");
+		infoLabel
+				.setText("<html>Please check the method you'd like <br> to use for recieving notifications.</html>");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(emailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(aimPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(updateUser)
-                    .addComponent(errorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(infoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(310, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(infoLabel)
-                    .addComponent(emailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(aimPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(errorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(updateUser)))
-                .addContainerGap(511, Short.MAX_VALUE))
-        );
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		this.setLayout(layout);
+		layout.setHorizontalGroup(layout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING,
+												false)
+												.addComponent(
+														emailPanel,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)
+												.addComponent(
+														aimPanel,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE))
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(updateUser)
+												.addComponent(
+														errorMessage,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														280,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														infoLabel,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														234,
+														javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addContainerGap(310, Short.MAX_VALUE)));
+		layout.setVerticalGroup(layout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.TRAILING,
+												false)
+												.addComponent(infoLabel)
+												.addComponent(
+														emailPanel,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE))
+								.addPreferredGap(
+										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(
+														aimPanel,
+														javax.swing.GroupLayout.Alignment.TRAILING,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addGroup(
+														javax.swing.GroupLayout.Alignment.TRAILING,
+														layout.createSequentialGroup()
+																.addComponent(
+																		errorMessage,
+																		javax.swing.GroupLayout.PREFERRED_SIZE,
+																		43,
+																		javax.swing.GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(
+																		javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+																.addComponent(
+																		updateUser)))
+								.addContainerGap(511, Short.MAX_VALUE)));
 	}// </editor-fold>
 
 	/**
@@ -233,7 +336,8 @@ public class PreferencesView extends JPanel {
 		}
 
 		final String aimText = aimField.getText();
-		final boolean validAim = (aimText.length() > 0) && !(aimText.contains(" "));
+		final boolean validAim = (aimText.length() > 0)
+				&& !(aimText.contains(" "));
 
 		if (validAim) {
 			currentUser.setInstantMessage(aimText);
@@ -272,7 +376,8 @@ public class PreferencesView extends JPanel {
 			errorMessage.setText("Must have one option checked");
 		}
 
-		final boolean canUpdate = aimChecked && emailChecked && oneOptionSelected;
+		final boolean canUpdate = aimChecked && emailChecked
+				&& oneOptionSelected;
 
 		if (canUpdate) {
 			errorMessage.setText("");
