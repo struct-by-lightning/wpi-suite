@@ -17,7 +17,6 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEst
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.MockNetwork;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -40,15 +39,6 @@ public class GetPlanningPokerFinalEstimateController {
 		network = Network.getInstance();
 		observer = new GetPlanningPokerFinalEstimateRequestObserver(this);
 	}
-	
-	private GetPlanningPokerFinalEstimateController(boolean isMockNetwork) {
-		if(isMockNetwork) {
-			network = new MockNetwork();
-		} else {
-			network = Network.getInstance();
-		}
-		observer = new GetPlanningPokerFinalEstimateRequestObserver(this);
-	}
 
 	/**
 	
@@ -59,21 +49,6 @@ public class GetPlanningPokerFinalEstimateController {
 		if(instance == null)
 		{
 			instance = new GetPlanningPokerFinalEstimateController();
-		}
-
-		return instance;
-	}
-
-	/**
-	 * Sends an HTTP request to store a PlanningPokerFinalEstimate when the
-	 * update button is pressed
-	 * @param e ActionEvent
-	*/
-	public static GetPlanningPokerFinalEstimateController getInstance(boolean isMockNetwork)
-	{
-		if(instance == null)
-		{
-			instance = new GetPlanningPokerFinalEstimateController(isMockNetwork);
 		}
 
 		return instance;
