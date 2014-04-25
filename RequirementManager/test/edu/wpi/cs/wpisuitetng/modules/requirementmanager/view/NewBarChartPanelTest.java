@@ -45,7 +45,7 @@ public class NewBarChartPanelTest {
 	static Session testSession;
 	static Project testProject;
 	static Requirement req2;
-	
+
 	static ViewEventController vec;
 	/**
 	
@@ -54,19 +54,19 @@ public class NewBarChartPanelTest {
 	@BeforeClass
 	public static void setUp() throws Exception {
 		String [][] exData = new String[1][8];
-		
+
 		for(int i=0; i<8; i++){
 			exData[0][i] = "1";
 		}
-		
+
 		vec = ViewEventController.getInstance();
 		vec.setMainView(new MainView());
 		vec.setOverviewTable(new OverviewTable(exData, exData[0]));
 		vec.setToolBar(new ToolbarView(true));
-		
-		bob = new User("bob", "bob", "bob@test.com", "1234", 27);
-		sue = new User("sue", "sue", "sue@test.com", "4321", 26);
-	
+
+		bob = new User("bob", "bob", "1234", 27);
+		sue = new User("sue", "sue", "4321", 26);
+
 		req1 = new Requirement(1,  "reqName", "The description");
 		req2 = new Requirement(2, "anotherReq", "another description");
 	}
@@ -87,7 +87,7 @@ public class NewBarChartPanelTest {
 		vec.createBarChart("Iteration");
 		assertEquals(3, vec.getMainView().getTabCount());
 	}
-	
+
 	/* any input other than Status or Iteration will create a bar chart that has info 
 	 * about the number of requirements a user has assigned
 	 */
@@ -107,7 +107,7 @@ public class NewBarChartPanelTest {
 		vec.createBarChart("Data");
 		assertEquals(3, vec.getMainView().getTabCount());
 	}
-	
+
 	@Test
 	public void testGetBarChartTitle() {
 		NewBarChartPanel bc = new NewBarChartPanel("The Name");

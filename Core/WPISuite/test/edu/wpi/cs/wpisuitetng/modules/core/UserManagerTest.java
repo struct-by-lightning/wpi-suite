@@ -51,47 +51,47 @@ public class UserManagerTest {
 	Session tempSession;
 	Session adminSession;
 	String mockSsid = "abc123";
-	
+
 	@Before
 	public void setUp()
 	{
 		test = new UserManager(MockDataStore.getMockDataStore());
 		testWithRealDB = new UserManager(DataStore.getDataStore());
-		temp = new User("test","test","test","test",0);
-		secondUser = new User ("Sam", "sammy","s@m.com","trouty", 1);
-		conflict = new User("steve", "steve","steve@steve.com",null, 0);
+		temp = new User("test","test","test",0);
+		secondUser = new User ("Sam", "sammy","trouty", 1);
+		conflict = new User("steve", "steve",null, 0);
 		tempSession = new Session(temp, mockSsid);
-		admin = new User("adam","adam","ad@m.com","password",4);
+		admin = new User("adam","adam","password",4);
 		admin.setRole(Role.ADMIN);
 		adminSession = new Session(admin, mockSsid);
 		json = new Gson();
 	}
-	
-	
-	
+
+
+
 	@Test
 	public void testMakeEntity() {
 		User u = null;
-		
+
 		String jsonUser = temp.toJSON();
 		jsonUser = jsonUser.substring(0, jsonUser.length() - 1);
 		jsonUser += ", \"password\":\"abcde\"}";
 		System.out.println(jsonUser);
-		
+
 		try {
 			u = test.makeEntity(new Session(temp, mockSsid), jsonUser);
 		} catch (WPISuiteException e) {
 			fail("unexpected exception");
 		}
-		
+
 		assertTrue(u.equals(temp));
 	}
-	
+
 	@Test(expected = ConflictException.class)
 	public void testMakeEntityExists() throws WPISuiteException {
 		test.makeEntity(tempSession, json.toJson(conflict, User.class));
 	}
-	
+
 	@Test(expected = BadRequestException.class)
 	public void testMakeEntityBadJson() throws WPISuiteException {
 		test.makeEntity(tempSession, "Garbage");
@@ -106,7 +106,7 @@ public class UserManagerTest {
 	public void testGetEntityStringEmptyString() throws NotFoundException, WPISuiteException {
 		test.getEntity("");
 	}
-	
+
 	@Test
 	public void testGetEntityStringUserExists()throws WPISuiteException {
 		User[] u = null;
@@ -117,7 +117,7 @@ public class UserManagerTest {
 		}
 		assertEquals(conflict, u[0]);
 	}
-	
+
 	@Test(expected = NotFoundException.class)
 	public void testGetEntityStringUserDNE() throws NotFoundException, WPISuiteException {
 		test.getEntity("jefferythegiraffe");
@@ -128,7 +128,7 @@ public class UserManagerTest {
 	public void testGetAll() throws WPISuiteException {
 		User[] initList = testWithRealDB.getAll(new Session(temp, mockSsid));
 		int initCount = initList.length;
-		
+
 		testWithRealDB.save(tempSession, temp);
 		testWithRealDB.save(tempSession, secondUser);
 		User[] myList = testWithRealDB.getAll(new Session(temp, mockSsid));
@@ -179,7 +179,7 @@ public class UserManagerTest {
 					Object uniqueID, String changeField, Object changeValue)
 					throws WPISuiteException {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
@@ -315,7 +315,7 @@ public class UserManagerTest {
 			}
 		).deleteEntity(adminSession, temp.getUsername());
 	}
-	
+
 	@Test
 	public void testDeleteEntity() throws WPISuiteException
 	{
@@ -400,7 +400,7 @@ public class UserManagerTest {
 		testWithRealDB.save(tempSession, secondUser);
 		User[] myList = testWithRealDB.getAll(new Session(temp, mockSsid));
 		testWithRealDB.deleteAll(new Session(temp, mockSsid));
-		
+
 		myList = testWithRealDB.getAll(new Session(temp, mockSsid));
 		assertEquals(1, myList.length);
 		assertEquals(myList[0], null);
@@ -410,7 +410,7 @@ public class UserManagerTest {
 	public void testCount() {
 		fail("Not yet implemented");
 	}
-	
+
 	@Test
 	/**
 	 * Tests if the update() function properly maps the JSON string then applies
@@ -422,14 +422,14 @@ public class UserManagerTest {
 		Session ses = null;
 		String updateString = "{ \"idNum\": 99, \"role\":\"ADMIN\",  \"username\": \"zach\", \"name\": \"zach\" }";
 		User newTemp = this.test.update(adminSession, temp, updateString);
-		
+
 		// TODO: find a way to retrieve the User from storage to run assertions on.
-		
+
 		assertEquals(99, newTemp.getIdNum());
 		assertEquals(newTemp.getRole(), Role.ADMIN);
 		assertTrue(newTemp.getName().equals("zach"));
 	}
-	
+
 	@Test(expected = WPISuiteException.class)
 	/**
 	 * Tests failure in update's ObjectMapper. 
@@ -439,9 +439,9 @@ public class UserManagerTest {
 	{
 		Session ses = null;
 		String updateString = "{ \"idNum\": 99,  \"username\": \"updated\", \"role\": \"ADMIN\",  \"name\": \"zach\",,,,,,,,,,, }"; // extra commas cause problems in ObjectMapper
-		
+
 		this.test.update(ses, temp, updateString);
-		
+
 		fail("Exception should have been thrown");
 	}
 

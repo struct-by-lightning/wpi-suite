@@ -27,24 +27,24 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 public class MockDataStore implements Data {
 
 	private ArrayList<Model> models;
-	
+
 	private static MockDataStore myself = null;
-	
+
 	public static MockDataStore getMockDataStore()
 	{
 		if(myself == null)
 			myself = new MockDataStore();
 		return myself;
 	}
-	
+
 	private MockDataStore()
 	{
 		models = new ArrayList<Model>();
 		models.add(new Project("test", "5"));
-		models.add(new User("steve","steve","steve@steve.com",null, 0));
-		models.add(new User("fred","fred","fred@fred.com",null, 1));
-		models.add(new User("jeff","jeff","jeff@jeff.com",null, 2));
-		models.add(new User("tyler","tyler","tyler@tyler.com",null, 3));
+		models.add(new User("steve", "steve",null, 0));
+		models.add(new User("fred","fred",null, 1));
+		models.add(new User("jeff","jeff",null, 2));
+		models.add(new User("tyler","tyler",null, 3));
 		models.add(new Project("WPISUITE","0"));
 		models.add(new Project("ANDROID:BEARCLAW","1"));
 		models.add(new Project("WINDOWS9","2"));
@@ -52,7 +52,7 @@ public class MockDataStore implements Data {
 		models.add(new Project("UBUNTU_RABID_RHINO","4"));
 
 	}
-	
+
 	public Model save(String json, Class<? extends Model> type)
 	{
 		Gson gson = new Gson();
@@ -62,7 +62,7 @@ public class MockDataStore implements Data {
 			models.add(m);
 		return (n == null) ? m : n[0];
 	}
-	
+
 	public Model[] retrieve(Class<? extends Model> type, Object id)
 	{
 		List<Model> list = new ArrayList<Model>();
@@ -89,7 +89,7 @@ public class MockDataStore implements Data {
 			return list.toArray(mlist);
 		}
 	}
-	
+
 	public Model[] retrieve(Class<? extends Model> type, Object id, Project aProject)
 	{
 		return retrieve(type, id);
@@ -155,7 +155,7 @@ public class MockDataStore implements Data {
 			Object theGivenValue, Project aProject) {
 		return retrieve(anObjectQueried, aFieldName, theGivenValue);
 	}
-	
+
 	@Override
 	public <T> T delete(T aTNG) {
 		System.out.println("DEBUG: Inside delete");
@@ -167,7 +167,7 @@ public class MockDataStore implements Data {
 	public void update(Class anObjectToBeModified, String fieldName,
 			Object uniqueID, String changeField, Object changeValue) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

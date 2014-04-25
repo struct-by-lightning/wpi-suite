@@ -52,7 +52,7 @@ public class UserManager implements EntityManager<User> {
 	private PasswordCryptographer passwordHash;
 	Gson gson;
 	Data data;
-	
+
 	private static final Logger logger = Logger.getLogger(UserManager.class.getName());
 
 	/**
@@ -74,12 +74,12 @@ public class UserManager implements EntityManager<User> {
 
 	}
 
-	
+
 	@Override
 	public User makeEntity(Session s, String content) throws WPISuiteException{
 
 		//TODO: create a custom de-serializer & serializer so we can hash the desired password & remove it from others.
-		
+
 		logger.log(Level.FINE, "Attempting new User creation...");
 
 		User p;
@@ -96,9 +96,9 @@ public class UserManager implements EntityManager<User> {
 			String hashedPassword = this.passwordHash.generateHash(newPassword);
 
 			p.setPassword(hashedPassword);
-			
+
 			p.setRole(Role.USER);
-			
+
 			save(s,p);
 		}
 		else
@@ -111,8 +111,8 @@ public class UserManager implements EntityManager<User> {
 
 		return p;
 	}
-	
-	
+
+
 	@Override
 	public User[] getEntity(Session s,String id) throws WPISuiteException 
 	{
@@ -126,7 +126,7 @@ public class UserManager implements EntityManager<User> {
 			return data.retrieve(user, "username", id).toArray(m);
 		}
 	}
-	
+
 	/**
 	 * returns a user without requiring a session, 
 	 * specifically for the scenario where a session needs to be created.
@@ -146,7 +146,7 @@ public class UserManager implements EntityManager<User> {
 		else
 		{
 			m = data.retrieve(user, "username", id).toArray(m);
-			
+
 			if(m[0] == null)
 			{
 				throw new NotFoundException("User with id <" + id + "> not found.");
@@ -161,7 +161,7 @@ public class UserManager implements EntityManager<User> {
 	@Override
 	public User[] getAll(Session s) {
 		User[] ret = new User[1];
-		ret = data.retrieveAll(new User("","","","",0)).toArray(ret);
+		ret = data.retrieveAll(new User("","","",0)).toArray(ret);
 		return ret;
 	}
 
@@ -178,7 +178,7 @@ public class UserManager implements EntityManager<User> {
 			logger.log(Level.WARNING, "User Save Failure!");
 			throw new DatabaseException("Save failure for User."); // Session User: " + s.getUsername() + " User: " + model.getName());
 		}
-		
+
 	}
 
 	@Override
@@ -195,16 +195,16 @@ public class UserManager implements EntityManager<User> {
 			logger.log(Level.WARNING,"User: "+s1.getUser().getUsername()+"attempted to delete: "+id);
 			throw new UnauthorizedException("Delete not authorized");
 		}
-		
-		
-		
-		
+
+
+
+
 	}
 
 	@Override
 	public void deleteAll(Session s) {
 		logger.log(Level.INFO, "UserManager invoking DeleteAll...");
-		data.deleteAll(new User("","","","",0));
+		data.deleteAll(new User("","","",0));
 	}
 
 	@Override
@@ -212,7 +212,7 @@ public class UserManager implements EntityManager<User> {
 		// TODO pending on get all
 		return 0;
 	}
-	
+
 	/**
 	 * 	Updates a single user object based on the JSON update string provided.
 	 * 		Inflates the JSON into a User object then checks each field for differences.
@@ -234,7 +234,6 @@ public class UserManager implements EntityManager<User> {
 		{
 			logger.log(Level.FINE, "User update being attempted...");
 			changes = User.fromJSON(changeSet);
-					
 		}
 		catch(JsonParseException e)
 		{
@@ -243,28 +242,23 @@ public class UserManager implements EntityManager<User> {
 			throw new SerializationException("Error inflating the changeset: " + e.getMessage());
 		}
 
-		
+
 		if(s.getUser().getUsername().equals(toUpdate.getUsername()) || s.getUser().getRole().equals(Role.ADMIN))
 		{
 			// Resolve differences toUpdate using changes, field-by-field.
 			toUpdate.setIdNum(changes.getIdNum()); 
-	
+
 			if(changes.getName() != null)
 			{
 				toUpdate.setName(changes.getName());
 			}
-			
+
 			if(changes.getPassword() != null)
 			{
 				String encryptedPass = this.passwordHash.generateHash(changes.getPassword());
 				toUpdate.setPassword(encryptedPass);
 			}
-			
-			if((changes.getEmail() != null))
-			{
-				toUpdate.setEmail(changes.getEmail());
-			}
-	
+
 			if((changes.getRole() != null))
 			{
 				if(s.getUser().getRole().equals(Role.ADMIN))
@@ -281,7 +275,7 @@ public class UserManager implements EntityManager<User> {
 					logger.log(Level.WARNING,"User: "+s.getUser().getUsername()+" attempted unauthorized priveledge elevation");
 				}
 			}
-	
+
 			// save the changes back
 			this.save(s, toUpdate);
 		}
@@ -315,10 +309,10 @@ public class UserManager implements EntityManager<User> {
 	@Override
 	public User update(Session s, String content) throws WPISuiteException {
 		String str = UserManager.parseUsername(content);
-		
+
 		return this.update(s, this.getEntity(str)[0], content);
 	}
-	
+
 	/**
 	 * This static utility method takes a JSON string and attempts to
 	 * 	retrieve a username field from it.
@@ -328,23 +322,23 @@ public class UserManager implements EntityManager<User> {
 	public static String parseUsername(String serializedUser)
 	{
 		logger.log(Level.FINE, "Attempting username parsing...");
-		
+
 		if(serializedUser == null || !serializedUser.contains("username"))
 		{
 			throw new JsonParseException("The given JSON string did not contain a username field.");
 		}
-		
+
 		int fieldStartIndex = serializedUser.indexOf("username");
 		int separator = serializedUser.indexOf(':', fieldStartIndex);
 		int startIndex = serializedUser.indexOf('"', separator) + 1;
 		int endIndex = serializedUser.indexOf('"', startIndex);
-		
+
 		String username = serializedUser.substring(startIndex, endIndex);
-		
+
 		logger.log(Level.FINE, "Username parsing success!");
 		return username;
 	}
-	
+
 	/**
 	 * Creates an Admin user if one does not exist
 	 */
@@ -352,7 +346,7 @@ public class UserManager implements EntityManager<User> {
 	{
 		logger.log(Level.INFO, "Adding an admin");
 
-		User p = new User("Admin", "admin", "struct.by.lightning@gmail.com", "password", 0);
+		User p = new User("Admin", "admin", "password", 0);
 
 		try {
 			if(getEntity(null,p.getUsername())[0] == null)
@@ -361,9 +355,9 @@ public class UserManager implements EntityManager<User> {
 				String hashedPassword = this.passwordHash.generateHash(newPassword);
 
 				p.setPassword(hashedPassword);
-				
+
 				p.setRole(Role.ADMIN);
-				
+
 				save(null,p);
 			}
 			else
@@ -374,10 +368,10 @@ public class UserManager implements EntityManager<User> {
 		}
 
 		logger.log(Level.INFO, "Admin creation success!");
-		
+
 		return p;
 	}
-	
+
 	private int getAdminCount() throws WPISuiteException {
 		return data.retrieve(User.class, "role", Role.ADMIN).size();
 	}
