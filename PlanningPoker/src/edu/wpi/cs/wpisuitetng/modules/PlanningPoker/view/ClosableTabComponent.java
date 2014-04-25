@@ -9,6 +9,7 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
 	
 /**
  * This class closes open tabs
@@ -76,19 +79,32 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// close this tab when close button is clicked
 		final int index = tabbedPane.indexOfTabComponent(this);
-		if(index > -1) { 
+
+		if(index > -1) {
+			System.out.println(index);
+			System.out.println(tabbedPane);
+			System.out.println(tabbedPane.getComponentAt(index));
+			Component tabView = tabbedPane.getComponentAt(index);
 			
-			//default icon, custom title
-			int n = JOptionPane.showConfirmDialog(
-			    this.getParent().getParent(),
-			    "Are you sure, you want to close the current tab?",
-			    "Warning",
-			    JOptionPane.YES_NO_OPTION);
-			
-			if (n == JOptionPane.YES_OPTION) {
+			if (tabView instanceof CreateGameView) {
+				if (((CreateGameView) tabView).isViewHasBeenEdited()) {
+					//default icon, custom title
+					int n = JOptionPane.showConfirmDialog(
+					    this.getParent().getParent(),
+					    "Are you sure, you want to close the current tab?",
+					    "Warning",
+					    JOptionPane.YES_NO_OPTION);
+					
+					if (n == JOptionPane.YES_OPTION) {
+						tabbedPane.removeTabAt(index);
+					}
+				}
+				else {
+					tabbedPane.removeTabAt(index);
+				}
+			} else {
 				tabbedPane.removeTabAt(index);
 			}
-
 		}
 	}
 	
