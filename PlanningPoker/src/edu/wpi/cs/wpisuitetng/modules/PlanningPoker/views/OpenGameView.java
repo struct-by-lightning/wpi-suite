@@ -144,7 +144,10 @@ public class OpenGameView extends JPanel {
 		initForGame();
 		
 		estimateNumberLabel.setText("?");
+		
+			if (!game.getDeckType().equals("No Deck")) {
 		submitButton.setEnabled(false);
+			}
 	}
 
 	/**
