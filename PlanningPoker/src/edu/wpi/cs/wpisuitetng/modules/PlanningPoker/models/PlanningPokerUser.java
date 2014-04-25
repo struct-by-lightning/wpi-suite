@@ -130,7 +130,7 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 	/**
 	 * @return the sendEmail
 	 */
-	public boolean isSendEmail() {
+	public boolean canSendEmail() {
 		return sendEmail;
 	}
 
@@ -144,7 +144,7 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 	/**
 	 * @return the sendAim
 	 */
-	public boolean isSendAim() {
+	public boolean canSendAim() {
 		return sendAim;
 	}
 

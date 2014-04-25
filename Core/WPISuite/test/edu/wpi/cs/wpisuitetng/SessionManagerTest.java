@@ -38,17 +38,17 @@ public class SessionManagerTest {
 	SessionManager man;
 	User u1;
 	User u2;
-	
+
 	@Before
 	public void setUp()
 	{
-		this.u1 = new User("Tyler", "twack", "tw@ck.com", "jayms", 2);
-		this.u2 = new User("Mike", "mpdelladonna", "mike@test.com", "yams", 3);
+		this.u1 = new User("Tyler", "twack", "jayms", 2);
+		this.u2 = new User("Mike", "mpdelladonna", "yams", 3);
 		this.u2.setRole(Role.ADMIN);
-		
+
 		this.man = new SessionManager();
 	}
-	
+
 	@After
 	/**
 	 * Clears out the sessions after each run.
@@ -59,55 +59,55 @@ public class SessionManagerTest {
 	}
 
 	/* Test SessionManager Map Exposure Functions */
-	
+
 	@Test
 	public void testCreateSession()
 	{
 		String ssid = this.man.createSession(this.u1);
-		
+
 		Session createdSession = this.man.getSession(ssid);
-		
+
 		assertEquals(this.man.sessionCount(), 1); // check that only one exists in the Manager.
 		assertTrue(createdSession.getUsername().equals(this.u1.getUsername())); // check that the session is the right user
 	}
-	
+
 	@Test
 	public void testSessionExists()
 	{
 		String session = this.man.createSession(this.u2);
-		
+
 		assertEquals(this.man.sessionCount(), 1);
 		assertTrue(this.man.sessionExists(session));
 	}
-	
+
 	@Test
 	public void testClearSessions()
 	{
 		this.man.createSession(this.u1);
 		this.man.createSession(this.u2);
-		
+
 		assertEquals(2, this.man.sessionCount()); // check that sessions have been added.
-		
+
 		this.man.clearSessions();
-		
+
 		assertEquals(this.man.sessionCount(), 0); // check that the sessions have been cleared.
 	}
-	
+
 	@Test
 	public void testRemoveSession()
 	{
 		this.man.createSession(this.u2);
 		String ssid = this.man.createSession(this.u1);
-		
+
 		assertEquals(2, this.man.sessionCount()); // check sessions has been created
-		
+
 		this.man.removeSession(ssid);
-		
+
 		assertEquals(this.man.sessionCount(), 1);
 	}
-	
+
 	/* Test complex SessionManager functions */
-	
+
 	@Test
 	@Ignore // db test, ignoring until we make a cleaner testing strategy.
 	/**
@@ -123,13 +123,13 @@ public class SessionManagerTest {
 		UserManager users = manager.getUsers();
 		SessionManager sessions = manager.getSessions();
 		ProjectManager projects = manager.getProjects();
-		
+
 		String originalSsid = sessions.createSession(u2);
 		Session originalSession = sessions.getSession(originalSsid);
-		
+
 		String projectId = "proj1";
 		Project p = new Project("wpisuite", projectId);
-		
+
 		try
 		{
 			projects.makeEntity(originalSession, p.toJSON());
@@ -138,16 +138,16 @@ public class SessionManagerTest {
 		{
 			// this is okay because it means the project already exists in the database.
 		}
-		
+
 		String newSsid = sessions.switchToProject(originalSsid, projectId);
 		Session projectSession = sessions.getSession(newSsid);
-		
+
 		assertFalse(sessions.sessionExists(originalSsid));
 		assertTrue(projectSession != null);
-		
+
 		assertTrue(originalSession.getProject() == null);
 		assertTrue(projectSession.getProject().equals(p));
-		
+
 		try
 		{
 			projects.deleteEntity(projectSession, p.toJSON());	
@@ -157,7 +157,7 @@ public class SessionManagerTest {
 			// this is okay since we are trying to make the project 'not found'
 		}
 	}
-	
+
 	@Test(expected=SessionException.class)
 	/**
 	 * Test the switchProject function in SessionManger. This tests the integrity checks
@@ -173,14 +173,14 @@ public class SessionManagerTest {
 		UserManager users = manager.getUsers();
 		SessionManager sessions = manager.getSessions();
 		ProjectManager projects = manager.getProjects();
-		
+
 		String originalSsid = "abc123";
-		
+
 		String projectId = "proj1";
-		
+
 		String newSsid = sessions.switchToProject(originalSsid, projectId); // exception expected here
 	}
-	
+
 	@Test(expected=SessionException.class)
 	/**
 	 * Test the switchProject function in SessionManger. It should replace the
@@ -195,12 +195,12 @@ public class SessionManagerTest {
 		UserManager users = manager.getUsers();
 		SessionManager sessions = manager.getSessions();
 		ProjectManager projects = manager.getProjects();
-		
+
 		String originalSsid = sessions.createSession(u2);
 		Session originalSession = sessions.getSession(originalSsid);
-		
+
 		String projectId = "proj00";
-		
+
 		String newSsid = sessions.switchToProject(originalSsid, projectId); // should throw an exception
 
 	}

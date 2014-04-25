@@ -50,28 +50,28 @@ public class RequirementManagerTest {
 	Project testProject;
 	Project otherProject;
 	Requirement req2;
-	
+
 	/**
 	 * Set up objects and create a mock session for testing
 	
 	 * @throws Exception */
 	@Before
 	public void setUp() throws Exception {
-		User admin = new User("admin", "admin", "admin@test.com", "1234", 27);
+		User admin = new User("admin", "admin", "1234", 27);
 		admin.setRole(Role.ADMIN);
 		testProject = new Project("test", "1");
 		otherProject = new Project("other", "2");
 		mockSsid = "abc123";
 		adminSession = new Session(admin, testProject, mockSsid);
-		
-		existingUser = new User("joe", "joe", "joe@test.com", "1234", 2);
+
+		existingUser = new User("joe", "joe", "1234", 2);
 		req1 = new Requirement(1, "Bob", "1.0", RequirementStatus.NEW, RequirementPriority.BLANK, "Desc", 1, 1);
-		
+
 		req2 = new Requirement(2, "Joe", "2.0", RequirementStatus.NEW, RequirementPriority.LOW, "Description", 2, 2);
-				
+
 		defaultSession = new Session(existingUser, testProject, mockSsid);
 		req3 = new Requirement(3, "Jim", "3.0", RequirementStatus.NEW, RequirementPriority.HIGH, "Desc", 1, 2);
-		
+
 		db = new MockData(new HashSet<Object>());
 		db.save(req1, testProject);
 		db.save(existingUser);
@@ -96,7 +96,7 @@ public class RequirementManagerTest {
 		assertEquals(2, created.getEffort());
 		assertSame(db.retrieve(Requirement.class, "id", 3).get(0), created);
 	}
-	
+
 	/**
 	 * Ensures a requirement can be retrieved from the database
 	
@@ -127,7 +127,7 @@ public class RequirementManagerTest {
 		assertTrue(manager.deleteEntity(adminSession, "1"));
 		assertEquals(0, db.retrieve(Requirement.class, "id", 1).size());
 	}
-	
+
 	/**
 	 * Ensures a NotFoundException is thrown when trying to delete
 	 * an invalid requirement
@@ -137,7 +137,7 @@ public class RequirementManagerTest {
 	public void testDeleteMissing() throws WPISuiteException {
 		manager.deleteEntity(adminSession, "4534");
 	}
-	
+
 	/**
 	 * Ensures an UnauthorizedException is thrown when trying
 	 * to delete an entity while not authorized
@@ -147,7 +147,7 @@ public class RequirementManagerTest {
 	public void testDeleteNotAllowed() throws WPISuiteException {
 		manager.deleteEntity(defaultSession, Integer.toString(req1.getId()));
 	}
-	
+
 	/**
 	 * Ensures the deletion of all requirements funtions properly
 	
@@ -173,7 +173,7 @@ public class RequirementManagerTest {
 		manager.deleteAll(adminSession);
 		// no exceptions
 	}
-	
+
 	/**
 	 * Method testCount.
 	
@@ -194,7 +194,7 @@ public class RequirementManagerTest {
 		assertEquals(req1.getName(), updatedRequirement.getName());
 		assertEquals(req1.getId(), updatedRequirement.getId());
 	}
-	
+
 	@Test
 	public void getAllTest() {
 		Requirement reqList[] = new Requirement[2];

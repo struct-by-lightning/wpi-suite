@@ -18,6 +18,10 @@ import java.util.Map.Entry;
  *
  */
 public class Statistics {
+	/**
+	 * @param m input array
+	 * @return mean
+	 */
 	public static double mean(double[] m) {
 	    double sum = 0;
 	    for (int i = 0; i < m.length; i++) {
@@ -26,6 +30,10 @@ public class Statistics {
 	    return sum / m.length;
 	}
 	
+	/**
+	 * @param m input array
+	 * @return median
+	 */
 	public static double median(double[] m) {
 		Arrays.sort(m);
 	    int middle = m.length/2;
@@ -36,6 +44,10 @@ public class Statistics {
 	    }
 	}
 	
+	/**
+	 * @param m input array
+	 * @return mode
+	 */
 	public static double mode(double a[]) {
 	    int maxCount = 0;
 	    double  maxValue = 0;
@@ -54,6 +66,10 @@ public class Statistics {
 	    return maxValue;
 	}
 	
+	/**
+	 * @param m input array
+	 * @return standard deviation
+	 */
 	public static double StdDev(double[] m) {
 		double avg = mean(m);
 		double variance = 0;
@@ -64,6 +80,10 @@ public class Statistics {
 		return Math.sqrt(variance/(m.length-1));
 	}
 	
+	/**
+	 * @param m input array
+	 * @return maximum value
+	 */
 	public static double max(double[] m) {
 		double max = m[0];
 		for(int i = 0; i<m.length; i++) {
@@ -74,6 +94,10 @@ public class Statistics {
 		return max;
 	}
 	
+	/**
+	 * @param m input array
+	 * @return minimum value
+	 */
 	public static double min(double[] m) {
 		double min = m[0];
 		for(int i = 0; i<m.length; i++) {

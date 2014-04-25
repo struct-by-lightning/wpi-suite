@@ -22,7 +22,7 @@ public class MockUserManager extends UserManager {
 
 	@Override
 	public User update(Session s, String content) throws WPISuiteException {
-		return new User("asdf","asdf","asdf@asdf.com","asdf", 0);
+		return new User("asdf","asdf","asdf", 0);
 	}
 
 	@Override
@@ -46,16 +46,16 @@ public class MockUserManager extends UserManager {
 
 	@Override
 	public User makeEntity(Session s, String content) throws WPISuiteException {
-		return new User("asdf","asdf","asdf@asdf.com","asdf", 0);
+		return new User("asdf","asdf","asdf", 0);
 	}
 
 	User fake;
-	
+
 	public MockUserManager(Data data, User fake) {
 		super(data);
 		this.fake = fake;
 	}
-	
+
 
 	@Override
 	public User[] getEntity(String id)
@@ -63,10 +63,10 @@ public class MockUserManager extends UserManager {
 		User[] u = new User[1];
 		u[0] = fake;
 
-		
+
 		return u;
 	}
-	
+
 	@Override
 	public User[] getEntity(Session s, String id)
 	{
@@ -79,17 +79,17 @@ public class MockUserManager extends UserManager {
 			u[0] = fake;
 			u[1] = fake;
 		}
-		
+
 		if(id.equalsIgnoreCase("asdf"))
-			u[0] = new User("asdf","asdf","asdf@asdf.com","asdf", 0);
-		
+			u[0] = new User("asdf","asdf","asdf", 0);
+
 		if(!(id.equalsIgnoreCase(fake.getUsername()) || id.equalsIgnoreCase("") || id.equalsIgnoreCase("asdf")))
 			return null;
 		System.out.println("MockUserManager retval: " + u[0]);
 		return u;
 	}
-	
-	
-	
-	
+
+
+
+
 }

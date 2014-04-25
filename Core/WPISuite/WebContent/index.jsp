@@ -15,9 +15,8 @@ String[] coreuser = {
 		"name",
 		"password",
 		"idNum",
-		"email"
 };
-int coreuserlength = 5;
+int coreuserlength = 4;
 
 String coreprojecttitle = "CoreProject";
 String coreprojectpath = "core/project";

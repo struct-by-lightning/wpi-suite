@@ -39,18 +39,18 @@ public class CommentManagerTest {
 	Defect defect;
 	Data db;
 	CommentManager manager;
-	
+
 	String mockSsid;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		mockSsid = "abc123";
-		bob = new User("bob", "bob", "bob@test.com", "1234", 1);
+		bob = new User("bob", "bob", "1234", 1);
 		testProject = new Project("test", "1");
 		defaultSession = new Session(bob, testProject, mockSsid);
 		defect = new Defect(1, "title", "description", bob);
 		goodComment = new Comment(1, bob, "this defect is stupid, and so are you");
-		
+
 		db = new MockData(new HashSet<Object>());
 		db.save(defect, testProject);
 		db.save(bob);
@@ -64,7 +64,7 @@ public class CommentManagerTest {
 		assertSame(created, defect.getEvents().get(0));
 		assertSame(testProject, created.getProject());
 	}
-	
+
 	@Test(expected=BadRequestException.class)
 	public void testMakeBadEntity() throws WPISuiteException {
 		goodComment.setBody(null); // make sure the validator is being used
