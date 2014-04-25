@@ -44,13 +44,13 @@ public class CommentValidatorTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		bob = new User("bob", "bob", "bob@test.com", "1234", 1);
+		bob = new User("bob", "bob", "1234", 1);
 		testProject = new Project("test", "1");
 		mockSsid = "abc123";
 		defaultSession = new Session(bob, testProject, mockSsid);
 		defect = new Defect(1, "title", "description", bob);
 		
-		User bobCopy = new User(null, "bob", "bot@test.com", null, -1);
+		User bobCopy = new User(null, "bob", null, -1);
 		goodNewComment = new Comment(1, bobCopy, "hello");
 		
 		db = new MockData(new HashSet<Object>());
@@ -105,7 +105,7 @@ public class CommentValidatorTest {
 	
 	@Test
 	public void testAuthorMismatch() {
-		goodNewComment.setUser(new User("joe", "joe", "joe@test.com", "", 2));
+		goodNewComment.setUser(new User("joe", "joe", "", 2));
 		checkFieldIssue(defaultSession, goodNewComment, "user");
 	}
 	
@@ -117,9 +117,9 @@ public class CommentValidatorTest {
 	
 	@Test
 	public void testBadAuthor() {
-		goodNewComment.setUser(new User(null, null, null, null, -1));
+		goodNewComment.setUser(new User(null, null, null, -1));
 		checkFieldIssue(defaultSession, goodNewComment, "user");
-		goodNewComment.setUser(new User(null, "blah", null, null, -1));
+		goodNewComment.setUser(new User(null, "blah", null, -1));
 		checkFieldIssue(defaultSession, goodNewComment, "user");
 	}
 	
