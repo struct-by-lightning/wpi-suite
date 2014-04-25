@@ -34,18 +34,19 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 	
 	private String userName;
 	
-	private String sms;
-	
 	private String instantMessage;
+	
+	private boolean sendEmail, sendAim;
 
 	
 	
-	public PlanningPokerUser(String email, String userName, String sms, String instantMessage) {
+	public PlanningPokerUser(String email, String userName, String instantMessage, boolean sendEmail, boolean sendAim) {
 		super();
 		this.email = email;
 		this.userName = userName;
-		this.sms = sms;
 		this.instantMessage = instantMessage;
+		this.sendEmail = sendEmail;
+		this.sendAim = sendAim;
 	}
 
 	public String toJSON(){
@@ -110,19 +111,6 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 		this.userName = userName;
 	}
 
-	/**
-	 * @return the sms
-	 */
-	public String getSms() {
-		return sms;
-	}
-
-	/**
-	 * @param sms the sms to set
-	 */
-	public void setSms(String sms) {
-		this.sms = sms;
-	}
 
 	/**
 	 * @return the instantMessage
@@ -136,6 +124,35 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 	 */
 	public void setInstantMessage(String instantMessage) {
 		this.instantMessage = instantMessage;
+	}
+
+
+	/**
+	 * @return the sendEmail
+	 */
+	public boolean isSendEmail() {
+		return sendEmail;
+	}
+
+	/**
+	 * @param sendEmail the sendEmail to set
+	 */
+	public void setSendEmail(boolean sendEmail) {
+		this.sendEmail = sendEmail;
+	}
+
+	/**
+	 * @return the sendAim
+	 */
+	public boolean isSendAim() {
+		return sendAim;
+	}
+
+	/**
+	 * @param sendAim the sendAim to set
+	 */
+	public void setSendAim(boolean sendAim) {
+		this.sendAim = sendAim;
 	}
 
 	/**
