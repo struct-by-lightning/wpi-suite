@@ -142,6 +142,12 @@ public class OpenGameView extends JPanel {
 
 		// Fill components with data from the planning poker game.
 		initForGame();
+		
+		estimateNumberLabel.setText("?");
+		
+			if (!game.getDeckType().equals("No Deck")) {
+		submitButton.setEnabled(false);
+			}
 	}
 
 	/**
