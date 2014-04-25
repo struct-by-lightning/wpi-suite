@@ -576,7 +576,7 @@ public class ClosedGameView extends JPanel {
 		estimateTitlePanel.setBorder(new javax.swing.border.SoftBevelBorder(
 				javax.swing.border.BevelBorder.RAISED));
 
-		estimateTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+		estimateTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 		estimateTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		estimateTitleLabel.setText("<html>Final estimate</html>");
 
@@ -638,12 +638,12 @@ public class ClosedGameView extends JPanel {
 						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-		mean.setFont(new java.awt.Font("Tahoma", 0, 28));
-		median.setFont(new java.awt.Font("Tahoma", 0, 28));
-		mode.setFont(new java.awt.Font("Tahoma", 0, 28));
-		std.setFont(new java.awt.Font("Tahoma", 0, 28));
-		max.setFont(new java.awt.Font("Tahoma", 0, 28));
-		min.setFont(new java.awt.Font("Tahoma", 0, 28));
+		mean.setFont(new java.awt.Font("Tahoma", 0, 14));
+		median.setFont(new java.awt.Font("Tahoma", 0, 14));
+		mode.setFont(new java.awt.Font("Tahoma", 0, 14));
+		std.setFont(new java.awt.Font("Tahoma", 0, 14));
+		max.setFont(new java.awt.Font("Tahoma", 0, 14));
+		min.setFont(new java.awt.Font("Tahoma", 0, 14));
 		stats.add(mean);
 		stats.add(std);
 		stats.add(median);
