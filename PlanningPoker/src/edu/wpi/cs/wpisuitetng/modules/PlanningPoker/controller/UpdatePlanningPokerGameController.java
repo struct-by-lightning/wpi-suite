@@ -20,7 +20,6 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * adding the contents of the PlanningPokerGame text fields to the model as a new
  * PlanningPokerGame.
  * @version $Revision: 1.0 $
- * @author justinhess
  */
 public class UpdatePlanningPokerGameController{
 	
