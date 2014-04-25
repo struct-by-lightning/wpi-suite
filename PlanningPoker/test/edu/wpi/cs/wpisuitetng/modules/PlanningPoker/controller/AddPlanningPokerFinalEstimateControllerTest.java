@@ -31,5 +31,5 @@ public class AddPlanningPokerFinalEstimateControllerTest {
 		AddPlanningPokerFinalEstimateController gc = AddPlanningPokerFinalEstimateController.getInstance();
 		assertEquals(gc.hashCode(), AddPlanningPokerFinalEstimateController.getInstance().hashCode());
 	}
-
+	
 }
