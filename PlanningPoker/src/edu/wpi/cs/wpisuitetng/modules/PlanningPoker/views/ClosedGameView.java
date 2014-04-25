@@ -382,8 +382,7 @@ public class ClosedGameView extends JPanel {
 
 		setLayout(new java.awt.BorderLayout());
 
-		requirementsLabelPanel.setBorder(javax.swing.BorderFactory
-				.createLineBorder(new java.awt.Color(153, 153, 153)));
+		requirementsLabelPanel.setBorder(null);
 
 		requirementsLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		requirementsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -573,10 +572,9 @@ public class ClosedGameView extends JPanel {
 
 		estimateCenteringPanel.setLayout(new java.awt.GridBagLayout());
 
-		estimateTitlePanel.setBorder(new javax.swing.border.SoftBevelBorder(
-				javax.swing.border.BevelBorder.RAISED));
+		estimateTitlePanel.setBorder(null);
 
-		estimateTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+		estimateTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 		estimateTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		estimateTitleLabel.setText("<html>Final estimate</html>");
 
@@ -598,8 +596,7 @@ public class ClosedGameView extends JPanel {
 								javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		estimateNumberPanel.setBorder(new javax.swing.border.SoftBevelBorder(
-				javax.swing.border.BevelBorder.RAISED));
+		estimateNumberPanel.setBorder(null);
 
 		estimateNumberBox.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
 		estimateNumberBox.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -638,12 +635,12 @@ public class ClosedGameView extends JPanel {
 						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-		mean.setFont(new java.awt.Font("Tahoma", 0, 28));
-		median.setFont(new java.awt.Font("Tahoma", 0, 28));
-		mode.setFont(new java.awt.Font("Tahoma", 0, 28));
-		std.setFont(new java.awt.Font("Tahoma", 0, 28));
-		max.setFont(new java.awt.Font("Tahoma", 0, 28));
-		min.setFont(new java.awt.Font("Tahoma", 0, 28));
+		mean.setFont(new java.awt.Font("Tahoma", 0, 14));
+		median.setFont(new java.awt.Font("Tahoma", 0, 14));
+		mode.setFont(new java.awt.Font("Tahoma", 0, 14));
+		std.setFont(new java.awt.Font("Tahoma", 0, 14));
+		max.setFont(new java.awt.Font("Tahoma", 0, 14));
+		min.setFont(new java.awt.Font("Tahoma", 0, 14));
 		stats.add(mean);
 		stats.add(std);
 		stats.add(median);
@@ -651,8 +648,7 @@ public class ClosedGameView extends JPanel {
 		stats.add(mode);
 		stats.add(min);
 		// stats.setPreferredSize(new Dimension(stats.getWidth(), 50));
-		stats.setBorder(javax.swing.BorderFactory
-				.createLineBorder(new java.awt.Color(153, 153, 153)));
+		stats.setBorder(null);
 
 		javax.swing.GroupLayout rightBlankPanelLayout = new javax.swing.GroupLayout(rightBlankPanel);
 		rightBlankPanel.setLayout(rightBlankPanelLayout);

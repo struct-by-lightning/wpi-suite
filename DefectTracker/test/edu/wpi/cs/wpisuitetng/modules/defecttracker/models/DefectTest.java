@@ -30,7 +30,7 @@ public class DefectTest {
 	
 	@Before
 	public void setUp() {
-		bob = new User("Bob", "bob", "", "", -1);
+		bob = new User("Bob", "bob", "", -1);
 		d1 = new Defect(1, "", "", bob);
 		d1.getEvents().add(new DefectChangeset());
 		d1.getEvents().add(new Comment());

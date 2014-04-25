@@ -19,7 +19,6 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  * to the server to add a PlanningPokerGame.
  *
  * @version $Revision: 1.0 $
- * @author justinhess
  */
 public class UpdatePlanningPokerGameRequestObserver implements RequestObserver {
 	
