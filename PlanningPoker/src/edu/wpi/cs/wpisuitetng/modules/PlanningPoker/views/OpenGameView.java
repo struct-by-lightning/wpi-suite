@@ -524,8 +524,7 @@ public class OpenGameView extends JPanel {
 
 		setLayout(new java.awt.BorderLayout());
 
-		requirementsLabelPanel.setBorder(javax.swing.BorderFactory
-				.createLineBorder(new java.awt.Color(153, 153, 153)));
+		requirementsLabelPanel.setBorder(null);
 
 		requirementsLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		requirementsLabel
@@ -806,8 +805,7 @@ public class OpenGameView extends JPanel {
 
 		estimateCenteringPanel.setLayout(new java.awt.GridBagLayout());
 
-		estimateTitlePanel.setBorder(new javax.swing.border.SoftBevelBorder(
-				javax.swing.border.BevelBorder.RAISED));
+		estimateTitlePanel.setBorder(null);
 
 		estimateTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 		estimateTitleLabel
