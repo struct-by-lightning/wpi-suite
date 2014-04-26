@@ -56,13 +56,7 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	 * @param requirementID int
 	 */
 	public PlanningPokerVote(String gameName, String userName, int vote, int requirementID) {
-		if(gameName != null){
-			this.gameName = gameName.replace(':', ';');
-		}
-		
-		else{
-			this.gameName = null;
-		}
+		this.gameName = gameName;
 		if(userName != null){
 			this.userName = userName.toLowerCase();
 		}
@@ -80,8 +74,7 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	 */
 	@Override
 	public String toJSON() {
-		// TODO Auto-generated method stub
-		return "{\"id\":\"" + gameName + ":" + userName + ":" + requirementID + "\",\"vote\":\"" + vote + "\"}";
+		return "{\"id\":\"" + gameName.replace(':', ';') + ":" + userName + ":" + requirementID + "\",\"vote\":\"" + vote + "\"}";
 	}
 	/**
 	 * gives the cannonical styling (as would appear in the JSON) of the primary key
@@ -155,7 +148,7 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 		scTemp.useDelimiter("\\\"?[:,{}]\\\"?");
 		scTemp.next();
 		// get the gameName
-		String retGameName = scTemp.next();
+		String retGameName = scTemp.next().replace(';', ':');
 		// check if the gameName is null
 		if(retGameName.equals("null"))
 			retGameName = null;
@@ -182,12 +175,11 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	
 	 * @return An array of reconstructed PlanningPokerGames */
 	public static PlanningPokerVote[] fromJsonArray(String jsonArr) {
-		PlanningPokerVoteDeserializer ppd = new PlanningPokerVoteDeserializer();
 		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
 		List<PlanningPokerVote> ppvs = new ArrayList<PlanningPokerVote>();
 
 		for (JsonElement json : array) {
-			ppvs.add(ppd.deserialize(json, null, null));
+			ppvs.add(PlanningPokerVote.fromJSON(json.toString()));
 		}
 
 		return ppvs.toArray(new PlanningPokerVote[0]);
