@@ -22,6 +22,7 @@ import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * @author Miguel
@@ -59,6 +60,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 
 		if (getEntity(s, p.getID())[0] == null) {
 			save(s, p);
+			closeIfAllVotes(s, p);
 		} else {
 			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerVoteModel creation.");
 			throw new ConflictException("A PlanningPokerVoteModel with the given ID already exists. Entity String: " + content);
@@ -117,7 +119,8 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 		PlanningPokerVote changes = PlanningPokerVote.fromJSON(content);
 		if(changes.gameName != null && changes.userName != null) {
 			deleteEntity(s, changes.getID());
-			data.save(changes);
+			save(s, changes);
+			closeIfAllVotes(s, changes);
 			return changes;
 		}
 		// currently we don't have the ability to deal with updates on more than one entry
@@ -134,7 +137,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	@Override
 	public void save(Session s, PlanningPokerVote model)
 			throws WPISuiteException {
-		if(data.save(model))
+		if(data.save(model, s.getProject()))
 		{
 			logger.log(Level.FINE, "PlanningPokerVoteModel Saved :" + model);
 
@@ -157,7 +160,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	 * @return boolean * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String) */
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
-		List<Model> retrieval = data.retrieve(ppg, "id", id);
+		List<Model> retrieval = data.retrieve(ppg, "id", id, s.getProject());
 		for(Model p : retrieval)
 			data.delete(p);
 		return true;
@@ -232,5 +235,34 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 			throws WPISuiteException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	private void closeIfAllVotes(Session s, PlanningPokerVote newVote) throws WPISuiteException {
+		User[] team = s.getProject().getTeam();
+		for(User u : team) {
+			System.out.println("Team member: " + u);
+		}
+		PlanningPokerEntityManager ppem = new PlanningPokerEntityManager(data);
+		System.out.println("Finding game name: "+newVote.getGameName());
+		PlanningPokerGame game = ppem.getEntity(s, newVote.getGameName())[0];
+		for(int id : game.getRequirementIds()) {
+			for(User u : team) {
+				System.out.println("DEBUG: Testing user " + u.getName() + " and requirement ID " + id);
+				try {
+					PlanningPokerVote[] vote = getEntity(s, new PlanningPokerVote(newVote.getGameName(), u.getName(), 0, id).getID());
+					if(vote.length == 0 || vote[0] == null) { //We do not have this vote, so do not close the game
+						return;
+					}
+					System.out.println("DEBUG: Found vote.");
+				} catch (WPISuiteException e) { //We do not have this vote, so do not close the game
+					System.out.println("DEBUG: No vote found.");
+					return;
+				}
+			}
+		}
+		System.out.println("Closing game \"" + game.getGameName() + "\" because everyone has voted.");
+		game.setFinished(true);
+		game.setLive(false);
+		ppem.update(s, game.toJSON());
 	}
 }
