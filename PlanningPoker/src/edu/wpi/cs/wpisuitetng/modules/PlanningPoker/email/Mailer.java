@@ -58,7 +58,7 @@ public class Mailer {
 	// TODO: Create a wpi-suite email address and mailtrap account that we can
 	// give people access to in the documentation.
 
-	private final boolean DEBUG = true;
+	private final boolean DEBUG = false;
 
 	public Mailer() {
 		session = createSmtpSession();
