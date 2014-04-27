@@ -63,11 +63,11 @@ public class PreferencesView extends JPanel {
 		textPanel = new javax.swing.JPanel();
 		emailPanel = new javax.swing.JPanel();
 		emailField = new javax.swing.JTextField();
-		aimPanel = new javax.swing.JPanel();
-		aimField = new javax.swing.JTextField();
+		googleChatPanel = new javax.swing.JPanel();
+		googleChatField = new javax.swing.JTextField();
 		notificationPanel = new javax.swing.JPanel();
 		sendEmail = new javax.swing.JCheckBox();
-		sendAIM = new javax.swing.JCheckBox();
+		sendGoogleChat = new javax.swing.JCheckBox();
 		updateUser = new javax.swing.JButton();
 		errorMessage = new javax.swing.JLabel();
 		infoLabel = new JLabel();
@@ -82,11 +82,11 @@ public class PreferencesView extends JPanel {
 			}
 		});
 
-		sendAIM.setText("AIM");
-		sendAIM.setActionCommand("");
-		sendAIM.addActionListener(new java.awt.event.ActionListener() {
+		sendGoogleChat.setText("Google Chat");
+		sendGoogleChat.setActionCommand("");
+		sendGoogleChat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				sendAIMActionPerformed(evt);
+				sendGoogleChatActionPerformed(evt);
 			}
 		});
 
@@ -96,9 +96,9 @@ public class PreferencesView extends JPanel {
 			}
 		});
 
-		aimField.addKeyListener(new KeyAdapter() {
+		googleChatField.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent evt) {
-				aimFieldKeyTyped(evt);
+				googleChatFieldKeyTyped(evt);
 			}
 		});
 
@@ -158,64 +158,64 @@ public class PreferencesView extends JPanel {
 																Short.MAX_VALUE))
 										.addGap(0, 6, Short.MAX_VALUE)));
 
-		aimPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
+		googleChatPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
 				javax.swing.BorderFactory.createLineBorder(new java.awt.Color(
-						0, 0, 0)), "Instant Message"));
+						0, 0, 0)), "Google Chat"));
 
-		sendAIM.addActionListener(new java.awt.event.ActionListener() {
+		sendGoogleChat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				sendAIMActionPerformed(evt);
+				sendGoogleChatActionPerformed(evt);
 			}
 		});
 
-		javax.swing.GroupLayout aimPanelLayout = new javax.swing.GroupLayout(
-				aimPanel);
-		aimPanel.setLayout(aimPanelLayout);
-		aimPanelLayout
-				.setHorizontalGroup(aimPanelLayout
+		javax.swing.GroupLayout googleChatPanelLayout = new javax.swing.GroupLayout(
+				googleChatPanel);
+		googleChatPanel.setLayout(googleChatPanelLayout);
+		googleChatPanelLayout
+				.setHorizontalGroup(googleChatPanelLayout
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
-								aimPanelLayout
+								googleChatPanelLayout
 										.createSequentialGroup()
 										.addContainerGap()
 										.addComponent(
-												aimField,
+												googleChatField,
 												javax.swing.GroupLayout.PREFERRED_SIZE,
 												264,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(sendAIM)
+										.addComponent(sendGoogleChat)
 										.addContainerGap(
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												Short.MAX_VALUE)));
-		aimPanelLayout
-				.setVerticalGroup(aimPanelLayout
+		googleChatPanelLayout
+				.setVerticalGroup(googleChatPanelLayout
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								javax.swing.GroupLayout.Alignment.TRAILING,
-								aimPanelLayout
+								googleChatPanelLayout
 										.createSequentialGroup()
 										.addContainerGap()
 										.addGroup(
-												aimPanelLayout
+												googleChatPanelLayout
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.TRAILING)
 														.addComponent(
-																sendAIM,
+																sendGoogleChat,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
 														.addGroup(
-																aimPanelLayout
+																googleChatPanelLayout
 																		.createSequentialGroup()
 																		.addGap(0,
 																				0,
 																				Short.MAX_VALUE)
 																		.addComponent(
-																				aimField,
+																				googleChatField,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -243,7 +243,7 @@ public class PreferencesView extends JPanel {
 														javax.swing.GroupLayout.DEFAULT_SIZE,
 														Short.MAX_VALUE)
 												.addComponent(
-														aimPanel,
+														googleChatPanel,
 														javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE,
 														Short.MAX_VALUE))
@@ -285,7 +285,7 @@ public class PreferencesView extends JPanel {
 										layout.createParallelGroup(
 												javax.swing.GroupLayout.Alignment.LEADING)
 												.addComponent(
-														aimPanel,
+														googleChatPanel,
 														javax.swing.GroupLayout.Alignment.TRAILING,
 														javax.swing.GroupLayout.PREFERRED_SIZE,
 														javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -318,7 +318,7 @@ public class PreferencesView extends JPanel {
 		checkAllFields();
 	}
 
-	protected void aimFieldKeyTyped(KeyEvent evt) {
+	protected void googleChatFieldKeyTyped(KeyEvent evt) {
 		checkAllFields();
 	}
 
@@ -326,7 +326,7 @@ public class PreferencesView extends JPanel {
 		checkAllFields();
 	}
 
-	private void sendAIMActionPerformed(ActionEvent evt) {
+	private void sendGoogleChatActionPerformed(ActionEvent evt) {
 		checkAllFields();
 	}
 
@@ -335,15 +335,14 @@ public class PreferencesView extends JPanel {
 			currentUser.setEmail(emailField.getText());
 		}
 
-		final String aimText = aimField.getText();
-		final boolean validAim = (aimText.length() > 0)
-				&& !(aimText.contains(" "));
+		final String googleChatText = googleChatField.getText();
+		final boolean validGoogleChat = isValidGoogleAccount();
 
-		if (validAim) {
-			currentUser.setInstantMessage(aimText);
+		if (validGoogleChat) {
+			currentUser.setInstantMessage(googleChatText);
 		}
 
-		currentUser.setSendAim(sendAIM.isSelected());
+		currentUser.setSendAim(sendGoogleChat.isSelected());
 		currentUser.setSendEmail(sendEmail.isSelected());
 		UpdatePlanningPokerUserController.getInstance().update(currentUser);
 		updateUser.setText("Saved!");
@@ -355,17 +354,16 @@ public class PreferencesView extends JPanel {
 		updateUser.setText("Save Changes");
 		updateUser.setEnabled(true);
 		boolean emailEntered = isValidEmail();
-		boolean aimEntered = !(aimField.getText().length() == 0)
-				&& !aimField.getText().contains(" ");
+		boolean googleChatEntered = isValidGoogleAccount();
 		boolean oneOptionSelected = sendEmail.isSelected()
-				|| sendAIM.isSelected();
+				|| sendGoogleChat.isSelected();
 
-		boolean aimChecked = true;
+		boolean googleChatChecked = true;
 		boolean emailChecked = true;
 
-		if (!aimEntered && sendAIM.isSelected()) {
-			errorMessage.setText("AIM checked, but no account entered");
-			aimChecked = false;
+		if (!googleChatEntered && sendGoogleChat.isSelected()) {
+			errorMessage.setText("<html>Google Chat checked, but a <br> valid account is not entered</html>");
+			googleChatChecked = false;
 		}
 
 		if (!emailEntered && sendEmail.isSelected()) {
@@ -376,7 +374,7 @@ public class PreferencesView extends JPanel {
 			errorMessage.setText("Must have one option checked");
 		}
 
-		final boolean canUpdate = aimChecked && emailChecked
+		final boolean canUpdate = googleChatChecked && emailChecked
 				&& oneOptionSelected;
 
 		if (canUpdate) {
@@ -397,6 +395,17 @@ public class PreferencesView extends JPanel {
 
 		return matcher.find();
 	}
+	
+	private boolean  isValidGoogleAccount(){
+		final String googleChatText = googleChatField.getText();
+		final Pattern VALID_GOOGLE_ADDRESS_REGEX = Pattern
+				.compile(
+						"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@gmail.com$",
+						Pattern.CASE_INSENSITIVE);
+		final Matcher matcher = VALID_GOOGLE_ADDRESS_REGEX.matcher(googleChatText);
+
+		return matcher.find();
+	}
 
 	private void fillAllFields() {
 		GetPlanningPokerUserController.getInstance().retrieveUser();
@@ -412,23 +421,23 @@ public class PreferencesView extends JPanel {
 			emailField.setText(currentUser.getEmail());
 		}
 		if (currentUser.getInstantMessage() != null) {
-			aimField.setText(currentUser.getInstantMessage());
+			googleChatField.setText(currentUser.getInstantMessage());
 		}
 
 		sendEmail.setSelected(currentUser.canSendEmail());
-		sendAIM.setSelected(currentUser.canSendAim());
+		sendGoogleChat.setSelected(currentUser.canSendAim());
 
 	}
 
 	// Variables declaration - do not modify
 	private JLabel infoLabel;
-	private javax.swing.JTextField aimField;
-	private javax.swing.JPanel aimPanel;
+	private javax.swing.JTextField googleChatField;
+	private javax.swing.JPanel googleChatPanel;
 	private javax.swing.JTextField emailField;
 	private javax.swing.JPanel emailPanel;
 	private javax.swing.JLabel errorMessage;
 	private javax.swing.JPanel notificationPanel;
-	private javax.swing.JCheckBox sendAIM;
+	private javax.swing.JCheckBox sendGoogleChat;
 	private javax.swing.JCheckBox sendEmail;
 	private javax.swing.JPanel textPanel;
 	private javax.swing.JButton updateUser;
