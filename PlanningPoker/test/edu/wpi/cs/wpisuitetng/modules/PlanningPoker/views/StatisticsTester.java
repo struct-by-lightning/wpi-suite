@@ -9,13 +9,9 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
-import static org.junit.Assert.*;
-
-import java.util.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.Statistics;
 
 /**
  * @author friscis, swconley
