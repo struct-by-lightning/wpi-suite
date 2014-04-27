@@ -309,7 +309,7 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 		String aimText = aimField.getText();
 		
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailText);
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailText);
         
 		if (matcher.find() || aimText.length() != 0) {
 			submitButton.setEnabled(true);
@@ -326,7 +326,7 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 		String emailText = emailField.getText();
 		
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
-		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailText);
+		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailText);
         
 		if (matcher.find()) {
 			return true;
