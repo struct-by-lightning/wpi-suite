@@ -82,7 +82,7 @@ public class PreferencesView extends JPanel {
 			}
 		});
 
-		sendAIM.setText("AIM");
+		sendAIM.setText("Google Chat");
 		sendAIM.setActionCommand("");
 		sendAIM.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,7 +160,7 @@ public class PreferencesView extends JPanel {
 
 		aimPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
 				javax.swing.BorderFactory.createLineBorder(new java.awt.Color(
-						0, 0, 0)), "Instant Message"));
+						0, 0, 0)), "Google Chat"));
 
 		sendAIM.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -364,7 +364,7 @@ public class PreferencesView extends JPanel {
 		boolean emailChecked = true;
 
 		if (!aimEntered && sendAIM.isSelected()) {
-			errorMessage.setText("AIM checked, but no account entered");
+			errorMessage.setText("Google Chat checked, but no account entered");
 			aimChecked = false;
 		}
 
