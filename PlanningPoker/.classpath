@@ -7,6 +7,8 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/Network"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/WPISuite-Interfaces"/>
 	<classpathentry kind="lib" path="lib/mail.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/smack-3.4.1-0cec571.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/smackx-3.4.1-0cec571.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/RequirementManager"/>
 	<classpathentry kind="output" path="bin"/>

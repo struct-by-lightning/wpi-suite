@@ -56,6 +56,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im.InstantMessenger;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
@@ -340,6 +341,8 @@ public class CreateGameView extends JPanel {
 							mailer = new Mailer(game);
 							mailer.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
 							mailer.send();
+							im = new InstantMessenger(game);
+							im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());
 
 						} else {
 							game = new PlanningPokerGame(enteredName, "Default description",
@@ -774,12 +777,12 @@ public class CreateGameView extends JPanel {
 		requirementsSelector.setLayout(new BoxLayout(requirementsSelector, BoxLayout.X_AXIS));
 
 		projectRequirements = new JPanel();
-		projectRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		projectRequirements.setBorder(null);
 		requirementsSelector.add(projectRequirements);
 		projectRequirements.setLayout(new BorderLayout(0, 0));
 
 		projectHeader = new JPanel();
-		projectHeader.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		projectHeader.setBorder(null);
 		projectRequirements.add(projectHeader, BorderLayout.NORTH);
 
 		lblAllProjectRequirements = new JLabel("All project requirements");
@@ -861,12 +864,12 @@ public class CreateGameView extends JPanel {
 		addRemPanel.setLayout(gl_addRemPanel);
 
 		gameRequirements = new JPanel();
-		gameRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		gameRequirements.setBorder(null);
 		requirementsSelector.add(gameRequirements);
 		gameRequirements.setLayout(new BorderLayout(0, 0));
 
 		gameHeader = new JPanel();
-		gameHeader.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		gameHeader.setBorder(null);
 		gameRequirements.add(gameHeader, BorderLayout.NORTH);
 
 		lblRequirementsToEstimate = new JLabel("Requirements to estimate");
@@ -893,6 +896,7 @@ public class CreateGameView extends JPanel {
 	private List<Integer> gameRequirementIDsList;
 	private List<PlanningPokerUser> userList;
 	private Mailer mailer;
+	private InstantMessenger im;
 	private boolean viewHasBeenEdited = false;
 
 	private DateFormat dateFormat;
