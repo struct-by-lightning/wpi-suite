@@ -1106,7 +1106,19 @@ public class MainView {
 	 * Description
 	 */
 	public static void preferencesButtonClicked() {
-		PreferencesView.openNewTab();
+		// Loop and check to see if the preferences tab is already opened.
+		Component[] tabInstances = mainComponent.getComponents();
+		boolean alreadyOpened = false;
 		
+		for(Component c: tabInstances) {
+			if (c instanceof PreferencesView) { // Preferences already open, select it and return
+				alreadyOpened = true;
+				mainComponent.setSelectedComponent(c);
+				return;
+			}
+		}
+		
+		// If not exist, open it
+		PreferencesView.openNewTab();
 	}
 }
