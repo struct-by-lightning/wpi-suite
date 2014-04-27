@@ -168,30 +168,30 @@ public class ClosedGameView extends JPanel {
 						    estimates.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 						    estimates.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 						    // Statistics
-							if(reqVotes.size()!= 0) {
+							if(reqVotes.size() != 0) {
 								final double[] voteNums = new double[reqVotes.size()];
-								for(int i = 0; i< reqVotes.size(); i++) {
+								for(int i = 0; i < reqVotes.size(); i++) {
 									voteNums[i] = (double)reqVotes.get(i);
 								}
-								mean.setText(meanDef+df.format(Statistics.mean(voteNums)));
-								median.setText(medianDef+df.format(Statistics.median(voteNums)));
-								mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
-								if(reqVotes.size()>1) {
-									std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
+								mean.setText(meanDef + df.format(Statistics.mean(voteNums)));
+								median.setText(medianDef + df.format(Statistics.median(voteNums)));
+								mode.setText(modeDef + df.format(Statistics.mode(voteNums)));
+								if(reqVotes.size() > 1) {
+									std.setText(stdDef + df.format(Statistics.StdDev(voteNums)));
 								}
 								else {
-									std.setText(stdDef+"N/A");
+									std.setText(stdDef + "N/A");
 								}
-								max.setText(maxDef+df.format(Statistics.max(voteNums)));
-								min.setText(minDef+df.format(Statistics.min(voteNums)));
+								max.setText(maxDef + df.format(Statistics.max(voteNums)));
+								min.setText(minDef + df.format(Statistics.min(voteNums)));
 							}
 							else {
-								mean.setText(meanDef+"N/A");
-								median.setText(medianDef+"N/A");
-								mode.setText(modeDef+"N/A");
-								std.setText(stdDef+"N/A");
-								max.setText(maxDef+"N/A");
-								min.setText(minDef+"N/A");
+								mean.setText(meanDef + "N/A");
+								median.setText(medianDef + "N/A");
+								mode.setText(modeDef + "N/A");
+								std.setText(stdDef + "N/A");
+								max.setText(maxDef + "N/A");
+								min.setText(minDef + "N/A");
 							}
 							previousID = currentID;
 						}
@@ -331,7 +331,7 @@ public class ClosedGameView extends JPanel {
 					}
 				}
 			}
-			System.out.println("The game req ids: " +gameReqIds);
+			System.out.println("The game req ids: " + gameReqIds);
 			for(Requirement r : requirements){
 				System.out.println("the req id from this game: " + r.getId()
 						+ "and has a fianl estimate "
@@ -736,7 +736,7 @@ public class ClosedGameView extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController
 						.getInstance().retrievePlanningPokerFinalEstimate();
-				System.out.println("These are the current final estimates:" +Arrays.asList(stuff));
+				System.out.println("These are the current final estimates:" + Arrays.asList(stuff));
 				for(PlanningPokerFinalEstimate ppfe : stuff) {
 					if(ppfe.getGameName().equals(game.getGameName())) {
 						Requirement req2set = RequirementModel.getInstance()
@@ -860,7 +860,7 @@ public class ClosedGameView extends JPanel {
 				}
 				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController
 						.getInstance().retrievePlanningPokerFinalEstimate();
-				System.out.println("These are the current final estimates:" +Arrays.asList(stuff));
+				System.out.println("These are the current final estimates:" + Arrays.asList(stuff));
 				enableUpdateButton(stuff);
 				
 				submitButton.setEnabled(false);

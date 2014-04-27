@@ -51,7 +51,7 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 		final PlanningPokerUser[] user = getEntity(s, u.getID());
 		
 		if(user.length == 0 || user[0] == null){
-			save(s,u);
+			save(s, u);
 		}
 		else{
 			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerUser creation.");
@@ -126,7 +126,7 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
 		final Model m = data.delete(data.retrieve(usr, "username", id).get(0));
 		logger.log(Level.INFO, "PlanningPokerUserEntityManager deleting deck < " + id + ">");
-		return (m !=null) ? true: false;
+		return (m != null) ? true: false;
 	}
 
 	/* (non-Javadoc)

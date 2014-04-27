@@ -57,7 +57,7 @@ public class GetPlanningPokerGamesControllerTest {
 		final List<PlanningPokerGame> pgm = PlanningPokerGameModel.getPlanningPokerGames();
 		assertTrue(pgm.size() == games.length);
 		for (int x = 0; x < pgm.size(); x++) {
-			PlanningPokerGame s1 = pgm.get(pgm.size()-x-1);
+			PlanningPokerGame s1 = pgm.get(pgm.size() - x - 1);
 			PlanningPokerGame s2 = games[x];
 			
 		assertEquals(s2.getID(), s1.getID());

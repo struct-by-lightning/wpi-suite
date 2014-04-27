@@ -153,7 +153,7 @@ public class DatePicker {
 			}
 			button[x].setText("" + day);
 			if(day == daysInMonth) {
-				for(int y = x+1; y < button.length; y++) {
+				for(int y = x + 1; y < button.length; y++) {
 					button[y].setEnabled(false);
 				}
 			}

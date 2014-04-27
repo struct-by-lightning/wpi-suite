@@ -169,7 +169,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * updates the border
 	 */
 	private void updateBorder() {
-		final Color borderColor = (selected ? new Color(0,111,255)
+		final Color borderColor = (selected ? new Color(0, 111, 255)
 				: Color.white);
 		this.setBorder(BorderFactory.createLineBorder(borderColor, 10));
 	}
