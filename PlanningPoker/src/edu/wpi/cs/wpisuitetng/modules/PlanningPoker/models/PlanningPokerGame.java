@@ -82,7 +82,6 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 			String deckType, List<Integer> requirementsIds,
 			boolean isFinished, boolean isLive, GregorianCalendar startDate,
 			GregorianCalendar endDate, String moderator) {
-		super();
 
 		this.requirementIds = new ArrayList<Integer>();
 		if(gameName != null)
@@ -115,7 +114,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 		
 		ArrayList<Requirement> toReturn = new ArrayList<Requirement>();
 
-		for(int id : this.getRequirementIds()) {
+		for(int id : requirementIds) {
 			toReturn.add(RequirementModel.getInstance().getRequirement(id));
 		}
 		

@@ -14,7 +14,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 
-import javax.swing.Icon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
@@ -33,9 +32,6 @@ import javax.swing.JTabbedPane;
  */
 @SuppressWarnings("serial")
 public class MainView extends JTabbedPane {
-	public MainView() {
-	}
-
 	private boolean dragging = false;
 	private Image tabImage = null;
 	private Point currentMouseLocation = null;

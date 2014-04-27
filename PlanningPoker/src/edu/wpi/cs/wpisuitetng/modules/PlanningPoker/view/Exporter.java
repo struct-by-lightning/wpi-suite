@@ -27,11 +27,6 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.
  * @version $Revision: 1.0 $
  */
 public class Exporter {
-
-	public Exporter() {
-		
-	}
-	
 	/**
 	 * Exports the input list of selected requirements to a file as a string
 	 * @param listOfRequirementsToAdd DefaultListModel<Requirement>
