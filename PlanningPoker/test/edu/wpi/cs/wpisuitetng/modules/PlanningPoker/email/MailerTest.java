@@ -16,7 +16,7 @@ import org.junit.Test;
 
 /**
  * Description
- *
+ * 
  * @author Alec Thompson - ajthompson
  * @version Apr 22, 2014
  */
@@ -25,19 +25,23 @@ public class MailerTest {
 	@Test
 	public final void countRecipientsTest() {
 		Mailer m = new Mailer();
-		
+
 		assertEquals(0, m.countRecipients());
-		
-		m.addEmail("ajthompson@wpi.edu");
-		
+
+		m.addEmail("ajthompson@wpi.edu", true);
+
 		assertEquals(1, m.countRecipients());
-		
-		m.addEmail("test@test.com");
-		
+
+		m.addEmail("test@test.com", false);
+
+		assertEquals(1, m.countRecipients());
+
+		m.addEmail("test@test.com", true);
+
 		assertEquals(2, m.countRecipients());
-		
-		m.addEmail("a@a.com");
-		
+
+		m.addEmail("a@a.com", true);
+
 		assertEquals(3, m.countRecipients());
 	}
 
