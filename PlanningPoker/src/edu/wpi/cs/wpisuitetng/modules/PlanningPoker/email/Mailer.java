@@ -78,7 +78,8 @@ public class Mailer {
 
 			// set the header line
 			message.setSubject("Great news ladies and gentlemen!");
-			message.setText("Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
+			message.setText(
+					"Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
 		} catch (MessagingException mex) {
 			System.out.println("Message creation failed");
 			mex.printStackTrace();
@@ -109,7 +110,8 @@ public class Mailer {
 
 			// set the header line
 			message.setSubject("Great news ladies and gentlemen!");
-			message.setText("Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
+			message.setText(
+					"Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
 			this.addEmail(emailAddress);
 		} catch (MessagingException mex) {
 			System.out.println("Message creation failed");
@@ -141,7 +143,8 @@ public class Mailer {
 
 			// set the header line
 			message.setSubject("Great news ladies and gentlemen!");
-			message.setText("Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
+			message.setText(
+					"Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
 			this.addEmailArray(emailArray);
 		} catch (MessagingException mex) {
 			System.out.println("Message creation failed");

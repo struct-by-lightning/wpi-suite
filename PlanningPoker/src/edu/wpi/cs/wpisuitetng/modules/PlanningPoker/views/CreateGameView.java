@@ -175,7 +175,8 @@ public class CreateGameView extends JPanel {
 				}
 
 				else if (selection.contentEquals("No Deck")) {
-					deckOverview.setText("PlanningPokerUser will be able to enter their own estimation");
+					deckOverview
+							.setText("PlanningPokerUser will be able to enter their own estimation");
 				}
 			}
 
@@ -334,12 +335,15 @@ public class CreateGameView extends JPanel {
 						if (startNow.isSelected()) {
 							game = new PlanningPokerGame(enteredName, "Default description",
 
-							(String) deckType.getSelectedItem(), gameRequirementIDsList, false,
-									true, startCal, endCal, ConfigManager.getConfig().getUserName());
+									(String) deckType.getSelectedItem(),
+									gameRequirementIDsList, false, true,
+									startCal, endCal, ConfigManager.getConfig()
+											.getUserName());
 							game.setFinished(false);
 							game.setLive(true);
 							mailer = new Mailer(game);
-							mailer.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
+							mailer.addEmailFromUsers(PlanningPokerUserModel
+									.getInstance().getUsers());
 							mailer.send();
 							im = new InstantMessenger(game);
 							im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());

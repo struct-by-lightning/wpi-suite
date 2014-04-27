@@ -42,7 +42,8 @@ public class GetPlanningPokerUserRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of Users to a PlanningPokerUser object array
-		final PlanningPokerUser[] users = PlanningPokerUser.fromJSONArray(iReq.getResponse().getBody());
+		final PlanningPokerUser[] users = PlanningPokerUser.fromJSONArray(iReq
+				.getResponse().getBody());
 
 		// pass these users to the controller
 		controller.receivedUser(users);

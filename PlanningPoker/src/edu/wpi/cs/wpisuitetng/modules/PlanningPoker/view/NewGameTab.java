@@ -382,7 +382,9 @@ public class NewGameTab extends JPanel {
 		cardDeckPane.add(lblCardDeck);
 
 		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "No Deck"}));
-		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
+		//deckType.setMinimumSize(new Dimension(
+		//		deckType.getPreferredSize().width,
+		//		deckType.getPreferredSize().height));
 
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
@@ -415,21 +417,20 @@ public class NewGameTab extends JPanel {
 		* Handles the combo box listener for deck selection and displays the deck type as a string
 		*/
 		deckType.addActionListener(new ActionListener () {
-		   public void actionPerformed(ActionEvent e) {
-			isTabEditedByUser = true;
-		    final JComboBox combo = (JComboBox)e.getSource();
-		                final String selection = (String)combo.getSelectedItem();
-		                if(selection.contentEquals("Default"))
-		                {
-		                // Replace this with button contents
-		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
-		                }
+			public void actionPerformed(ActionEvent e) {
+				isTabEditedByUser = true;
+				final JComboBox combo = (JComboBox) e.getSource();
+				final String selection = (String) combo.getSelectedItem();
+				if (selection.contentEquals("Default")) {
+					// Replace this with button contents
+					deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
+				}
 
-		               
-		                else if(selection.contentEquals("No Deck")){
-		                	deckOverview.setText("PlanningPokerUser will be able to enter their own estimation");
-		                }
-		   }
+				else if (selection.contentEquals("No Deck")) {
+					deckOverview
+							.setText("PlanningPokerUser will be able to enter their own estimation");
+				}
+			}
 
 		});
 
@@ -537,17 +538,22 @@ public class NewGameTab extends JPanel {
 		gl_addRemPanel.setHorizontalGroup(
 			gl_addRemPanel.createParallelGroup(Alignment.LEADING)
 				.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
-				.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-				.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+				.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE,
+						GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 49,
+						GroupLayout.PREFERRED_SIZE)
 		);
 		gl_addRemPanel.setVerticalGroup(
 			gl_addRemPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_addRemPanel.createSequentialGroup()
-					.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE,
+								25, GroupLayout.PREFERRED_SIZE)
 					.addGap(3)
-					.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+						.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE,
+								121, GroupLayout.PREFERRED_SIZE)
 					.addGap(3)
-					.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+						.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE,
+								25, GroupLayout.PREFERRED_SIZE))
 		);
 		addRemPanel.setLayout(gl_addRemPanel);
 
@@ -707,7 +713,8 @@ public class NewGameTab extends JPanel {
 									"Default description",
 
 									selectedDeckType, gameRequirementIDsList,
-									false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
+									false, true, startCal, endCal,
+									ConfigManager.getConfig().getUserName());
 						} else {
 							game = new PlanningPokerGame(enteredName,
 									"Default description", selectedDeckType,
@@ -899,26 +906,6 @@ public class NewGameTab extends JPanel {
 	    		MainView.getInstance().refreshGameTree();
 		    }
 		});
-
-		/**
-		 * Exports the list of selected requirements to a file when btnExport is
-		 * pressed
-		 */ // Removed
-		/*btnExport.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Create a file chooser
-				final JFileChooser fc = new JFileChooser();
-				//In response to a button click:
-				int returnVal = fc.showSaveDialog(NewGameTab.this);
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					// Create exporter
-					Exporter ex = new Exporter();
-					// Export requirements
-					ex.exportAsJSON(listOfRequirementsToAdd, fc.getSelectedFile().getAbsolutePath());
-					System.out.println("Exported all selected requirements\n");
-				}
-			}
-		});*/
 	}
 
 	/**

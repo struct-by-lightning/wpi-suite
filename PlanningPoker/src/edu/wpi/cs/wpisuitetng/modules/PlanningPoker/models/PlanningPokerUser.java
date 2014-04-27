@@ -36,7 +36,8 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 
 	
 	
-	public PlanningPokerUser(String email, String userName, String instantMessage, boolean sendEmail, boolean sendAim) {
+	public PlanningPokerUser(String email, String userName,
+			String instantMessage, boolean sendEmail, boolean sendAim) {
 		this.email = email;
 		this.userName = userName;
 		this.instantMessage = instantMessage;

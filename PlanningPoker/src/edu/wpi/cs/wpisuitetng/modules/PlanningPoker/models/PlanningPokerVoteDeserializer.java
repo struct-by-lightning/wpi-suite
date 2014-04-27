@@ -10,17 +10,9 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.lang.reflect.Type;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Scanner;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -79,7 +71,8 @@ public class PlanningPokerVoteDeserializer {
 
 		final PlanningPokerVote inflated = new PlanningPokerVote(gameName, userName, vote, id);
 		
-		System.out.println("DESERIALIZED: User " + userName + " voted " + vote + " for requirement" + id + " in game " + gameName);
+		System.out.println("DESERIALIZED: User " + userName + " voted " + vote
+				+ " for requirement" + id + " in game " + gameName);
 		
 		// Prevent resource leak
 		scTemp.close();

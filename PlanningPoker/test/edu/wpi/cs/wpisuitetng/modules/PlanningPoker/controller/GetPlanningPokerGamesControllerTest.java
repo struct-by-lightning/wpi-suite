@@ -24,8 +24,9 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameMode
 public class GetPlanningPokerGamesControllerTest {
 
 	/**
-	 * Test method for {@link edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController#getInstance()}.
-	 * See if each instance is the same.
+	 * Test method for
+	 * {@link edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController#getInstance()}
+	 * . See if each instance is the same.
 	 */
 	@Test
 	public void testGetInstance() {
@@ -34,15 +35,22 @@ public class GetPlanningPokerGamesControllerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController#receivedPlanningPokerGames(edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame[])}.
-	 * Retrieve games and check to see if the lists contain the same elements. Currently, for some reason, the list is set backwards. This is kind of bad and should be fixed.
+	 * Test method for
+	 * {@link edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController#receivedPlanningPokerGames(edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame[])}
+	 * . Retrieve games and check to see if the lists contain the same elements.
+	 * Currently, for some reason, the list is set backwards. This is kind of
+	 * bad and should be fixed.
 	 */
 	@Test
 	public void testReceivedPlanningPokerGames() {
 		final GetPlanningPokerGamesController gc = GetPlanningPokerGamesController.getInstance();
 		final PlanningPokerGame[] games = new PlanningPokerGame[]{
-				new PlanningPokerGame("g1", "d1", "dt1", new ArrayList<Integer>(), false, false, new GregorianCalendar(), new GregorianCalendar(), "m1"),
-				new PlanningPokerGame("g2", "d2", "dt2", new ArrayList<Integer>(), false, false, new GregorianCalendar(), new GregorianCalendar(), "m2")
+				new PlanningPokerGame("g1", "d1", "dt1",
+						new ArrayList<Integer>(), false, false,
+						new GregorianCalendar(), new GregorianCalendar(), "m1"),
+				new PlanningPokerGame("g2", "d2", "dt2",
+						new ArrayList<Integer>(), false, false,
+						new GregorianCalendar(), new GregorianCalendar(), "m2")
 		};
 		gc.receivedPlanningPokerGames(games);
 		

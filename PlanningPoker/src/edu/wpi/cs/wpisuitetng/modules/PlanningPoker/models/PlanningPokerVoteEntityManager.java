@@ -32,7 +32,8 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	Class<PlanningPokerVote> ppg = PlanningPokerVote.class;
 	Data data;
 
-	private static final Logger logger = Logger.getLogger(PlanningPokerEntityManager.class.getName());
+	private static final Logger logger = Logger
+			.getLogger(PlanningPokerEntityManager.class.getName());
 
 	/**
 	 * Constructor for PlanningPokerVoteEntityManager.
@@ -46,12 +47,13 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	 * Method makeEntity.
 	 * @param s Session
 	 * @param content String
-	
-	
-	
-	
-	
-	 * @return PlanningPokerVote * @throws BadRequestException * @throws ConflictException * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(Session, String) */
+	 * 
+	 * @return PlanningPokerVote
+	 * @throws BadRequestException
+	 * @throws ConflictException
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(Session, String)
+	 */
 	@Override
 	public PlanningPokerVote makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
@@ -61,7 +63,9 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 			save(s, p);
 		} else {
 			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerVoteModel creation.");
-			throw new ConflictException("A PlanningPokerVoteModel with the given ID already exists. Entity String: " + content);
+			throw new ConflictException(
+					"A PlanningPokerVoteModel with the given ID already exists. Entity String: "
+							+ content);
 		}
 
 		return p;
@@ -70,11 +74,12 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	 * Method getEntity.
 	 * @param s Session
 	 * @param id String
-	
-	
-	
-	
-	 * @return PlanningPokerVote[] * @throws NotFoundException * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String) */
+	 * 	
+	 * @return PlanningPokerVote[]
+	 * @throws NotFoundException
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String)
+	 */
 	@Override
 	public PlanningPokerVote[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
@@ -92,10 +97,11 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	/**
 	 * Method getAll.
 	 * @param s Session
-	
-	
-	
-	 * @return PlanningPokerVote[] * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session) */
+	 * 
+	 * @return PlanningPokerVote[]
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session)
+	 */
 	@Override
 	public PlanningPokerVote[] getAll(Session s) throws WPISuiteException {
 		PlanningPokerVote[] ret = new PlanningPokerVote[0];
@@ -107,10 +113,11 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	 * Method update.
 	 * @param s Session
 	 * @param content String
-	
-	
-	
-	 * @return PlanningPokerVote * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#update(Session, String) */
+	 * 
+	 * @return PlanningPokerVote
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#update(Session, String)
+	 */
 	@Override
 	public PlanningPokerVote update(Session s, String content)
 			throws WPISuiteException {
@@ -152,10 +159,11 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	 * Method deleteEntity.
 	 * @param s Session
 	 * @param id String
-	
-	
-	
-	 * @return boolean * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String) */
+	 * 
+	 * @return boolean
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String)
+	 */
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
 		final List<Model> retrieval = data.retrieve(ppg, "id", id);
@@ -168,10 +176,11 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	 * Method advancedGet.
 	 * @param s Session
 	 * @param args String[]
-	
-	
-	
-	 * @return String * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedGet(Session, String[]) */
+	 * 
+	 * @return String
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedGet(Session, String[])
+	 */
 	@Override
 	public String advancedGet(Session s, String[] args)
 			throws WPISuiteException {
@@ -182,9 +191,10 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	/**
 	 * Method deleteAll.
 	 * @param s Session
-	
-	
-	 * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteAll(Session) */
+	 * 
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteAll(Session)
+	 */
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
 		logger.log(Level.INFO, "PlanningPokerEntityManager invoking DeleteAll...");
@@ -193,10 +203,11 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 
 	/**
 	 * Method Count.
-	
-	
-	
-	 * @return int * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count() */
+	 * 
+	 * @return int
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count()
+	 */
 	@Override
 	public int Count() throws WPISuiteException {
 		// TODO Auto-generated method stub
@@ -208,10 +219,10 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	 * @param s Session
 	 * @param args String[]
 	 * @param content String
-	
-	
-	
-	 * @return String * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPut(Session, String[], String) */
+	 * @return String
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPut(Session, String[], String)
+	 */
 	@Override
 	public String advancedPut(Session s, String[] args, String content)
 			throws WPISuiteException {
@@ -224,10 +235,10 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	 * @param s Session
 	 * @param string String
 	 * @param content String
-	
-	
-	
-	 * @return String * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPost(Session, String, String) */
+	 * @return String
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPost(Session, String, String)
+	 */
 	@Override
 	public String advancedPost(Session s, String string, String content)
 			throws WPISuiteException {

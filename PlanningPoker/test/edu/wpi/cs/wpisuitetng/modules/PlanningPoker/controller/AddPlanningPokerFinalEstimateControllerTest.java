@@ -13,8 +13,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEstimate;
-
 /**
  * @author lisabatbouta
  *
@@ -28,8 +26,10 @@ public class AddPlanningPokerFinalEstimateControllerTest {
 	 */
 	@Test
 	public void testGetInstance() {
-		final AddPlanningPokerFinalEstimateController gc = AddPlanningPokerFinalEstimateController.getInstance();
-		assertEquals(gc.hashCode(), AddPlanningPokerFinalEstimateController.getInstance().hashCode());
+		final AddPlanningPokerFinalEstimateController gc = AddPlanningPokerFinalEstimateController
+				.getInstance();
+		assertEquals(gc.hashCode(), AddPlanningPokerFinalEstimateController
+				.getInstance().hashCode());
 	}
 	
 }

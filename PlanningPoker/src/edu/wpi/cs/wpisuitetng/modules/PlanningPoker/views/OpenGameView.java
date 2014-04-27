@@ -732,8 +732,8 @@ public class OpenGameView extends JPanel {
 		requirementDescriptionLabel
 				.setText("game.getRequirements.get(LIST SELECTION NUM).description()");
 
-		final javax.swing.GroupLayout requirementDescriptionLabelPanelLayout = new javax.swing.GroupLayout(
-				requirementDescriptionLabelPanel);
+		final javax.swing.GroupLayout requirementDescriptionLabelPanelLayout = new
+				javax.swing.GroupLayout(requirementDescriptionLabelPanel);
 		requirementDescriptionLabelPanel
 				.setLayout(requirementDescriptionLabelPanelLayout);
 		requirementDescriptionLabelPanelLayout

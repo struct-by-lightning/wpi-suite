@@ -32,7 +32,8 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	Data data;
 
 	
-	private static final Logger logger = Logger.getLogger(PlanningPokerUserEntityManager.class.getName());
+	private static final Logger logger = Logger
+			.getLogger(PlanningPokerUserEntityManager.class.getName());
 	
 	
 	public PlanningPokerUserEntityManager(Data data){
@@ -54,7 +55,9 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 		}
 		else{
 			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerUser creation.");
-			throw new ConflictException("A PlanningPokerUser with the given ID already exists. Entity String "  + content);
+			throw new ConflictException(
+					"A PlanningPokerUser with the given ID already exists. Entity String "
+							+ content);
 		}
 		
 		return u;

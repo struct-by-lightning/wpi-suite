@@ -42,10 +42,11 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 	 * @param ppmElement JsonElement
 	 * @param ppmType Type
 	 * @param context JsonDeserializationContext
-	
-	
-	
-	 * @return PlanningPokerGame * @throws JsonParseException * @see com.google.gson.JsonDeserializer#deserialize(JsonElement, Type, JsonDeserializationContext) */
+	 * 
+	 * @return PlanningPokerGame
+	 * @throws JsonParseException
+	 * @see com.google.gson.JsonDeserializer#deserialize(JsonElement, Type, JsonDeserializationContext)
+	 */
 	@Override
 	public PlanningPokerGame deserialize(JsonElement ppmElement, Type ppmType,
 			JsonDeserializationContext context) throws JsonParseException {

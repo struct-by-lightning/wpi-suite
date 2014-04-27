@@ -53,7 +53,8 @@ public class UpdateDeckController {
 	 * @param newDeck Deck
 	 */
 	public void updateDeck(Deck newDeck) {
-		final Request request = Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.POST);
+		final Request request = Network.getInstance().makeRequest(
+				"planningpoker/deck", HttpMethod.POST);
 		request.setBody(newDeck.toJSON()); // put the new Deck into the request
 		request.addObserver(observer); // add an observer to process the response
 		request.send();

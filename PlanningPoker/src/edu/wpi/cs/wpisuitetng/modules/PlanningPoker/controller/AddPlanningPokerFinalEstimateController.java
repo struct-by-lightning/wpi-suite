@@ -17,11 +17,13 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 
 /**
- * This class constructs a final estimate controller model and adds the planning poker final estimate to the server.
+ * This class constructs a final estimate controller model and adds the planning
+ * poker final estimate to the server.
+ * 
  * @author friscis
  * @author swconley
  * @author mamora
- *
+ * 
  */
 public class AddPlanningPokerFinalEstimateController{
 	private static AddPlanningPokerFinalEstimateController instance = null;
@@ -54,7 +56,8 @@ public class AddPlanningPokerFinalEstimateController{
 	 * @param newPlanningPokerFinalEstimate
 	 *            is the PlanningPokerFinalEstimate to be added to the server.
 	 */
-	public void addPlanningPokerFinalEstimate(PlanningPokerFinalEstimate newPlanningPokerFinalEstimate) {
+	public void addPlanningPokerFinalEstimate(
+			PlanningPokerFinalEstimate newPlanningPokerFinalEstimate) {
 		final Request request = Network.getInstance().makeRequest(
 				"planningpoker/planningpokerfinalestimate", HttpMethod.POST); // PUT ==
 																		// create

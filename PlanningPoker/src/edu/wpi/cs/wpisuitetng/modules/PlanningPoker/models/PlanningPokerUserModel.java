@@ -20,8 +20,8 @@ import javax.swing.AbstractListModel;
 /**
  * List of planningPokerUsers pulled from the server.
  * 
- * Add functions only add planningPokerUsers to the local instance, as the planningPokerUsers already
- * exist on the server
+ * Add functions only add planningPokerUsers to the local instance, as the
+ * planningPokerUsers already exist on the server
  * 
  * @author Alec Thompson
  */

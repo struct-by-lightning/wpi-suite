@@ -129,9 +129,8 @@ public class Deck extends RegularAbstractModel<Deck> {
 	/**
 	 * Converts the list of cards to a string
 	 * 
-	
-	
-	 * @return the string representing the list of cards * @see edu.wpi.cs.wpisuitetng.modules.Model#toString() * @see edu.wpi.cs.wpisuitetng.modules.Model#toString()
+	 * @return the string representing the list of cards
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toString()
 	 */
 	@Override
 	public String toString() {
@@ -143,9 +142,10 @@ public class Deck extends RegularAbstractModel<Deck> {
 	/**
 	 * Serializes this Deck into a JSON string.
 	 * 
-	
-	
-	 * @return the JSON representation of this Deck * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
+	 * 
+	 * 
+	 * @return the JSON representation of this Deck
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
 	public String toJSON() {
 		final String json;

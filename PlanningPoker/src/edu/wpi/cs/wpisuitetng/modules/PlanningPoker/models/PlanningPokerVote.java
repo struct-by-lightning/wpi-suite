@@ -72,16 +72,22 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 		this.vote = vote;
 		this.requirementID = requirementID;
 	}
+	
 	/**
-	 * in ppvotemodel, this does not extend easily to the standard one given to us by a gson object
-	
-	
-	 * @return the JSON string with id being the primary key concat of gamename and username as well as vote * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
+	 * in ppvotemodel, this does not extend easily to the standard one given to
+	 * us by a gson object
+	 * 
+	 * 
+	 * @return the JSON string with id being the primary key concat of gamename
+	 *         and username as well as vote * @see
+	 *         edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see
+	 *         edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
 	@Override
 	public String toJSON() {
 		// TODO Auto-generated method stub
-		return "{\"id\":\"" + gameName + ":" + userName + ":" + requirementID + "\",\"vote\":\"" + vote + "\"}";
+		return "{\"id\":\"" + gameName + ":" + userName + ":" + requirementID
+				+ "\",\"vote\":\"" + vote + "\"}";
 	}
 	/**
 	 * gives the cannonical styling (as would appear in the JSON) of the primary key
@@ -142,12 +148,17 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	public void setUserName(String toSet) {
 		userName = toSet.toLowerCase();
 	}
-	/**
-	 * This method makes a JSON string into a votemodel.
-	 * It is currently fairly brittle, but should work if the standards for usernames and gamenames don't change.
-	 * @param json assumes a JSON string generated from a model of this type
 	
-	 * @return the object form of the JSON */
+	/**
+	 * This method makes a JSON string into a votemodel. It is currently fairly
+	 * brittle, but should work if the standards for usernames and gamenames
+	 * don't change.
+	 * 
+	 * @param json
+	 *            assumes a JSON string generated from a model of this type
+	 * 
+	 * @return the object form of the JSON
+	 */
 	public static PlanningPokerVote fromJSON(String json) {
 		final Scanner scTemp = new Scanner(json);
 		System.out.println(json);

@@ -62,8 +62,11 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 
 		// TODO: Right now, this button simply transitions from the contact
 		// prompt to the main planning poker view no matter what.
-		final boolean aimEntered = (aimField.getText().length() > 0) && !(aimField.getText().contains(" "));
-		final PlanningPokerUser user = new PlanningPokerUser(emailField.getText(), ConfigManager.getConfig().getUserName(), aimField.getText(), isValidEmail() , aimEntered);
+		final boolean aimEntered = (aimField.getText().length() > 0)
+				&& !(aimField.getText().contains(" "));
+		final PlanningPokerUser user = new PlanningPokerUser(
+				emailField.getText(), ConfigManager.getConfig().getUserName(),
+				aimField.getText(), isValidEmail(), aimEntered);
 		AddPlanningPokerUserController.getInstance().AddUser(user);
 		MainView.getInstance().switchToMainOverview();
 	}
@@ -106,7 +109,8 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 			}
 		});
 
-		final javax.swing.GroupLayout aimFieldPanelLayout = new javax.swing.GroupLayout(aimFieldPanel);
+		final javax.swing.GroupLayout aimFieldPanelLayout = new javax.swing.GroupLayout(
+				aimFieldPanel);
 		aimFieldPanel.setLayout(aimFieldPanelLayout);
 		aimFieldPanelLayout.setHorizontalGroup(aimFieldPanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -126,7 +130,8 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 			}
 		});
 
-		final javax.swing.GroupLayout emailFieldPanelLayout = new javax.swing.GroupLayout(emailFieldPanel);
+		final javax.swing.GroupLayout emailFieldPanelLayout = new javax.swing.GroupLayout(
+				emailFieldPanel);
 		emailFieldPanel.setLayout(emailFieldPanelLayout);
 		emailFieldPanelLayout.setHorizontalGroup(emailFieldPanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -308,7 +313,10 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 		final String emailText = emailField.getText();
 		final String aimText = aimField.getText();
 		
-		final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
+		final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern
+				.compile(
+						"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
+						Pattern.CASE_INSENSITIVE);
 		final Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailText);
         
 		if (matcher.find() || aimText.length() != 0) {
@@ -325,7 +333,10 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 	private boolean isValidEmail(){
 		final String emailText = emailField.getText();
 		
-		final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
+		final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern
+				.compile(
+						"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
+						Pattern.CASE_INSENSITIVE);
 		final Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailText);
         
 		return matcher.find();

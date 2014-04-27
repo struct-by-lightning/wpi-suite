@@ -56,26 +56,6 @@ public class MainView extends JTabbedPane {
 		}
 	}
 
-
-	/**
-	 * Overridden insertTab function to allow tab to close.
-	 *
-	
-	
-	
-	
-	
-	 * @param c Component
-	 */
-//	public void insertTab(String title, Icon icon, Component component,
-//			String tip, int index) {
-//		super.insertTab(title, icon, component, tip, index);
-//		if (!(component instanceof OverviewPanel) && !(component instanceof IterationOverviewPanel)) {
-//			setTabComponentAt(index, new ClosableTabComponent(this));
-//		}
-//	}
-
-
 	/**
 	 * Method setSelectedComponent allows you to select tabs
 	 * i.e. Main view or New Game.

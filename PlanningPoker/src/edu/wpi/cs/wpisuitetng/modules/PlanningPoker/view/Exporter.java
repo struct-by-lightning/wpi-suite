@@ -32,7 +32,9 @@ public class Exporter {
 	 * @param listOfRequirementsToAdd DefaultListModel<Requirement>
 	 * @param filename String
 	 */
-	public void exportAsString(DefaultListModel<Requirement> listOfRequirementsToAdd, String filename) {
+	public void exportAsString(
+			DefaultListModel<Requirement> listOfRequirementsToAdd,
+			String filename) {
 		// Prepare file for exporting
 		PrintWriter out = null;
 		try {
@@ -62,7 +64,8 @@ public class Exporter {
 			out.println("");
 			out.println("Transaction History:");
 			// Iterate over transaction history and print all the history
-			LinkedList<Transaction> history = listOfRequirementsToAdd.get(i).getHistory().getHistory();
+			LinkedList<Transaction> history = listOfRequirementsToAdd.get(i)
+					.getHistory().getHistory();
 			for(int j = 0; j < history.size(); j++) {
 				Date date= new Date(history.get(j).getTS());
 		        SimpleDateFormat df2 = new SimpleDateFormat("MM/dd/yy");
@@ -89,7 +92,9 @@ public class Exporter {
 	 * @param listOfRequirementsToAdd DefaultListModel<Requirement>
 	 * @param filename String
 	 */
-	public void exportAsJSON(DefaultListModel<Requirement> listOfRequirementsToAdd, String filename) {
+	public void exportAsJSON(
+			DefaultListModel<Requirement> listOfRequirementsToAdd,
+			String filename) {
 		// Prepare file for exporting
 		PrintWriter out = null;
 		try {

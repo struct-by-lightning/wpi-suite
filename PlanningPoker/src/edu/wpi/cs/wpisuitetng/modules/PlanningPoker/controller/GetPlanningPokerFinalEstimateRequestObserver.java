@@ -9,8 +9,6 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -27,7 +25,8 @@ public class GetPlanningPokerFinalEstimateRequestObserver implements RequestObse
 	 * Constructs the observer given a GetPlanningPokerFinalEstimateController
 	 * @param controller the controller used to retrieve PlanningPokerFinalEstimates
 	 */
-	public GetPlanningPokerFinalEstimateRequestObserver(GetPlanningPokerFinalEstimateController controller) {
+	public GetPlanningPokerFinalEstimateRequestObserver(
+			GetPlanningPokerFinalEstimateController controller) {
 		this.controller = controller;
 	}
 

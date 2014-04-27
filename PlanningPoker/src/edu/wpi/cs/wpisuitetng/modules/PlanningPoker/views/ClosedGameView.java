@@ -134,7 +134,8 @@ public class ClosedGameView extends JPanel {
 							for(PlanningPokerVote v : gameVotes) {
 								if(v.getRequirementID() == currentID) {
 									reqVotes.add((double)v.getVote());
-									estimateModel.addRow(Arrays.asList(v.getUserName(), v.getVote()));
+									estimateModel.addRow(Arrays.asList(v.getUserName(),
+											v.getVote()));
 								}
 							}
 							
@@ -147,10 +148,14 @@ public class ClosedGameView extends JPanel {
 						        {
 						            int rowHeight = estimates.getRowHeight();
 
-						            for (int column = 0; column < estimates.getColumnCount(); column++)
+						            for (int column = 0; column < estimates
+						            		.getColumnCount(); column++)
 						            {
-						                Component comp = estimates.prepareRenderer(estimates.getCellRenderer(row, column), row, column);
-						                rowHeight = Math.max(rowHeight, comp.getPreferredSize().height) + 5;
+						                Component comp = estimates.prepareRenderer(
+						                		estimates.getCellRenderer(row, column),
+						                		row, column);
+						                rowHeight = Math.max(rowHeight,
+						                		comp.getPreferredSize().height) + 5;
 						            }
 
 						            estimates.setRowHeight(row, rowHeight);
@@ -297,10 +302,12 @@ public class ClosedGameView extends JPanel {
 	 *            The requriement currently being viewed by the user.
 	 */
 	private void updateEstimateTotal(int selected) {
-		final PlanningPokerFinalEstimate[] finalEsts = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
+		final PlanningPokerFinalEstimate[] finalEsts = GetPlanningPokerFinalEstimateController
+				.getInstance().retrievePlanningPokerFinalEstimate();
 		estimateNumberBox.setText("0");
 		for(PlanningPokerFinalEstimate ppfe : finalEsts) {
-			if(ppfe.getRequirementID() ==  selected && ppfe.getGameName().equals(game.getGameName())) {
+			if (ppfe.getRequirementID() == selected
+					&& ppfe.getGameName().equals(game.getGameName())) {
 				estimateNumberBox.setText("" + ppfe.getEstimate());
 			}
 		}
@@ -326,7 +333,9 @@ public class ClosedGameView extends JPanel {
 			}
 			System.out.println("The game req ids: " +gameReqIds);
 			for(Requirement r : requirements){
-				System.out.println("the req id from this game: "+r.getId() +"and has a fianl estimate "+ gameReqIds.contains((Integer)r.getId()));
+				System.out.println("the req id from this game: " + r.getId()
+						+ "and has a fianl estimate "
+						+ gameReqIds.contains((Integer) r.getId()));
 				if(gameReqIds.contains((Integer)r.getId())){
 					updateButton.setEnabled(gameHasEstimates);
 				}
@@ -410,7 +419,8 @@ public class ClosedGameView extends JPanel {
 
 		requirementListScrollPane.setViewportView(requirementList);
 
-		final javax.swing.GroupLayout leftSplitPanelLayout = new javax.swing.GroupLayout(leftSplitPanel);
+		final javax.swing.GroupLayout leftSplitPanelLayout = new javax.swing.GroupLayout(
+				leftSplitPanel);
 		leftSplitPanel.setLayout(leftSplitPanelLayout);
 		leftSplitPanelLayout.setHorizontalGroup(leftSplitPanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -453,7 +463,8 @@ public class ClosedGameView extends JPanel {
 		gameDeadlineDateLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		gameDeadlineDateLabel.setText("game.getDeadlineDate()");
 
-		final javax.swing.GroupLayout gameTitlePanelLayout = new javax.swing.GroupLayout(gameTitlePanel);
+		final javax.swing.GroupLayout gameTitlePanelLayout = new javax.swing.GroupLayout(
+				gameTitlePanel);
 		gameTitlePanel.setLayout(gameTitlePanelLayout);
 		gameTitlePanelLayout.setHorizontalGroup(gameTitlePanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -603,7 +614,8 @@ public class ClosedGameView extends JPanel {
 		estimateNumberBox.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
 				final char c = e.getKeyChar();
-				if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+				if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) ||
+						(c == KeyEvent.VK_DELETE))) {
 					getToolkit().beep();
 					e.consume();
 					System.out.println("Please enter a number");
@@ -649,7 +661,8 @@ public class ClosedGameView extends JPanel {
 		// stats.setPreferredSize(new Dimension(stats.getWidth(), 50));
 		stats.setBorder(null);
 
-		final javax.swing.GroupLayout rightBlankPanelLayout = new javax.swing.GroupLayout(rightBlankPanel);
+		final javax.swing.GroupLayout rightBlankPanelLayout = new javax.swing.GroupLayout(
+				rightBlankPanel);
 		rightBlankPanel.setLayout(rightBlankPanelLayout);
 		rightBlankPanelLayout.setHorizontalGroup(rightBlankPanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -721,11 +734,13 @@ public class ClosedGameView extends JPanel {
 		updateButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
+				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController
+						.getInstance().retrievePlanningPokerFinalEstimate();
 				System.out.println("These are the current final estimates:" +Arrays.asList(stuff));
 				for(PlanningPokerFinalEstimate ppfe : stuff) {
 					if(ppfe.getGameName().equals(game.getGameName())) {
-						Requirement req2set = RequirementModel.getInstance().getRequirement(ppfe.getRequirementID());
+						Requirement req2set = RequirementModel.getInstance()
+								.getRequirement(ppfe.getRequirementID());
 						req2set.setEstimate(ppfe.getEstimate());
 						UpdateRequirementController.getInstance().updateRequirement(req2set);
 					}
@@ -766,7 +781,8 @@ public class ClosedGameView extends JPanel {
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
 
-		final javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(estimatePanel);
+		final javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(
+				estimatePanel);
 		estimatePanel.setLayout(estimatePanelLayout);
 		estimatePanelLayout.setHorizontalGroup(estimatePanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -831,16 +847,19 @@ public class ClosedGameView extends JPanel {
 						+ " set estimate to " + estimateNumberBox.getText());
 
 				final Requirement req2set = RequirementModel.getInstance().getRequirement(n);
-				final PlanningPokerFinalEstimate ppfe = new PlanningPokerFinalEstimate(game.getGameName(), n);
+				final PlanningPokerFinalEstimate ppfe = new PlanningPokerFinalEstimate(
+						game.getGameName(), n);
 				ppfe.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
-				AddPlanningPokerFinalEstimateController.getInstance().addPlanningPokerFinalEstimate(ppfe);
+				AddPlanningPokerFinalEstimateController.getInstance()
+						.addPlanningPokerFinalEstimate(ppfe);
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
+				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController
+						.getInstance().retrievePlanningPokerFinalEstimate();
 				System.out.println("These are the current final estimates:" +Arrays.asList(stuff));
 				enableUpdateButton(stuff);
 				
@@ -854,7 +873,8 @@ public class ClosedGameView extends JPanel {
 			estimateTitleLabel.setEnabled(false);
 			updateButton.setEnabled(false);
 		}
-		final javax.swing.GroupLayout rightSplitPanelLayout = new javax.swing.GroupLayout(rightSplitPanel);
+		final javax.swing.GroupLayout rightSplitPanelLayout = new javax.swing.GroupLayout(
+				rightSplitPanel);
 		rightSplitPanel.setLayout(rightSplitPanelLayout);
 		rightSplitPanelLayout.setHorizontalGroup(rightSplitPanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(

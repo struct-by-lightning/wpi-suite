@@ -230,7 +230,8 @@ public class MainView {
 		// If it is, remove that game tab, recreate one so that the requirements are updated.
 		final Component[] tabInstances = mainComponent.getComponents();
 		for(Component c: tabInstances) {
-			if (c instanceof OpenGameView || c instanceof NewGameView || c instanceof ClosedGameView) {
+			if (c instanceof OpenGameView || c instanceof NewGameView
+					|| c instanceof ClosedGameView) {
 				String gameName = "";
 				if (c instanceof OpenGameView) gameName = ((OpenGameView) c).getGame().getID();
 				if (c instanceof NewGameView) gameName = ((NewGameView) c).getGame().getID();
@@ -355,7 +356,9 @@ public class MainView {
 				}
 
 
-				final PlanningPokerUser user = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName());
+				final PlanningPokerUser user = PlanningPokerUserModel
+						.getInstance().getUser(
+								ConfigManager.getConfig().getUserName());
 
 				userHasInfo = (user != null);
 
@@ -532,7 +535,7 @@ public class MainView {
 
 		whatIsBody.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 		whatIsBody
-		.setText("<html> What does it mean if you click...<br><br> <em><strong>Create New Game:</strong></em><br> This will open the window to create a new game where you can choose the user requirements for the game.<br><br> <em><strong>New folder:</strong></em><br> These games are created but have not been started yet. If you click one of the games in this folder you if you are the moderator you can start the game.<br><br> <em><strong>Open folder:</strong></em><br> These games have been created and started you can estimate each user story. After the user story is estimated it will be marked as completed.<br><br> <em><strong>Closed folder:</strong></em><br> These are closed games. By clicking on the games in this folder you will get the results from this game. If you are the moderator of this game then you should be able to edit results.<br><br> If you are looking for further information refer to Help. </html>");
+				.setText("<html> What does it mean if you click...<br><br> <em><strong>Create New Game:</strong></em><br> This will open the window to create a new game where you can choose the user requirements for the game.<br><br> <em><strong>New folder:</strong></em><br> These games are created but have not been started yet. If you click one of the games in this folder you if you are the moderator you can start the game.<br><br> <em><strong>Open folder:</strong></em><br> These games have been created and started you can estimate each user story. After the user story is estimated it will be marked as completed.<br><br> <em><strong>Closed folder:</strong></em><br> These are closed games. By clicking on the games in this folder you will get the results from this game. If you are the moderator of this game then you should be able to edit results.<br><br> If you are looking for further information refer to Help. </html>");
 
 		final javax.swing.GroupLayout leftLayout = new javax.swing.GroupLayout(left);
 		left.setLayout(leftLayout);
@@ -564,7 +567,9 @@ public class MainView {
 										javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addGap(18, 18, 18)
-										.addComponent(whatIsBody, javax.swing.GroupLayout.PREFERRED_SIZE,
+										.addComponent(
+												whatIsBody,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addContainerGap(478, Short.MAX_VALUE)));
@@ -579,7 +584,7 @@ public class MainView {
 
 		whatIsBody1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 		whatIsBody1
-		.setText("<html> Planning Poker is a consensus-based tool for software developers to come together and estimate effort of development goals for the team. This is a great tool for agile teams to estimate the user stories they have for a given iteration.<br><br> The idea behind Planning Poker is that team discusses each user story and then goes into the game and then each user goes into the deck and selects the card that represents how effort he or she thinks the task will take. This process can be repeated for any number of user stories in the game.<br><br> During the game all estimates remain private until everyone has chose his or her card. After all estimates are in the Planning Poker game will calculate the Mean, Median, Mode, Minimum, Maximum, and Standard Deviation of the game. These values can be used for the team to continue the discussion and come to a consensus of what the groups estimate is for the user story.<br><br> </html>");
+				.setText("<html> Planning Poker is a consensus-based tool for software developers to come together and estimate effort of development goals for the team. This is a great tool for agile teams to estimate the user stories they have for a given iteration.<br><br> The idea behind Planning Poker is that team discusses each user story and then goes into the game and then each user goes into the deck and selects the card that represents how effort he or she thinks the task will take. This process can be repeated for any number of user stories in the game.<br><br> During the game all estimates remain private until everyone has chose his or her card. After all estimates are in the Planning Poker game will calculate the Mean, Median, Mode, Minimum, Maximum, and Standard Deviation of the game. These values can be used for the team to continue the discussion and come to a consensus of what the groups estimate is for the user story.<br><br> </html>");
 
 		final javax.swing.GroupLayout rightLayout = new javax.swing.GroupLayout(right);
 		right.setLayout(rightLayout);
@@ -613,7 +618,9 @@ public class MainView {
 										javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addGap(18, 18, 18)
-										.addComponent(whatIsBody1, javax.swing.GroupLayout.PREFERRED_SIZE,
+										.addComponent(
+												whatIsBody1,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addContainerGap(433, Short.MAX_VALUE)));
@@ -634,7 +641,10 @@ public class MainView {
 		jPanel1.setLayout(jPanel1Layout);
 		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel1Layout.createSequentialGroup().addContainerGap().addComponent(jLabel1)
+								jPanel1Layout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(jLabel1)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 						.addComponent(jTextField1).addContainerGap()));
 		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(
@@ -651,7 +661,9 @@ public class MainView {
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addComponent(jLabel1))
-												.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 
 		jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 		jButton2.setText("CREATE");
@@ -695,11 +707,17 @@ public class MainView {
 		jPanel3.setLayout(jPanel3Layout);
 		jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel3Layout.createSequentialGroup().addContainerGap().addComponent(jLabel3)
+				jPanel3Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel3)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel3Layout.createSequentialGroup().addContainerGap().addComponent(jLabel3)
+				jPanel3Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel3)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204,
@@ -712,11 +730,17 @@ public class MainView {
 		jPanel6.setLayout(jPanel6Layout);
 		jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel6Layout.createSequentialGroup().addContainerGap().addComponent(jLabel5)
+				jPanel6Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel5)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel6Layout.createSequentialGroup().addContainerGap().addComponent(jLabel5)
+				jPanel6Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel5)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		final javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -743,7 +767,8 @@ public class MainView {
 														.addComponent(jPanel3,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)).addContainerGap()));
+																Short.MAX_VALUE))
+										.addContainerGap()));
 		jPanel5Layout.setVerticalGroup(jPanel5Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 						jPanel5Layout
@@ -754,11 +779,14 @@ public class MainView {
 						.addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 								.addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 
 		jPanel10.setLayout(new java.awt.GridBagLayout());
 
@@ -793,7 +821,10 @@ public class MainView {
 								Short.MAX_VALUE).addContainerGap()));
 		jPanel13Layout.setVerticalGroup(jPanel13Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel13Layout.createSequentialGroup().addContainerGap().addComponent(jLabel4)
+				jPanel13Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel4)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		final javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -824,7 +855,9 @@ public class MainView {
 								.addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 
 		jPanel10.add(jPanel8, new java.awt.GridBagConstraints());
 
@@ -868,7 +901,8 @@ public class MainView {
 						.addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)));
 		jPanel11Layout.setVerticalGroup(jPanel11Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 						jPanel11Layout
@@ -898,7 +932,10 @@ public class MainView {
 								Short.MAX_VALUE).addContainerGap()));
 		jPanel7Layout.setVerticalGroup(jPanel7Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel7Layout.createSequentialGroup().addContainerGap().addComponent(jLabel2)
+				jPanel7Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel2)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		jList1.setModel(new javax.swing.AbstractListModel() {
@@ -942,7 +979,9 @@ public class MainView {
 								.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 
 		jPanel10.add(jPanel12, new java.awt.GridBagConstraints());
 
@@ -970,7 +1009,10 @@ public class MainView {
 						.addComponent(jLabel8).addContainerGap()));
 		jPanel16Layout.setVerticalGroup(jPanel16Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel16Layout.createSequentialGroup().addContainerGap().addComponent(jLabel8)
+				jPanel16Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel8)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		final javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
@@ -998,13 +1040,13 @@ public class MainView {
 																.createSequentialGroup()
 																.addComponent(jLabel6)
 																.addPreferredGap(
-																		javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
 																				jComboBox1,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)))
-																				.addContainerGap()));
+										.addContainerGap()));
 		jPanel14Layout.setVerticalGroup(jPanel14Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 						jPanel14Layout
@@ -1019,10 +1061,14 @@ public class MainView {
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addComponent(jLabel6))
-												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-												.addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												jPanel16,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addContainerGap()));
 
 		jPanel15.setBackground(Color.white);
 		jPanel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204,
@@ -1034,7 +1080,10 @@ public class MainView {
 		jPanel15.setLayout(jPanel15Layout);
 		jPanel15Layout.setHorizontalGroup(jPanel15Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel15Layout.createSequentialGroup().addContainerGap().addComponent(jLabel7)
+				jPanel15Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel7)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		jPanel15Layout.setVerticalGroup(jPanel15Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(

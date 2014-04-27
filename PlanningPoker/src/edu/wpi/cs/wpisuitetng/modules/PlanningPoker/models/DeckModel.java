@@ -97,9 +97,8 @@ public class DeckModel extends AbstractListModel<Deck> {
 	/**
 	 * Provides the number of elements in the list of Decks for the project.
 	 * 
-	
-	
-	 * @return the number of Decks in the project * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize()
+	 * @return the number of Decks in the project
+	 * @see javax.swing.ListModel#getSize()
 	 */
 	public int getSize() {
 		return Decks.size();
@@ -111,9 +110,8 @@ public class DeckModel extends AbstractListModel<Deck> {
 	 * @param index
 	 *            the index from which you want to retrieve a Deck
 	 * 
-	
-	
-	 * @return the Deck at the given index * @see javax.swing.ListModel#getElementAt(int) * @see javax.swing.ListModel#getElementAt(int)
+	 * @return the Deck at the given index
+	 * @see javax.swing.ListModel#getElementAt(int)
 	 */
 	@Override
 	public Deck getElementAt(int index) {

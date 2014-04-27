@@ -30,9 +30,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 /**
+ * This class contains an interactive calendar to select when a Planning Poker
+ * session is to begin and end.
+ * 
  * @author Miguel (Code), Christian (Comments)
- *
- * This class contains an interactive calendar to select when a Planning Poker session is to begin and end.
  * @version $Revision: 1.0 $
  */
 
@@ -59,7 +60,8 @@ public class DatePicker {
 		
 		top = box;
 		txt = text;
-		final String[] header = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" }; // shorter version
+		final String[] header = { "SUN", "MON", "TUE", "WED", "THU", "FRI",
+				"SAT" }; // shorter version
 
 		p1 = new JPanel(new GridLayout(7, 7));
 		p1.setPreferredSize(new Dimension(430, 400));

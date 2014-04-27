@@ -196,7 +196,8 @@ public class NewGameView extends JPanel {
 				}
 
 				else if (selection.contentEquals("No Deck")) {
-					deckOverview.setText("PlanningPokerUser will be able to enter their own estimation");
+					deckOverview
+							.setText("PlanningPokerUser will be able to enter their own estimation");
 				}
 			}
 
@@ -307,8 +308,10 @@ public class NewGameView extends JPanel {
 						if (deadline.isSelected()) {
 							game = new PlanningPokerGame(enteredName, "Default description",
 
-							(String) deckType.getSelectedItem(), gameRequirementIDsList, false,
-									true, startCal, endCal, ConfigManager.getConfig().getUserName());
+									(String) deckType.getSelectedItem(),
+									gameRequirementIDsList, false, true,
+									startCal, endCal, ConfigManager.getConfig()
+											.getUserName());
 						} else {
 							game = new PlanningPokerGame(enteredName, "Default description",
 									(String) deckType.getSelectedItem(), gameRequirementIDsList,

@@ -29,11 +29,13 @@ import edu.wpi.cs.wpisuitetng.modules.Model;
  * @author mamora
  *
  */
-public class PlanningPokerFinalEstimateEntityManager implements EntityManager<PlanningPokerFinalEstimate>{
+public class PlanningPokerFinalEstimateEntityManager implements
+		EntityManager<PlanningPokerFinalEstimate> {
 	Class<PlanningPokerFinalEstimate> ppg = PlanningPokerFinalEstimate.class;
 	Data data;
 
-	private static final Logger logger = Logger.getLogger(PlanningPokerEntityManager.class.getName());
+	private static final Logger logger = Logger
+			.getLogger(PlanningPokerEntityManager.class.getName());
 
 	/**
 	 * Constructor for PlanningPokerFinalEstimateEntityManager.
@@ -60,8 +62,11 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 		if (getEntity(s, p.getID())[0] == null) {
 			save(s, p);
 		} else {
-			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerFinalEstimateModel creation.");
-			throw new ConflictException("A PlanningPokerFinalEstimateModel with the given ID already exists. Entity String: " + content);
+			logger.log(Level.WARNING,
+					"Conflict Exception during PlanningPokerFinalEstimateModel creation.");
+			throw new ConflictException(
+					"A PlanningPokerFinalEstimateModel with the given ID already exists. Entity String: "
+							+ content);
 		}
 
 		return p;
@@ -181,7 +186,11 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 
 	/**
 	 * Method Count.
-	 * @return int * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count() */
+	 * 
+	 * @return int
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count()
+	 */
 	@Override
 	public int Count() throws WPISuiteException {
 		// TODO Auto-generated method stub

@@ -106,11 +106,15 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	}
 	
 	/**
-	 * This method makes a JSON string into a votemodel.
-	 * It is currently fairly brittle, but should work if the standards for usernames and gamenames don't change.
-	 * @param json assumes a JSON string generated from a model of this type
-	
-	 * @return the object form of the JSON */
+	 * This method makes a JSON string into a votemodel. It is currently fairly
+	 * brittle, but should work if the standards for usernames and gamenames
+	 * don't change.
+	 * 
+	 * @param json
+	 *            assumes a JSON string generated from a model of this type
+	 * 
+	 * @return the object form of the JSON
+	 */
 	public static PlanningPokerFinalEstimate fromJSON(String json) {
 		final Scanner scTemp = new Scanner(json);
 		//System.out.println("This is the json" +json);
@@ -127,7 +131,8 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		// get and format the vote
 		final int retEstimate = Integer.parseInt(scTemp.next());
 		
-		 final PlanningPokerFinalEstimate est = new PlanningPokerFinalEstimate(retGameName, retRequirementID);
+		final PlanningPokerFinalEstimate est = new PlanningPokerFinalEstimate(
+				retGameName, retRequirementID);
 		 est.setEstimate(retEstimate);
 		 //System.out.println("This is the final estimate that has been parsed:"+est);
 		 return est;

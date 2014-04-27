@@ -11,7 +11,6 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,11 +44,9 @@ public class DeckDeserializer implements JsonDeserializer<Deck> {
 	 * @param context
 	 *            the JSON deserialization context
 	 * 
-	
-	
-	
 	 * @return the deflated Deck * @throws JsonParseException * @throws JsonParseException
-	 * @see com.google.gson.JsonDeserializer#deserialize(JsonElement, Type, JsonDeserializationContext) */
+	 * @see com.google.gson.JsonDeserializer#deserialize(JsonElement, Type, JsonDeserializationContext)
+	 */
 	@Override
 	public Deck deserialize(JsonElement dElement, Type dType,
 			JsonDeserializationContext context) throws JsonParseException {
