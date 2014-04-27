@@ -49,7 +49,7 @@ public class PlanningPokerVoteDeserializer {
 	public PlanningPokerVote deserialize(JsonElement ppmElement, Type ppmType,
 			JsonDeserializationContext context) throws JsonParseException {
 		
-		JsonObject deflated = ppmElement.getAsJsonObject();
+		final JsonObject deflated = ppmElement.getAsJsonObject();
 
 		if (!deflated.has("id")) {
 			throw new JsonParseException(
@@ -62,22 +62,22 @@ public class PlanningPokerVoteDeserializer {
 		}
 		// for all other attributes: instantiate as null, fill in if given.
 
-		String key = deflated.get("id").getAsString();
+		final String key = deflated.get("id").getAsString();
 	
-		Scanner scTemp = new Scanner(key);
+		final Scanner scTemp = new Scanner(key);
 		
 		// skip the boilerplate
 		scTemp.useDelimiter("\\\"?[:,{}]\\\"?");
-		String userName = scTemp.next();
+		final String userName = scTemp.next();
 		// get the gameName
-		String gameName = scTemp.next();
+		final String gameName = scTemp.next();
 		// get the requirement ID
-		Integer id = Integer.parseInt(scTemp.next());
+		final Integer id = Integer.parseInt(scTemp.next());
 		
 		// get the vote
-		int vote = deflated.get("vote").getAsInt();
+		final int vote = deflated.get("vote").getAsInt();
 
-		PlanningPokerVote inflated = new PlanningPokerVote(gameName, userName, vote, id);
+		final PlanningPokerVote inflated = new PlanningPokerVote(gameName, userName, vote, id);
 		
 		System.out.println("DESERIALIZED: User " + userName + " voted " + vote + " for requirement" + id + " in game " + gameName);
 		

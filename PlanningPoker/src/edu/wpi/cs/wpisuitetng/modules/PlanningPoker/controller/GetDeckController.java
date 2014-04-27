@@ -29,7 +29,7 @@ public class GetDeckController implements ActionListener {
 	/** The singleton instance of the GetDeckController */
 	private static GetDeckController instance = null;
 	/** the observer tied to this controller */
-	private GetDeckRequestObserver observer;
+	private final GetDeckRequestObserver observer;
 
 	/**
 	 * Retrieves the singleton instance of the DeckController, or creates it if

@@ -27,7 +27,7 @@ public class DeckModelTest {
 	 */
 	@Test
 	public void testGetInstance() {
-		DeckModel guc = DeckModel.getInstance();
+		final DeckModel guc = DeckModel.getInstance();
 		assertEquals(guc.hashCode(), DeckModel.getInstance().hashCode());
 	}
 	

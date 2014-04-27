@@ -24,7 +24,7 @@ public class MailerTest {
 
 	@Test
 	public final void testCountRecipients() {
-		Mailer m = new Mailer();
+		final Mailer m = new Mailer();
 		
 		assertEquals(0, m.countRecipients());
 		

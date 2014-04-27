@@ -148,9 +148,9 @@ public class Deck extends RegularAbstractModel<Deck> {
 	 * @return the JSON representation of this Deck * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
 	public String toJSON() {
-		String json;
+		final String json;
 
-		Gson gson = new GsonBuilder().registerTypeAdapter(Deck.class,
+		final Gson gson = new GsonBuilder().registerTypeAdapter(Deck.class,
 				new DeckSerializer()).create();
 
 		json = gson.toJson(this, Deck.class);
@@ -185,7 +185,7 @@ public class Deck extends RegularAbstractModel<Deck> {
 	
 	 * @return the reconstructed Deck */
 	public static Deck fromJSON(String json) {
-		DeckDeserializer dd = new DeckDeserializer();
+		final DeckDeserializer dd = new DeckDeserializer();
 		return dd.deserialize(new JsonParser().parse(json), null, null);
 	}
 
@@ -197,9 +197,9 @@ public class Deck extends RegularAbstractModel<Deck> {
 	
 	 * @return an array of reconstructed decks */
 	public static Deck[] fromJsonArray(String jsonArr) {
-		DeckDeserializer dd = new DeckDeserializer();
-		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
-		List<Deck> decks = new ArrayList<Deck>();
+		final DeckDeserializer dd = new DeckDeserializer();
+		final JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		final List<Deck> decks = new ArrayList<Deck>();
 
 		for (JsonElement json : array) {
 			decks.add(dd.deserialize(json, null, null));

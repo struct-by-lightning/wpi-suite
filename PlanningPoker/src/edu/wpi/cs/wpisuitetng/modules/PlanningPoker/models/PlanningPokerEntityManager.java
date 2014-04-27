@@ -55,10 +55,10 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public PlanningPokerGame makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
-		PlanningPokerGame p;
+		final PlanningPokerGame p;
 		p = PlanningPokerGame.fromJSON(content);
 
-		PlanningPokerGame[] existing = getEntity(s, p.getID());
+		final PlanningPokerGame[] existing = getEntity(s, p.getID());
 		if (existing.length == 0 || existing[0] == null) {
 			save(s, p);
 		} else {
@@ -80,7 +80,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public PlanningPokerGame[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
-		PlanningPokerGame[] m = new PlanningPokerGame[0];
+		final PlanningPokerGame[] m = new PlanningPokerGame[0];
 		PlanningPokerUser[] u;
 		Mailer close;
 		
@@ -90,7 +90,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 		}
 		else
 		{
-			PlanningPokerGame[] rv = data.retrieve(ppg, "gameName", id).toArray(m);
+			final PlanningPokerGame[] rv = data.retrieve(ppg, "gameName", id).toArray(m);
 			
 			for(PlanningPokerGame game : rv) {
 				if(!game.isFinished() && new Date().after(game.getEndDate().getTime())) {
@@ -162,7 +162,7 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	@Override
 	public PlanningPokerGame update(Session s, String content)
 			throws WPISuiteException {
-		PlanningPokerGame changes = PlanningPokerGame.fromJSON(content);
+		final PlanningPokerGame changes = PlanningPokerGame.fromJSON(content);
 		System.out.println("Started update.");
 		deleteEntity(s, changes.getID());
 		data.save(changes);

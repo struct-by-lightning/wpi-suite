@@ -25,7 +25,7 @@ public class GetDeckRequestObserver implements RequestObserver {
 	/**
 	 * The controller linked to this RequestObserver *
 	 **/
-	private GetDeckController controller;
+	private final GetDeckController controller;
 
 	/**
 	 * Constructs the observer given the instance of the GetDeckController
@@ -46,7 +46,7 @@ public class GetDeckRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		// convert the JASON array of Decks to a Deck array
-		Deck[] decks = Deck.fromJsonArray(iReq.getResponse().getBody());
+		final Deck[] decks = Deck.fromJsonArray(iReq.getResponse().getBody());
 
 		// Pass these Decks to the controller
 		controller.receivedDecks(decks);

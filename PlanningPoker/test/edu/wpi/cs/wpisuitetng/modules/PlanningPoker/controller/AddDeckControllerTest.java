@@ -29,7 +29,7 @@ public class AddDeckControllerTest {
 	 */
 	@Test
 	public void testGetInstance() {
-		AddDeckController gc = AddDeckController.getInstance();
+		final AddDeckController gc = AddDeckController.getInstance();
 		assertEquals(gc.hashCode(), AddDeckController.getInstance().hashCode());
 	}
 	

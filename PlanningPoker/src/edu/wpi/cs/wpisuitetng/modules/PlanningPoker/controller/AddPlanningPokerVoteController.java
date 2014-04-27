@@ -22,7 +22,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 public class AddPlanningPokerVoteController {
 
 	private static AddPlanningPokerVoteController instance = null;
-	private AddPlanningPokerVoteRequestObserver observer;
+	private final AddPlanningPokerVoteRequestObserver observer;
 
 	/**
 	 * Construct an AddPlanningPokerVoteController for the given model, view

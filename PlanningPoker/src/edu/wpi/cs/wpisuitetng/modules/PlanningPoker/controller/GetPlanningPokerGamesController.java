@@ -28,7 +28,7 @@ public class GetPlanningPokerGamesController implements ActionListener {
 	
 	public static volatile boolean waitingOnRequest = false;
 
-	private GetPlanningPokerGamesRequestObserver observer;
+	private final GetPlanningPokerGamesRequestObserver observer;
 	private static GetPlanningPokerGamesController instance = null;
 
 	/**

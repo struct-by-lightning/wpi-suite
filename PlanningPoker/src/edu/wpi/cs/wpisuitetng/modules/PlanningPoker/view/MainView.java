@@ -32,14 +32,14 @@ import javax.swing.JTabbedPane;
  */
 @SuppressWarnings("serial")
 public class MainView extends JTabbedPane {
-	private boolean dragging = false;
-	private Image tabImage = null;
-	private Point currentMouseLocation = null;
-	private int draggedTabIndex = 0;
+	private final boolean dragging = false;
+	private final Image tabImage = null;
+	private final Point currentMouseLocation = null;
+	private final int draggedTabIndex = 0;
 	private Component lastTab = null;
 	private final JPopupMenu popup = new JPopupMenu();
-	private JMenuItem closeAll = new JMenuItem("Close All Tabs");
-	private JMenuItem closeOthers = new JMenuItem("Close Others");
+	private final JMenuItem closeAll = new JMenuItem("Close All Tabs");
+	private final JMenuItem closeOthers = new JMenuItem("Close Others");
 
 
 	/**

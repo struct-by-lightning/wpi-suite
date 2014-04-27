@@ -36,9 +36,9 @@ public class NoCardVoting extends JPanel {
 
 	static int selectedValue;
 	static PlanningPokerVote ppv;
-	private JTextField textField;
-	private JPanel estimatePanel = new JPanel();
-	private PlanningPokerGame game;
+	private final JTextField textField;
+	private final JPanel estimatePanel = new JPanel();
+	private final PlanningPokerGame game;
 
 	/**
 	 * Constructor for NoCardVoting.
@@ -48,24 +48,24 @@ public class NoCardVoting extends JPanel {
 	 */
 	public NoCardVoting(JPanel infoContainer, PlanningPokerGame initialGame) {
 		game = initialGame;
-		JPanel submitPane = new JPanel();
+		final JPanel submitPane = new JPanel();
 		submitPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		infoContainer.add(submitPane);
 		submitPane.setLayout(new BorderLayout(0, 0));
 
-		JPanel submitLabel = new JPanel();
+		final JPanel submitLabel = new JPanel();
 		submitLabel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		submitPane.add(submitLabel, BorderLayout.NORTH);
 
-		JLabel lblSubmitAnEstimate = new JLabel("Submit an estimate");
+		final JLabel lblSubmitAnEstimate = new JLabel("Submit an estimate");
 		lblSubmitAnEstimate.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		submitLabel.add(lblSubmitAnEstimate);
 
-		JPanel submitButton = new JPanel();
+		final JPanel submitButton = new JPanel();
 		submitButton.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		submitPane.add(submitButton, BorderLayout.SOUTH);
 
-		JButton btnSubmitEstimate = new JButton("Submit");
+		final JButton btnSubmitEstimate = new JButton("Submit");
 		btnSubmitEstimate.addActionListener(new ActionListener() {
 
 			@Override
@@ -77,7 +77,7 @@ public class NoCardVoting extends JPanel {
 		});
 		submitButton.add(btnSubmitEstimate);
 
-		JScrollPane estimateSelector = new JScrollPane();
+		final JScrollPane estimateSelector = new JScrollPane();
 		submitPane.add(estimateSelector, BorderLayout.CENTER);
 
 		estimateSelector.setViewportView(estimatePanel);
@@ -93,7 +93,7 @@ public class NoCardVoting extends JPanel {
 	}
 
 	public void refresh() {
-		ActionListener[] act = textField.getActionListeners();
+		final ActionListener[] act = textField.getActionListeners();
 		if (act.length > 0) {
 			textField.removeActionListener(act[0]);// remove the previous action
 													// listener if it exists
@@ -102,7 +102,7 @@ public class NoCardVoting extends JPanel {
 		textField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Vote value
-				int selectedValue = Integer.parseInt(textField.getText());
+				final int selectedValue = Integer.parseInt(textField.getText());
 
 				// Requirement ID
 				// @TODO: Get selected requirement ID
@@ -110,10 +110,10 @@ public class NoCardVoting extends JPanel {
 				// SeeOpenGameViewController.getSelectedRequirement().getId();
 
 				// Game name
-				String gameName = game.getGameName();
+				final String gameName = game.getGameName();
 
 				// User name
-				String userName = ConfigManager.getConfig().getUserName();
+				final String userName = ConfigManager.getConfig().getUserName();
 
 				// Vote
 				// ppv = new PlanningPokerVote(gameName, userName,

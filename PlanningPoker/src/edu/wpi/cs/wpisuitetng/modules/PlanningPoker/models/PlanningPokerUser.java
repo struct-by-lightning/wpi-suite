@@ -156,8 +156,8 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 	 * @return
 	 */
 	public static PlanningPokerUser[] fromJSONArray(String jsonArr) {
-		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
-		List<PlanningPokerUser> planningPokerUsers = new ArrayList<PlanningPokerUser>();
+		final JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		final List<PlanningPokerUser> planningPokerUsers = new ArrayList<PlanningPokerUser>();
 
 		for (JsonElement json : array) {
 			planningPokerUsers.add(PlanningPokerUser.fromJSON(json.toString()));

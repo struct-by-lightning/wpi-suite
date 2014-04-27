@@ -24,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetProjectController {
 	/** The observer that acts on responses to requests */
-	private GetProjectRequestObserver observer;
+	private final GetProjectRequestObserver observer;
 	/** The singleton instance of the controller */
 	private static GetProjectController instance = null;
 

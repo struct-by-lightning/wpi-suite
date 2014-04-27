@@ -36,7 +36,7 @@ public class Statistics {
 	 */
 	public static double median(double[] m) {
 		Arrays.sort(m);
-	    int middle = m.length/2;
+	    final int middle = m.length/2;
 	    if (m.length%2 == 1) {
 	        return m[middle];
 	    } else {
@@ -71,7 +71,7 @@ public class Statistics {
 	 * @return standard deviation
 	 */
 	public static double StdDev(double[] m) {
-		double avg = mean(m);
+		final double avg = mean(m);
 		double variance = 0;
 		for (int i=0; i<m.length; i++)
 		{

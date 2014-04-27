@@ -27,7 +27,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetPlanningPokerVoteController implements ActionListener {
 
-	private GetPlanningPokerVoteRequestObserver observer;
+	private final GetPlanningPokerVoteRequestObserver observer;
 	private static GetPlanningPokerVoteController instance = null;
 
 	/**
@@ -78,7 +78,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 			e.printStackTrace();
 		}
 		if(request.getResponse() != null) {
-			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
+			final PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
 			return a;
 		} else {
 			return new PlanningPokerVote[0];
@@ -103,7 +103,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 			e.printStackTrace();
 		}
 		if(request.getResponse() != null && request.getResponse().getStatusCode() == 200) {
-			PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
+			final PlanningPokerVote[] a = PlanningPokerVote.fromJsonArray(request.getResponse().getBody());
 			PlanningPokerVote ret = new PlanningPokerVote(null, null, 0, 0);
 			for(PlanningPokerVote v : a) {
 				if(v.getID().equalsIgnoreCase(gameName + ":" + userName + ":" + requirementID)) {

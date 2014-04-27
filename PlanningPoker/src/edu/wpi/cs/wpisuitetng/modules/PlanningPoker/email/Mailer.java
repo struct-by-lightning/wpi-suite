@@ -46,14 +46,14 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * @version $Revision: 1.0 $
  */
 public class Mailer {
-	private Session session;
-	private MimeMessage message;
+	private final Session session;
+	private final MimeMessage message;
 	private Transport transport;
 
 	// test information
-	private String host = "mailtrap.io";
-	private String login = "structbylightning-17dcc3f2b944376c";
-	private String pass = "ce1a24cb171342c3";
+	private final String host = "mailtrap.io";
+	private final String login = "structbylightning-17dcc3f2b944376c";
+	private final String pass = "ce1a24cb171342c3";
 
 	// TODO: Create a wpi-suite email address and mailtrap account that we can
 	// give people access to in the documentation.
@@ -71,7 +71,7 @@ public class Mailer {
 				transport = session.getTransport("smtp");
 			}
 			// release
-			String from = "struct.by.lightning@gmail.com";
+			final String from = "struct.by.lightning@gmail.com";
 
 			// set the message to be from struct by lightning
 			message.setFrom(new InternetAddress(from));
@@ -102,7 +102,7 @@ public class Mailer {
 				transport = session.getTransport("smtp");
 			}
 			// release
-			String from = "struct.by.lightning@gmail.com";
+			final String from = "struct.by.lightning@gmail.com";
 
 			// set the message to be from struct by lightning
 			message.setFrom(new InternetAddress(from));
@@ -134,7 +134,7 @@ public class Mailer {
 			if (DEBUG) {
 				transport = session.getTransport("smtp");
 			}
-			String from = "struct.by.lightning@gmail.com";
+			final String from = "struct.by.lightning@gmail.com";
 
 			// set the message to be from struct by lightning
 			message.setFrom(new InternetAddress(from));
@@ -160,7 +160,7 @@ public class Mailer {
 				transport = session.getTransport("smtp");
 			}
 			// release
-			String from = "struct.by.lightning@gmail.com";
+			final String from = "struct.by.lightning@gmail.com";
 
 			// set the message to be from struct by lightning
 			message.setFrom(new InternetAddress(from));
@@ -231,7 +231,7 @@ public class Mailer {
 				transport = session.getTransport("smtp");
 			}
 			// release
-			String from = "struct.by.lightning@gmail.com";
+			final String from = "struct.by.lightning@gmail.com";
 
 			// set the message to be from struct by lightning
 			message.setFrom(new InternetAddress(from));
@@ -351,7 +351,7 @@ public class Mailer {
 		// final version settings
 		if (DEBUG) {
 			// test with mailtrap
-			Properties props = System.getProperties();
+			final Properties props = System.getProperties();
 			props.put("mail.smtp.host", host);
 			props.put("mail.smtp.user", login);
 			props.put("mail.smtp.password", pass);

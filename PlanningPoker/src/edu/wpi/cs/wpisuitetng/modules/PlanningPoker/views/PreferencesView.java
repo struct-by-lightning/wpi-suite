@@ -115,7 +115,7 @@ public class PreferencesView extends JPanel {
 				javax.swing.BorderFactory.createLineBorder(new java.awt.Color(
 						0, 0, 0)), "Email"));
 
-		javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(
+		final javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(
 				emailPanel);
 		emailPanel.setLayout(emailPanelLayout);
 		emailPanelLayout
@@ -168,7 +168,7 @@ public class PreferencesView extends JPanel {
 			}
 		});
 
-		javax.swing.GroupLayout aimPanelLayout = new javax.swing.GroupLayout(
+		final javax.swing.GroupLayout aimPanelLayout = new javax.swing.GroupLayout(
 				aimPanel);
 		aimPanel.setLayout(aimPanelLayout);
 		aimPanelLayout
@@ -226,7 +226,7 @@ public class PreferencesView extends JPanel {
 		infoLabel
 				.setText("<html>Please check the method you'd like <br> to use for recieving notifications.</html>");
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
 		layout.setHorizontalGroup(layout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

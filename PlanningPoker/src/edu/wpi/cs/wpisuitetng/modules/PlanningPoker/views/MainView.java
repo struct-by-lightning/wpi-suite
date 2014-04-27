@@ -88,7 +88,7 @@ public class MainView {
 		
 		
 
-		Component selected = mainComponent.getSelectedComponent();
+		final Component selected = mainComponent.getSelectedComponent();
 		if (selected != null) {
 			mainComponent.remove(selected);
 		}
@@ -113,10 +113,10 @@ public class MainView {
 		games = PlanningPokerGameModel.getPlanningPokerGames();
 
 		// Instantiate each of the folders which may appear in the tree.
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("All Games");
-		DefaultMutableTreeNode newGames = new DefaultMutableTreeNode("New");
-		DefaultMutableTreeNode openGames = new DefaultMutableTreeNode("Open");
-		DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode("Finished");
+		final DefaultMutableTreeNode root = new DefaultMutableTreeNode("All Games");
+		final DefaultMutableTreeNode newGames = new DefaultMutableTreeNode("New");
+		final DefaultMutableTreeNode openGames = new DefaultMutableTreeNode("Open");
+		final DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode("Finished");
 
 		// Potentially add a node to one of the sub folders for each planning
 		// poker game we have.
@@ -167,7 +167,7 @@ public class MainView {
 		}
 
 		// Get the model for the tree.
-		DefaultTreeModel model = (DefaultTreeModel) gameTree.getModel();
+		final DefaultTreeModel model = (DefaultTreeModel) gameTree.getModel();
 
 		// Set the model's root node to the newly constructed one.
 		model.setRoot(root);
@@ -228,7 +228,7 @@ public class MainView {
 
 		// Search for selected game tab that already exists.
 		// If it is, remove that game tab, recreate one so that the requirements are updated.
-		Component[] tabInstances = mainComponent.getComponents();
+		final Component[] tabInstances = mainComponent.getComponents();
 		for(Component c: tabInstances) {
 			if (c instanceof OpenGameView || c instanceof NewGameView || c instanceof ClosedGameView) {
 				String gameName = "";
@@ -292,8 +292,8 @@ public class MainView {
 		this.refreshGameTree();
 
 		// Set the correct active cards on the toolbar and main components.
-		CardLayout toolbar = (CardLayout) cardToolbarComponent.getLayout();
-		CardLayout mainArea = (CardLayout) cardMainAreaComponent.getLayout();
+		final CardLayout toolbar = (CardLayout) cardToolbarComponent.getLayout();
+		final CardLayout mainArea = (CardLayout) cardMainAreaComponent.getLayout();
 		toolbar.show(cardToolbarComponent, MAIN_VIEW);
 		mainArea.show(cardMainAreaComponent, MAIN_VIEW);
 	}
@@ -340,7 +340,7 @@ public class MainView {
 		setupCards();
 		initLogic();
 
-		ContactChecker checker = new ContactChecker() {
+		final ContactChecker checker = new ContactChecker() {
 
 			@Override
 			public void verifyContactInfo() {
@@ -355,7 +355,7 @@ public class MainView {
 				}
 
 
-				PlanningPokerUser user = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName());
+				final PlanningPokerUser user = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName());
 
 				userHasInfo = (user != null);
 
@@ -403,8 +403,8 @@ public class MainView {
 		// Display the contact prompt view first by default.
 
 
-		CardLayout toolbar = (CardLayout) cardToolbarComponent.getLayout();
-		CardLayout mainArea = (CardLayout) cardMainAreaComponent.getLayout();
+		final CardLayout toolbar = (CardLayout) cardToolbarComponent.getLayout();
+		final CardLayout mainArea = (CardLayout) cardMainAreaComponent.getLayout();
 		toolbar.show(cardToolbarComponent, CONTACT_PROMPT_VIEW);
 		mainArea.show(cardMainAreaComponent, CONTACT_PROMPT_VIEW);
 
@@ -421,14 +421,14 @@ public class MainView {
 		// the game tree.
 		gameTree.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				int selRow = gameTree.getRowForLocation(e.getX(), e.getY());
-				TreePath selPath = gameTree.getPathForLocation(e.getX(), e.getY());
+				final int selRow = gameTree.getRowForLocation(e.getX(), e.getY());
+				final TreePath selPath = gameTree.getPathForLocation(e.getX(), e.getY());
 				if (selRow != -1) {
 					if (e.getClickCount() == 2) {
 						if (games.size() > 0) {
-							DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
+							final DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
 									.getLastPathComponent();
-							String gameName = (String) node.getUserObject();
+							final String gameName = (String) node.getUserObject();
 
 							MainView.gameWasDoubleClicked(PlanningPokerGameModel
 									.getPlanningPokerGame(gameName));
@@ -443,7 +443,7 @@ public class MainView {
 		mainComponent.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (e.getSource() instanceof JTabbedPane) {
-					JTabbedPane pane = (JTabbedPane) e.getSource();
+					final JTabbedPane pane = (JTabbedPane) e.getSource();
 					if (pane.getSelectedIndex() == 0) {
 						refreshGameTree();
 					}
@@ -534,7 +534,7 @@ public class MainView {
 		whatIsBody
 		.setText("<html> What does it mean if you click...<br><br> <em><strong>Create New Game:</strong></em><br> This will open the window to create a new game where you can choose the user requirements for the game.<br><br> <em><strong>New folder:</strong></em><br> These games are created but have not been started yet. If you click one of the games in this folder you if you are the moderator you can start the game.<br><br> <em><strong>Open folder:</strong></em><br> These games have been created and started you can estimate each user story. After the user story is estimated it will be marked as completed.<br><br> <em><strong>Closed folder:</strong></em><br> These are closed games. By clicking on the games in this folder you will get the results from this game. If you are the moderator of this game then you should be able to edit results.<br><br> If you are looking for further information refer to Help. </html>");
 
-		javax.swing.GroupLayout leftLayout = new javax.swing.GroupLayout(left);
+		final javax.swing.GroupLayout leftLayout = new javax.swing.GroupLayout(left);
 		left.setLayout(leftLayout);
 		leftLayout.setHorizontalGroup(leftLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -581,7 +581,7 @@ public class MainView {
 		whatIsBody1
 		.setText("<html> Planning Poker is a consensus-based tool for software developers to come together and estimate effort of development goals for the team. This is a great tool for agile teams to estimate the user stories they have for a given iteration.<br><br> The idea behind Planning Poker is that team discusses each user story and then goes into the game and then each user goes into the deck and selects the card that represents how effort he or she thinks the task will take. This process can be repeated for any number of user stories in the game.<br><br> During the game all estimates remain private until everyone has chose his or her card. After all estimates are in the Planning Poker game will calculate the Mean, Median, Mode, Minimum, Maximum, and Standard Deviation of the game. These values can be used for the team to continue the discussion and come to a consensus of what the groups estimate is for the user story.<br><br> </html>");
 
-		javax.swing.GroupLayout rightLayout = new javax.swing.GroupLayout(right);
+		final javax.swing.GroupLayout rightLayout = new javax.swing.GroupLayout(right);
 		right.setLayout(rightLayout);
 		rightLayout.setHorizontalGroup(rightLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -630,7 +630,7 @@ public class MainView {
 		jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 		jLabel1.setText("Game Name");
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+		final javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
 		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -661,7 +661,7 @@ public class MainView {
 
 		jCheckBox1.setText("Start voting immediately");
 
-		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+		final javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
 		jPanel2.setLayout(jPanel2Layout);
 		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -691,7 +691,7 @@ public class MainView {
 		jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 		jLabel3.setText("End time stuff");
 
-		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+		final javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
 		jPanel3.setLayout(jPanel3Layout);
 		jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -708,7 +708,7 @@ public class MainView {
 		jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 		jLabel5.setText("End date stuff");
 
-		javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+		final javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
 		jPanel6.setLayout(jPanel6Layout);
 		jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -719,7 +719,7 @@ public class MainView {
 						jPanel6Layout.createSequentialGroup().addContainerGap().addComponent(jLabel5)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+		final javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
 		jPanel5.setLayout(jPanel5Layout);
 		jPanel5Layout.setHorizontalGroup(jPanel5Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -763,7 +763,7 @@ public class MainView {
 		jPanel10.setLayout(new java.awt.GridBagLayout());
 
 		jList2.setModel(new javax.swing.AbstractListModel() {
-			private String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+			private final String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
 
 			public int getSize() {
 				return strings.length;
@@ -782,7 +782,7 @@ public class MainView {
 		jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		jLabel4.setText("Backlog");
 
-		javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+		final javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
 		jPanel13.setLayout(jPanel13Layout);
 		jPanel13Layout.setHorizontalGroup(jPanel13Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -796,7 +796,7 @@ public class MainView {
 						jPanel13Layout.createSequentialGroup().addContainerGap().addComponent(jLabel4)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+		final javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
 		jPanel8.setLayout(jPanel8Layout);
 		jPanel8Layout.setHorizontalGroup(jPanel8Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -858,7 +858,7 @@ public class MainView {
 
 		jPanel4.add(jPanel9);
 
-		javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+		final javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
 		jPanel11.setLayout(jPanel11Layout);
 		jPanel11Layout.setHorizontalGroup(jPanel11Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -887,7 +887,7 @@ public class MainView {
 		jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		jLabel2.setText("This Game");
 
-		javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+		final javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
 		jPanel7.setLayout(jPanel7Layout);
 		jPanel7Layout.setHorizontalGroup(jPanel7Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -902,7 +902,7 @@ public class MainView {
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		jList1.setModel(new javax.swing.AbstractListModel() {
-			private String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+			private final String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
 
 			public int getSize() {
 				return strings.length;
@@ -914,7 +914,7 @@ public class MainView {
 		});
 		jScrollPane1.setViewportView(jList1);
 
-		javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+		final javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
 		jPanel12.setLayout(jPanel12Layout);
 		jPanel12Layout.setHorizontalGroup(jPanel12Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -960,7 +960,7 @@ public class MainView {
 
 		jLabel8.setText("0, 1, 3, 5, 6, 7, 8, 9");
 
-		javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+		final javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
 		jPanel16.setLayout(jPanel16Layout);
 		jPanel16Layout.setHorizontalGroup(jPanel16Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -973,7 +973,7 @@ public class MainView {
 						jPanel16Layout.createSequentialGroup().addContainerGap().addComponent(jLabel8)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+		final javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
 		jPanel14.setLayout(jPanel14Layout);
 		jPanel14Layout
 		.setHorizontalGroup(jPanel14Layout
@@ -1030,7 +1030,7 @@ public class MainView {
 
 		jLabel7.setText("Logged in as...");
 
-		javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+		final javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
 		jPanel15.setLayout(jPanel15Layout);
 		jPanel15Layout.setHorizontalGroup(jPanel15Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(

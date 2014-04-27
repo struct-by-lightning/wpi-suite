@@ -79,7 +79,7 @@ public class CreateGameView extends JPanel {
 	 * UI for creating a new planning poker game.
 	 */
 	public static void openNewTab() {
-		CreateGameView view = new CreateGameView();
+		final CreateGameView view = new CreateGameView();
 		MainView.getInstance().addCloseableTab("Create Game", view);
 	}
 
@@ -166,9 +166,9 @@ public class CreateGameView extends JPanel {
 
 				viewHasBeenEdited = true;
 
-				JComboBox<String> combo = (JComboBox<String>) e.getSource();
+				final JComboBox<String> combo = (JComboBox<String>) e.getSource();
 
-				String selection = (String) combo.getSelectedItem();
+				final String selection = (String) combo.getSelectedItem();
 
 				if (selection.contentEquals("Default")) {
 					deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
@@ -201,7 +201,7 @@ public class CreateGameView extends JPanel {
 
 				viewHasBeenEdited = true;
 
-				String currentText = sessionName.getText();
+				final String currentText = sessionName.getText();
 
 				if (currentText.length() < 1) {
 
@@ -290,7 +290,7 @@ public class CreateGameView extends JPanel {
 
 				enteredName = sessionName.getText();
 				selectedDeckType = (String) deckType.getSelectedItem();
-				GregorianCalendar startCal, endCal;
+				final GregorianCalendar startCal, endCal;
 
 				// Checks to see if the user set the date to something other
 				// than default text
@@ -299,9 +299,9 @@ public class CreateGameView extends JPanel {
 					System.out.println("Please enter a valid date");
 				} else {
 					// String[] startDate = startDateText.getText().split("-");
-					String[] endDate = endDateText.getText().split("-");
+					final String[] endDate = endDateText.getText().split("-");
 
-					Date endVal = (Date) endTime.getValue();
+					final Date endVal = (Date) endTime.getValue();
 
 					/**
 					 * Gregorian Calendars save month values starting at 0, so
@@ -364,9 +364,9 @@ public class CreateGameView extends JPanel {
 						// Error message when the session name is empty
 						if (sessionName.getText().isEmpty()) {
 							btnCreateGame.setEnabled(false);
-							JOptionPane emptyNameErrorPanel = new JOptionPane(
+							final JOptionPane emptyNameErrorPanel = new JOptionPane(
 									"You must enter the session name", JOptionPane.ERROR_MESSAGE);
-							JDialog errorDialog = emptyNameErrorPanel.createDialog(null);
+							final JDialog errorDialog = emptyNameErrorPanel.createDialog(null);
 							errorDialog.setLocation(thisPanel.getWidth() / 2,
 									thisPanel.getHeight() / 2);
 							errorDialog.setVisible(true);
@@ -624,7 +624,7 @@ public class CreateGameView extends JPanel {
 		settingsPanel.add(calendarOverview, BorderLayout.CENTER);
 		calendarOverview.setLayout(new GridLayout(1, 2, 0, 0));
 
-		SpinnerDateModel model_2 = new SpinnerDateModel();
+		final SpinnerDateModel model_2 = new SpinnerDateModel();
 		model_2.setCalendarField(Calendar.MINUTE);
 
 		calendar = new JPanel();
@@ -670,7 +670,7 @@ public class CreateGameView extends JPanel {
 		endPanel.add(endTime, constraints9);
 
 		lblrequired2 = new JLabel("*");
-		GridBagConstraints gbc_lblrequired2 = new GridBagConstraints();
+		final GridBagConstraints gbc_lblrequired2 = new GridBagConstraints();
 		gbc_lblrequired2.insets = new Insets(0, 0, 5, 0);
 		gbc_lblrequired2.anchor = GridBagConstraints.LINE_START;
 		gbc_lblrequired2.gridx = 2;
@@ -839,7 +839,7 @@ public class CreateGameView extends JPanel {
 		btn_removeAll.setEnabled(false);
 
 		bottomSpacer = new JPanel();
-		GroupLayout gl_addRemPanel = new GroupLayout(addRemPanel);
+		final GroupLayout gl_addRemPanel = new GroupLayout(addRemPanel);
 		gl_addRemPanel
 				.setHorizontalGroup(gl_addRemPanel
 						.createParallelGroup(Alignment.LEADING)

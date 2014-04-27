@@ -29,7 +29,7 @@ public class GetPlanningPokerGamesControllerTest {
 	 */
 	@Test
 	public void testGetInstance() {
-		GetPlanningPokerGamesController gc = GetPlanningPokerGamesController.getInstance();
+		final GetPlanningPokerGamesController gc = GetPlanningPokerGamesController.getInstance();
 		assertEquals(gc.hashCode(), GetPlanningPokerGamesController.getInstance().hashCode());
 	}
 
@@ -39,14 +39,14 @@ public class GetPlanningPokerGamesControllerTest {
 	 */
 	@Test
 	public void testReceivedPlanningPokerGames() {
-		GetPlanningPokerGamesController gc = GetPlanningPokerGamesController.getInstance();
-		PlanningPokerGame[] games = new PlanningPokerGame[]{
+		final GetPlanningPokerGamesController gc = GetPlanningPokerGamesController.getInstance();
+		final PlanningPokerGame[] games = new PlanningPokerGame[]{
 				new PlanningPokerGame("g1", "d1", "dt1", new ArrayList<Integer>(), false, false, new GregorianCalendar(), new GregorianCalendar(), "m1"),
 				new PlanningPokerGame("g2", "d2", "dt2", new ArrayList<Integer>(), false, false, new GregorianCalendar(), new GregorianCalendar(), "m2")
 		};
 		gc.receivedPlanningPokerGames(games);
 		
-		List<PlanningPokerGame> pgm = PlanningPokerGameModel.getPlanningPokerGames();
+		final List<PlanningPokerGame> pgm = PlanningPokerGameModel.getPlanningPokerGames();
 		assertTrue(pgm.size() == games.length);
 		for (int x = 0; x < pgm.size(); x++) {
 			PlanningPokerGame s1 = pgm.get(pgm.size()-x-1);

@@ -49,7 +49,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 	@Override
 	public PlanningPokerGame deserialize(JsonElement ppmElement, Type ppmType,
 			JsonDeserializationContext context) throws JsonParseException {
-		JsonObject deflated = ppmElement.getAsJsonObject();
+		final JsonObject deflated = ppmElement.getAsJsonObject();
 
 		if (!deflated.has("gameName")) {
 			throw new JsonParseException(
@@ -91,10 +91,10 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 		}
 		// for all other attributes: instantiate as null, fill in if given.
 
-		String gameName = deflated.get("gameName").getAsString();
-		String description = null;
+		final String gameName = deflated.get("gameName").getAsString();
+		final String description = null;
 		String deckType = null;
-		List<Integer> requirements = new ArrayList<Integer>();
+		final List<Integer> requirements = new ArrayList<Integer>();
 		boolean isFinished = false;
 		boolean isArchived = false;
 		boolean isLive = false;
@@ -134,10 +134,10 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 					"PlanningPokerModel transmitted with String in isLive field");
 		}
 
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 		try {
-			Date date = df.parse(deflated.get("startDate").getAsString());
+			final Date date = df.parse(deflated.get("startDate").getAsString());
 			startDate = new GregorianCalendar();
 			startDate.setTime(date);
 		} catch (java.text.ParseException e) {
@@ -147,7 +147,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 		}
 		
 		try {
-			Date date = df.parse(deflated.get("endDate").getAsString());
+			final Date date = df.parse(deflated.get("endDate").getAsString());
 			endDate = new GregorianCalendar();
 			endDate.setTime(date);
 		} catch (java.text.ParseException e) {
@@ -166,7 +166,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 		moderator = deflated.get("moderator").getAsString();
 		
 		
-		PlanningPokerGame inflated = new PlanningPokerGame(gameName, description,
+		final PlanningPokerGame inflated = new PlanningPokerGame(gameName, description,
 				deckType, requirements, isFinished, isLive, startDate, endDate, moderator);
 		inflated.setArchived(isArchived);
 		return inflated;

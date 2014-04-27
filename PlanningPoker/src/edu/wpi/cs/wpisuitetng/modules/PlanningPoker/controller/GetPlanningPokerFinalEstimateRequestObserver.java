@@ -21,7 +21,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class GetPlanningPokerFinalEstimateRequestObserver implements RequestObserver{
 	public static boolean isError = false;
-	private GetPlanningPokerFinalEstimateController controller;
+	private final GetPlanningPokerFinalEstimateController controller;
 	
 	/**
 	 * Constructs the observer given a GetPlanningPokerFinalEstimateController

@@ -22,7 +22,7 @@ import java.util.Map;
 public class PlanningPokerGameModel {
 
 	// Dictionary mapping each game's name to it's instance.
-	private static Map<String, PlanningPokerGame> planningPokerGamesDict = new HashMap<String, PlanningPokerGame>();
+	private static final Map<String, PlanningPokerGame> planningPokerGamesDict = new HashMap<String, PlanningPokerGame>();
 
 	/**
 	 * Adds a single PlanningPokerGame to the project's set of games.
@@ -57,7 +57,7 @@ public class PlanningPokerGameModel {
 	 * @return The PlanningPokerGame instance with the name provided. * @throws NotFoundException
 	 *             If no game with the given name is found. */
 	public static PlanningPokerGame getPlanningPokerGame(String name) {
-		PlanningPokerGame toReturn = PlanningPokerGameModel.planningPokerGamesDict
+		final PlanningPokerGame toReturn = PlanningPokerGameModel.planningPokerGamesDict
 				.get(name);
 
 		return toReturn;

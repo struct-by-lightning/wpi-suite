@@ -68,7 +68,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	@Override
 	public void setID(String toSet) {
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(toSet);
+		final Scanner sc = new Scanner(toSet);
 		sc.useDelimiter("\\s*:\\s*");
 		gameName = sc.next();
 		requirementID = sc.nextInt();
@@ -112,22 +112,22 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	
 	 * @return the object form of the JSON */
 	public static PlanningPokerFinalEstimate fromJSON(String json) {
-		Scanner scTemp = new Scanner(json);
+		final Scanner scTemp = new Scanner(json);
 		//System.out.println("This is the json" +json);
 		// skip the boilerplate
 		scTemp.useDelimiter("\\\"?[:,{}]\\\"?");
 		scTemp.next();
 		// get the gameName
-		String retGameName = scTemp.next();
+		final String retGameName = scTemp.next();
 		
 		// get the requirement ID
-		Integer retRequirementID = Integer.parseInt(scTemp.next());
+		final Integer retRequirementID = Integer.parseInt(scTemp.next());
 		
 		scTemp.next();
 		// get and format the vote
-		int retEstimate = Integer.parseInt(scTemp.next());
+		final int retEstimate = Integer.parseInt(scTemp.next());
 		
-		 PlanningPokerFinalEstimate est = new PlanningPokerFinalEstimate(retGameName, retRequirementID);
+		 final PlanningPokerFinalEstimate est = new PlanningPokerFinalEstimate(retGameName, retRequirementID);
 		 est.setEstimate(retEstimate);
 		 //System.out.println("This is the final estimate that has been parsed:"+est);
 		 return est;
@@ -141,9 +141,9 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	
 	 * @return An array of reconstructed PlanningPokerGames */
 	public static PlanningPokerFinalEstimate[] fromJsonArray(String jsonArr) {
-		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		final JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
 		//System.out.println(array);
-		List<PlanningPokerFinalEstimate> ppnes = new ArrayList<PlanningPokerFinalEstimate>();
+		final List<PlanningPokerFinalEstimate> ppnes = new ArrayList<PlanningPokerFinalEstimate>();
 
 		for (JsonElement json : array) {
 			ppnes.add(fromJSON(json.toString()));

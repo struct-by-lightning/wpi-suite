@@ -39,7 +39,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	private String deckType;
 
 	/** Requirement IDs associated with this game */
-	private List<Integer> requirementIds;
+	private final List<Integer> requirementIds;
 
 	/** Whether the game is finished */
 	private boolean isFinished;
@@ -114,7 +114,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 				|| RequirementModel.getInstance().getRequirements().get(0) == null) {
 		}
 		
-		List<Requirement> toReturn = new ArrayList<Requirement>();
+		final List<Requirement> toReturn = new ArrayList<Requirement>();
 
 		for(int id : requirementIds) {
 			toReturn.add(RequirementModel.getInstance().getRequirement(id));
@@ -173,7 +173,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 */
 	@Override
 	public String toJSON() {
-		PlanningPokerSerializer pps = new PlanningPokerSerializer();
+		final PlanningPokerSerializer pps = new PlanningPokerSerializer();
 		return pps.serialize(this, null, null).toString();
 	}
 
@@ -185,7 +185,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return The reconstructed PlanningPokerGame */
 	public static PlanningPokerGame fromJSON(String json) {
-		PlanningPokerDeserializer ppd = new PlanningPokerDeserializer();
+		final PlanningPokerDeserializer ppd = new PlanningPokerDeserializer();
 		return ppd.deserialize(new JsonParser().parse(json), null, null);
 	}
 
@@ -197,9 +197,9 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return An array of reconstructed PlanningPokerGames */
 	public static PlanningPokerGame[] fromJsonArray(String jsonArr) {
-		PlanningPokerDeserializer ppd = new PlanningPokerDeserializer();
-		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
-		List<PlanningPokerGame> ppgs = new ArrayList<PlanningPokerGame>();
+		final PlanningPokerDeserializer ppd = new PlanningPokerDeserializer();
+		final JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		final List<PlanningPokerGame> ppgs = new ArrayList<PlanningPokerGame>();
 
 		for (JsonElement json : array) {
 			ppgs.add(ppd.deserialize(json, null, null));

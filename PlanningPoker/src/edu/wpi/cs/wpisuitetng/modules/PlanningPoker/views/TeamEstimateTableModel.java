@@ -7,8 +7,8 @@ import javax.swing.table.AbstractTableModel;
 
 public class TeamEstimateTableModel extends AbstractTableModel
 {
-    private List<String> columnNames = new ArrayList();
-    private List<List> data = new ArrayList();
+    private final List<String> columnNames = new ArrayList();
+    private final List<List> data = new ArrayList();
 
     {
         columnNames.add("Username");

@@ -84,12 +84,12 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 			System.out.println(index);
 			System.out.println(tabbedPane);
 			System.out.println(tabbedPane.getComponentAt(index));
-			Component tabView = tabbedPane.getComponentAt(index);
+			final Component tabView = tabbedPane.getComponentAt(index);
 			
 			if (tabView instanceof CreateGameView) {
 				if (((CreateGameView) tabView).isViewHasBeenEdited()) {
 					//default icon, custom title
-					int n = JOptionPane.showConfirmDialog(
+					final int n = JOptionPane.showConfirmDialog(
 					    this.getParent().getParent(),
 					    "Are you sure, you want to close the current tab?",
 					    "Warning",

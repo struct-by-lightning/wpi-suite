@@ -23,7 +23,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class GetProjectRequestObserver implements RequestObserver {
 	/** the controller associated with this observer */
-	private GetProjectController controller;
+	private final GetProjectController controller;
 
 	/**
 	 * Construct the observer given a GetProjectController
@@ -45,7 +45,7 @@ public class GetProjectRequestObserver implements RequestObserver {
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of PlanningPokerGames to a PlanningPokerGame
 		// object array
-		Project[] projects = Project
+		final Project[] projects = Project
 				.fromJsonArray(iReq.getResponse().getBody());
 
 		// Pass these PlanningPokerGames to the controller

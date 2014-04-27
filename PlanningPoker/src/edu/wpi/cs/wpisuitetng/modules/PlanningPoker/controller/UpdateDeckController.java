@@ -26,7 +26,7 @@ public class UpdateDeckController {
 	/** The singleton instance of the UpdateDeckController */
 	private static UpdateDeckController instance = null;
 	/** THe observer tied to the instance of the UpdateDeckController */
-	private UpdateDeckRequestObserver observer;
+	private final UpdateDeckRequestObserver observer;
 
 	/**
 	 * Returns the singleton instance of the UpdateDeckController, or creates it
@@ -53,7 +53,7 @@ public class UpdateDeckController {
 	 * @param newDeck Deck
 	 */
 	public void updateDeck(Deck newDeck) {
-		Request request = Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.POST);
+		final Request request = Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.POST);
 		request.setBody(newDeck.toJSON()); // put the new Deck into the request
 		request.addObserver(observer); // add an observer to process the response
 		request.send();

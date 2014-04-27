@@ -23,7 +23,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
 	public static boolean isError = false;
-	private GetPlanningPokerVoteController controller;
+	private final GetPlanningPokerVoteController controller;
 	
 	/**
 	 * Constructs the observer given a GetPlanningPokerGamesController

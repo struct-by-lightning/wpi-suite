@@ -27,7 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
  */
 public class DeckModel extends AbstractListModel<Deck> {
 	/** The list in which all the Decks for a single project are contained */
-	private List<Deck> Decks;
+	private final List<Deck> Decks;
 	/** The singleton instance of the DeckModel */
 	private static DeckModel instance = null;
 
@@ -128,8 +128,8 @@ public class DeckModel extends AbstractListModel<Deck> {
 	 * PlanningPokerUser from the model.
 	 */
 	public void emptyModel() {
-		int oldSize = getSize();
-		Iterator<Deck> iterator = Decks.iterator();
+		final int oldSize = getSize();
+		final Iterator<Deck> iterator = Decks.iterator();
 		while (iterator.hasNext()) {
 			iterator.next();
 			iterator.remove();

@@ -89,7 +89,7 @@ public class EmailPopup {
 	 * out, the user on the server is updated.
 	 */
 	private void run() {
-		PlanningPokerUser planningPokerUser;
+		final PlanningPokerUser planningPokerUser;
 		String newEmail = null;
 		// check if the user has an email already
 		planningPokerUser = findUser();
@@ -125,7 +125,7 @@ public class EmailPopup {
 	
 	 * @return the list of users updated with the user's new email address. */
 	private List<PlanningPokerUser> run(List<PlanningPokerUser> userList) {
-		PlanningPokerUser planningPokerUser;
+		final PlanningPokerUser planningPokerUser;
 		String newEmail = null;
 		// check if the user has an email already
 		planningPokerUser = findUser(userList, ConfigManager.getConfig().getUserName());

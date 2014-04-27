@@ -25,8 +25,8 @@ public class PlayingCardJPanel extends JPanel {
 	private final int value;
 	private boolean selected;
 	private Image img;
-	private GroupLayout innerCardPanelLayout;
-	private GroupLayout thisLayout;
+	private final GroupLayout innerCardPanelLayout;
+	private final GroupLayout thisLayout;
 
 	/**
 	 * Inner panels for displaying this card.
@@ -169,7 +169,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * updates the border
 	 */
 	private void updateBorder() {
-		Color borderColor = (selected ? new Color(0,111,255)
+		final Color borderColor = (selected ? new Color(0,111,255)
 				: Color.white);
 		this.setBorder(BorderFactory.createLineBorder(borderColor, 10));
 	}

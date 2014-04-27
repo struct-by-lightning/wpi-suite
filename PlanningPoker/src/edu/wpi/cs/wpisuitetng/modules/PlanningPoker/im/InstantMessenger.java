@@ -34,11 +34,11 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * @version Apr 24, 2014
  */
 public class InstantMessenger {
-	private ConnectionConfiguration config;
-	private XMPPConnection server;
-	private Presence presence;
+	private final ConnectionConfiguration config;
+	private final XMPPConnection server;
+	private final Presence presence;
 	private String text;
-	private PacketListener pl;
+	private final PacketListener pl;
 
 	public InstantMessenger(PlanningPokerGame game) {
 		config = new ConnectionConfiguration("talk.google.com", 5222,
@@ -60,7 +60,7 @@ public class InstantMessenger {
 			@Override
 			public void processPacket(Packet p) {
 				if (p instanceof Message) {
-					Message msg = (Message) p;
+					final Message msg = (Message) p;
 					System.out.println(msg.getFrom() + ": " + msg.getBody());
 				}
 			}
@@ -101,7 +101,7 @@ public class InstantMessenger {
 	 */
 	public void sendMessage(String username) {
 		System.out.println("Sending message to " + username);
-		Message msg = new Message(username, Message.Type.chat);
+		final Message msg = new Message(username, Message.Type.chat);
 		msg.setBody(text);
 		server.sendPacket(msg);
 	}

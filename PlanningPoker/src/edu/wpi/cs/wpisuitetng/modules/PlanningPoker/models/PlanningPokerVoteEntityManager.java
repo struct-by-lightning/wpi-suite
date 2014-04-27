@@ -55,7 +55,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	@Override
 	public PlanningPokerVote makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
-		PlanningPokerVote p = PlanningPokerVote.fromJSON(content);
+		final PlanningPokerVote p = PlanningPokerVote.fromJSON(content);
 
 		if (getEntity(s, p.getID())[0] == null) {
 			save(s, p);
@@ -78,7 +78,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	@Override
 	public PlanningPokerVote[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
-		PlanningPokerVote[] m = new PlanningPokerVote[0];
+		final PlanningPokerVote[] m = new PlanningPokerVote[0];
 		if(id.equals(""))
 		{
 			return getAll(s);
@@ -114,7 +114,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	@Override
 	public PlanningPokerVote update(Session s, String content)
 			throws WPISuiteException {
-		PlanningPokerVote changes = PlanningPokerVote.fromJSON(content);
+		final PlanningPokerVote changes = PlanningPokerVote.fromJSON(content);
 		if(changes.gameName != null && changes.userName != null) {
 			deleteEntity(s, changes.getID());
 			data.save(changes);
@@ -158,7 +158,7 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 	 * @return boolean * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String) */
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
-		List<Model> retrieval = data.retrieve(ppg, "id", id);
+		final List<Model> retrieval = data.retrieve(ppg, "id", id);
 		for(Model p : retrieval)
 			data.delete(p);
 		return true;

@@ -39,7 +39,7 @@ public class GetUserControllerTest {
 	 */
 	@Test
 	public void testGetInstance() {
-		GetPlanningPokerUserController guc = GetPlanningPokerUserController.getInstance();
+		final GetPlanningPokerUserController guc = GetPlanningPokerUserController.getInstance();
 		assertEquals(guc.hashCode(), GetPlanningPokerUserController.getInstance().hashCode());
 	}
 	
@@ -48,14 +48,14 @@ public class GetUserControllerTest {
 
 	@Test
 	public void testReceivedUser() {
-		GetPlanningPokerUserController gc = GetPlanningPokerUserController.getInstance();
-		PlanningPokerUser[] users = new PlanningPokerUser[]{
+		final GetPlanningPokerUserController gc = GetPlanningPokerUserController.getInstance();
+		final PlanningPokerUser[] users = new PlanningPokerUser[]{
 				 new PlanningPokerUser("jbond@test.com", "jbond", "jbond@aim.com", false, false),
 				new PlanningPokerUser("m@m.com", "m",  "m@aim.com", false, false)
 		};
 		gc.receivedUser(users);
 		
-		List<PlanningPokerUser> pgm = PlanningPokerUserModel.getInstance().getUsers();
+		final List<PlanningPokerUser> pgm = PlanningPokerUserModel.getInstance().getUsers();
 		assertTrue(pgm.size() == users.length);
 		for (int x = 0; x < pgm.size(); x++) {
 			PlanningPokerUser s1 = pgm.get(x);

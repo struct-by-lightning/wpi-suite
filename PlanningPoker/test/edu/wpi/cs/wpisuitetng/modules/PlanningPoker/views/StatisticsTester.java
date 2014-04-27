@@ -20,7 +20,7 @@ import org.junit.Test;
 public class StatisticsTester {
 	@Test
 	public void testAll1() {
-		double[] nums = {1.0, 2.0, 3.0, 4.0, 5.0};
+		final double[] nums = {1.0, 2.0, 3.0, 4.0, 5.0};
 		assertEquals(3.0, Statistics.mean(nums), .001);
 		assertEquals(3.0, Statistics.median(nums), .001);
 		assertEquals(1.0, Statistics.mode(nums), .001);
@@ -30,7 +30,7 @@ public class StatisticsTester {
 	}
 	@Test
 	public void testAll2() {
-		double[] nums = {48.6, 20.9, 8, 20.9, 11.40, 4.26, 71.45, 85.99, 12};
+		final double[] nums = {48.6, 20.9, 8, 20.9, 11.40, 4.26, 71.45, 85.99, 12};
 		assertEquals(31.5, Statistics.mean(nums), .001);
 		assertEquals(20.9, Statistics.median(nums), .001);
 		assertEquals(20.9, Statistics.mode(nums), .001);

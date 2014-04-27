@@ -45,7 +45,7 @@ public class ProjectModel extends AbstractListModel<Project> {
 	}
 
 	/** The list of all projects on the server */
-	private List<Project> projects;
+	private final List<Project> projects;
 
 	/** Constructs an empty project model */
 	private ProjectModel() {
@@ -83,8 +83,8 @@ public class ProjectModel extends AbstractListModel<Project> {
 	 * model.
 	 */
 	public void emptyModel() {
-		int oldSize = getSize();
-		Iterator<Project> iterator = projects.iterator();
+		final int oldSize = getSize();
+		final Iterator<Project> iterator = projects.iterator();
 		while (iterator.hasNext()) {
 			iterator.next();
 			iterator.remove();

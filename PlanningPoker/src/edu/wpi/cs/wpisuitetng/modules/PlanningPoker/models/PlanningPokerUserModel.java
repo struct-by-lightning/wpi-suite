@@ -29,7 +29,7 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	/**
 	 * The list in which all the Users for a single project are contained
 	 */
-	private List<PlanningPokerUser> planningPokerUsers;
+	private final List<PlanningPokerUser> planningPokerUsers;
 
 	/**
 	 * The static object to allow the user model to exist
@@ -134,8 +134,8 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 * model.
 	 */
 	public void emptyModel() {
-		int oldSize = getSize();
-		Iterator<PlanningPokerUser> iterator = planningPokerUsers.iterator();
+		final int oldSize = getSize();
+		final Iterator<PlanningPokerUser> iterator = planningPokerUsers.iterator();
 		while (iterator.hasNext()) {
 			iterator.next();
 			iterator.remove();

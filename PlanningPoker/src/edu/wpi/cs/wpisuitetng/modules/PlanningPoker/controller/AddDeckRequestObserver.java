@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 public class AddDeckRequestObserver implements RequestObserver {
 
 	/** The controller the request observer is associated with */
-	private AddDeckController controller;
+	private final AddDeckController controller;
 
 	/**
 	 * Constructs the observer given the AddDeckController

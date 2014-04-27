@@ -28,7 +28,7 @@ public class AddPlanningPokerFinalEstimateControllerTest {
 	 */
 	@Test
 	public void testGetInstance() {
-		AddPlanningPokerFinalEstimateController gc = AddPlanningPokerFinalEstimateController.getInstance();
+		final AddPlanningPokerFinalEstimateController gc = AddPlanningPokerFinalEstimateController.getInstance();
 		assertEquals(gc.hashCode(), AddPlanningPokerFinalEstimateController.getInstance().hashCode());
 	}
 	

@@ -21,8 +21,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  *
  */
 public class GetPlanningPokerFinalEstimateController {
-	private Network network;
-	private GetPlanningPokerFinalEstimateRequestObserver observer;
+	private final Network network;
+	private final GetPlanningPokerFinalEstimateRequestObserver observer;
 	private static GetPlanningPokerFinalEstimateController instance = null;
 
 	/**
@@ -71,7 +71,7 @@ public class GetPlanningPokerFinalEstimateController {
 		}
 		if(request.getResponse() != null) {
 			System.out.println("response exists");
-			PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate.fromJsonArray(request.getResponse().getBody()); //return the response
+			final PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate.fromJsonArray(request.getResponse().getBody()); //return the response
 			return a;
 		} else {
 			System.out.println("response is null");
@@ -97,7 +97,7 @@ public class GetPlanningPokerFinalEstimateController {
 			e.printStackTrace();
 		}
 		if(request.getResponse() != null && request.getResponse().getStatusCode() == 200) {
-			PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate.fromJsonArray(request.getResponse().getBody());
+			final PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate.fromJsonArray(request.getResponse().getBody());
 			PlanningPokerFinalEstimate ret = new PlanningPokerFinalEstimate(null, 0);
 			for(PlanningPokerFinalEstimate fe : a) {
 				if(fe.getID().equalsIgnoreCase(gameName + ":"  + requirementID)) {

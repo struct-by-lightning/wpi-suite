@@ -60,7 +60,7 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	@Override
 	public Deck makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
-		Deck d;
+		final Deck d;
 		d = Deck.fromJSON(content);
 
 		if (getEntity(s, d.getDeckName())[0] == null) {
@@ -86,7 +86,7 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	@Override
 	public Deck[] getEntity(Session s, String id) throws NotFoundException,
 			WPISuiteException {
-		Deck[] m = new Deck[0];
+		final Deck[] m = new Deck[0];
 		if (id.equals("")) {
 			return getAll(s);
 		} else {
@@ -118,7 +118,7 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	 * @return Deck * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#update(Session, String) */
 	@Override
 	public Deck update(Session s, String content) throws WPISuiteException {
-		Deck changes = Deck.fromJSON(content);
+		final Deck changes = Deck.fromJSON(content);
 		System.out.println("Started update.");
 		deleteEntity(s, changes.getDeckName());
 		data.save(changes);
@@ -153,7 +153,7 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	 * @return boolean * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String) */
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
-		Model m = data.delete(data.retrieve(d, "deckName", id).get(0));
+		final Model m = data.delete(data.retrieve(d, "deckName", id).get(0));
 		logger.log(Level.INFO, "DeckEntityManager deleting deck < " + id + " >");
 		return (m != null) ? true : false;
 	}

@@ -59,7 +59,7 @@ public class DatePicker {
 		
 		top = box;
 		txt = text;
-		String[] header = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" }; // shorter version
+		final String[] header = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" }; // shorter version
 
 		p1 = new JPanel(new GridLayout(7, 7));
 		p1.setPreferredSize(new Dimension(430, 400));
@@ -89,7 +89,7 @@ public class DatePicker {
 		}
 		p2 = new JPanel(new GridLayout(1, 3));
 		p1.setPreferredSize(new Dimension(430, 60));
-		JButton previous = new JButton("<< Previous");
+		final JButton previous = new JButton("<< Previous");
 		previous.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				month--;
@@ -98,7 +98,7 @@ public class DatePicker {
 		});
 		p2.add(previous);
 		p2.add(l);
-		JButton next = new JButton("Next >>");
+		final JButton next = new JButton("Next >>");
 		next.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				month++;
@@ -133,13 +133,13 @@ public class DatePicker {
 			button[x].setText("");
 			button[x].setEnabled(false);
 		}
-		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
+		final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
 				"MMMM yyyy");
-		java.util.Calendar cal = java.util.Calendar.getInstance();
-		java.util.Calendar current = java.util.Calendar.getInstance();
+		final java.util.Calendar cal = java.util.Calendar.getInstance();
+		final java.util.Calendar current = java.util.Calendar.getInstance();
 		cal.set(year, month, 1);
-		int dayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK);
-		int daysInMonth = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
+		final int dayOfWeek = cal.get(java.util.Calendar.DAY_OF_WEEK);
+		final int daysInMonth = cal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
 		for (int x = 6 + dayOfWeek, day = 1; day <= daysInMonth; x ++, day++) {
 			button[x].setFont(new Font("Default", Font.PLAIN, 14));
 			cal.set(year,  month, day);
@@ -167,9 +167,9 @@ public class DatePicker {
 		if (day.equals("")) {
 			return day;
 		}
-		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
+		final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
 				"dd-MM-yyyy");
-		java.util.Calendar cal = java.util.Calendar.getInstance();
+		final java.util.Calendar cal = java.util.Calendar.getInstance();
 		cal.set(year, month, Integer.parseInt(day)); 
 		return sdf.format(cal.getTime());
 	}

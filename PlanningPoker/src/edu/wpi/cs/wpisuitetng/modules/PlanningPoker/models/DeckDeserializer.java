@@ -53,15 +53,15 @@ public class DeckDeserializer implements JsonDeserializer<Deck> {
 	@Override
 	public Deck deserialize(JsonElement dElement, Type dType,
 			JsonDeserializationContext context) throws JsonParseException {
-		JsonObject deflated = dElement.getAsJsonObject();
+		final JsonObject deflated = dElement.getAsJsonObject();
 
 		if (!deflated.has("deckName")) {
 			throw new JsonParseException(
 					"The serialized deck did not contain the required deckName field.");
 		}
 
-		String deckName = deflated.get("deckName").getAsString();
-		List<Integer> cards = null;
+		final String deckName = deflated.get("deckName").getAsString();
+		final List<Integer> cards = null;
 
 		JsonArray jsonCards = null;
 
@@ -80,7 +80,7 @@ public class DeckDeserializer implements JsonDeserializer<Deck> {
 			}
 		}
 
-		Deck inflated = new Deck(deckName, cards);
+		final Deck inflated = new Deck(deckName, cards);
 
 		return inflated;
 	}

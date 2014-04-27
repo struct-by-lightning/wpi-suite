@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class AddPlanningPokerFinalEstimateController{
 	private static AddPlanningPokerFinalEstimateController instance = null;
-	private AddPlanningPokerFinalEstimateRequestObserver observer;
+	private final AddPlanningPokerFinalEstimateRequestObserver observer;
 
 	/**
 	 * Construct an AddPlanningPokerFinalEstimateController for the given model, view
