@@ -8,12 +8,9 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-
-import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A singleton class used to read from or add to the set of planning poker games
@@ -25,7 +22,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPok
 public class PlanningPokerGameModel {
 
 	// Dictionary mapping each game's name to it's instance.
-	private static HashMap<String, PlanningPokerGame> planningPokerGamesDict = new HashMap<String, PlanningPokerGame>();
+	private static Map<String, PlanningPokerGame> planningPokerGamesDict = new HashMap<String, PlanningPokerGame>();
 
 	/**
 	 * Adds a single PlanningPokerGame to the project's set of games.
@@ -71,7 +68,7 @@ public class PlanningPokerGameModel {
 	 *
 	
 	 * @return the PlanningPokerGames held within the PlanningPokerGameModel. */
-	public static ArrayList<PlanningPokerGame> getPlanningPokerGames() {
+	public static List<PlanningPokerGame> getPlanningPokerGames() {
 		return new ArrayList<PlanningPokerGame>(
 				PlanningPokerGameModel.planningPokerGamesDict.values());
 	}

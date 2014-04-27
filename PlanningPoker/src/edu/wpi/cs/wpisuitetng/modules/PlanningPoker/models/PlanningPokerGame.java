@@ -104,7 +104,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	/**
 	 * @return A list of the requirements which are associated with this planning poker game. 
 	 **/
-	public ArrayList<Requirement> getRequirements() {
+	public List<Requirement> getRequirements() {
 		
 		// Make sure requirements have been loaded from the database.
 		GetRequirementsController.getInstance().retrieveRequirements();
@@ -112,7 +112,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 				|| RequirementModel.getInstance().getRequirements().get(0) == null) {
 		}
 		
-		ArrayList<Requirement> toReturn = new ArrayList<Requirement>();
+		List<Requirement> toReturn = new ArrayList<Requirement>();
 
 		for(int id : requirementIds) {
 			toReturn.add(RequirementModel.getInstance().getRequirement(id));
@@ -125,7 +125,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * Method getDeckValues.
 	
 	 * @return ArrayList<Integer> */
-	public ArrayList<Integer> getDeckValues() {
+	public List<Integer> getDeckValues() {
 		// TODO This method returns mock data, and needs to be correctly implemented.
 		
         return new ArrayList<Integer>() {
@@ -159,7 +159,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * @param selectedRequirement Requirement
 	
 	 * @return ArrayList<Integer> */
-	public ArrayList<Integer> getSelectedCardIndices(Object user, Requirement selectedRequirement) {
+	public List<Integer> getSelectedCardIndices(Object user, Requirement selectedRequirement) {
 		// TODO This method returns mock data, and needs to be correctly implemented.
 		
 		return new ArrayList<Integer>();

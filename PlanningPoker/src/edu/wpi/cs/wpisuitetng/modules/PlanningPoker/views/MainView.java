@@ -14,7 +14,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -53,7 +53,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * @author Austin Rose (atrose)
  */
 public class MainView {
-	private ArrayList<PlanningPokerGame> games;
+	private List<PlanningPokerGame> games;
 	/**
 	 * This function adds a new closeable tab to the planning poker module's
 	 * inner tab pane.

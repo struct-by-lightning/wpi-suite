@@ -9,7 +9,9 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,6 @@ import java.util.List;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import com.google.gson.JsonElement;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
 
@@ -77,7 +77,7 @@ public class DeckTest {
 		// set up ordered list of cards in deck
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
@@ -110,7 +110,7 @@ public class DeckTest {
 		// set up unordered list of cards in deck
 		Integer[] cards = new Integer[] { 3, 1, 13, 21, 5, 8, 2, 1 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
@@ -146,7 +146,7 @@ public class DeckTest {
 		// set up ordered list of cards in deck
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
@@ -178,7 +178,7 @@ public class DeckTest {
 		// set up ordered list of cards in deck
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
@@ -210,7 +210,7 @@ public class DeckTest {
 		// set up ordered list of cards in deck
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
@@ -236,7 +236,7 @@ public class DeckTest {
 		// set up ordered list of cards in deck
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
@@ -265,7 +265,7 @@ public class DeckTest {
 		// set up ordered list of cards in deck
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
@@ -295,7 +295,7 @@ public class DeckTest {
 		// set up ordered list of cards in deck
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
@@ -325,7 +325,7 @@ public class DeckTest {
 		// set up ordered list of cards in deck
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
@@ -346,8 +346,8 @@ public class DeckTest {
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 		Integer[] cards2 = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
-		ArrayList<Integer> cardList2 = new ArrayList<Integer>();
+		List<Integer> cardList = new ArrayList<Integer>();
+		List<Integer> cardList2 = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
@@ -404,7 +404,7 @@ public class DeckTest {
 	public final void testToString() {
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);

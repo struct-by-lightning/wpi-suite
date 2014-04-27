@@ -41,16 +41,15 @@ import javax.swing.text.PlainDocument;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im.InstantMessenger;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -114,13 +113,13 @@ public class OpenGameView extends JPanel {
 	}
 
 	private PlanningPokerGame game;
-	private ArrayList<Requirement> requirements;
+	private List<Requirement> requirements;
 	private Requirement currentlySelectedRequirement;
 	private static PlanningPokerVote ppv;
 	private JTextArea textArea;
 
 	// JPanel subclasses for each card in this game's deck.
-	private ArrayList<PlayingCardJPanel> cards;
+	private List<PlayingCardJPanel> cards;
 
 	// Mailer for this view
 	private Mailer closedNotification;
@@ -410,7 +409,7 @@ public class OpenGameView extends JPanel {
 	private void updateSelectedCards(PlanningPokerGame game,
 			Requirement selectedRequirement) {
 
-		ArrayList<Integer> selectedIndices = game.getSelectedCardIndices(null,
+		List<Integer> selectedIndices = game.getSelectedCardIndices(null,
 				selectedRequirement);
 
 		for (int i = 0; i < this.cards.size(); i++) {

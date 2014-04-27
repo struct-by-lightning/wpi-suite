@@ -34,7 +34,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerFinalEstimateController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerFinalEstimateController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
@@ -72,7 +71,7 @@ public class ClosedGameView extends JPanel {
 	/**
 	 * The list of requirements associated with this instance's game.
 	 */
-	private ArrayList<Requirement> requirements;
+	private List<Requirement> requirements;
 
 	/**
 	 * Constructor initializes GUI components, then updates them based on the

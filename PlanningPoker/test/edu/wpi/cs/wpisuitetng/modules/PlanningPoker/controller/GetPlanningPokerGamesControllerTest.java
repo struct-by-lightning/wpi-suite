@@ -3,13 +3,15 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.Test;
+
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 
@@ -44,7 +46,7 @@ public class GetPlanningPokerGamesControllerTest {
 		};
 		gc.receivedPlanningPokerGames(games);
 		
-		ArrayList<PlanningPokerGame> pgm = PlanningPokerGameModel.getPlanningPokerGames();
+		List<PlanningPokerGame> pgm = PlanningPokerGameModel.getPlanningPokerGames();
 		assertTrue(pgm.size() == games.length);
 		for (int x = 0; x < pgm.size(); x++) {
 			PlanningPokerGame s1 = pgm.get(pgm.size()-x-1);
