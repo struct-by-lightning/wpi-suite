@@ -34,7 +34,7 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	/**
 	 * The static object to allow the user model to exist
 	 */
-	private static PlanningPokerUserModel instance;
+	private static PlanningPokerUserModel instance = null;
 
 	/**
 	 * Constructs an empty list of planningPokerUsers for the project

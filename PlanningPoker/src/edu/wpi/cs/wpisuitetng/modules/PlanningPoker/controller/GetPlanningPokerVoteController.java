@@ -12,8 +12,6 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -30,7 +28,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 public class GetPlanningPokerVoteController implements ActionListener {
 
 	private GetPlanningPokerVoteRequestObserver observer;
-	private static GetPlanningPokerVoteController instance;
+	private static GetPlanningPokerVoteController instance = null;
 
 	/**
 	 * Constructs the controller given a PlanningPokerVoteModel

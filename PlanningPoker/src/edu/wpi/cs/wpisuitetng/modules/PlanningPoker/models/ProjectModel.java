@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 public class ProjectModel extends AbstractListModel<Project> {
 
 	/** the singleton instance of the ProjectModel */
-	private static ProjectModel instance;
+	private static ProjectModel instance = null;
 	/**
 	 * Returns the singleton instance of the ProjectModel, or creates one if it
 	 * does not yet exist.

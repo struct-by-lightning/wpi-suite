@@ -29,7 +29,7 @@ public class DeckModel extends AbstractListModel<Deck> {
 	/** The list in which all the Decks for a single project are contained */
 	private List<Deck> Decks;
 	/** The singleton instance of the DeckModel */
-	private static DeckModel instance;
+	private static DeckModel instance = null;
 
 	/**
 	 * Retrieves the singleton instance of the DeckModel, or creates it if it

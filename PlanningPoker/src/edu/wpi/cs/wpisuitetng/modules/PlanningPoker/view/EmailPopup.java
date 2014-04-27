@@ -31,7 +31,7 @@ public class EmailPopup {
 	/**
 	 * The singleton instance of the email popup
 	 */
-	private static EmailPopup instance;
+	private static EmailPopup instance = null;
 
 	/**
 	 * Creates a singleton instance of the email popup if it does not already

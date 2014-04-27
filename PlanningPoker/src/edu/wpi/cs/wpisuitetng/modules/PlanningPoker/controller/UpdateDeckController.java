@@ -24,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class UpdateDeckController {
 	/** The singleton instance of the UpdateDeckController */
-	private static UpdateDeckController instance;
+	private static UpdateDeckController instance = null;
 	/** THe observer tied to the instance of the UpdateDeckController */
 	private UpdateDeckRequestObserver observer;
 

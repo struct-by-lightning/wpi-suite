@@ -24,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class UpdatePlanningPokerUserController {
 
-	private static UpdatePlanningPokerUserController instance;
+	private static UpdatePlanningPokerUserController instance = null;
 	private UpdatePlanningPokerUserRequestObserver observer;
 
 	/**

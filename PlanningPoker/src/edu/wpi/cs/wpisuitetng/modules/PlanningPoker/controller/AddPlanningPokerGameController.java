@@ -21,7 +21,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class AddPlanningPokerGameController {
 
-	private static AddPlanningPokerGameController instance;
+	private static AddPlanningPokerGameController instance = null;
 	private AddPlanningPokerGameRequestObserver observer;
 
 	/**
