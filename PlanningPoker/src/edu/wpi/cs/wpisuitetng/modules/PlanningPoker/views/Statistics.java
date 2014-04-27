@@ -73,7 +73,7 @@ public class Statistics {
 		double variance = 0;
 		for (int i=0; i < m.length; i++)
 		{
-		    variance = variance + Math.pow(m[i] - avg, 2);
+		    variance += Math.pow(m[i] - avg, 2);
 		}
 		return Math.sqrt(variance / (m.length - 1));
 	}

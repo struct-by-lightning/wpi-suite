@@ -212,9 +212,9 @@ public class MainView {
 		try {
 			GetRequirementsController.getInstance().retrieveRequirements();
 
-			while (true) {		
+			while (true) {
 				RequirementModel rm = RequirementModel.getInstance();
-				int size = rm.getRequirements().size();		
+				int size = rm.getRequirements().size();	
 				if (size > 0) {
 					if (rm.getRequirements().get(0) != null) {
 						break;
