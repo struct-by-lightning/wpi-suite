@@ -112,8 +112,7 @@ public class PreferencesView extends JPanel {
 		updateUser.setText("Save Changes");
 
 		emailPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
-				javax.swing.BorderFactory.createLineBorder(new java.awt.Color(
-						0, 0, 0)), "Email"));
+				javax.swing.BorderFactory.createLineBorder(Color.black), "Email"));
 
 		final javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(
 				emailPanel);
@@ -159,8 +158,7 @@ public class PreferencesView extends JPanel {
 										.addGap(0, 6, Short.MAX_VALUE)));
 
 		aimPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
-				javax.swing.BorderFactory.createLineBorder(new java.awt.Color(
-						0, 0, 0)), "Instant Message"));
+				javax.swing.BorderFactory.createLineBorder(Color.black), "Instant Message"));
 
 		sendAIM.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {

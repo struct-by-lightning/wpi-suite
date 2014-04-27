@@ -801,7 +801,7 @@ public class CreateGameView extends JPanel {
 		projectList.add(thisGameRequirementList);
 
 		addRemPanel = new JPanel();
-		addRemPanel.setBorder(new LineBorder(new Color(192, 192, 192), 0));
+		addRemPanel.setBorder(new LineBorder(Color.lightGray, 0));
 		requirementsSelector.add(addRemPanel);
 
 		topSpacer = new JPanel();
