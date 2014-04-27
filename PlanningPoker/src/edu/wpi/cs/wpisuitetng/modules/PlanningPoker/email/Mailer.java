@@ -451,7 +451,7 @@ public class Mailer {
 		System.out.println(" to message");
 		System.out.println("length of recipient: " + recipient.length());
 		// make sure it isn't an invalid input
-		if (recipient != null && recipient != "" && recipient.length() != 0) {
+		if (recipient != null && !recipient.equals("") && recipient.length() != 0) {
 			try {
 				message.addRecipient(Message.RecipientType.TO,
 						new InternetAddress(recipient));
