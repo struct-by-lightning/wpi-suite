@@ -119,15 +119,11 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	@Override
 	public Deck update(Session s, String content) throws WPISuiteException {
 		Deck changes = Deck.fromJSON(content);
-		if (true) {
-			System.out.println("Started update.");
-			deleteEntity(s, changes.getDeckName());
-			data.save(changes);
-			System.out.println("Finished update.");
-			return changes;
-		} else {
-			return null;
-		}
+		System.out.println("Started update.");
+		deleteEntity(s, changes.getDeckName());
+		data.save(changes);
+		System.out.println("Finished update.");
+		return changes;
 	}
 
 	/**

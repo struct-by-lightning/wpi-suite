@@ -92,17 +92,12 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	@Override
 	public PlanningPokerUser update(Session s, String content) throws WPISuiteException {
 		PlanningPokerUser changes = PlanningPokerUser.fromJSON(content);
-		
-		if(true){
-			System.out.println("Started update");
-			deleteEntity(s, changes.getID());
-			data.save(changes);
-			System.out.println("Finsihed update");
-			return changes;
-		}
-		else{
-			return null;
-		}
+
+		System.out.println("Started update");
+		deleteEntity(s, changes.getID());
+		data.save(changes);
+		System.out.println("Finsihed update");
+		return changes;
 	}
 
 	/* (non-Javadoc)

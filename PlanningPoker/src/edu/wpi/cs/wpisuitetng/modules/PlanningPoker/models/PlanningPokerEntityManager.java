@@ -21,8 +21,6 @@ import edu.wpi.cs.wpisuitetng.exceptions.DatabaseException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.PlanningPoker;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 
 /**
@@ -165,16 +163,11 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	public PlanningPokerGame update(Session s, String content)
 			throws WPISuiteException {
 		PlanningPokerGame changes = PlanningPokerGame.fromJSON(content);
-		if(true) { //TODO: Partial updates with nulls
-			System.out.println("Started update.");
-			deleteEntity(s, changes.getID());
-			data.save(changes);
-			System.out.println("Finished update.");
-			return changes;
-		}
-		// currently we don't have the ability to deal with updates on more than one entry
-		else
-			return null;
+		System.out.println("Started update.");
+		deleteEntity(s, changes.getID());
+		data.save(changes);
+		System.out.println("Finished update.");
+		return changes;
 	}
 
 	/**
