@@ -102,11 +102,13 @@ public class InstantMessenger {
 	 * @param username
 	 *            the username to send the message to
 	 */
-	public void sendMessage(String username) {
-		System.out.println("Sending message to " + username);
-		Message msg = new Message(username, Message.Type.chat);
-		msg.setBody(text);
-		server.sendPacket(msg);
+	public void sendMessage(String username, boolean preference) {
+		if (preference) {
+			System.out.println("Sending message to " + username);
+			Message msg = new Message(username, Message.Type.chat);
+			msg.setBody(text);
+			server.sendPacket(msg);
+		}
 	}
 
 	/**
@@ -117,7 +119,7 @@ public class InstantMessenger {
 	 */
 	public void sendAllMessages(List<PlanningPokerUser> users) {
 		for (PlanningPokerUser u : users) {
-			sendMessage(u.getInstantMessage());
+			sendMessage(u.getInstantMessage(), u.canSendAim());
 		}
 	}
 

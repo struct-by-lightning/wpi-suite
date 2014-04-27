@@ -21,6 +21,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
@@ -58,7 +59,7 @@ public class Mailer {
 	// TODO: Create a wpi-suite email address and mailtrap account that we can
 	// give people access to in the documentation.
 
-	private final boolean DEBUG = true;
+	private final boolean DEBUG = false;
 
 	public Mailer() {
 		session = createSmtpSession();
@@ -90,30 +91,30 @@ public class Mailer {
 	 * @param emailAddress
 	 *            Hard-coded email address
 	 */
-	public Mailer(String emailAddress) {
-		session = createSmtpSession();
-		session.setDebug(true);
-		message = new MimeMessage(session);
-
-		try {
-			// testing
-			if (DEBUG)
-				transport = session.getTransport("smtp");
-			// release
-			String from = "struct.by.lightning@gmail.com";
-
-			// set the message to be from struct by lightning
-			message.setFrom(new InternetAddress(from));
-
-			// set the header line
-			message.setSubject("Great news ladies and gentlemen!");
-			message.setText("Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
-			this.addEmail(emailAddress);
-		} catch (MessagingException mex) {
-			System.out.println("Message creation failed");
-			mex.printStackTrace();
-		}
-	}
+	// public Mailer(String emailAddress) {
+	// session = createSmtpSession();
+	// session.setDebug(true);
+	// message = new MimeMessage(session);
+	//
+	// try {
+	// // testing
+	// if (DEBUG)
+	// transport = session.getTransport("smtp");
+	// // release
+	// String from = "struct.by.lightning@gmail.com";
+	//
+	// // set the message to be from struct by lightning
+	// message.setFrom(new InternetAddress(from));
+	//
+	// // set the header line
+	// message.setSubject("Great news ladies and gentlemen!");
+	// message.setText("Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
+	// this.addEmail(emailAddress);
+	// } catch (MessagingException mex) {
+	// System.out.println("Message creation failed");
+	// mex.printStackTrace();
+	// }
+	// }
 
 	/**
 	 * Alternate constructor that takes an array of email addresses as a
@@ -123,28 +124,28 @@ public class Mailer {
 	 * @param emailArray
 	 *            String[]
 	 */
-	public Mailer(String[] emailArray) {
-		session = createSmtpSession();
-		session.setDebug(true);
-		message = new MimeMessage(session);
-
-		try {
-			if (DEBUG)
-				transport = session.getTransport("smtp");
-			String from = "struct.by.lightning@gmail.com";
-
-			// set the message to be from struct by lightning
-			message.setFrom(new InternetAddress(from));
-
-			// set the header line
-			message.setSubject("Great news ladies and gentlemen!");
-			message.setText("Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
-			this.addEmailArray(emailArray);
-		} catch (MessagingException mex) {
-			System.out.println("Message creation failed");
-			mex.printStackTrace();
-		}
-	}
+	// public Mailer(String[] emailArray) {
+	// session = createSmtpSession();
+	// session.setDebug(true);
+	// message = new MimeMessage(session);
+	//
+	// try {
+	// if (DEBUG)
+	// transport = session.getTransport("smtp");
+	// String from = "struct.by.lightning@gmail.com";
+	//
+	// // set the message to be from struct by lightning
+	// message.setFrom(new InternetAddress(from));
+	//
+	// // set the header line
+	// message.setSubject("Great news ladies and gentlemen!");
+	// message.setText("Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
+	// this.addEmailArray(emailArray);
+	// } catch (MessagingException mex) {
+	// System.out.println("Message creation failed");
+	// mex.printStackTrace();
+	// }
+	// }
 
 	public Mailer(String subject, String text) {
 		session = createSmtpSession();
@@ -223,8 +224,7 @@ public class Mailer {
 
 		try {
 			// testing
-			if (DEBUG)
-				transport = session.getTransport("smtp");
+			transport = session.getTransport("smtp");
 			// release
 			String from = "struct.by.lightning@gmail.com";
 
@@ -342,35 +342,29 @@ public class Mailer {
 	 * @return Google SMTP session
 	 */
 	private Session createSmtpSession() {
+		Properties props;
+
 		// final version settings
 		if (DEBUG) {
 			// test with mailtrap
-			Properties props = System.getProperties();
+			props = System.getProperties();
 			props.put("mail.smtp.host", host);
 			props.put("mail.smtp.user", login);
 			props.put("mail.smtp.password", pass);
 			props.put("mail.smtp.port", "2525");
 			props.put("mail.smtp.auth", "true");
-
-			return Session.getDefaultInstance(props);
 		} else {
-			final Properties props = new Properties();
-			props.setProperty("mail.smtp.host", "smtp.gmail.com");
-			props.setProperty("mail.smtp.auth", "true");
-			props.setProperty("mail.smtp.port", "" + 587);
-			props.setProperty("mail.smtp.starttls.enable", "true");
-			props.setProperty("mail.transport.protocol", "smtp");
-
-			return Session.getDefaultInstance(props,
-					new javax.mail.Authenticator() {
-
-						protected PasswordAuthentication getPasswordAuthentication() {
-							return new PasswordAuthentication(
-									"struct.by.lightning@gmail.com",
-									"Donthackthis!12358");
-						}
-					});
+			props = new Properties();
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "587");
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.transport.protocol", "smtp");
+			props.put("mail.smtp.user", "struct.by.lightning@gmail.com");
+			props.put("mail.smtp.password", "Donthackthis!12358");
 		}
+
+		return Session.getDefaultInstance(props);
 	}
 
 	/**
@@ -384,17 +378,14 @@ public class Mailer {
 			if (message.getAllRecipients() != null) {
 				if (DEBUG)
 					transport.connect(host, login, pass);
+				else
+					transport.connect("smtp.gmail.com", "struct.by.lightning@gmail.com", "Donthackthis!12358");
 				// send the message
 				System.out.println("Ready to send message");
 				// testing
-				if (DEBUG) {
-					transport.sendMessage(message, message.getAllRecipients());
-				} else { // release
-					Transport.send(message);
-				}
+				transport.sendMessage(message, message.getAllRecipients());
 				System.out.println("Sent message successfully");
-				if (DEBUG)
-					transport.close();
+				transport.close();
 				return true;
 			}
 			System.out
@@ -437,13 +428,14 @@ public class Mailer {
 	 * 
 	 * @return true if the recipient is added, false otherwise
 	 */
-	public boolean addEmail(String recipient) {
+	public boolean addEmail(String recipient, boolean pref) {
 		// debug prints
 		System.out.print("Attempting to add " + recipient);
 		System.out.println(" to message");
 		System.out.println("length of recipient: " + recipient.length());
 		// make sure it isn't an invalid input
-		if (recipient != null && recipient != "" && recipient.length() != 0) {
+		if (recipient != null && recipient != "" && recipient.length() != 0
+				&& pref) {
 			try {
 				message.addRecipient(Message.RecipientType.TO,
 						new InternetAddress(recipient));
@@ -465,13 +457,13 @@ public class Mailer {
 	 * 
 	 * @return true if all addresses were added successfully, false otherwise
 	 */
-	public boolean addEmailArray(String[] recArr) {
-		boolean isSuccess = true;
-		for (String s : recArr) {
-			isSuccess &= this.addEmail(s);
-		}
-		return isSuccess;
-	}
+	// public boolean addEmailArray(String[] recArr) {
+	// boolean isSuccess = true;
+	// for (String s : recArr) {
+	// isSuccess &= this.addEmail(s);
+	// }
+	// return isSuccess;
+	// }
 
 	/**
 	 * Method addEmailFromUsers.
@@ -482,10 +474,18 @@ public class Mailer {
 	 * @return boolean
 	 */
 	public boolean addEmailFromUsers(List<PlanningPokerUser> userList) {
+		try {
+			if (message.getAllRecipients() != null)
+				// clear the recipients
+				message.setRecipient(RecipientType.TO, null);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		boolean isSuccess = true;
 		for (PlanningPokerUser u : userList) {
 			if (u.getEmail() != null)
-				isSuccess &= this.addEmail(u.getEmail());
+				isSuccess &= this.addEmail(u.getEmail(), u.canSendEmail());
 		}
 		return isSuccess;
 	}
