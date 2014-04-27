@@ -29,6 +29,7 @@ import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.ClosedGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.NewGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.OpenGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.PreferencesView;
 
@@ -53,7 +54,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 		setOpaque(false);
 		String iconPath = "";
 
-		if (typeOfPanelAdded instanceof CreateGameView) {
+		if (typeOfPanelAdded instanceof CreateGameView || typeOfPanelAdded instanceof NewGameView) {
 			iconPath = "add.png";
 		} else {
 			if (typeOfPanelAdded instanceof OpenGameView) {
