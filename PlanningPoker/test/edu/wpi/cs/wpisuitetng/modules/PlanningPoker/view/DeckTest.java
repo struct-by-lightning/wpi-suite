@@ -378,14 +378,14 @@ public class DeckTest {
 	}
 	
 	@Test
-	public void constructorNullName() { 
+	public void testConstructorNullName() { 
 		thrown.expect(NullPointerException.class);
 		thrown.expectMessage("DeckName must not be null");
 		Deck test = new Deck(null, null);
 	}
 	
 	@Test
-	public void serializeNullCards() {
+	public void testSerializeNullCards() {
 		Deck test1 = new Deck("test1");
 		Deck test2 = new Deck("test2", null);
 		
@@ -401,7 +401,7 @@ public class DeckTest {
 	}
 	
 	@Test
-	public final void toStringTest() {
+	public final void testToString() {
 		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
 		ArrayList<Integer> cardList = new ArrayList<Integer>();
@@ -416,7 +416,7 @@ public class DeckTest {
 	}
 	
 	@Test
-	public final void removeCardNullTest() {
+	public final void testRemoveCardNull() {
 		Deck test1 = new Deck("test1");
 		
 		assertEquals(null, test1.getCards());
