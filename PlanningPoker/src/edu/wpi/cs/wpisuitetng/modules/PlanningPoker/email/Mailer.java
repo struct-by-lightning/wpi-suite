@@ -67,8 +67,9 @@ public class Mailer {
 
 		try {
 			// testing
-			if (DEBUG)
+			if (DEBUG) {
 				transport = session.getTransport("smtp");
+			}
 			// release
 			String from = "struct.by.lightning@gmail.com";
 
@@ -97,8 +98,9 @@ public class Mailer {
 
 		try {
 			// testing
-			if (DEBUG)
+			if (DEBUG) {
 				transport = session.getTransport("smtp");
+			}
 			// release
 			String from = "struct.by.lightning@gmail.com";
 
@@ -129,8 +131,9 @@ public class Mailer {
 		message = new MimeMessage(session);
 
 		try {
-			if (DEBUG)
+			if (DEBUG) {
 				transport = session.getTransport("smtp");
+			}
 			String from = "struct.by.lightning@gmail.com";
 
 			// set the message to be from struct by lightning
@@ -153,8 +156,9 @@ public class Mailer {
 
 		try {
 			// testing
-			if (DEBUG)
+			if (DEBUG) {
 				transport = session.getTransport("smtp");
+			}
 			// release
 			String from = "struct.by.lightning@gmail.com";
 
@@ -223,8 +227,9 @@ public class Mailer {
 
 		try {
 			// testing
-			if (DEBUG)
+			if (DEBUG) {
 				transport = session.getTransport("smtp");
+			}
 			// release
 			String from = "struct.by.lightning@gmail.com";
 
@@ -255,8 +260,9 @@ public class Mailer {
 		if (game.getEndDate().get(GregorianCalendar.YEAR) != 9999) {
 			text += " Make sure to vote before the game closes at "
 					+ game.getEndDate().get(GregorianCalendar.HOUR) + ":";
-			if (game.getEndDate().get(GregorianCalendar.MINUTE) < 10)
+			if (game.getEndDate().get(GregorianCalendar.MINUTE) < 10) {
 				text += "0";
+			}
 			text += game.getEndDate().get(GregorianCalendar.MINUTE) + " ";
 
 			// control whether it is AM or PM
@@ -382,8 +388,9 @@ public class Mailer {
 	public boolean send() {
 		try {
 			if (message.getAllRecipients() != null) {
-				if (DEBUG)
+				if (DEBUG) {
 					transport.connect(host, login, pass);
+				}
 				// send the message
 				System.out.println("Ready to send message");
 				// testing
@@ -393,8 +400,9 @@ public class Mailer {
 					Transport.send(message);
 				}
 				System.out.println("Sent message successfully");
-				if (DEBUG)
+				if (DEBUG) {
 					transport.close();
+				}
 				return true;
 			}
 			System.out
@@ -484,8 +492,9 @@ public class Mailer {
 	public boolean addEmailFromUsers(List<PlanningPokerUser> userList) {
 		boolean isSuccess = true;
 		for (PlanningPokerUser u : userList) {
-			if (u.getEmail() != null)
+			if (u.getEmail() != null) {
 				isSuccess &= this.addEmail(u.getEmail());
+			}
 		}
 		return isSuccess;
 	}

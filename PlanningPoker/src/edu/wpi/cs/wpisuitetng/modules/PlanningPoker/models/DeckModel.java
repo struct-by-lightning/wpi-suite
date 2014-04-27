@@ -38,8 +38,9 @@ public class DeckModel extends AbstractListModel<Deck> {
 	
 	 * @return the singleton instance of the DeckModel */
 	public static DeckModel getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new DeckModel();
+		}
 		return instance;
 	}
 

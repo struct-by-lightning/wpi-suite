@@ -84,8 +84,9 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 			GregorianCalendar endDate, String moderator) {
 
 		requirementIds = new ArrayList<Integer>();
-		if(gameName != null)
+		if(gameName != null) {
 			this.gameName = gameName.replace(';', ':');
+		}
 		this.setDescription(description);
 		this.setDeckType(deckType);
 		if (requirementsIds != null) {
@@ -147,8 +148,9 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * @return boolean */
 	public boolean hasEndDate() {
 		// TODO This method returns mock data, and needs to be correctly implemented.
-		if(endDate.get(GregorianCalendar.YEAR) == 9999)
+		if(endDate.get(GregorianCalendar.YEAR) == 9999) {
 			return false;
+		}
 		return true;
 	}
 	

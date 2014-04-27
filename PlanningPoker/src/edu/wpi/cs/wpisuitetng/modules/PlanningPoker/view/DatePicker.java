@@ -69,14 +69,16 @@ public class DatePicker {
 			button[x].setMargin(new Insets(0, 0, 0, 0));
 			button[x].setFocusPainted(false);
 			button[x].setBackground(Color.white);
-			if (x > 6)
+			if (x > 6) {
 				button[x].addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent ae) {
 						day = button[selection].getActionCommand();
-						if(!day.equals(""))
-								txt.setText(formatPickedDate());
+						if(!day.equals("")) {
+							txt.setText(formatPickedDate());
 						}
+					}
 				});
+			}
 			if (x < 7) {
 				button[x].setFont(new Font("Default", Font.PLAIN, 14));
 				button[x].setText(header[x]);
@@ -140,10 +142,12 @@ public class DatePicker {
 		for (int x = 6 + dayOfWeek, day = 1; day <= daysInMonth; x ++, day++) {
 			button[x].setFont(new Font("Default", Font.PLAIN, 14));
 			cal.set(year,  month, day);
-			if (cal.before(current))
+			if (cal.before(current)) {
 				button[x].setEnabled(false);
-			else
+			}
+			else {
 				button[x].setEnabled(true);
+			}
 			button[x].setText("" + day);
 			if(day == daysInMonth) {
 				for(int y = x+1; y < button.length; y++) {
@@ -159,8 +163,9 @@ public class DatePicker {
 	 * @return String */
 
 	public String formatPickedDate() {
-		if (day.equals(""))
+		if (day.equals("")) {
 			return day;
+		}
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
 				"dd-MM-yyyy");
 		java.util.Calendar cal = java.util.Calendar.getInstance();

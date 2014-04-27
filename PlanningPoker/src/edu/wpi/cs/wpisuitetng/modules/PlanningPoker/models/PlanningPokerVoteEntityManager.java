@@ -121,8 +121,9 @@ public class PlanningPokerVoteEntityManager implements EntityManager<PlanningPok
 			return changes;
 		}
 		// currently we don't have the ability to deal with updates on more than one entry
-		else
+		else {
 			return null;
+		}
 	}
 
 	/**

@@ -159,14 +159,16 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 		// get the gameName
 		String retGameName = scTemp.next();
 		// check if the gameName is null
-		if(retGameName.equals("null"))
+		if(retGameName.equals("null")) {
 			retGameName = null;
+		}
 		
 		// get the requirement ID
 		Integer retRequirementID = Integer.parseInt(scTemp.next());
 		// check if the userName is null
-		if(retUserName.equals("null"))
+		if(retUserName.equals("null")) {
 			retUserName = null;
+		}
 		scTemp.next();
 		// get and format the vote
 		int retVote = Integer.parseInt(scTemp.next());

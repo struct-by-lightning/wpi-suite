@@ -38,8 +38,9 @@ public class ProjectModel extends AbstractListModel<Project> {
 	 * @return the singleton instance of the ProjectModel
 	 */
 	public static ProjectModel getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new ProjectModel();
+		}
 		return instance;
 	}
 
@@ -115,8 +116,9 @@ public class ProjectModel extends AbstractListModel<Project> {
 	public Project getProject(String name) {
 		// iterate through the list of Projects until name is found
 		for (Project p : projects) {
-			if (p.getName().equals(name))
+			if (p.getName().equals(name)) {
 				return p;
+			}
 		}
 		return null;
 	}

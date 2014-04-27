@@ -35,8 +35,9 @@ public class GetProjectController {
 	 * @return the singleton instance of the GetProjectController
 	 */
 	public static GetProjectController getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new GetProjectController();
+		}
 		return instance;
 	}
 	

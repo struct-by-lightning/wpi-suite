@@ -70,8 +70,9 @@ public class NoCardVoting extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if (game.isLive() && game.isFinished())
+				if (game.isLive() && game.isFinished()) {
 					AddPlanningPokerVoteController.getInstance().addPlanningPokerVote(ppv);
+				}
 			}
 		});
 		submitButton.add(btnSubmitEstimate);

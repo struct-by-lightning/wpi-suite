@@ -190,8 +190,9 @@ public class OpenGameView extends JPanel {
 					String userName = ConfigManager.getConfig().getUserName();
 
 					// Vote
-					if (estimateNumberLabel.getText().equals("?"))
+					if (estimateNumberLabel.getText().equals("?")) {
 						submitButton.setEnabled(false);
+					}
 					else {
 						submitButton.setEnabled(true);
 						ppv = new PlanningPokerVote(gameName, userName, Integer

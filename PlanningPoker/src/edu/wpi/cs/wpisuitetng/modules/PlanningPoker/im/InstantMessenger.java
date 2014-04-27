@@ -13,8 +13,6 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.XMPPConnection;
@@ -26,7 +24,6 @@ import org.jivesoftware.smack.packet.Presence;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -136,8 +133,9 @@ public class InstantMessenger {
 		if (game.getEndDate().get(GregorianCalendar.YEAR) != 9999) {
 			text += " Make sure to vote before the game closes at "
 					+ game.getEndDate().get(GregorianCalendar.HOUR) + ":";
-			if (game.getEndDate().get(GregorianCalendar.MINUTE) < 10)
+			if (game.getEndDate().get(GregorianCalendar.MINUTE) < 10) {
 				text += "0";
+			}
 			text += game.getEndDate().get(GregorianCalendar.MINUTE) + " ";
 
 			// control whether it is AM or PM
