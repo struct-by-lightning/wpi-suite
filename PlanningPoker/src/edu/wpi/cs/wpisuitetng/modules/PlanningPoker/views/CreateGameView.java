@@ -116,7 +116,7 @@ public class CreateGameView extends JPanel {
 
 		// The "have a deadline" checkbox listener
 		deadline.addActionListener(new ActionListener() {
-			boolean checked = false;
+			private boolean checked = false;
 			
 			public void actionPerformed(ActionEvent ae) {
 				viewHasBeenEdited = true;
@@ -136,8 +136,8 @@ public class CreateGameView extends JPanel {
 		});
 
 		calendarButton_2.addActionListener(new ActionListener() {
-			boolean open = false;
-			DatePicker dp;
+			private boolean open = false;
+			private DatePicker dp;
 
 			/**
 			 * action for using the calendar method for enabling it and
