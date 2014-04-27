@@ -66,7 +66,7 @@ public class MainView {
 	public void addCloseableTab(String tabName, JPanel tabPanel) {
 		this.mainComponent.addTab(tabName, tabPanel);
 		this.mainComponent.setTabComponentAt(this.mainComponent.indexOfComponent(tabPanel),
-				new ClosableTabComponent(this.mainComponent));
+				new ClosableTabComponent(this.mainComponent, tabPanel));
 		this.mainComponent.setSelectedComponent(tabPanel);
 	}
 

@@ -11,11 +11,15 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -23,8 +27,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.ClosedGameView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
-	
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.NewGameView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.OpenGameView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.PreferencesView;
+
 /**
  * This class closes open tabs
  * @author bnurbekov
@@ -32,19 +40,41 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
  */
 @SuppressWarnings("serial")
 public class ClosableTabComponent extends JPanel implements ActionListener {
-	
+
 	private final JTabbedPane tabbedPane;
-	
+
 	/**
 	 * Create a closable tab component belonging to the given tabbedPane.
 	 * The title is extracted with {@link JTabbedPane#getTitleAt(int)}.
 	 * @param tabbedPane  The JTabbedPane this tab component belongs to
 	 */
-	public ClosableTabComponent(JTabbedPane tabbedPane) {
+	public ClosableTabComponent(JTabbedPane tabbedPane, JPanel typeOfPanelAdded) {
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		this.tabbedPane = tabbedPane;
 		setOpaque(false);
-		
+		String iconPath = "";
+
+		if (typeOfPanelAdded instanceof CreateGameView || typeOfPanelAdded instanceof NewGameView) {
+			iconPath = "add.png";
+		} else {
+			if (typeOfPanelAdded instanceof OpenGameView) {
+				iconPath = "clock.png";
+			} else {
+				if (typeOfPanelAdded instanceof ClosedGameView) {
+					iconPath = "accept.png";
+				} else {
+					if (typeOfPanelAdded instanceof PreferencesView) {
+						iconPath = "cog.png";
+					}
+				}
+			}
+		}
+		javax.swing.ImageIcon icon = new javax.swing.ImageIcon(getClass().getResource(iconPath));
+		javax.swing.JLabel iconTab = new javax.swing.JLabel();
+		iconTab.setIcon(icon);
+		iconTab.setBorder(BorderFactory.createEmptyBorder(3, 0, 2, 7));
+		add(iconTab);
+
 		//create the label for the tab component 
 		final JLabel label = new JLabel() {
 			// display the title according to what's set on our JTabbedPane
@@ -57,15 +87,15 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 		};
 		label.setBorder(BorderFactory.createEmptyBorder(3, 0, 2, 7));
 		add(label);
-		
+
 		//create close button
 		final JButton closeButton = new JButton("\u2716");
-		
+
 		//specify settings for close button 
 		closeButton.setFont(closeButton.getFont().deriveFont((float) 8));
 		closeButton.setMargin(new Insets(0, 0, 0, 0));
 		closeButton.addActionListener(this);
-		
+
 		//add button to the tab component (not the JTabbedPane itself!)
 		add(closeButton);
 	}
@@ -73,7 +103,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 	/**
 	 * Removes tab at the selected index on action event
 	 * @param e ActionEvent The event that occurred 
-	
+
 	 * * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)  */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -85,16 +115,16 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 			System.out.println(tabbedPane);
 			System.out.println(tabbedPane.getComponentAt(index));
 			Component tabView = tabbedPane.getComponentAt(index);
-			
+
 			if (tabView instanceof CreateGameView) {
 				if (((CreateGameView) tabView).isViewHasBeenEdited()) {
 					//default icon, custom title
 					int n = JOptionPane.showConfirmDialog(
-					    this.getParent().getParent(),
-					    "Are you sure, you want to close the current tab?",
-					    "Warning",
-					    JOptionPane.YES_NO_OPTION);
-					
+							this.getParent().getParent(),
+							"Are you sure, you want to close the current tab?",
+							"Warning",
+							JOptionPane.YES_NO_OPTION);
+
 					if (n == JOptionPane.YES_OPTION) {
 						tabbedPane.removeTabAt(index);
 					}
@@ -107,5 +137,5 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 			}
 		}
 	}
-	
+
 }
