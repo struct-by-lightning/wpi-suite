@@ -130,17 +130,6 @@ public class ClosedGameView extends JPanel {
 							updateEstimateTotal(currentID);
 							ArrayList<Double> reqVotes = new ArrayList<Double>();
 							
-							estimateModel = new TeamEstimateTableModel();
-							
-							for(PlanningPokerVote v : gameVotes) {
-								if(v.getRequirementID() == currentID) {
-									reqVotes.add((double)v.getVote());
-									estimateModel.addRow(Arrays.asList(v.getUserName(), v.getVote()));
-								}
-							}
-							
-							estimates.setModel(estimateModel);
-							
 							// Resize the table row height
 						    try
 						    {
@@ -189,6 +178,18 @@ public class ClosedGameView extends JPanel {
 								max.setText(maxDef+"N/A");
 								min.setText(minDef+"N/A");
 							}
+							
+							estimateModel = new TeamEstimateTableModel();
+							
+							for(PlanningPokerVote v : gameVotes) {
+								if(v.getRequirementID() == currentID) {
+									reqVotes.add((double)v.getVote());
+									estimateModel.addRow(Arrays.asList(v.getUserName(), v.getVote()));
+								}
+							}
+							
+							estimates.setModel(estimateModel);
+							
 							previousID = currentID;
 						}
 						
@@ -706,11 +707,11 @@ public class ClosedGameView extends JPanel {
 		// allEstimates.add(scroll);
 		scroll.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153,
 				153)));
-
 		rowSplitPanel.add(topRowRequirementPanel);
-		rowSplitPanel.add(stats);
-		rowSplitPanel.add(estimateCenteringPanel);
 		rowSplitPanel.add(scroll);
+		
+		rowSplitPanel.add(estimateCenteringPanel);
+		rowSplitPanel.add(stats);
 
 		submitButton = new JButton("Submit");
 		updateButton = new JButton("Update All Estimates");
