@@ -337,7 +337,7 @@ public class MainView {
 	 */
 	private MainView() {
 		initComponents();
-		setUpCards();
+		setupCards();
 		initLogic();
 
 		ContactChecker checker = new ContactChecker() {
@@ -377,7 +377,7 @@ public class MainView {
 	 * Initialize the card layout JPanels which will allow switiching between
 	 * the main planning poker view and the prompt for contact information.
 	 */
-	private void setUpCards() {
+	private void setupCards() {
 		// Initialize the toolbar JPanel with a card layout.
 		this.cardToolbarComponent = new JPanel(new CardLayout());
 
