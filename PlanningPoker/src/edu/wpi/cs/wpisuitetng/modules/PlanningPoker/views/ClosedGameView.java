@@ -171,6 +171,7 @@ public class ClosedGameView extends JPanel {
 								}
 								mean.setText(meanDef+df.format(Statistics.mean(voteNums)));
 								median.setText(medianDef+df.format(Statistics.median(voteNums)));
+								Average = Math.round(Statistics.mean(voteNums));
 								mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
 								if(reqVotes.size()>1) {
 									std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
@@ -190,8 +191,6 @@ public class ClosedGameView extends JPanel {
 								min.setText(minDef+"N/A");
 							}
 							
-							//Average = Integer.parseInt(mean.getText());
-							Average = 9;
 							estimateNumberBox.setText(""+Average);
 							
 							previousID = currentID;
@@ -950,5 +949,5 @@ public class ClosedGameView extends JPanel {
 	private int previousID = -1;
 	private JButton submitButton;
 	private JButton updateButton;
-	private int Average;
+	private long Average;
 }
