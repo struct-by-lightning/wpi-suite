@@ -23,11 +23,11 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -159,7 +159,7 @@ public class ClosedGameView extends JPanel {
 						    catch(ClassCastException e) {}
 						    // Align text center
 						    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-						    centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+						    centerRenderer.setHorizontalAlignment( SwingConstants.CENTER );
 						    estimates.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 						    estimates.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 						    // Statistics

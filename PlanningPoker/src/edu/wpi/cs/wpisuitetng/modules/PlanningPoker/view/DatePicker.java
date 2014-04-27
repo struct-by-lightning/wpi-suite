@@ -27,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  * @author Miguel (Code), Christian (Comments)
@@ -38,7 +39,7 @@ import javax.swing.JTextField;
 public class DatePicker {
 	int month = java.util.Calendar.getInstance().get(java.util.Calendar.MONTH);
 	int year = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR);
-	JLabel l = new JLabel("", JLabel.CENTER);
+	JLabel l = new JLabel("", SwingConstants.CENTER);
 	String day = "";
 	JButton[] button = new JButton[49];
 	JPanel p1, p2, top;

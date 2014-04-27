@@ -10,6 +10,7 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -148,7 +149,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * @return boolean */
 	public boolean hasEndDate() {
 		// TODO This method returns mock data, and needs to be correctly implemented.
-		if(endDate.get(GregorianCalendar.YEAR) == 9999) {
+		if(endDate.get(Calendar.YEAR) == 9999) {
 			return false;
 		}
 		return true;

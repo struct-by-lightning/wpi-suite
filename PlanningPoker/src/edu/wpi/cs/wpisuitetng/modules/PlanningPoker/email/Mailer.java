@@ -9,7 +9,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email;
 
-import java.util.GregorianCalendar;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -257,16 +257,16 @@ public class Mailer {
 		String text = "";
 
 		// check if the date is real or a placeholder
-		if (game.getEndDate().get(GregorianCalendar.YEAR) != 9999) {
+		if (game.getEndDate().get(Calendar.YEAR) != 9999) {
 			text += " Make sure to vote before the game closes at "
-					+ game.getEndDate().get(GregorianCalendar.HOUR) + ":";
-			if (game.getEndDate().get(GregorianCalendar.MINUTE) < 10) {
+					+ game.getEndDate().get(Calendar.HOUR) + ":";
+			if (game.getEndDate().get(Calendar.MINUTE) < 10) {
 				text += "0";
 			}
-			text += game.getEndDate().get(GregorianCalendar.MINUTE) + " ";
+			text += game.getEndDate().get(Calendar.MINUTE) + " ";
 
 			// control whether it is AM or PM
-			switch (game.getEndDate().get(GregorianCalendar.AM_PM)) {
+			switch (game.getEndDate().get(Calendar.AM_PM)) {
 			case 0:
 				text += "AM";
 				break;
@@ -278,7 +278,7 @@ public class Mailer {
 			text += " on ";
 
 			// control month
-			switch (game.getEndDate().get(GregorianCalendar.MONTH)) {
+			switch (game.getEndDate().get(Calendar.MONTH)) {
 			case 0:
 				text += "January";
 				break;
@@ -316,10 +316,10 @@ public class Mailer {
 				text += "December";
 				break;
 			}
-			text += " " + game.getEndDate().get(GregorianCalendar.DATE);
+			text += " " + game.getEndDate().get(Calendar.DATE);
 
 			// control suffix for date
-			switch (game.getEndDate().get(GregorianCalendar.DATE)) {
+			switch (game.getEndDate().get(Calendar.DATE)) {
 			case 1:
 				text += "st";
 				break;

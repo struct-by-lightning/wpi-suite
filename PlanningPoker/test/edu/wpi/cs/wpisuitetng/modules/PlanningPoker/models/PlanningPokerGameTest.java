@@ -10,9 +10,12 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -150,10 +153,10 @@ public class PlanningPokerGameTest {
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
 
-		assertEquals(2014, test.getStartDate().get(GregorianCalendar.YEAR));
-		assertEquals(3, test.getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(2014, test.getStartDate().get(Calendar.YEAR));
+		assertEquals(3, test.getStartDate().get(Calendar.MONTH));
 		assertEquals(20, test.getStartDate()
-				.get(GregorianCalendar.DAY_OF_MONTH));
+				.get(Calendar.DAY_OF_MONTH));
 	}
 
 	@Test
@@ -172,9 +175,9 @@ public class PlanningPokerGameTest {
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
 
-		assertEquals(2014, test.getEndDate().get(GregorianCalendar.YEAR));
-		assertEquals(5, test.getEndDate().get(GregorianCalendar.MONTH));
-		assertEquals(28, test.getEndDate().get(GregorianCalendar.DAY_OF_MONTH));
+		assertEquals(2014, test.getEndDate().get(Calendar.YEAR));
+		assertEquals(5, test.getEndDate().get(Calendar.MONTH));
+		assertEquals(28, test.getEndDate().get(Calendar.DAY_OF_MONTH));
 	}
 
 	@Test
@@ -356,14 +359,14 @@ public class PlanningPokerGameTest {
 		assertTrue(result.getRequirementIds().contains(5));
 		assertEquals(false, result.isFinished());
 		assertEquals(false, result.isLive());
-		assertEquals(2014, result.getStartDate().get(GregorianCalendar.YEAR));
-		assertEquals(3, result.getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(2014, result.getStartDate().get(Calendar.YEAR));
+		assertEquals(3, result.getStartDate().get(Calendar.MONTH));
 		assertEquals(20,
-				result.getStartDate().get(GregorianCalendar.DAY_OF_MONTH));
-		assertEquals(2014, result.getEndDate().get(GregorianCalendar.YEAR));
-		assertEquals(5, result.getEndDate().get(GregorianCalendar.MONTH));
+				result.getStartDate().get(Calendar.DAY_OF_MONTH));
+		assertEquals(2014, result.getEndDate().get(Calendar.YEAR));
+		assertEquals(5, result.getEndDate().get(Calendar.MONTH));
 		assertEquals(28, result.getEndDate()
-				.get(GregorianCalendar.DAY_OF_MONTH));
+				.get(Calendar.DAY_OF_MONTH));
 		assertTrue(result.getModerator().equals("ajthompson"));
 	}
 
@@ -379,14 +382,14 @@ public class PlanningPokerGameTest {
 		assertTrue(result2.getRequirementIds().isEmpty());
 		assertEquals(false, result2.isFinished());
 		assertEquals(false, result2.isLive());
-		assertEquals(2014, result2.getStartDate().get(GregorianCalendar.YEAR));
-		assertEquals(3, result2.getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(2014, result2.getStartDate().get(Calendar.YEAR));
+		assertEquals(3, result2.getStartDate().get(Calendar.MONTH));
 		assertEquals(20,
-				result2.getStartDate().get(GregorianCalendar.DAY_OF_MONTH));
-		assertEquals(2014, result2.getEndDate().get(GregorianCalendar.YEAR));
-		assertEquals(5, result2.getEndDate().get(GregorianCalendar.MONTH));
+				result2.getStartDate().get(Calendar.DAY_OF_MONTH));
+		assertEquals(2014, result2.getEndDate().get(Calendar.YEAR));
+		assertEquals(5, result2.getEndDate().get(Calendar.MONTH));
 		assertEquals(28,
-				result2.getEndDate().get(GregorianCalendar.DAY_OF_MONTH));
+				result2.getEndDate().get(Calendar.DAY_OF_MONTH));
 		assertEquals("", result2.getModerator());
 	}
 
@@ -446,14 +449,14 @@ public class PlanningPokerGameTest {
 		assertTrue(result[0].getRequirementIds().contains(5));
 		assertEquals(false, result[0].isFinished());
 		assertEquals(false, result[0].isLive());
-		assertEquals(2014, result[0].getStartDate().get(GregorianCalendar.YEAR));
-		assertEquals(3, result[0].getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(2014, result[0].getStartDate().get(Calendar.YEAR));
+		assertEquals(3, result[0].getStartDate().get(Calendar.MONTH));
 		assertEquals(20,
-				result[0].getStartDate().get(GregorianCalendar.DAY_OF_MONTH));
-		assertEquals(2014, result[0].getEndDate().get(GregorianCalendar.YEAR));
-		assertEquals(5, result[0].getEndDate().get(GregorianCalendar.MONTH));
+				result[0].getStartDate().get(Calendar.DAY_OF_MONTH));
+		assertEquals(2014, result[0].getEndDate().get(Calendar.YEAR));
+		assertEquals(5, result[0].getEndDate().get(Calendar.MONTH));
 		assertEquals(28,
-				result[0].getEndDate().get(GregorianCalendar.DAY_OF_MONTH));
+				result[0].getEndDate().get(Calendar.DAY_OF_MONTH));
 		assertTrue(result[0].getModerator().equals("ajthompson"));
 
 		assertTrue(result[1].getGameName().equals("null test"));
@@ -462,14 +465,14 @@ public class PlanningPokerGameTest {
 		assertTrue(result[1].getRequirementIds().isEmpty());
 		assertEquals(false, result[1].isFinished());
 		assertEquals(false, result[1].isLive());
-		assertEquals(2014, result[1].getStartDate().get(GregorianCalendar.YEAR));
-		assertEquals(3, result[1].getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(2014, result[1].getStartDate().get(Calendar.YEAR));
+		assertEquals(3, result[1].getStartDate().get(Calendar.MONTH));
 		assertEquals(20,
-				result[1].getStartDate().get(GregorianCalendar.DAY_OF_MONTH));
-		assertEquals(2014, result[1].getEndDate().get(GregorianCalendar.YEAR));
-		assertEquals(5, result[1].getEndDate().get(GregorianCalendar.MONTH));
+				result[1].getStartDate().get(Calendar.DAY_OF_MONTH));
+		assertEquals(2014, result[1].getEndDate().get(Calendar.YEAR));
+		assertEquals(5, result[1].getEndDate().get(Calendar.MONTH));
 		assertEquals(28,
-				result[1].getEndDate().get(GregorianCalendar.DAY_OF_MONTH));
+				result[1].getEndDate().get(Calendar.DAY_OF_MONTH));
 		assertEquals("", result[1].getModerator());
 	}
 
