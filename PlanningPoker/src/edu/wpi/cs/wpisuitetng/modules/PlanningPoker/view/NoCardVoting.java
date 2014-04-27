@@ -47,7 +47,7 @@ public class NoCardVoting extends JPanel {
 	 *            JPanel
 	 */
 	public NoCardVoting(JPanel infoContainer, PlanningPokerGame initialGame) {
-		this.game = initialGame;
+		game = initialGame;
 		JPanel submitPane = new JPanel();
 		submitPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		infoContainer.add(submitPane);

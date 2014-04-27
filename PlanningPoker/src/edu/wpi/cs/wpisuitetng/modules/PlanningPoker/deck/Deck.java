@@ -20,7 +20,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckDeserializer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckSerializer;
@@ -47,7 +46,7 @@ public class Deck extends RegularAbstractModel<Deck> {
 		if (deckName == null)
 			throw new NullPointerException("DeckName must not be null");		
 		this.deckName = deckName;
-		this.cards = null;
+		cards = null;
 	}
 
 	/**
@@ -72,9 +71,9 @@ public class Deck extends RegularAbstractModel<Deck> {
 	 * @param card Integer
 	 */
 	public void addCard(Integer card) {
-		if (this.cards == null)
-			this.cards = new ArrayList<Integer>();
-		this.cards.add(card);
+		if (cards == null)
+			cards = new ArrayList<Integer>();
+		cards.add(card);
 		this.sortDeck();
 	}
 
@@ -83,13 +82,13 @@ public class Deck extends RegularAbstractModel<Deck> {
 	 * @param card Integer
 	 */
 	public void removeCard(Integer card) {
-		if (this.cards != null)
-			this.cards.remove((Integer) card);
+		if (cards != null)
+			cards.remove((Integer) card);
 	}
 
 	public void sortDeck() {
-		if (this.cards != null)
-			Collections.sort(this.cards);
+		if (cards != null)
+			Collections.sort(cards);
 	}
 
 	/**
@@ -131,7 +130,7 @@ public class Deck extends RegularAbstractModel<Deck> {
 	 */
 	@Override
 	public String toString() {
-		return this.deckName;
+		return deckName;
 	}
 
 	// Serializing

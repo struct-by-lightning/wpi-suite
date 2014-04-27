@@ -9,13 +9,12 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
-
-import java.awt.Color;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * This singleton is a JPanel with the GUI needed for the main area of the view
@@ -302,29 +301,29 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 	}
 
 	private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		this.submitButtonPressed(this.emailField.getText(), this.aimField.getText());
+		this.submitButtonPressed(emailField.getText(), aimField.getText());
 	}
 
 	private boolean updateIfValid() {
-		String emailText = this.emailField.getText();
-		String aimText = this.aimField.getText();
+		String emailText = emailField.getText();
+		String aimText = aimField.getText();
 		
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailText);
         
 		if (matcher.find() || aimText.length() != 0) {
-			this.submitButton.setEnabled(true);
-			this.errorLabel.setVisible(false);
+			submitButton.setEnabled(true);
+			errorLabel.setVisible(false);
 			return true;
 		} else {
-			this.submitButton.setEnabled(false);
-			this.errorLabel.setVisible(true);
+			submitButton.setEnabled(false);
+			errorLabel.setVisible(true);
 			return false;
 		}
 	}
 	
 	private boolean isValidEmail(){
-		String emailText = this.emailField.getText();
+		String emailText = emailField.getText();
 		
 		Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(emailText);

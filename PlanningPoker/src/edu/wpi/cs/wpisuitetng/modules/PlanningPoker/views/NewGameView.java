@@ -115,7 +115,7 @@ public class NewGameView extends JPanel {
 				listModelForReseting.addElement(req);
 			}
 		}
-		this.btnStartVoting.setEnabled(true);
+		btnStartVoting.setEnabled(true);
 		thisGameRequirementList.setModel(listModelForBacklog);
 	}
 	/**

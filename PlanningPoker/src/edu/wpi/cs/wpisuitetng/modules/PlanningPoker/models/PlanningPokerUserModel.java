@@ -12,7 +12,6 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 
 import javax.swing.AbstractListModel;
 
@@ -76,7 +75,7 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 */
 	public PlanningPokerUser getUser(String id) {
 		// iterate through the list of Users until id is found
-		for (PlanningPokerUser user : this.planningPokerUsers) {
+		for (PlanningPokerUser user : planningPokerUsers) {
 			if (user.getUserName().equals(id)) {
 				return user;
 			}
@@ -94,7 +93,7 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 */
 	public void removeUser(String id) {
 		// iterate through the list of Users until id is found
-		for (int i = 0; i < this.planningPokerUsers.size(); i++) {
+		for (int i = 0; i < planningPokerUsers.size(); i++) {
 			if (planningPokerUsers.get(i).getID().equals(id)) {
 				planningPokerUsers.remove(i);
 				break;
@@ -152,7 +151,7 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 */
 	public void addUsers(PlanningPokerUser[] users) {
 		for (PlanningPokerUser u : users) {
-			this.planningPokerUsers.add(u);
+			planningPokerUsers.add(u);
 		}
 		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
 	}

@@ -15,7 +15,6 @@ import java.util.Scanner;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
@@ -41,7 +40,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		else{
 			this.gameName = null;
 		}
-		this.estimate = 0;
+		estimate = 0;
 		this.requirementID = requirementID;
 	}
 	
@@ -103,7 +102,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	
 	public void setEstimate(int estimate) {
 		this.estimate = estimate;
-		this.hasEstimate = (estimate != 0);
+		hasEstimate = (estimate != 0);
 	}
 	
 	/**

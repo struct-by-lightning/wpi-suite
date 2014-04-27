@@ -138,9 +138,9 @@ public class OpenGameView extends JPanel {
 	private OpenGameView(PlanningPokerGame game) {
 		this.game = game;
 
-		this.requirements = game.getRequirements();
+		requirements = game.getRequirements();
 
-		this.cards = new ArrayList<>();
+		cards = new ArrayList<>();
 
 		// Initialize all GUI components. Netbeans generated code.
 		initComponents();
@@ -167,8 +167,8 @@ public class OpenGameView extends JPanel {
 		for (final Integer cardValue : game.getDeckValues()) {
 			PlayingCardJPanel card = new PlayingCardJPanel(
 					cardValue.intValue(), false);
-			this.cards.add(card);
-			this.allCardsPanel.add(card, gridBagConstraints);
+			cards.add(card);
+			allCardsPanel.add(card, gridBagConstraints);
 			card.repaint();
 			card.addMouseListener(new MouseAdapter() {
 				@Override
@@ -221,7 +221,7 @@ public class OpenGameView extends JPanel {
 		textArea.setColumns(2);
 		textArea.setRows(1);
 
-		this.allCardsPanel.add(textArea, gridBagConstraints);
+		allCardsPanel.add(textArea, gridBagConstraints);
 
 		allCardsPanel.setBackground(new Color(232, 232, 232));
 	}
@@ -318,7 +318,7 @@ public class OpenGameView extends JPanel {
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
 
-		this.requirementList
+		requirementList
 				.addListSelectionListener(new ListSelectionListener() {
 					@Override
 					public void valueChanged(ListSelectionEvent ev) {
@@ -371,27 +371,27 @@ public class OpenGameView extends JPanel {
 
 		// Populate the list with each requirement.
 		DefaultListModel<String> model = new DefaultListModel<String>();
-		for (Requirement r : this.requirements) {
+		for (Requirement r : requirements) {
 			System.out.println("r: " + r);
 			model.addElement(r.getName());
 		}
 
-		this.requirementList.setModel(model);
+		requirementList.setModel(model);
 
 		// Initially select the first item in the tree.
-		this.requirementList.setSelectedIndex(0);
+		requirementList.setSelectedIndex(0);
 
 		// Show the name of the game.
-		this.gameNameLabel.setText(game.getGameName());
+		gameNameLabel.setText(game.getGameName());
 
 		// Show the deadline of the game if there is one.
 		if (game.hasEndDate()) {
 			SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
 			fmt.setCalendar(game.getEndDate());
 			String dateFormatted = fmt.format(game.getEndDate().getTime());
-			this.gameDeadlineDateLabel.setText(dateFormatted);
+			gameDeadlineDateLabel.setText(dateFormatted);
 		} else {
-			this.gameDeadlineDateLabel.setText("No Deadline");
+			gameDeadlineDateLabel.setText("No Deadline");
 		}
 
 	}
@@ -412,11 +412,11 @@ public class OpenGameView extends JPanel {
 		List<Integer> selectedIndices = game.getSelectedCardIndices(null,
 				selectedRequirement);
 
-		for (int i = 0; i < this.cards.size(); i++) {
+		for (int i = 0; i < cards.size(); i++) {
 			if (selectedIndices.contains(new Integer(i))) {
-				this.cards.get(i).select();
+				cards.get(i).select();
 			} else {
-				this.cards.get(i).deselect();
+				cards.get(i).deselect();
 			}
 		}
 	}
@@ -427,11 +427,11 @@ public class OpenGameView extends JPanel {
 	 */
 	private void updateEstimateTotal() {
 		int total = 0;
-		for (PlayingCardJPanel card : this.cards) {
+		for (PlayingCardJPanel card : cards) {
 			total += card.getValue();
 		}
 		if (total > 0) {
-			this.estimateNumberLabel.setText(new Integer(total).toString());
+			estimateNumberLabel.setText(new Integer(total).toString());
 		}
 
 		else {
@@ -440,7 +440,7 @@ public class OpenGameView extends JPanel {
 							ConfigManager.getConfig().getUserName(),
 							currentlySelectedRequirement.getId());
 			String strVote = vote > 0 ? ((Integer) vote).toString() : "?";
-			this.estimateNumberLabel.setText(strVote);
+			estimateNumberLabel.setText(strVote);
 		}
 
 	}

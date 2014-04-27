@@ -64,10 +64,10 @@ public class MainView {
 	 *            The JPanel to display as the newly added tab's content.
 	 */
 	public void addCloseableTab(String tabName, JPanel tabPanel) {
-		this.mainComponent.addTab(tabName, tabPanel);
-		this.mainComponent.setTabComponentAt(this.mainComponent.indexOfComponent(tabPanel),
-				new ClosableTabComponent(this.mainComponent));
-		this.mainComponent.setSelectedComponent(tabPanel);
+		mainComponent.addTab(tabName, tabPanel);
+		mainComponent.setTabComponentAt(mainComponent.indexOfComponent(tabPanel),
+				new ClosableTabComponent(mainComponent));
+		mainComponent.setSelectedComponent(tabPanel);
 	}
 
 	/**
@@ -88,9 +88,9 @@ public class MainView {
 		
 		
 
-		Component selected = this.mainComponent.getSelectedComponent();
+		Component selected = mainComponent.getSelectedComponent();
 		if (selected != null) {
-			this.mainComponent.remove(selected);
+			mainComponent.remove(selected);
 		}
 
 		// TODO: Do these do anything?
@@ -167,15 +167,15 @@ public class MainView {
 		}
 
 		// Get the model for the tree.
-		DefaultTreeModel model = (DefaultTreeModel) this.gameTree.getModel();
+		DefaultTreeModel model = (DefaultTreeModel) gameTree.getModel();
 
 		// Set the model's root node to the newly constructed one.
 		model.setRoot(root);
 		model.reload(root);
 
 		// Expand the tree's folders.
-		for (int i = 0; i < this.gameTree.getRowCount(); i++) {
-			this.gameTree.expandRow(i);
+		for (int i = 0; i < gameTree.getRowCount(); i++) {
+			gameTree.expandRow(i);
 		}
 	}
 
@@ -185,7 +185,7 @@ public class MainView {
 	 *         prompt, or the main toolbar for planning poker.
 	 */
 	public JComponent getToolbarComponent() {
-		return this.cardToolbarComponent;
+		return cardToolbarComponent;
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class MainView {
 	 *         information prompt, or the main tabbed pane for planning poker.
 	 */
 	public JComponent getMainComponent() {
-		return this.cardMainAreaComponent;
+		return cardMainAreaComponent;
 	}
 
 	/**
@@ -292,10 +292,10 @@ public class MainView {
 		this.refreshGameTree();
 
 		// Set the correct active cards on the toolbar and main components.
-		CardLayout toolbar = (CardLayout) this.cardToolbarComponent.getLayout();
-		CardLayout mainArea = (CardLayout) this.cardMainAreaComponent.getLayout();
-		toolbar.show(this.cardToolbarComponent, this.MAIN_VIEW);
-		mainArea.show(this.cardMainAreaComponent, this.MAIN_VIEW);
+		CardLayout toolbar = (CardLayout) cardToolbarComponent.getLayout();
+		CardLayout mainArea = (CardLayout) cardMainAreaComponent.getLayout();
+		toolbar.show(cardToolbarComponent, MAIN_VIEW);
+		mainArea.show(cardMainAreaComponent, MAIN_VIEW);
 	}
 
 	/**
@@ -379,34 +379,34 @@ public class MainView {
 	 */
 	private void setupCards() {
 		// Initialize the toolbar JPanel with a card layout.
-		this.cardToolbarComponent = new JPanel(new CardLayout());
+		cardToolbarComponent = new JPanel(new CardLayout());
 
 		// Initialize the main area JPanel with a card layout.
-		this.cardMainAreaComponent = new JPanel(new CardLayout());
+		cardMainAreaComponent = new JPanel(new CardLayout());
 
 
 
 		// Add the contact prompt view's toolbar.
-		this.cardToolbarComponent.add(new ContactInformationPromptToolbarView(),
-				this.CONTACT_PROMPT_VIEW);
+		cardToolbarComponent.add(new ContactInformationPromptToolbarView(),
+				CONTACT_PROMPT_VIEW);
 
 		// Add the contact prompt view's main area.
-		this.cardMainAreaComponent.add(ContactInformationPromptView.getInstance(),
-				this.CONTACT_PROMPT_VIEW);
+		cardMainAreaComponent.add(ContactInformationPromptView.getInstance(),
+				CONTACT_PROMPT_VIEW);
 
 		// Add the main view's toolbar.
-		this.cardToolbarComponent.add(this.toolbarComponent, this.MAIN_VIEW);
+		cardToolbarComponent.add(toolbarComponent, MAIN_VIEW);
 
 		// Add the main view's main area.
-		this.cardMainAreaComponent.add(this.mainComponent, this.MAIN_VIEW);
+		cardMainAreaComponent.add(mainComponent, MAIN_VIEW);
 
 		// Display the contact prompt view first by default.
 
 
-		CardLayout toolbar = (CardLayout) this.cardToolbarComponent.getLayout();
-		CardLayout mainArea = (CardLayout) this.cardMainAreaComponent.getLayout();
-		toolbar.show(this.cardToolbarComponent, this.CONTACT_PROMPT_VIEW);
-		mainArea.show(this.cardMainAreaComponent, this.CONTACT_PROMPT_VIEW);
+		CardLayout toolbar = (CardLayout) cardToolbarComponent.getLayout();
+		CardLayout mainArea = (CardLayout) cardMainAreaComponent.getLayout();
+		toolbar.show(cardToolbarComponent, CONTACT_PROMPT_VIEW);
+		mainArea.show(cardMainAreaComponent, CONTACT_PROMPT_VIEW);
 
 
 	}
@@ -440,7 +440,7 @@ public class MainView {
 
 		// This listener updates the overview tab's tree of games before it is
 		// displayed.
-		this.mainComponent.addChangeListener(new ChangeListener() {
+		mainComponent.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (e.getSource() instanceof JTabbedPane) {
 					JTabbedPane pane = (JTabbedPane) e.getSource();

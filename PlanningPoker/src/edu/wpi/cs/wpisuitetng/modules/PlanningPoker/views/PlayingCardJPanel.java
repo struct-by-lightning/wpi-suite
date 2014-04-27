@@ -9,13 +9,8 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -52,10 +47,10 @@ public class PlayingCardJPanel extends JPanel {
 		this.value = value;
 		this.selected = selected;
 		this.updateBorder();
-		this.innerCardPanel = new CardImgPanel();
-		this.cardLabel = new JLabel();
-		this.innerCardPanelLayout = new GroupLayout(innerCardPanel);
-		this.thisLayout = new GroupLayout(this);
+		innerCardPanel = new CardImgPanel();
+		cardLabel = new JLabel();
+		innerCardPanelLayout = new GroupLayout(innerCardPanel);
+		thisLayout = new GroupLayout(this);
 
 		setupCardlabel();
 		setupInnerCardPanelBorder();
@@ -150,7 +145,7 @@ public class PlayingCardJPanel extends JPanel {
 	 */
 
 	public void toggle() {
-		this.selected = !this.selected;
+		selected = !selected;
 		this.updateBorder();
 	}
 
@@ -158,7 +153,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * allows user to select
 	 */
 	public void select() {
-		this.selected = true;
+		selected = true;
 		this.updateBorder();
 	}
 
@@ -166,7 +161,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * allows you to deselect
 	 */
 	public void deselect() {
-		this.selected = false;
+		selected = false;
 		this.updateBorder();
 	}
 
@@ -174,7 +169,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * updates the border
 	 */
 	private void updateBorder() {
-		Color borderColor = (this.selected ? new Color(0,111,255)
+		Color borderColor = (selected ? new Color(0,111,255)
 				: Color.white);
 		this.setBorder(BorderFactory.createLineBorder(borderColor, 10));
 	}
@@ -185,7 +180,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * @return int
 	 */
 	public int getValue() {
-		return (this.selected ? value : 0);
+		return (selected ? value : 0);
 	}
 
 }

@@ -82,14 +82,14 @@ public class ClosedGameView extends JPanel {
 	 */
 	private ClosedGameView(PlanningPokerGame game) {
 		this.game = game;
-		this.requirements = this.game.getRequirements();
+		requirements = this.game.getRequirements();
 
 		initComponents();
 		initLogic();
 		initForGame();
 
 		// Initially select the first item in the tree.
-		this.requirementList.setSelectedIndex(0);
+		requirementList.setSelectedIndex(0);
 	}
 	/**
 	 * 
@@ -107,8 +107,8 @@ public class ClosedGameView extends JPanel {
 		// selected in the tree.
 		System.out.println("**Initforgame was called");
 		
-		this.requirements = game.getRequirements();
-		this.requirementList
+		requirements = game.getRequirements();
+		requirementList
 				.addListSelectionListener(new ListSelectionListener() {
 					@Override
 					public void valueChanged(ListSelectionEvent ev) {
@@ -205,17 +205,17 @@ public class ClosedGameView extends JPanel {
 
 		// Populate the list with each requirement.
 		DefaultListModel<String> model = new DefaultListModel<String>();
-		for (Requirement r : this.requirements) {
+		for (Requirement r : requirements) {
 			model.addElement(r.getName());
 		}
 
-		this.requirementList.setModel(model);
+		requirementList.setModel(model);
 
 		// Show the name of the game.
-		this.gameNameLabel.setText(game.getGameName());
+		gameNameLabel.setText(game.getGameName());
 
 		// Show the deadline of the game if there is one.
-		this.gameDeadlineDateLabel.setText("Game is Finished");
+		gameDeadlineDateLabel.setText("Game is Finished");
 		if (!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {
 			submitButton.setEnabled(false);
 			estimateNumberBox.setEnabled(false);
@@ -298,10 +298,10 @@ public class ClosedGameView extends JPanel {
 	 */
 	private void updateEstimateTotal(int selected) {
 		PlanningPokerFinalEstimate[] finalEsts = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
-		this.estimateNumberBox.setText("0");
+		estimateNumberBox.setText("0");
 		for(PlanningPokerFinalEstimate ppfe : finalEsts) {
 			if(ppfe.getRequirementID() ==  selected && ppfe.getGameName().equals(game.getGameName())) {
-				this.estimateNumberBox.setText("" + ppfe.getEstimate());
+				estimateNumberBox.setText("" + ppfe.getEstimate());
 			}
 		}
 		enableUpdateButton(finalEsts);
@@ -325,7 +325,7 @@ public class ClosedGameView extends JPanel {
 				}
 			}
 			System.out.println("The game req ids: " +gameReqIds);
-			for(Requirement r : this.requirements){
+			for(Requirement r : requirements){
 				System.out.println("the req id from this game: "+r.getId() +"and has a fianl estimate "+ gameReqIds.contains((Integer)r.getId()));
 				if(gameReqIds.contains((Integer)r.getId())){
 					updateButton.setEnabled(gameHasEstimates);

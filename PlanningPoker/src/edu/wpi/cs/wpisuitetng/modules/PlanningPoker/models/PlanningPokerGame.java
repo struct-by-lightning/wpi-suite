@@ -83,7 +83,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 			boolean isFinished, boolean isLive, GregorianCalendar startDate,
 			GregorianCalendar endDate, String moderator) {
 
-		this.requirementIds = new ArrayList<Integer>();
+		requirementIds = new ArrayList<Integer>();
 		if(gameName != null)
 			this.gameName = gameName.replace(';', ':');
 		this.setDescription(description);
@@ -210,7 +210,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 */
 	@Override
 	public String getID() {
-		return this.gameName;
+		return gameName;
 	}
 
 	/**
@@ -226,7 +226,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return String */
 	public String getModerator() {
-		return this.moderator;
+		return moderator;
 	}
 
 	/**
@@ -235,7 +235,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return The game's name */
 	public String getGameName() {
-		return this.gameName;
+		return gameName;
 	}
 
 	/**
@@ -300,7 +300,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return A list of the game's requirement IDs */
 	public List<Integer> getRequirementIds() {
-		return this.requirementIds;
+		return requirementIds;
 	}
 
 	/**
@@ -310,7 +310,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 *            The requirement to add
 	 */
 	public void addRequirementId(Integer requirementID) {
-		this.requirementIds.add(requirementID);
+		requirementIds.add(requirementID);
 	}
 
 	/**
@@ -321,7 +321,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return {@code true} if the game had the specified requirement */
 	public boolean removeRequirement(Integer requirementID) {
-		return this.requirementIds.remove(requirementID);
+		return requirementIds.remove(requirementID);
 	}
 
 	/**
@@ -413,7 +413,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	}
 	
 	public boolean isArchived() {
-		return this.isArchived;
+		return isArchived;
 	}
 
 }
