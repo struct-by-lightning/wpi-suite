@@ -129,6 +129,18 @@ public class ClosedGameView extends JPanel {
 									.getDescription());
 							updateEstimateTotal(currentID);
 							ArrayList<Double> reqVotes = new ArrayList<Double>();
+						
+						    // Table
+							estimateModel = new TeamEstimateTableModel();
+							
+							for(PlanningPokerVote v : gameVotes) {
+								if(v.getRequirementID() == currentID) {
+									reqVotes.add((double)v.getVote());
+									estimateModel.addRow(Arrays.asList(v.getUserName(), v.getVote()));
+								}
+							}
+							// Estimates
+							estimates.setModel(estimateModel);
 							
 							// Resize the table row height
 						    try
@@ -147,23 +159,13 @@ public class ClosedGameView extends JPanel {
 						        }
 						    }
 						    catch(ClassCastException e) {}
-						    // Align text center
+						    
+						    // Align text center in table
 						    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 						    centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 						    estimates.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 						    estimates.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-						    // Table
-							estimateModel = new TeamEstimateTableModel();
-							
-							for(PlanningPokerVote v : gameVotes) {
-								if(v.getRequirementID() == currentID) {
-									reqVotes.add((double)v.getVote());
-									estimateModel.addRow(Arrays.asList(v.getUserName(), v.getVote()));
-								}
-							}
-							// Estimates
-							estimates.setModel(estimateModel);
-							
+						    
 							if(reqVotes.size()!= 0) {
 								double[] voteNums = new double[reqVotes.size()];
 								for(int i = 0; i< reqVotes.size(); i++) {
@@ -171,8 +173,10 @@ public class ClosedGameView extends JPanel {
 								}
 								mean.setText(meanDef+df.format(Statistics.mean(voteNums)));
 								median.setText(medianDef+df.format(Statistics.median(voteNums)));
+								
 								Average = Math.round(Statistics.mean(voteNums));
 								mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
+								
 								if(reqVotes.size()>1) {
 									std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
 								}
