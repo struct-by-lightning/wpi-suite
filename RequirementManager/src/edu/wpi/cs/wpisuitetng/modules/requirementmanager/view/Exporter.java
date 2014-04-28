@@ -106,7 +106,6 @@ public class Exporter {
 			return;
 		}
 		
-		// Format has been modified so it does not load as an array, but line by line
 		out.print("[");
 		// Iterate over the list of requirements
 		for(int i = 0; i < listOfRequirementsToAdd.size(); i++) {
