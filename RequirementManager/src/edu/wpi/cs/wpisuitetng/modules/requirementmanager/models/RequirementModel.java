@@ -208,6 +208,14 @@ public class RequirementModel extends AbstractListModel{
 	}
 
 	/**
+	 * Sets the list of the requirements
+	
+	 * @param the requirements held within the requirementmodel. */
+	public void setRequirements(List<Requirement> input) {
+		requirements = input;
+	}
+	
+	/**
 	 * Returns the list of children for the given requirement.
 	 * @param requirement the parent requirement to find children for.
 	
