@@ -785,14 +785,16 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Method identify.
 	 * @param o Object
-	
-	
 	 * @return Boolean * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(Object) * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(Object)
 	 */
 	@Override
 	public Boolean identify(Object o) {
 		// TODO Auto-generated method stub
-		return null;
+		/*if(o != something) {
+			return false;
+		}*/
+		// Set something
+		return true;
 	}
 
 	/**
