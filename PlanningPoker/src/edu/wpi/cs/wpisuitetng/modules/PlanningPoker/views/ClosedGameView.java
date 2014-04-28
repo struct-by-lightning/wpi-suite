@@ -195,7 +195,9 @@ public class ClosedGameView extends JPanel {
 								min.setText(minDef+"N/A");
 							}
 							
-							estimateNumberBox.setText(""+Average);
+							if (estimateNumberBox.getText().equals("0")) {
+								estimateNumberBox.setText(""+Average);
+							}
 							
 							previousID = currentID;
 						}
