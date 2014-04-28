@@ -175,7 +175,7 @@ public class ClosedGameView extends JPanel {
 								median.setText(medianDef+df.format(Statistics.median(voteNums)));
 								
 								Average = Math.round(Statistics.mean(voteNums));
-								mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
+								//mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
 								
 								if(reqVotes.size()>1) {
 									std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
