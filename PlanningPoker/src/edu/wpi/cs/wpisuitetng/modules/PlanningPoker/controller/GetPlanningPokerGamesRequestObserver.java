@@ -20,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	
-	private GetPlanningPokerGamesController controller;
+	private final GetPlanningPokerGamesController controller;
 	
 	/**
 	 * Constructs the observer given a GetPlanningPokerGamesController
@@ -38,7 +38,8 @@ public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of PlanningPokerGames to a PlanningPokerGame object array
-		PlanningPokerGame[] PlanningPokerGames = PlanningPokerGame.fromJsonArray(iReq.getResponse().getBody());
+		final PlanningPokerGame[] PlanningPokerGames = PlanningPokerGame
+				.fromJsonArray(iReq.getResponse().getBody());
 		
 		// Pass these PlanningPokerGames to the controller
 		controller.receivedPlanningPokerGames(PlanningPokerGames);

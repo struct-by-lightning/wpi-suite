@@ -10,7 +10,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
@@ -23,7 +22,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class GetProjectRequestObserver implements RequestObserver {
 	/** the controller associated with this observer */
-	private GetProjectController controller;
+	private final GetProjectController controller;
 
 	/**
 	 * Construct the observer given a GetProjectController
@@ -45,7 +44,7 @@ public class GetProjectRequestObserver implements RequestObserver {
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of PlanningPokerGames to a PlanningPokerGame
 		// object array
-		Project[] projects = Project
+		final Project[] projects = Project
 				.fromJsonArray(iReq.getResponse().getBody());
 
 		// Pass these PlanningPokerGames to the controller
@@ -57,7 +56,8 @@ public class GetProjectRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("The request to retrieve Projects has encountered an error and had to close.");
+		System.err
+				.println("The request to retrieve Projects has encountered an error and had to close.");
 	}
 
 /**

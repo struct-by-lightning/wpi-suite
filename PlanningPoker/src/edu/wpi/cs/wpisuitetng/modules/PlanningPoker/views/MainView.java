@@ -14,7 +14,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -53,7 +53,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * @author Austin Rose (atrose)
  */
 public class MainView {
-	private ArrayList<PlanningPokerGame> games;
+	private List<PlanningPokerGame> games;
 	/**
 	 * This function adds a new closeable tab to the planning poker module's
 	 * inner tab pane.
@@ -68,6 +68,7 @@ public class MainView {
 		this.mainComponent.setTabComponentAt(this.mainComponent.indexOfComponent(tabPanel),
 				new ClosableTabComponent(this.mainComponent, tabPanel));
 		this.mainComponent.setSelectedComponent(tabPanel);
+
 	}
 
 	/**
@@ -88,9 +89,9 @@ public class MainView {
 		
 		
 
-		Component selected = this.mainComponent.getSelectedComponent();
+		final Component selected = mainComponent.getSelectedComponent();
 		if (selected != null) {
-			this.mainComponent.remove(selected);
+			mainComponent.remove(selected);
 		}
 
 		// TODO: Do these do anything?
@@ -113,10 +114,10 @@ public class MainView {
 		games = PlanningPokerGameModel.getPlanningPokerGames();
 
 		// Instantiate each of the folders which may appear in the tree.
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("All Games");
-		DefaultMutableTreeNode newGames = new DefaultMutableTreeNode("New");
-		DefaultMutableTreeNode openGames = new DefaultMutableTreeNode("Open");
-		DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode("Finished");
+		final DefaultMutableTreeNode root = new DefaultMutableTreeNode("All Games");
+		final DefaultMutableTreeNode newGames = new DefaultMutableTreeNode("New");
+		final DefaultMutableTreeNode openGames = new DefaultMutableTreeNode("Open");
+		final DefaultMutableTreeNode finishedGames = new DefaultMutableTreeNode("Finished");
 
 		// Potentially add a node to one of the sub folders for each planning
 		// poker game we have.
@@ -167,15 +168,15 @@ public class MainView {
 		}
 
 		// Get the model for the tree.
-		DefaultTreeModel model = (DefaultTreeModel) this.gameTree.getModel();
+		final DefaultTreeModel model = (DefaultTreeModel) gameTree.getModel();
 
 		// Set the model's root node to the newly constructed one.
 		model.setRoot(root);
 		model.reload(root);
 
 		// Expand the tree's folders.
-		for (int i = 0; i < this.gameTree.getRowCount(); i++) {
-			this.gameTree.expandRow(i);
+		for (int i = 0; i < gameTree.getRowCount(); i++) {
+			gameTree.expandRow(i);
 		}
 	}
 
@@ -185,7 +186,7 @@ public class MainView {
 	 *         prompt, or the main toolbar for planning poker.
 	 */
 	public JComponent getToolbarComponent() {
-		return this.cardToolbarComponent;
+		return cardToolbarComponent;
 	}
 
 	/**
@@ -194,7 +195,7 @@ public class MainView {
 	 *         information prompt, or the main tabbed pane for planning poker.
 	 */
 	public JComponent getMainComponent() {
-		return this.cardMainAreaComponent;
+		return cardMainAreaComponent;
 	}
 
 	/**
@@ -212,9 +213,9 @@ public class MainView {
 		try {
 			GetRequirementsController.getInstance().retrieveRequirements();
 
-			while (true) {		
+			while (true) {
 				RequirementModel rm = RequirementModel.getInstance();
-				int size = rm.getRequirements().size();		
+				int size = rm.getRequirements().size();	
 				if (size > 0) {
 					if (rm.getRequirements().get(0) != null) {
 						break;
@@ -228,9 +229,10 @@ public class MainView {
 
 		// Search for selected game tab that already exists.
 		// If it is, remove that game tab, recreate one so that the requirements are updated.
-		Component[] tabInstances = mainComponent.getComponents();
+		final Component[] tabInstances = mainComponent.getComponents();
 		for(Component c: tabInstances) {
-			if (c instanceof OpenGameView || c instanceof NewGameView || c instanceof ClosedGameView) {
+			if (c instanceof OpenGameView || c instanceof NewGameView
+					|| c instanceof ClosedGameView) {
 				String gameName = "";
 				if (c instanceof OpenGameView) gameName = ((OpenGameView) c).getGame().getID();
 				if (c instanceof NewGameView) gameName = ((NewGameView) c).getGame().getID();
@@ -292,10 +294,10 @@ public class MainView {
 		this.refreshGameTree();
 
 		// Set the correct active cards on the toolbar and main components.
-		CardLayout toolbar = (CardLayout) this.cardToolbarComponent.getLayout();
-		CardLayout mainArea = (CardLayout) this.cardMainAreaComponent.getLayout();
-		toolbar.show(this.cardToolbarComponent, this.MAIN_VIEW);
-		mainArea.show(this.cardMainAreaComponent, this.MAIN_VIEW);
+		final CardLayout toolbar = (CardLayout) cardToolbarComponent.getLayout();
+		final CardLayout mainArea = (CardLayout) cardMainAreaComponent.getLayout();
+		toolbar.show(cardToolbarComponent, MAIN_VIEW);
+		mainArea.show(cardMainAreaComponent, MAIN_VIEW);
 	}
 
 	/**
@@ -337,10 +339,10 @@ public class MainView {
 	 */
 	private MainView() {
 		initComponents();
-		setUpCards();
+		setupCards();
 		initLogic();
 
-		ContactChecker checker = new ContactChecker() {
+		final ContactChecker checker = new ContactChecker() {
 
 			@Override
 			public void verifyContactInfo() {
@@ -355,7 +357,9 @@ public class MainView {
 				}
 
 
-				PlanningPokerUser user = PlanningPokerUserModel.getInstance().getUser(ConfigManager.getConfig().getUserName());
+				final PlanningPokerUser user = PlanningPokerUserModel
+						.getInstance().getUser(
+								ConfigManager.getConfig().getUserName());
 
 				userHasInfo = (user != null);
 
@@ -377,36 +381,36 @@ public class MainView {
 	 * Initialize the card layout JPanels which will allow switiching between
 	 * the main planning poker view and the prompt for contact information.
 	 */
-	private void setUpCards() {
+	private void setupCards() {
 		// Initialize the toolbar JPanel with a card layout.
-		this.cardToolbarComponent = new JPanel(new CardLayout());
+		cardToolbarComponent = new JPanel(new CardLayout());
 
 		// Initialize the main area JPanel with a card layout.
-		this.cardMainAreaComponent = new JPanel(new CardLayout());
+		cardMainAreaComponent = new JPanel(new CardLayout());
 
 
 
 		// Add the contact prompt view's toolbar.
-		this.cardToolbarComponent.add(new ContactInformationPromptToolbarView(),
-				this.CONTACT_PROMPT_VIEW);
+		cardToolbarComponent.add(new ContactInformationPromptToolbarView(),
+				CONTACT_PROMPT_VIEW);
 
 		// Add the contact prompt view's main area.
-		this.cardMainAreaComponent.add(ContactInformationPromptView.getInstance(),
-				this.CONTACT_PROMPT_VIEW);
+		cardMainAreaComponent.add(ContactInformationPromptView.getInstance(),
+				CONTACT_PROMPT_VIEW);
 
 		// Add the main view's toolbar.
-		this.cardToolbarComponent.add(this.toolbarComponent, this.MAIN_VIEW);
+		cardToolbarComponent.add(toolbarComponent, MAIN_VIEW);
 
 		// Add the main view's main area.
-		this.cardMainAreaComponent.add(this.mainComponent, this.MAIN_VIEW);
+		cardMainAreaComponent.add(mainComponent, MAIN_VIEW);
 
 		// Display the contact prompt view first by default.
 
 
-		CardLayout toolbar = (CardLayout) this.cardToolbarComponent.getLayout();
-		CardLayout mainArea = (CardLayout) this.cardMainAreaComponent.getLayout();
-		toolbar.show(this.cardToolbarComponent, this.CONTACT_PROMPT_VIEW);
-		mainArea.show(this.cardMainAreaComponent, this.CONTACT_PROMPT_VIEW);
+		final CardLayout toolbar = (CardLayout) cardToolbarComponent.getLayout();
+		final CardLayout mainArea = (CardLayout) cardMainAreaComponent.getLayout();
+		toolbar.show(cardToolbarComponent, CONTACT_PROMPT_VIEW);
+		mainArea.show(cardMainAreaComponent, CONTACT_PROMPT_VIEW);
 
 
 	}
@@ -421,14 +425,14 @@ public class MainView {
 		// the game tree.
 		gameTree.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				int selRow = gameTree.getRowForLocation(e.getX(), e.getY());
-				TreePath selPath = gameTree.getPathForLocation(e.getX(), e.getY());
+				final int selRow = gameTree.getRowForLocation(e.getX(), e.getY());
+				final TreePath selPath = gameTree.getPathForLocation(e.getX(), e.getY());
 				if (selRow != -1) {
 					if (e.getClickCount() == 2) {
 						if (games.size() > 0) {
-							DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
+							final DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
 									.getLastPathComponent();
-							String gameName = (String) node.getUserObject();
+							final String gameName = (String) node.getUserObject();
 
 							MainView.gameWasDoubleClicked(PlanningPokerGameModel
 									.getPlanningPokerGame(gameName));
@@ -440,10 +444,10 @@ public class MainView {
 
 		// This listener updates the overview tab's tree of games before it is
 		// displayed.
-		this.mainComponent.addChangeListener(new ChangeListener() {
+		mainComponent.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (e.getSource() instanceof JTabbedPane) {
-					JTabbedPane pane = (JTabbedPane) e.getSource();
+					final JTabbedPane pane = (JTabbedPane) e.getSource();
 					if (pane.getSelectedIndex() == 0) {
 						refreshGameTree();
 					}
@@ -532,9 +536,9 @@ public class MainView {
 
 		whatIsBody.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 		whatIsBody
-		.setText("<html> What does it mean if you click...<br><br> <em><strong>Create New Game:</strong></em><br> This will open the window to create a new game where you can choose the user requirements for the game.<br><br> <em><strong>New folder:</strong></em><br> These games are created but have not been started yet. If you click one of the games in this folder you if you are the moderator you can start the game.<br><br> <em><strong>Open folder:</strong></em><br> These games have been created and started you can estimate each user story. After the user story is estimated it will be marked as completed.<br><br> <em><strong>Closed folder:</strong></em><br> These are closed games. By clicking on the games in this folder you will get the results from this game. If you are the moderator of this game then you should be able to edit results.<br><br> If you are looking for further information refer to Help. </html>");
+				.setText("<html> What does it mean if you click...<br><br> <em><strong>Create New Game:</strong></em><br> This will open the window to create a new game where you can choose the user requirements for the game.<br><br> <em><strong>New folder:</strong></em><br> These games are created but have not been started yet. If you click one of the games in this folder you if you are the moderator you can start the game.<br><br> <em><strong>Open folder:</strong></em><br> These games have been created and started you can estimate each user story. After the user story is estimated it will be marked as completed.<br><br> <em><strong>Closed folder:</strong></em><br> These are closed games. By clicking on the games in this folder you will get the results from this game. If you are the moderator of this game then you should be able to edit results.<br><br> If you are looking for further information refer to Help. </html>");
 
-		javax.swing.GroupLayout leftLayout = new javax.swing.GroupLayout(left);
+		final javax.swing.GroupLayout leftLayout = new javax.swing.GroupLayout(left);
 		left.setLayout(leftLayout);
 		leftLayout.setHorizontalGroup(leftLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -564,7 +568,9 @@ public class MainView {
 										javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addGap(18, 18, 18)
-										.addComponent(whatIsBody, javax.swing.GroupLayout.PREFERRED_SIZE,
+										.addComponent(
+												whatIsBody,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addContainerGap(478, Short.MAX_VALUE)));
@@ -579,9 +585,9 @@ public class MainView {
 
 		whatIsBody1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 		whatIsBody1
-		.setText("<html> Planning Poker is a consensus-based tool for software developers to come together and estimate effort of development goals for the team. This is a great tool for agile teams to estimate the user stories they have for a given iteration.<br><br> The idea behind Planning Poker is that team discusses each user story and then goes into the game and then each user goes into the deck and selects the card that represents how effort he or she thinks the task will take. This process can be repeated for any number of user stories in the game.<br><br> During the game all estimates remain private until everyone has chose his or her card. After all estimates are in the Planning Poker game will calculate the Mean, Median, Mode, Minimum, Maximum, and Standard Deviation of the game. These values can be used for the team to continue the discussion and come to a consensus of what the groups estimate is for the user story.<br><br> </html>");
+				.setText("<html> Planning Poker is a consensus-based tool for software developers to come together and estimate effort of development goals for the team. This is a great tool for agile teams to estimate the user stories they have for a given iteration.<br><br> The idea behind Planning Poker is that team discusses each user story and then goes into the game and then each user goes into the deck and selects the card that represents how effort he or she thinks the task will take. This process can be repeated for any number of user stories in the game.<br><br> During the game all estimates remain private until everyone has chose his or her card. After all estimates are in the Planning Poker game will calculate the Mean, Median, Mode, Minimum, Maximum, and Standard Deviation of the game. These values can be used for the team to continue the discussion and come to a consensus of what the groups estimate is for the user story.<br><br> </html>");
 
-		javax.swing.GroupLayout rightLayout = new javax.swing.GroupLayout(right);
+		final javax.swing.GroupLayout rightLayout = new javax.swing.GroupLayout(right);
 		right.setLayout(rightLayout);
 		rightLayout.setHorizontalGroup(rightLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -613,7 +619,9 @@ public class MainView {
 										javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addGap(18, 18, 18)
-										.addComponent(whatIsBody1, javax.swing.GroupLayout.PREFERRED_SIZE,
+										.addComponent(
+												whatIsBody1,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addContainerGap(433, Short.MAX_VALUE)));
@@ -630,11 +638,14 @@ public class MainView {
 		jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 		jLabel1.setText("Game Name");
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+		final javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
 		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel1Layout.createSequentialGroup().addContainerGap().addComponent(jLabel1)
+								jPanel1Layout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(jLabel1)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 						.addComponent(jTextField1).addContainerGap()));
 		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(
@@ -651,7 +662,9 @@ public class MainView {
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addComponent(jLabel1))
-												.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 
 		jButton2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 		jButton2.setText("CREATE");
@@ -661,7 +674,7 @@ public class MainView {
 
 		jCheckBox1.setText("Start voting immediately");
 
-		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+		final javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
 		jPanel2.setLayout(jPanel2Layout);
 		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -691,15 +704,21 @@ public class MainView {
 		jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 		jLabel3.setText("End time stuff");
 
-		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+		final javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
 		jPanel3.setLayout(jPanel3Layout);
 		jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel3Layout.createSequentialGroup().addContainerGap().addComponent(jLabel3)
+				jPanel3Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel3)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel3Layout.createSequentialGroup().addContainerGap().addComponent(jLabel3)
+				jPanel3Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel3)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204,
@@ -708,18 +727,24 @@ public class MainView {
 		jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 		jLabel5.setText("End date stuff");
 
-		javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+		final javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
 		jPanel6.setLayout(jPanel6Layout);
 		jPanel6Layout.setHorizontalGroup(jPanel6Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel6Layout.createSequentialGroup().addContainerGap().addComponent(jLabel5)
+				jPanel6Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel5)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		jPanel6Layout.setVerticalGroup(jPanel6Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel6Layout.createSequentialGroup().addContainerGap().addComponent(jLabel5)
+				jPanel6Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel5)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+		final javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
 		jPanel5.setLayout(jPanel5Layout);
 		jPanel5Layout.setHorizontalGroup(jPanel5Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -743,7 +768,8 @@ public class MainView {
 														.addComponent(jPanel3,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)).addContainerGap()));
+																Short.MAX_VALUE))
+										.addContainerGap()));
 		jPanel5Layout.setVerticalGroup(jPanel5Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 						jPanel5Layout
@@ -754,16 +780,19 @@ public class MainView {
 						.addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 								.addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 
 		jPanel10.setLayout(new java.awt.GridBagLayout());
 
 		jList2.setModel(new javax.swing.AbstractListModel() {
-			private String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+			private final String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
 
 			public int getSize() {
 				return strings.length;
@@ -782,7 +811,7 @@ public class MainView {
 		jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		jLabel4.setText("Backlog");
 
-		javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+		final javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
 		jPanel13.setLayout(jPanel13Layout);
 		jPanel13Layout.setHorizontalGroup(jPanel13Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -793,10 +822,13 @@ public class MainView {
 								Short.MAX_VALUE).addContainerGap()));
 		jPanel13Layout.setVerticalGroup(jPanel13Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel13Layout.createSequentialGroup().addContainerGap().addComponent(jLabel4)
+				jPanel13Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel4)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+		final javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
 		jPanel8.setLayout(jPanel8Layout);
 		jPanel8Layout.setHorizontalGroup(jPanel8Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -824,7 +856,9 @@ public class MainView {
 								.addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 
 		jPanel10.add(jPanel8, new java.awt.GridBagConstraints());
 
@@ -858,7 +892,7 @@ public class MainView {
 
 		jPanel4.add(jPanel9);
 
-		javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+		final javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
 		jPanel11.setLayout(jPanel11Layout);
 		jPanel11Layout.setHorizontalGroup(jPanel11Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -868,7 +902,8 @@ public class MainView {
 						.addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)));
 		jPanel11Layout.setVerticalGroup(jPanel11Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 						jPanel11Layout
@@ -887,7 +922,7 @@ public class MainView {
 		jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		jLabel2.setText("This Game");
 
-		javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+		final javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
 		jPanel7.setLayout(jPanel7Layout);
 		jPanel7Layout.setHorizontalGroup(jPanel7Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -898,11 +933,14 @@ public class MainView {
 								Short.MAX_VALUE).addContainerGap()));
 		jPanel7Layout.setVerticalGroup(jPanel7Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel7Layout.createSequentialGroup().addContainerGap().addComponent(jLabel2)
+				jPanel7Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel2)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 		jList1.setModel(new javax.swing.AbstractListModel() {
-			private String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+			private final String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
 
 			public int getSize() {
 				return strings.length;
@@ -914,7 +952,7 @@ public class MainView {
 		});
 		jScrollPane1.setViewportView(jList1);
 
-		javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+		final javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
 		jPanel12.setLayout(jPanel12Layout);
 		jPanel12Layout.setHorizontalGroup(jPanel12Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -942,7 +980,9 @@ public class MainView {
 								.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
 
 		jPanel10.add(jPanel12, new java.awt.GridBagConstraints());
 
@@ -960,7 +1000,7 @@ public class MainView {
 
 		jLabel8.setText("0, 1, 3, 5, 6, 7, 8, 9");
 
-		javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+		final javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
 		jPanel16.setLayout(jPanel16Layout);
 		jPanel16Layout.setHorizontalGroup(jPanel16Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -970,10 +1010,13 @@ public class MainView {
 						.addComponent(jLabel8).addContainerGap()));
 		jPanel16Layout.setVerticalGroup(jPanel16Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel16Layout.createSequentialGroup().addContainerGap().addComponent(jLabel8)
+				jPanel16Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel8)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+		final javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
 		jPanel14.setLayout(jPanel14Layout);
 		jPanel14Layout
 		.setHorizontalGroup(jPanel14Layout
@@ -998,13 +1041,13 @@ public class MainView {
 																.createSequentialGroup()
 																.addComponent(jLabel6)
 																.addPreferredGap(
-																		javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 																		.addComponent(
 																				jComboBox1,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				javax.swing.GroupLayout.DEFAULT_SIZE,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)))
-																				.addContainerGap()));
+										.addContainerGap()));
 		jPanel14Layout.setVerticalGroup(jPanel14Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 						jPanel14Layout
@@ -1019,10 +1062,14 @@ public class MainView {
 												javax.swing.GroupLayout.DEFAULT_SIZE,
 												javax.swing.GroupLayout.PREFERRED_SIZE)
 												.addComponent(jLabel6))
-												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-												.addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()));
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												jPanel16,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addContainerGap()));
 
 		jPanel15.setBackground(Color.white);
 		jPanel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204,
@@ -1030,11 +1077,14 @@ public class MainView {
 
 		jLabel7.setText("Logged in as...");
 
-		javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+		final javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
 		jPanel15.setLayout(jPanel15Layout);
 		jPanel15Layout.setHorizontalGroup(jPanel15Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-						jPanel15Layout.createSequentialGroup().addContainerGap().addComponent(jLabel7)
+				jPanel15Layout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(jLabel7)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		jPanel15Layout.setVerticalGroup(jPanel15Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(

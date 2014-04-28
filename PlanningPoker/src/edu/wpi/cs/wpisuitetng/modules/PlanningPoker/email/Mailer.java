@@ -9,7 +9,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email;
 
-import java.util.GregorianCalendar;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
@@ -47,14 +47,14 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * @version $Revision: 1.0 $
  */
 public class Mailer {
-	private Session session;
-	private MimeMessage message;
+	private final Session session;
+	private final MimeMessage message;
 	private Transport transport;
 
 	// test information
-	private String host = "mailtrap.io";
-	private String login = "structbylightning-17dcc3f2b944376c";
-	private String pass = "ce1a24cb171342c3";
+	private final String host = "mailtrap.io";
+	private final String login = "structbylightning-17dcc3f2b944376c";
+	private final String pass = "ce1a24cb171342c3";
 
 	// TODO: Create a wpi-suite email address and mailtrap account that we can
 	// give people access to in the documentation.
@@ -68,17 +68,19 @@ public class Mailer {
 
 		try {
 			// testing
-			if (DEBUG)
+			if (DEBUG) {
 				transport = session.getTransport("smtp");
+			}
 			// release
-			String from = "struct.by.lightning@gmail.com";
+			final String from = "struct.by.lightning@gmail.com";
 
 			// set the message to be from struct by lightning
 			message.setFrom(new InternetAddress(from));
 
 			// set the header line
 			message.setSubject("Great news ladies and gentlemen!");
-			message.setText("Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
+			message.setText(
+					"Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
 		} catch (MessagingException mex) {
 			System.out.println("Message creation failed");
 			mex.printStackTrace();
@@ -91,6 +93,7 @@ public class Mailer {
 	 * @param emailAddress
 	 *            Hard-coded email address
 	 */
+
 	// public Mailer(String emailAddress) {
 	// session = createSmtpSession();
 	// session.setDebug(true);
@@ -116,6 +119,7 @@ public class Mailer {
 	// }
 	// }
 
+
 	/**
 	 * Alternate constructor that takes an array of email addresses as a
 	 * parameter
@@ -124,6 +128,7 @@ public class Mailer {
 	 * @param emailArray
 	 *            String[]
 	 */
+
 	// public Mailer(String[] emailArray) {
 	// session = createSmtpSession();
 	// session.setDebug(true);
@@ -147,6 +152,7 @@ public class Mailer {
 	// }
 	// }
 
+
 	public Mailer(String subject, String text) {
 		session = createSmtpSession();
 		session.setDebug(true);
@@ -154,10 +160,11 @@ public class Mailer {
 
 		try {
 			// testing
-			if (DEBUG)
+			if (DEBUG) {
 				transport = session.getTransport("smtp");
+			}
 			// release
-			String from = "struct.by.lightning@gmail.com";
+			final String from = "struct.by.lightning@gmail.com";
 
 			// set the message to be from struct by lightning
 			message.setFrom(new InternetAddress(from));
@@ -225,8 +232,9 @@ public class Mailer {
 		try {
 			// testing
 			transport = session.getTransport("smtp");
+
 			// release
-			String from = "struct.by.lightning@gmail.com";
+			final String from = "struct.by.lightning@gmail.com";
 
 			// set the message to be from struct by lightning
 			message.setFrom(new InternetAddress(from));
@@ -252,15 +260,16 @@ public class Mailer {
 		String text = "";
 
 		// check if the date is real or a placeholder
-		if (game.getEndDate().get(GregorianCalendar.YEAR) != 9999) {
+		if (game.getEndDate().get(Calendar.YEAR) != 9999) {
 			text += " Make sure to vote before the game closes at "
-					+ game.getEndDate().get(GregorianCalendar.HOUR) + ":";
-			if (game.getEndDate().get(GregorianCalendar.MINUTE) < 10)
+					+ game.getEndDate().get(Calendar.HOUR) + ":";
+			if (game.getEndDate().get(Calendar.MINUTE) < 10) {
 				text += "0";
-			text += game.getEndDate().get(GregorianCalendar.MINUTE) + " ";
+			}
+			text += game.getEndDate().get(Calendar.MINUTE) + " ";
 
 			// control whether it is AM or PM
-			switch (game.getEndDate().get(GregorianCalendar.AM_PM)) {
+			switch (game.getEndDate().get(Calendar.AM_PM)) {
 			case 0:
 				text += "AM";
 				break;
@@ -272,7 +281,7 @@ public class Mailer {
 			text += " on ";
 
 			// control month
-			switch (game.getEndDate().get(GregorianCalendar.MONTH)) {
+			switch (game.getEndDate().get(Calendar.MONTH)) {
 			case 0:
 				text += "January";
 				break;
@@ -310,10 +319,10 @@ public class Mailer {
 				text += "December";
 				break;
 			}
-			text += " " + game.getEndDate().get(GregorianCalendar.DATE);
+			text += " " + game.getEndDate().get(Calendar.DATE);
 
 			// control suffix for date
-			switch (game.getEndDate().get(GregorianCalendar.DATE)) {
+			switch (game.getEndDate().get(Calendar.DATE)) {
 			case 1:
 				text += "st";
 				break;
@@ -348,6 +357,7 @@ public class Mailer {
 		if (DEBUG) {
 			// test with mailtrap
 			props = System.getProperties();
+
 			props.put("mail.smtp.host", host);
 			props.put("mail.smtp.user", login);
 			props.put("mail.smtp.password", pass);
@@ -376,16 +386,20 @@ public class Mailer {
 	public boolean send() {
 		try {
 			if (message.getAllRecipients() != null) {
-				if (DEBUG)
+				if (DEBUG) {
 					transport.connect(host, login, pass);
+				}
 				else
 					transport.connect("smtp.gmail.com", "struct.by.lightning@gmail.com", "Donthackthis!12358");
+
 				// send the message
 				System.out.println("Ready to send message");
 				// testing
 				transport.sendMessage(message, message.getAllRecipients());
 				System.out.println("Sent message successfully");
+
 				transport.close();
+
 				return true;
 			}
 			System.out
@@ -434,8 +448,10 @@ public class Mailer {
 		System.out.println(" to message");
 		System.out.println("length of recipient: " + recipient.length());
 		// make sure it isn't an invalid input
+
 		if (recipient != null && recipient != "" && recipient.length() != 0
 				&& pref) {
+
 			try {
 				message.addRecipient(Message.RecipientType.TO,
 						new InternetAddress(recipient));
@@ -486,6 +502,7 @@ public class Mailer {
 		for (PlanningPokerUser u : userList) {
 			if (u.getEmail() != null)
 				isSuccess &= this.addEmail(u.getEmail(), u.canSendEmail());
+
 		}
 		return isSuccess;
 	}

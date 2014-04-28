@@ -9,8 +9,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
+
+
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -23,7 +23,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class GetPlanningPokerVoteRequestObserver implements RequestObserver {
 	public static boolean isError = false;
-	private GetPlanningPokerVoteController controller;
+	private final GetPlanningPokerVoteController controller;
 	
 	/**
 	 * Constructs the observer given a GetPlanningPokerGamesController

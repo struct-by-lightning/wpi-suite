@@ -32,7 +32,8 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	Data data;
 
 	
-	private static final Logger logger = Logger.getLogger(PlanningPokerUserEntityManager.class.getName());
+	private static final Logger logger = Logger
+			.getLogger(PlanningPokerUserEntityManager.class.getName());
 	
 	
 	public PlanningPokerUserEntityManager(Data data){
@@ -44,17 +45,19 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	@Override
 	public PlanningPokerUser makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
-		PlanningPokerUser u = PlanningPokerUser.fromJSON(content);
+		final PlanningPokerUser u = PlanningPokerUser.fromJSON(content);
 		
 
-		PlanningPokerUser[] user = getEntity(s, u.getID());
+		final PlanningPokerUser[] user = getEntity(s, u.getID());
 		
 		if(user.length == 0 || user[0] == null){
-			save(s,u);
+			save(s, u);
 		}
 		else{
 			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerUser creation.");
-			throw new ConflictException("A PlanningPokerUser with the given ID already exists. Entity String "  + content);
+			throw new ConflictException(
+					"A PlanningPokerUser with the given ID already exists. Entity String "
+							+ content);
 		}
 		
 		return u;
@@ -66,7 +69,7 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	@Override
 	public PlanningPokerUser[] getEntity(Session s, String id) throws NotFoundException,
 			WPISuiteException {
-		PlanningPokerUser[] m = new PlanningPokerUser[0];
+		final PlanningPokerUser[] m = new PlanningPokerUser[0];
 		
 		if(id.equals("")){
 			return getAll(s);
@@ -91,18 +94,13 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	 */
 	@Override
 	public PlanningPokerUser update(Session s, String content) throws WPISuiteException {
-		PlanningPokerUser changes = PlanningPokerUser.fromJSON(content);
-		
-		if(true){
-			System.out.println("Started update");
-			deleteEntity(s, changes.getID());
-			data.save(changes);
-			System.out.println("Finsihed update");
-			return changes;
-		}
-		else{
-			return null;
-		}
+		final PlanningPokerUser changes = PlanningPokerUser.fromJSON(content);
+
+		System.out.println("Started update");
+		deleteEntity(s, changes.getID());
+		data.save(changes);
+		System.out.println("Finsihed update");
+		return changes;
 	}
 
 	/* (non-Javadoc)
@@ -126,9 +124,9 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	 */
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
-		Model m = data.delete(data.retrieve(usr, "username", id).get(0));
+		final Model m = data.delete(data.retrieve(usr, "username", id).get(0));
 		logger.log(Level.INFO, "PlanningPokerUserEntityManager deleting deck < " + id + ">");
-		return (m !=null) ? true: false;
+		return (m != null) ? true: false;
 	}
 
 	/* (non-Javadoc)

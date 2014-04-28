@@ -54,7 +54,7 @@ public class StoriesBoardPanel extends JPanel {
      * contains the data to be displayed in the list box.
      */
     private final DefaultListModel lstBoardModel;
-    private JList list;
+    private final JList list;
 
     /**
      * Construct the panel, the three components, and add the
@@ -76,7 +76,7 @@ public class StoriesBoardPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS)); // components will  be arranged vertically
 
         // Put the listbox in a scroll pane
-        JScrollPane lstScrollPane = new JScrollPane(lstBoard);
+        final JScrollPane lstScrollPane = new JScrollPane(lstBoard);
         lstScrollPane.setPreferredSize(new Dimension(150, 400));
 
         // Clear the contents of the text field when the user clicks on it

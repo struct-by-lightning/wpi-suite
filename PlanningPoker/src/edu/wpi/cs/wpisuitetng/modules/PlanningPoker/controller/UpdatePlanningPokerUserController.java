@@ -24,8 +24,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class UpdatePlanningPokerUserController {
 
-	private static UpdatePlanningPokerUserController instance;
-	private UpdatePlanningPokerUserRequestObserver observer;
+	private static UpdatePlanningPokerUserController instance = null;
+	private final UpdatePlanningPokerUserRequestObserver observer;
 
 	/**
 	 * Returns the instance of the UpdatePlanningPokerUserController, or creates
@@ -55,7 +55,7 @@ public class UpdatePlanningPokerUserController {
 	 *            PlanningPokerUser
 	 */
 	public void update(PlanningPokerUser newUser) {
-		Request request = Network.getInstance().makeRequest(
+		final Request request = Network.getInstance().makeRequest(
 				"planningpoker/planningpokeruser", HttpMethod.POST);
 		request.setBody(newUser.toJSON());
 		request.addObserver(observer);

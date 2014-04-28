@@ -23,9 +23,9 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class AddDeckController {
 	/** The singleton instance of the controller */
-	private static AddDeckController instance;
+	private static AddDeckController instance = null;
 	/** The observer for this controller */
-	private AddDeckRequestObserver observer;
+	private final AddDeckRequestObserver observer;
 
 
 

@@ -12,7 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 
 /**
- * This is a JPanel which just has a header reading "Welcome to Planning Poker" it is needed because 
+ * This is a JPanel which just has a header reading "Welcome to Planning Poker"
+ * it is needed because
  * 
  * @author Austin Rose (atrose)
  */
@@ -43,7 +44,7 @@ public class ContactInformationPromptToolbarView extends javax.swing.JPanel {
 		titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		titleLabel.setText("Welcome to Planning Poker");
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+		final javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
 		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -61,7 +62,7 @@ public class ContactInformationPromptToolbarView extends javax.swing.JPanel {
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
 		layout.setHorizontalGroup(layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(

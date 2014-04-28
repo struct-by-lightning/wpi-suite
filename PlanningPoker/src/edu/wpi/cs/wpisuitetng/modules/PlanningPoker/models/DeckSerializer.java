@@ -40,8 +40,8 @@ public class DeckSerializer implements JsonSerializer<Deck> {
 	@Override
 	public JsonElement serialize(Deck d, Type t,
 			JsonSerializationContext context) {
-		JsonObject deflated = new JsonObject();
-		JsonArray deflatedCards = new JsonArray();
+		final JsonObject deflated = new JsonObject();
+		final JsonArray deflatedCards = new JsonArray();
 
 		deflated.addProperty("deckName", d.getDeckName());
 		

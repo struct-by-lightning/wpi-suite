@@ -10,9 +10,12 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -32,8 +35,8 @@ public class PlanningPokerGameTest {
 	public ExpectedException thrown = ExpectedException.none();
 
 	@Test
-	public final void getGameNameTest() {
-		PlanningPokerGame test = new PlanningPokerGame("test game name",
+	public final void testGetGameName() {
+		final PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", null, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -42,8 +45,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getDescriptionTest() {
-		PlanningPokerGame test = new PlanningPokerGame("test game name",
+	public final void testGetDescription() {
+		final PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", null, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -52,8 +55,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getDeckTypeTest() {
-		PlanningPokerGame test = new PlanningPokerGame("test game name",
+	public final void testGetDeckType() {
+		final PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", null, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -62,8 +65,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getRequirementIdsTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testGetRequirementIds() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -72,7 +75,7 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("test game name",
+		final PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -85,8 +88,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getIsFinishedTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testGetIsFinished() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -95,12 +98,12 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("test game name",
+		final PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
 
-		PlanningPokerGame test2 = new PlanningPokerGame("test game name",
+		final PlanningPokerGame test2 = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", testIds, true, true,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -110,8 +113,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getIsLiveTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testGetIsLive() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -120,12 +123,12 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("test game name",
+		final PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
 
-		PlanningPokerGame test2 = new PlanningPokerGame("test game name",
+		final PlanningPokerGame test2 = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", testIds, true, true,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -135,8 +138,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getStartDateTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testGetStartDate() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -145,20 +148,20 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("test game name",
+		final PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
 
-		assertEquals(2014, test.getStartDate().get(GregorianCalendar.YEAR));
-		assertEquals(3, test.getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(2014, test.getStartDate().get(Calendar.YEAR));
+		assertEquals(3, test.getStartDate().get(Calendar.MONTH));
 		assertEquals(20, test.getStartDate()
-				.get(GregorianCalendar.DAY_OF_MONTH));
+				.get(Calendar.DAY_OF_MONTH));
 	}
 
 	@Test
-	public final void getEndDateTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testGetEndDate() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -167,19 +170,19 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("test game name",
+		final PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
 
-		assertEquals(2014, test.getEndDate().get(GregorianCalendar.YEAR));
-		assertEquals(5, test.getEndDate().get(GregorianCalendar.MONTH));
-		assertEquals(28, test.getEndDate().get(GregorianCalendar.DAY_OF_MONTH));
+		assertEquals(2014, test.getEndDate().get(Calendar.YEAR));
+		assertEquals(5, test.getEndDate().get(Calendar.MONTH));
+		assertEquals(28, test.getEndDate().get(Calendar.DAY_OF_MONTH));
 	}
 
 	@Test
-	public final void getModeratorTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testGetModerator() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -188,7 +191,7 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("test game name",
+		final PlanningPokerGame test = new PlanningPokerGame("test game name",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -200,8 +203,8 @@ public class PlanningPokerGameTest {
 	 * The constructor should convert ";"s in the game name to ":"s
 	 */
 	@Test
-	public final void gameNameColonConversionTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testGameNameColonConversion() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -210,7 +213,7 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+		final PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -219,9 +222,9 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getDeckValuesTest() {
+	public final void testGetDeckValues() {
 		// TODO currently based on the mock data returned by the method
-		List<Integer> testIds = new ArrayList<Integer>() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -230,7 +233,7 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+		final PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -243,9 +246,9 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void hasEndDateTest() {
+	public final void testHasEndDate() {
 		// TODO currently based on the mock data returned by the method
-		List<Integer> testIds = new ArrayList<Integer>() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -254,11 +257,11 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+		final PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
-		PlanningPokerGame test2 = new PlanningPokerGame("2014-05-28 11;08;15",
+		final PlanningPokerGame test2 = new PlanningPokerGame("2014-05-28 11;08;15",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(9999,
 						5, 28), "ajthompson");
@@ -268,8 +271,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void toJsonTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testToJson() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -278,12 +281,12 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+		final PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
 
-		String testString = test.toJSON();
+		final String testString = test.toJSON();
 
 		assertTrue(testString.contains("gameName"));
 		assertTrue(testString.contains("2014-05-28 11:08:15"));
@@ -306,8 +309,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void toJsonNullTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testToJsonNull() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -316,11 +319,11 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame nulltest = new PlanningPokerGame("null test", null,
+		final PlanningPokerGame nulltest = new PlanningPokerGame("null test", null,
 				null, null, false, false, new GregorianCalendar(2014, 3, 20),
 				new GregorianCalendar(2014, 5, 28), null);
 
-		String nullString = nulltest.toJSON();
+		final String nullString = nulltest.toJSON();
 
 		assertTrue(nullString.contains("gameName"));
 		assertTrue(nullString.contains("null test"));
@@ -341,10 +344,10 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void fromJsonTest() {
-		String jsonString = "{\"gameName\":\"2014-05-28 11:08:15\",\"moderator\":\"ajthompson\",\"description\":\"test description\",\"deckType\":\"fibonacci\",\"requirements\":[1,2,3,4,5],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\",\"isArchived\":\"false\"}";
+	public final void testFromJson() {
+		final String jsonString = "{\"gameName\":\"2014-05-28 11:08:15\",\"moderator\":\"ajthompson\",\"description\":\"test description\",\"deckType\":\"fibonacci\",\"requirements\":[1,2,3,4,5],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\",\"isArchived\":\"false\"}";
 
-		PlanningPokerGame result = PlanningPokerGame.fromJSON(jsonString);
+		final PlanningPokerGame result = PlanningPokerGame.fromJSON(jsonString);
 
 		assertTrue(result.getGameName().equals("2014-05-28 11:08:15"));
 		assertEquals(null, result.getDescription()); // not currently used
@@ -356,22 +359,22 @@ public class PlanningPokerGameTest {
 		assertTrue(result.getRequirementIds().contains(5));
 		assertEquals(false, result.isFinished());
 		assertEquals(false, result.isLive());
-		assertEquals(2014, result.getStartDate().get(GregorianCalendar.YEAR));
-		assertEquals(3, result.getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(2014, result.getStartDate().get(Calendar.YEAR));
+		assertEquals(3, result.getStartDate().get(Calendar.MONTH));
 		assertEquals(20,
-				result.getStartDate().get(GregorianCalendar.DAY_OF_MONTH));
-		assertEquals(2014, result.getEndDate().get(GregorianCalendar.YEAR));
-		assertEquals(5, result.getEndDate().get(GregorianCalendar.MONTH));
+				result.getStartDate().get(Calendar.DAY_OF_MONTH));
+		assertEquals(2014, result.getEndDate().get(Calendar.YEAR));
+		assertEquals(5, result.getEndDate().get(Calendar.MONTH));
 		assertEquals(28, result.getEndDate()
-				.get(GregorianCalendar.DAY_OF_MONTH));
+				.get(Calendar.DAY_OF_MONTH));
 		assertTrue(result.getModerator().equals("ajthompson"));
 	}
 
 	@Test
-	public final void fromJsonNullFieldsTest() {
-		String jsonString = "{\"gameName\":\"null test\",\"moderator\":\"\",\"description\":\"\",\"deckType\":\"\",\"requirements\":[],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\",\"isArchived\":\"false\"}";
+	public final void testFromJsonNullFields() {
+		final String jsonString = "{\"gameName\":\"null test\",\"moderator\":\"\",\"description\":\"\",\"deckType\":\"\",\"requirements\":[],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\",\"isArchived\":\"false\"}";
 
-		PlanningPokerGame result2 = PlanningPokerGame.fromJSON(jsonString);
+		final PlanningPokerGame result2 = PlanningPokerGame.fromJSON(jsonString);
 
 		assertTrue(result2.getGameName().equals("null test"));
 		assertEquals(null, result2.getDescription()); // not currently used
@@ -379,20 +382,20 @@ public class PlanningPokerGameTest {
 		assertTrue(result2.getRequirementIds().isEmpty());
 		assertEquals(false, result2.isFinished());
 		assertEquals(false, result2.isLive());
-		assertEquals(2014, result2.getStartDate().get(GregorianCalendar.YEAR));
-		assertEquals(3, result2.getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(2014, result2.getStartDate().get(Calendar.YEAR));
+		assertEquals(3, result2.getStartDate().get(Calendar.MONTH));
 		assertEquals(20,
-				result2.getStartDate().get(GregorianCalendar.DAY_OF_MONTH));
-		assertEquals(2014, result2.getEndDate().get(GregorianCalendar.YEAR));
-		assertEquals(5, result2.getEndDate().get(GregorianCalendar.MONTH));
+				result2.getStartDate().get(Calendar.DAY_OF_MONTH));
+		assertEquals(2014, result2.getEndDate().get(Calendar.YEAR));
+		assertEquals(5, result2.getEndDate().get(Calendar.MONTH));
 		assertEquals(28,
-				result2.getEndDate().get(GregorianCalendar.DAY_OF_MONTH));
+				result2.getEndDate().get(Calendar.DAY_OF_MONTH));
 		assertEquals("", result2.getModerator());
 	}
 
 	@Test
-	public final void getIDTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testGetID() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -401,7 +404,7 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+		final PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -410,8 +413,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void getPrimaryKeyTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testGetPrimaryKey() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -420,7 +423,7 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+		final PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -429,11 +432,11 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void fromJsonArrayTest() {
-		String jsonString = "[{\"gameName\":\"2014-05-28 11:08:15\",\"moderator\":\"ajthompson\",\"description\":\"test description\",\"deckType\":\"fibonacci\",\"requirements\":[1,2,3,4,5],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\",\"isArchived\":\"false\"},"
+	public final void testFromJsonArray() {
+		final String jsonString = "[{\"gameName\":\"2014-05-28 11:08:15\",\"moderator\":\"ajthompson\",\"description\":\"test description\",\"deckType\":\"fibonacci\",\"requirements\":[1,2,3,4,5],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\",\"isArchived\":\"false\"},"
 				+ "{\"gameName\":\"null test\",\"moderator\":\"\",\"description\":\"\",\"deckType\":\"\",\"requirements\":[],\"isFinished\":false,\"isLive\":false,\"startDate\":\"2014-04-20T00:00:00.000-0400\",\"endDate\":\"2014-06-28T00:00:00.000-0400\",\"isArchived\":\"false\"}]";
 
-		PlanningPokerGame[] result = PlanningPokerGame
+		final PlanningPokerGame[] result = PlanningPokerGame
 				.fromJsonArray(jsonString);
 
 		assertTrue(result[0].getGameName().equals("2014-05-28 11:08:15"));
@@ -446,14 +449,14 @@ public class PlanningPokerGameTest {
 		assertTrue(result[0].getRequirementIds().contains(5));
 		assertEquals(false, result[0].isFinished());
 		assertEquals(false, result[0].isLive());
-		assertEquals(2014, result[0].getStartDate().get(GregorianCalendar.YEAR));
-		assertEquals(3, result[0].getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(2014, result[0].getStartDate().get(Calendar.YEAR));
+		assertEquals(3, result[0].getStartDate().get(Calendar.MONTH));
 		assertEquals(20,
-				result[0].getStartDate().get(GregorianCalendar.DAY_OF_MONTH));
-		assertEquals(2014, result[0].getEndDate().get(GregorianCalendar.YEAR));
-		assertEquals(5, result[0].getEndDate().get(GregorianCalendar.MONTH));
+				result[0].getStartDate().get(Calendar.DAY_OF_MONTH));
+		assertEquals(2014, result[0].getEndDate().get(Calendar.YEAR));
+		assertEquals(5, result[0].getEndDate().get(Calendar.MONTH));
 		assertEquals(28,
-				result[0].getEndDate().get(GregorianCalendar.DAY_OF_MONTH));
+				result[0].getEndDate().get(Calendar.DAY_OF_MONTH));
 		assertTrue(result[0].getModerator().equals("ajthompson"));
 
 		assertTrue(result[1].getGameName().equals("null test"));
@@ -462,21 +465,21 @@ public class PlanningPokerGameTest {
 		assertTrue(result[1].getRequirementIds().isEmpty());
 		assertEquals(false, result[1].isFinished());
 		assertEquals(false, result[1].isLive());
-		assertEquals(2014, result[1].getStartDate().get(GregorianCalendar.YEAR));
-		assertEquals(3, result[1].getStartDate().get(GregorianCalendar.MONTH));
+		assertEquals(2014, result[1].getStartDate().get(Calendar.YEAR));
+		assertEquals(3, result[1].getStartDate().get(Calendar.MONTH));
 		assertEquals(20,
-				result[1].getStartDate().get(GregorianCalendar.DAY_OF_MONTH));
-		assertEquals(2014, result[1].getEndDate().get(GregorianCalendar.YEAR));
-		assertEquals(5, result[1].getEndDate().get(GregorianCalendar.MONTH));
+				result[1].getStartDate().get(Calendar.DAY_OF_MONTH));
+		assertEquals(2014, result[1].getEndDate().get(Calendar.YEAR));
+		assertEquals(5, result[1].getEndDate().get(Calendar.MONTH));
 		assertEquals(28,
-				result[1].getEndDate().get(GregorianCalendar.DAY_OF_MONTH));
+				result[1].getEndDate().get(Calendar.DAY_OF_MONTH));
 		assertEquals("", result[1].getModerator());
 	}
 
 	@Test
-	public final void getSelectedCardIndicesTest() {
+	public final void testGetSelectedCardIndices() {
 		// TODO this method returns a placeholder empty arraylist
-		List<Integer> testIds = new ArrayList<Integer>() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -485,7 +488,7 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+		final PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -494,8 +497,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void setIDTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testSetID() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -504,7 +507,7 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+		final PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -516,8 +519,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void setGameNameTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testSetGameName() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -526,7 +529,7 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+		final PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -538,8 +541,8 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void removeRequirementTest() {
-		List<Integer> testIds = new ArrayList<Integer>() {
+	public final void testRemoveRequirement() {
+		final List<Integer> testIds = new ArrayList<Integer>() {
 			{
 				add(1);
 				add(2);
@@ -548,7 +551,7 @@ public class PlanningPokerGameTest {
 				add(5);
 			}
 		};
-		PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
+		final PlanningPokerGame test = new PlanningPokerGame("2014-05-28 11;08;15",
 				"test description", "fibonacci", testIds, false, false,
 				new GregorianCalendar(2014, 3, 20), new GregorianCalendar(2014,
 						5, 28), "ajthompson");
@@ -559,7 +562,7 @@ public class PlanningPokerGameTest {
 		assertTrue(test.getRequirementIds().contains(4));
 		assertTrue(test.getRequirementIds().contains(5));
 		
-		boolean remove = test.removeRequirement(3);
+		final boolean remove = test.removeRequirement(3);
 		
 		assertTrue(test.getRequirementIds().contains(1));
 		assertTrue(test.getRequirementIds().contains(2));

@@ -10,8 +10,6 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map.Entry;
 
 /**
  * @author Legion
@@ -36,11 +34,11 @@ public class Statistics {
 	 */
 	public static double median(double[] m) {
 		Arrays.sort(m);
-	    int middle = m.length/2;
-	    if (m.length%2 == 1) {
+	    final int middle = m.length / 2;
+	    if (m.length % 2 == 1) {
 	        return m[middle];
 	    } else {
-	        return (m[middle-1] + m[middle]) / 2.0;
+	        return (m[middle - 1] + m[middle]) / 2.0;
 	    }
 	}
 	
@@ -71,13 +69,13 @@ public class Statistics {
 	 * @return standard deviation
 	 */
 	public static double StdDev(double[] m) {
-		double avg = mean(m);
+		final double avg = mean(m);
 		double variance = 0;
-		for (int i=0; i<m.length; i++)
+		for (int i=0; i < m.length; i++)
 		{
-		    variance = variance + Math.pow(m[i] - avg, 2);
+		    variance += Math.pow(m[i] - avg, 2);
 		}
-		return Math.sqrt(variance/(m.length-1));
+		return Math.sqrt(variance / (m.length - 1));
 	}
 	
 	/**
@@ -86,7 +84,7 @@ public class Statistics {
 	 */
 	public static double max(double[] m) {
 		double max = m[0];
-		for(int i = 0; i<m.length; i++) {
+		for(int i = 0; i < m.length; i++) {
 			if(m[i] > max) {
 				max = m[i];
 			}
@@ -100,7 +98,7 @@ public class Statistics {
 	 */
 	public static double min(double[] m) {
 		double min = m[0];
-		for(int i = 0; i<m.length; i++) {
+		for(int i = 0; i < m.length; i++) {
 			if(m[i] < min) {
 				min = m[i];
 			}

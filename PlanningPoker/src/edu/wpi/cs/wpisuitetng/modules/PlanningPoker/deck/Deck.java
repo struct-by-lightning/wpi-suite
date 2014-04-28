@@ -20,7 +20,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckDeserializer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckSerializer;
@@ -44,10 +43,11 @@ public class Deck extends RegularAbstractModel<Deck> {
 	 *            the name of the Deck
 	 */
 	public Deck(String deckName) throws NullPointerException {
-		if (deckName == null)
-			throw new NullPointerException("DeckName must not be null");		
+		if (deckName == null) {
+			throw new NullPointerException("DeckName must not be null");
+		}
 		this.deckName = deckName;
-		this.cards = null;
+		cards = null;
 	}
 
 	/**
@@ -60,8 +60,9 @@ public class Deck extends RegularAbstractModel<Deck> {
 	 * @param cards
 	 */
 	public Deck(String deckName, List<Integer> cards) throws NullPointerException {
-		if (deckName == null)
-			throw new NullPointerException("DeckName must not be null");		
+		if (deckName == null) {
+			throw new NullPointerException("DeckName must not be null");
+		}
 		this.deckName = deckName;
 		this.cards = cards;
 		this.sortDeck();
@@ -72,9 +73,10 @@ public class Deck extends RegularAbstractModel<Deck> {
 	 * @param card Integer
 	 */
 	public void addCard(Integer card) {
-		if (this.cards == null)
-			this.cards = new ArrayList<Integer>();
-		this.cards.add(card);
+		if (cards == null) {
+			cards = new ArrayList<Integer>();
+		}
+		cards.add(card);
 		this.sortDeck();
 	}
 
@@ -83,13 +85,15 @@ public class Deck extends RegularAbstractModel<Deck> {
 	 * @param card Integer
 	 */
 	public void removeCard(Integer card) {
-		if (this.cards != null)
-			this.cards.remove((Integer) card);
+		if (cards != null) {
+			cards.remove((Integer) card);
+		}
 	}
 
 	public void sortDeck() {
-		if (this.cards != null)
-			Collections.sort(this.cards);
+		if (cards != null) {
+			Collections.sort(cards);
+		}
 	}
 
 	/**
@@ -125,13 +129,12 @@ public class Deck extends RegularAbstractModel<Deck> {
 	/**
 	 * Converts the list of cards to a string
 	 * 
-	
-	
-	 * @return the string representing the list of cards * @see edu.wpi.cs.wpisuitetng.modules.Model#toString() * @see edu.wpi.cs.wpisuitetng.modules.Model#toString()
+	 * @return the string representing the list of cards
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toString()
 	 */
 	@Override
 	public String toString() {
-		return this.deckName;
+		return deckName;
 	}
 
 	// Serializing
@@ -139,14 +142,15 @@ public class Deck extends RegularAbstractModel<Deck> {
 	/**
 	 * Serializes this Deck into a JSON string.
 	 * 
-	
-	
-	 * @return the JSON representation of this Deck * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
+	 * 
+	 * 
+	 * @return the JSON representation of this Deck
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
 	public String toJSON() {
-		String json;
+		final String json;
 
-		Gson gson = new GsonBuilder().registerTypeAdapter(Deck.class,
+		final Gson gson = new GsonBuilder().registerTypeAdapter(Deck.class,
 				new DeckSerializer()).create();
 
 		json = gson.toJson(this, Deck.class);
@@ -181,7 +185,7 @@ public class Deck extends RegularAbstractModel<Deck> {
 	
 	 * @return the reconstructed Deck */
 	public static Deck fromJSON(String json) {
-		DeckDeserializer dd = new DeckDeserializer();
+		final DeckDeserializer dd = new DeckDeserializer();
 		return dd.deserialize(new JsonParser().parse(json), null, null);
 	}
 
@@ -193,9 +197,9 @@ public class Deck extends RegularAbstractModel<Deck> {
 	
 	 * @return an array of reconstructed decks */
 	public static Deck[] fromJsonArray(String jsonArr) {
-		DeckDeserializer dd = new DeckDeserializer();
-		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
-		List<Deck> decks = new ArrayList<Deck>();
+		final DeckDeserializer dd = new DeckDeserializer();
+		final JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		final List<Deck> decks = new ArrayList<Deck>();
 
 		for (JsonElement json : array) {
 			decks.add(dd.deserialize(json, null, null));

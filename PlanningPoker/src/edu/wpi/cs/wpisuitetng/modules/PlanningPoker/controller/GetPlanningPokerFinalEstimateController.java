@@ -9,14 +9,7 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Arrays;
-
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEstimate;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -28,9 +21,9 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  *
  */
 public class GetPlanningPokerFinalEstimateController {
-	private Network network;
-	private GetPlanningPokerFinalEstimateRequestObserver observer;
-	private static GetPlanningPokerFinalEstimateController instance;
+	private final Network network;
+	private final GetPlanningPokerFinalEstimateRequestObserver observer;
+	private static GetPlanningPokerFinalEstimateController instance = null;
 
 	/**
 	 * Constructs the controller given a PlanningPokerFinalEstimateModel
@@ -41,9 +34,10 @@ public class GetPlanningPokerFinalEstimateController {
 	}
 
 	/**
-	
-	 * @return the instance of the GetPlanningPokerFinalEstimateController or creates one if it does not
-	 * exist. */
+	 * 
+	 * @return the instance of the GetPlanningPokerFinalEstimateController or
+	 *         creates one if it does not exist.
+	 */
 	public static GetPlanningPokerFinalEstimateController getInstance()
 	{
 		if(instance == null)
@@ -58,7 +52,8 @@ public class GetPlanningPokerFinalEstimateController {
 	 * Sends an HTTP request to retrieve all PlanningPokerFinalEstimates
 	 */
 	public PlanningPokerFinalEstimate[] retrievePlanningPokerFinalEstimate() {
-		final Request request = network.makeRequest("planningpoker/planningpokerfinalestimate", HttpMethod.GET); // GET == read
+		final Request request = network.makeRequest(
+				"planningpoker/planningpokerfinalestimate", HttpMethod.GET); // GET == read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 		
@@ -78,7 +73,8 @@ public class GetPlanningPokerFinalEstimateController {
 		}
 		if(request.getResponse() != null) {
 			System.out.println("response exists");
-			PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate.fromJsonArray(request.getResponse().getBody()); //return the response
+			final PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate
+					.fromJsonArray(request.getResponse().getBody()); // return the response
 			return a;
 		} else {
 			System.out.println("response is null");
@@ -93,7 +89,8 @@ public class GetPlanningPokerFinalEstimateController {
 	 * @return the vote if it exists, Integer.MIN_VALUE otherwise
 	 */
 	public int retrievePlanningPokerFinalEstimate(String gameName, int requirementID) {
-		final Request request = Network.getInstance().makeRequest("planningpoker/planningpokerfinalestimate", HttpMethod.GET); // GET equals read
+		final Request request = Network.getInstance().makeRequest(
+				"planningpoker/planningpokerfinalestimate", HttpMethod.GET); // GET equals read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
 		
@@ -104,7 +101,8 @@ public class GetPlanningPokerFinalEstimateController {
 			e.printStackTrace();
 		}
 		if(request.getResponse() != null && request.getResponse().getStatusCode() == 200) {
-			PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate.fromJsonArray(request.getResponse().getBody());
+			final PlanningPokerFinalEstimate[] a = PlanningPokerFinalEstimate
+					.fromJsonArray(request.getResponse().getBody());
 			PlanningPokerFinalEstimate ret = new PlanningPokerFinalEstimate(null, 0);
 			for(PlanningPokerFinalEstimate fe : a) {
 				if(fe.getID().equalsIgnoreCase(gameName + ":"  + requirementID)) {

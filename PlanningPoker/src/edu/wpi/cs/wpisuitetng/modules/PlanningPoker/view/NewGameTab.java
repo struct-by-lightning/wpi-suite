@@ -47,7 +47,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -78,8 +77,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * @version $Revision: 1.0 $
  */
 public class NewGameTab extends JPanel {
-	private JTextField sessionName;
-	private NewGameTab thisPanel;
+	private final JTextField sessionName;
+	private final NewGameTab thisPanel;
 	final String defaultCalendarText = "Click Calendar to set date";
 	/**
 	 * Error label that will show the reason why a game cannot be created
@@ -169,16 +168,16 @@ public class NewGameTab extends JPanel {
 		setBorder(new LineBorder(Color.DARK_GRAY));
 		setLayout(new BorderLayout(0, 0));
 
-		JPanel titlePanel = new JPanel();
-		FlowLayout fl_titlePanel = (FlowLayout) titlePanel.getLayout();
+		final JPanel titlePanel = new JPanel();
+		final FlowLayout fl_titlePanel = (FlowLayout) titlePanel.getLayout();
 		fl_titlePanel.setAlignment(FlowLayout.LEFT);
 		titlePanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		add(titlePanel, BorderLayout.NORTH);
 
-		JPanel namePane = new JPanel();
+		final JPanel namePane = new JPanel();
 		titlePanel.add(namePane);
 
-		JLabel lblName = new JLabel("Name:");
+		final JLabel lblName = new JLabel("Name:");
 		namePane.add(lblName);
 		lblName.setFont(new Font("Tahoma", Font.BOLD, 14));
 
@@ -191,7 +190,7 @@ public class NewGameTab extends JPanel {
 		sessionName.setText(dateFormat.format(date));
 		sessionName.setColumns(50);
 
-		JPanel createGamePane = new JPanel();
+		final JPanel createGamePane = new JPanel();
 		titlePanel.add(createGamePane);
 		createGamePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
@@ -199,7 +198,7 @@ public class NewGameTab extends JPanel {
 		btnCreateGame.setEnabled(false);
 		createGamePane.add(btnCreateGame);
 
-		JButton btnResetGame = new JButton("Reset");
+		final JButton btnResetGame = new JButton("Reset");
 		createGamePane.add(btnResetGame);
 
 		//JButton btnExport = new JButton("Export requirements");
@@ -211,37 +210,37 @@ public class NewGameTab extends JPanel {
 		createGameErrorText = new JLabel("");
 		titlePanel.add(createGameErrorText);
 
-		JLabel label = new JLabel("");
+		final JLabel label = new JLabel("");
 		titlePanel.add(label);
 
 		lblGameCreated = new JLabel("Session Created!");
 		titlePanel.add(lblGameCreated);
 		lblGameCreated.setVisible(false);
 
-		JPanel settingsPanel = new JPanel();
+		final JPanel settingsPanel = new JPanel();
 		settingsPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		add(settingsPanel, BorderLayout.SOUTH);
 		settingsPanel.setLayout(new BorderLayout(0, 0));
 
-		JPanel configPanel = new JPanel();
+		final JPanel configPanel = new JPanel();
 		configPanel.setBorder(new LineBorder(Color.DARK_GRAY));
 		settingsPanel.add(configPanel, BorderLayout.NORTH);
 
-		JLabel lblConfigureGameSettings = new JLabel("Configure game settings");
+		final JLabel lblConfigureGameSettings = new JLabel("Configure game settings");
 		configPanel.add(lblConfigureGameSettings);
 
-		JPanel calendarOverview = new JPanel();
+		final JPanel calendarOverview = new JPanel();
 		calendarOverview.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		settingsPanel.add(calendarOverview, BorderLayout.CENTER);
 		calendarOverview.setLayout(new GridLayout(1, 2, 0, 0));
 
-		SpinnerDateModel model_2 = new SpinnerDateModel();
+		final SpinnerDateModel model_2 = new SpinnerDateModel();
 		model_2.setCalendarField(Calendar.MINUTE);
 
-		JPanel calendar = new JPanel();
+		final JPanel calendar = new JPanel();
 		calendarOverview.add(calendar);
 
-		JLabel lblEndDate = new JLabel("End Date:");
+		final JLabel lblEndDate = new JLabel("End Date:");
 
 		final JTextField endDateText = new JTextField(13);
 		endDateText.setText(defaultCalendarText);
@@ -300,8 +299,8 @@ public class NewGameTab extends JPanel {
 		endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
 		endPanel.add(endTime, constraints9);
 
-		JLabel lblrequired2 = new JLabel("*");
-		GridBagConstraints gbc_lblrequired2 = new GridBagConstraints();
+		final JLabel lblrequired2 = new JLabel("*");
+		final GridBagConstraints gbc_lblrequired2 = new GridBagConstraints();
 		gbc_lblrequired2.insets = new Insets(0, 0, 5, 0);
 		gbc_lblrequired2.anchor = GridBagConstraints.LINE_START;
 		gbc_lblrequired2.gridx = 2;
@@ -347,7 +346,7 @@ public class NewGameTab extends JPanel {
 		constraints14.weightx = 0;
 		constraints14.weighty = 0;
 
-		JPanel calendarHandler = new JPanel();
+		final JPanel calendarHandler = new JPanel();
 		final JPanel calendarPanel = new JPanel(new GridBagLayout());
 		calendarPanel.setPreferredSize(new Dimension(350, 220));
 		calendarHandler.add(calendarPanel);
@@ -371,19 +370,21 @@ public class NewGameTab extends JPanel {
 
 		calendar.add(endPanel);
 
-		JPanel cardPanel = new JPanel(new GridBagLayout());
-		JPanel deckPanel = new JPanel();
-		JPanel cardDeckPane = new JPanel();
+		final JPanel cardPanel = new JPanel(new GridBagLayout());
+		final JPanel deckPanel = new JPanel();
+		final JPanel cardDeckPane = new JPanel();
 
 		calendarOverview.add(deckPanel);
 		// JPanel deckDisplayPane = new JPanel();
 
 		// calendarOverview.add(deckDisplayPane);
-		JLabel lblCardDeck = new JLabel("Card deck:");
+		final JLabel lblCardDeck = new JLabel("Card deck:");
 		cardDeckPane.add(lblCardDeck);
 
 		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "No Deck"}));
-		//deckType.setMinimumSize(new Dimension (deckType.getPreferredSize().width, deckType.getPreferredSize().height));
+		//deckType.setMinimumSize(new Dimension(
+		//		deckType.getPreferredSize().width,
+		//		deckType.getPreferredSize().height));
 
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
@@ -416,21 +417,20 @@ public class NewGameTab extends JPanel {
 		* Handles the combo box listener for deck selection and displays the deck type as a string
 		*/
 		deckType.addActionListener(new ActionListener () {
-		   public void actionPerformed(ActionEvent e) {
-			isTabEditedByUser = true;
-		    JComboBox combo = (JComboBox)e.getSource();
-		                String selection = (String)combo.getSelectedItem();
-		                if(selection.contentEquals("Default"))
-		                {
-		                // Replace this with button contents
-		                deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
-		                }
+			public void actionPerformed(ActionEvent e) {
+				isTabEditedByUser = true;
+				final JComboBox combo = (JComboBox) e.getSource();
+				final String selection = (String) combo.getSelectedItem();
+				if (selection.contentEquals("Default")) {
+					// Replace this with button contents
+					deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
+				}
 
-		               
-		                else if(selection.contentEquals("No Deck")){
-		                	deckOverview.setText("PlanningPokerUser will be able to enter their own estimation");
-		                }
-		   }
+				else if (selection.contentEquals("No Deck")) {
+					deckOverview
+							.setText("PlanningPokerUser will be able to enter their own estimation");
+				}
+			}
 
 		});
 
@@ -449,63 +449,63 @@ public class NewGameTab extends JPanel {
 		// JPanel panel_23 = new JPanel();
 		// panel_15.add(panel_23);
 
-		JPanel requirementsPanel = new JPanel();
+		final JPanel requirementsPanel = new JPanel();
 		requirementsPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		add(requirementsPanel, BorderLayout.CENTER);
 		requirementsPanel.setLayout(new BorderLayout(0, 0));
 
-		JPanel requirementsHeader = new JPanel();
+		final JPanel requirementsHeader = new JPanel();
 		requirementsHeader.setBorder(new LineBorder(Color.DARK_GRAY));
 		requirementsPanel.add(requirementsHeader, BorderLayout.NORTH);
 
-		JLabel lblChooseRequirementsTo = new JLabel(
+		final JLabel lblChooseRequirementsTo = new JLabel(
 				"Choose requirements to estimate");
 		lblChooseRequirementsTo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		requirementsHeader.add(lblChooseRequirementsTo);
 
-		JPanel requirementsSelector = new JPanel();
+		final JPanel requirementsSelector = new JPanel();
 		requirementsPanel.add(requirementsSelector, BorderLayout.CENTER);
 		requirementsSelector.setLayout(new BoxLayout(requirementsSelector,
 				BoxLayout.X_AXIS));
 
-		JPanel projectRequirements = new JPanel();
+		final JPanel projectRequirements = new JPanel();
 		projectRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		requirementsSelector.add(projectRequirements);
 		projectRequirements.setLayout(new BorderLayout(0, 0));
 
-		JPanel projectHeader = new JPanel();
+		final JPanel projectHeader = new JPanel();
 		projectHeader.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		projectRequirements.add(projectHeader, BorderLayout.NORTH);
 
-		JLabel lblAllProjectRequirements = new JLabel(
+		final JLabel lblAllProjectRequirements = new JLabel(
 				"All project requirements");
 		projectHeader.add(lblAllProjectRequirements);
 
-		JPanel projectList = new JPanel();
+		final JPanel projectList = new JPanel();
 		projectList.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		JScrollPane scroller = new JScrollPane(projectList);
+		final JScrollPane scroller = new JScrollPane(projectList);
 		projectRequirements.add(scroller, BorderLayout.CENTER);
 		projectList.setLayout(new BorderLayout(0, 0));
 
 		projectList.add(allRequirements);
 
-		JPanel addRemPanel = new JPanel();
+		final JPanel addRemPanel = new JPanel();
 		addRemPanel.setBorder(new LineBorder(Color.lightGray, 0));
 		requirementsSelector.add(addRemPanel);
 
-		JPanel topSpacer = new JPanel();
+		final JPanel topSpacer = new JPanel();
 
-		JPanel buttonsPanel = new JPanel();
+		final JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new GridLayout(4, 1, 4, 4));
 
-		JPanel topmostButton = new JPanel();
+		final JPanel topmostButton = new JPanel();
 		buttonsPanel.add(topmostButton);
 		topmostButton.setLayout(new BorderLayout(0, 0));
 
 		final JButton btn_addAll = new JButton(">>");
 		topmostButton.add(btn_addAll, BorderLayout.CENTER);
 
-		JPanel topButton = new JPanel();
+		final JPanel topButton = new JPanel();
 		buttonsPanel.add(topButton);
 		topButton.setLayout(new BorderLayout(0, 0));
 
@@ -516,7 +516,7 @@ public class NewGameTab extends JPanel {
 		});
 		topButton.add(btn_addToGame, BorderLayout.CENTER);
 
-		JPanel bottomButton = new JPanel();
+		final JPanel bottomButton = new JPanel();
 		buttonsPanel.add(bottomButton);
 		bottomButton.setLayout(new BorderLayout(0, 0));
 
@@ -525,7 +525,7 @@ public class NewGameTab extends JPanel {
 
 		btn_removeFromGame.setEnabled(false);
 
-		JPanel bottommostButton = new JPanel();
+		final JPanel bottommostButton = new JPanel();
 		buttonsPanel.add(bottommostButton);
 		bottommostButton.setLayout(new BorderLayout(0, 0));
 
@@ -533,45 +533,50 @@ public class NewGameTab extends JPanel {
 		bottommostButton.add(btn_removeAll);
 		btn_removeAll.setEnabled(false);
 
-		JPanel bottomSpacer = new JPanel();
-		GroupLayout gl_addRemPanel = new GroupLayout(addRemPanel);
+		final JPanel bottomSpacer = new JPanel();
+		final GroupLayout gl_addRemPanel = new GroupLayout(addRemPanel);
 		gl_addRemPanel.setHorizontalGroup(
 			gl_addRemPanel.createParallelGroup(Alignment.LEADING)
 				.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
-				.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-				.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+				.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE,
+						GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 49,
+						GroupLayout.PREFERRED_SIZE)
 		);
 		gl_addRemPanel.setVerticalGroup(
 			gl_addRemPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_addRemPanel.createSequentialGroup()
-					.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE,
+								25, GroupLayout.PREFERRED_SIZE)
 					.addGap(3)
-					.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
+						.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE,
+								121, GroupLayout.PREFERRED_SIZE)
 					.addGap(3)
-					.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+						.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE,
+								25, GroupLayout.PREFERRED_SIZE))
 		);
 		addRemPanel.setLayout(gl_addRemPanel);
 
-		JPanel gameRequirements = new JPanel();
+		final JPanel gameRequirements = new JPanel();
 		gameRequirements.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		requirementsSelector.add(gameRequirements);
 		gameRequirements.setLayout(new BorderLayout(0, 0));
 
-		JPanel gameHeader = new JPanel();
+		final JPanel gameHeader = new JPanel();
 		gameHeader.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		gameRequirements.add(gameHeader, BorderLayout.NORTH);
 
-		JLabel lblRequirementsToEstimate = new JLabel(
+		final JLabel lblRequirementsToEstimate = new JLabel(
 				"Requirements to estimate");
 		gameHeader.add(lblRequirementsToEstimate);
 
-		JPanel gameList = new JPanel();
+		final JPanel gameList = new JPanel();
 		gameList.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		JScrollPane scroller_2 = new JScrollPane(gameList);
+		final JScrollPane scroller_2 = new JScrollPane(gameList);
 		gameRequirements.add(scroller_2, BorderLayout.CENTER);
 		gameList.setLayout(new BorderLayout(0, 0));
 
-		JTextPane txtpnLoggedInAs = new JTextPane();
+		final JTextPane txtpnLoggedInAs = new JTextPane();
 		txtpnLoggedInAs.setText("Logged in as: "
 				+ ConfigManager.getConfig().getUserName());
 		txtpnLoggedInAs.setFocusable(false);
@@ -591,7 +596,7 @@ public class NewGameTab extends JPanel {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
 				isTabEditedByUser = true;
-				String currentText = sessionName.getText();
+				final String currentText = sessionName.getText();
 				if (currentText.equals("")) {
 
 					btnCreateGame.setEnabled(false);
@@ -657,7 +662,7 @@ public class NewGameTab extends JPanel {
 
 				enteredName = sessionName.getText();
 				selectedDeckType = (String) deckType.getSelectedItem();
-				GregorianCalendar startCal, endCal;
+				final GregorianCalendar startCal, endCal;
 
 				// Checks to see if the user set the date to something other
 				// than default text
@@ -666,9 +671,9 @@ public class NewGameTab extends JPanel {
 					System.out.println("Please enter a valid date");
 				} else {
 					// String[] startDate = startDateText.getText().split("-");
-					String[] endDate = endDateText.getText().split("-");
+					final String[] endDate = endDateText.getText().split("-");
 
-					Date endVal = (Date) endTime.getValue();
+					final Date endVal = (Date) endTime.getValue();
 
 					/**
 					 * Gregorian Calendars save month values starting at 0, so
@@ -708,7 +713,8 @@ public class NewGameTab extends JPanel {
 									"Default description",
 
 									selectedDeckType, gameRequirementIDsList,
-									false, true, startCal, endCal, ConfigManager.getConfig().getUserName());
+									false, true, startCal, endCal,
+									ConfigManager.getConfig().getUserName());
 						} else {
 							game = new PlanningPokerGame(enteredName,
 									"Default description", selectedDeckType,
@@ -728,10 +734,10 @@ public class NewGameTab extends JPanel {
 					else{
 						// Error message when the session name is empty
 						if (sessionName.getText().isEmpty()) {
-							JOptionPane emptyNameErrorPanel = new JOptionPane(
+							final JOptionPane emptyNameErrorPanel = new JOptionPane(
 									"You must enter the session name",
 									JOptionPane.ERROR_MESSAGE);
-							JDialog errorDialog = emptyNameErrorPanel
+							final JDialog errorDialog = emptyNameErrorPanel
 									.createDialog(null);
 							errorDialog.setLocation(thisPanel.getWidth() / 2,
 									thisPanel.getHeight() / 2);
@@ -900,26 +906,6 @@ public class NewGameTab extends JPanel {
 	    		MainView.getInstance().refreshGameTree();
 		    }
 		});
-
-		/**
-		 * Exports the list of selected requirements to a file when btnExport is
-		 * pressed
-		 */ // Removed
-		/*btnExport.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Create a file chooser
-				final JFileChooser fc = new JFileChooser();
-				//In response to a button click:
-				int returnVal = fc.showSaveDialog(NewGameTab.this);
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					// Create exporter
-					Exporter ex = new Exporter();
-					// Export requirements
-					ex.exportAsJSON(listOfRequirementsToAdd, fc.getSelectedFile().getAbsolutePath());
-					System.out.println("Exported all selected requirements\n");
-				}
-			}
-		});*/
 	}
 
 	/**

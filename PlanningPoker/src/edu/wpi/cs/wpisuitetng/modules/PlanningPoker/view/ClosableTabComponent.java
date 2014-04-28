@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -114,6 +114,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 			System.out.println(index);
 			System.out.println(tabbedPane);
 			System.out.println(tabbedPane.getComponentAt(index));
+
 			Component tabView = tabbedPane.getComponentAt(index);
 
 			if (tabView instanceof CreateGameView) {
@@ -124,6 +125,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 							"Are you sure, you want to close the current tab?",
 							"Warning",
 							JOptionPane.YES_NO_OPTION);
+
 
 					if (n == JOptionPane.YES_OPTION) {
 						tabbedPane.removeTabAt(index);

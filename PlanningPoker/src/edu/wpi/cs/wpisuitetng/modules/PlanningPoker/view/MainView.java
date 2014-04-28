@@ -14,7 +14,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 
-import javax.swing.Icon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
@@ -33,17 +32,14 @@ import javax.swing.JTabbedPane;
  */
 @SuppressWarnings("serial")
 public class MainView extends JTabbedPane {
-	public MainView() {
-	}
-
-	private boolean dragging = false;
-	private Image tabImage = null;
-	private Point currentMouseLocation = null;
-	private int draggedTabIndex = 0;
+	private final boolean dragging = false;
+	private final Image tabImage = null;
+	private final Point currentMouseLocation = null;
+	private final int draggedTabIndex = 0;
 	private Component lastTab = null;
 	private final JPopupMenu popup = new JPopupMenu();
-	private JMenuItem closeAll = new JMenuItem("Close All Tabs");
-	private JMenuItem closeOthers = new JMenuItem("Close Others");
+	private final JMenuItem closeAll = new JMenuItem("Close All Tabs");
+	private final JMenuItem closeOthers = new JMenuItem("Close Others");
 
 
 	/**
@@ -60,26 +56,6 @@ public class MainView extends JTabbedPane {
 		}
 	}
 
-
-	/**
-	 * Overridden insertTab function to allow tab to close.
-	 *
-	
-	
-	
-	
-	
-	 * @param c Component
-	 */
-//	public void insertTab(String title, Icon icon, Component component,
-//			String tip, int index) {
-//		super.insertTab(title, icon, component, tip, index);
-//		if (!(component instanceof OverviewPanel) && !(component instanceof IterationOverviewPanel)) {
-//			setTabComponentAt(index, new ClosableTabComponent(this));
-//		}
-//	}
-
-
 	/**
 	 * Method setSelectedComponent allows you to select tabs
 	 * i.e. Main view or New Game.
@@ -87,7 +63,7 @@ public class MainView extends JTabbedPane {
 	 */
 	@Override
 	public void setSelectedComponent(Component c){
-		this.lastTab = this.getSelectedComponent();
+		lastTab = this.getSelectedComponent();
 		super.setSelectedComponent(c);
 	}
 
@@ -99,8 +75,8 @@ public class MainView extends JTabbedPane {
 	public void removeTabAt(int i){
 		super.removeTabAt(i);
 		try{
-			if (this.lastTab != null){
-				setSelectedComponent(this.lastTab);}
+			if (lastTab != null){
+				setSelectedComponent(lastTab);}
 		} catch (IllegalArgumentException e){}
 	}
 

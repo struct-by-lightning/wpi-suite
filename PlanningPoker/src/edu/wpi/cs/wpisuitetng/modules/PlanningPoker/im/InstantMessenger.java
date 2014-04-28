@@ -13,8 +13,6 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.XMPPConnection;
@@ -26,7 +24,6 @@ import org.jivesoftware.smack.packet.Presence;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -37,11 +34,11 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * @version Apr 24, 2014
  */
 public class InstantMessenger {
-	private ConnectionConfiguration config;
-	private XMPPConnection server;
-	private Presence presence;
+	private final ConnectionConfiguration config;
+	private final XMPPConnection server;
+	private final Presence presence;
 	private String text;
-	private PacketListener pl;
+	private final PacketListener pl;
 
 	public InstantMessenger(PlanningPokerGame game) {
 		config = new ConnectionConfiguration("talk.google.com", 5222,
@@ -63,7 +60,7 @@ public class InstantMessenger {
 			@Override
 			public void processPacket(Packet p) {
 				if (p instanceof Message) {
-					Message msg = (Message) p;
+					final Message msg = (Message) p;
 					System.out.println(msg.getFrom() + ": " + msg.getBody());
 				}
 			}
@@ -102,6 +99,7 @@ public class InstantMessenger {
 	 * @param username
 	 *            the username to send the message to
 	 */
+
 	public void sendMessage(String username, boolean preference) {
 		if (preference) {
 			System.out.println("Sending message to " + username);
@@ -109,6 +107,7 @@ public class InstantMessenger {
 			msg.setBody(text);
 			server.sendPacket(msg);
 		}
+
 	}
 
 	/**
@@ -138,8 +137,9 @@ public class InstantMessenger {
 		if (game.getEndDate().get(GregorianCalendar.YEAR) != 9999) {
 			text += " Make sure to vote before the game closes at "
 					+ game.getEndDate().get(GregorianCalendar.HOUR) + ":";
-			if (game.getEndDate().get(GregorianCalendar.MINUTE) < 10)
+			if (game.getEndDate().get(GregorianCalendar.MINUTE) < 10) {
 				text += "0";
+			}
 			text += game.getEndDate().get(GregorianCalendar.MINUTE) + " ";
 
 			// control whether it is AM or PM

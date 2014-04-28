@@ -25,8 +25,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetPlanningPokerUserController implements ActionListener {
 
-	private GetPlanningPokerUserRequestObserver observer;
-	private static GetPlanningPokerUserController instance;
+	private final GetPlanningPokerUserRequestObserver observer;
+	private static GetPlanningPokerUserController instance = null;
 
 	private GetPlanningPokerUserController() {
 		observer = new GetPlanningPokerUserRequestObserver(this);

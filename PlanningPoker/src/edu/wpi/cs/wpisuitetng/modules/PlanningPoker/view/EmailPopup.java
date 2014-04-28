@@ -31,7 +31,7 @@ public class EmailPopup {
 	/**
 	 * The singleton instance of the email popup
 	 */
-	private static EmailPopup instance;
+	private static EmailPopup instance = null;
 
 	/**
 	 * Creates a singleton instance of the email popup if it does not already
@@ -41,8 +41,9 @@ public class EmailPopup {
 	 * GetPlanningPokerUserController.
 	 */
 	public static void checkUserEmail() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new EmailPopup();
+		}
 		instance.run();
 	}
 
@@ -56,8 +57,9 @@ public class EmailPopup {
 	
 	 * @return List<PlanningPokerUser> */
 	public static List<PlanningPokerUser> checkUserEmail(List<PlanningPokerUser> userList) {
-		if (instance == null)
+		if (instance == null) {
 			instance = new EmailPopup();
+		}
 		return instance.run(userList);
 	}
 
@@ -74,8 +76,9 @@ public class EmailPopup {
 	 * @param planningPokerUser PlanningPokerUser
 	 * @return false if the user's email is null, otherwise true. */
 	private boolean hasEmail(PlanningPokerUser planningPokerUser) {
-		if (planningPokerUser.getEmail() == null)
+		if (planningPokerUser.getEmail() == null) {
 			return false;
+		}
 		return true;
 	}
 
@@ -86,7 +89,7 @@ public class EmailPopup {
 	 * out, the user on the server is updated.
 	 */
 	private void run() {
-		PlanningPokerUser planningPokerUser;
+		final PlanningPokerUser planningPokerUser;
 		String newEmail = null;
 		// check if the user has an email already
 		planningPokerUser = findUser();
@@ -122,7 +125,7 @@ public class EmailPopup {
 	
 	 * @return the list of users updated with the user's new email address. */
 	private List<PlanningPokerUser> run(List<PlanningPokerUser> userList) {
-		PlanningPokerUser planningPokerUser;
+		final PlanningPokerUser planningPokerUser;
 		String newEmail = null;
 		// check if the user has an email already
 		planningPokerUser = findUser(userList, ConfigManager.getConfig().getUserName());
@@ -167,8 +170,9 @@ public class EmailPopup {
 		}
 
 		for (PlanningPokerUser u : PlanningPokerUserModel.getInstance().getUsers()) {
-			if (u.getUserName().equals(ConfigManager.getConfig().getUserName()))
+			if (u.getUserName().equals(ConfigManager.getConfig().getUserName())) {
 				return u;
+			}
 		}
 		return null; // this shouldn't happen
 	}
@@ -185,8 +189,9 @@ public class EmailPopup {
 	 * @return the user with the given username */
 	private PlanningPokerUser findUser(List<PlanningPokerUser> userList, String username) {
 		for (PlanningPokerUser u : userList) {
-			if (u.getUserName().equals(username))
+			if (u.getUserName().equals(username)) {
 				return u;
+			}
 		}
 		System.out.println("PlanningPokerUser not found");
 		return null; // should never happen

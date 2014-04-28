@@ -12,7 +12,6 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 
 import javax.swing.AbstractListModel;
 
@@ -21,8 +20,8 @@ import javax.swing.AbstractListModel;
 /**
  * List of planningPokerUsers pulled from the server.
  * 
- * Add functions only add planningPokerUsers to the local instance, as the planningPokerUsers already
- * exist on the server
+ * Add functions only add planningPokerUsers to the local instance, as the
+ * planningPokerUsers already exist on the server
  * 
  * @author Alec Thompson
  */
@@ -30,12 +29,12 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	/**
 	 * The list in which all the Users for a single project are contained
 	 */
-	private List<PlanningPokerUser> planningPokerUsers;
+	private final List<PlanningPokerUser> planningPokerUsers;
 
 	/**
 	 * The static object to allow the user model to exist
 	 */
-	private static PlanningPokerUserModel instance;
+	private static PlanningPokerUserModel instance = null;
 
 	/**
 	 * Constructs an empty list of planningPokerUsers for the project
@@ -76,7 +75,7 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 */
 	public PlanningPokerUser getUser(String id) {
 		// iterate through the list of Users until id is found
-		for (PlanningPokerUser user : this.planningPokerUsers) {
+		for (PlanningPokerUser user : planningPokerUsers) {
 			if (user.getUserName().equals(id)) {
 				return user;
 			}
@@ -94,7 +93,7 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 */
 	public void removeUser(String id) {
 		// iterate through the list of Users until id is found
-		for (int i = 0; i < this.planningPokerUsers.size(); i++) {
+		for (int i = 0; i < planningPokerUsers.size(); i++) {
 			if (planningPokerUsers.get(i).getID().equals(id)) {
 				planningPokerUsers.remove(i);
 				break;
@@ -135,8 +134,8 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 * model.
 	 */
 	public void emptyModel() {
-		int oldSize = getSize();
-		Iterator<PlanningPokerUser> iterator = planningPokerUsers.iterator();
+		final int oldSize = getSize();
+		final Iterator<PlanningPokerUser> iterator = planningPokerUsers.iterator();
 		while (iterator.hasNext()) {
 			iterator.next();
 			iterator.remove();
@@ -152,7 +151,7 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	 */
 	public void addUsers(PlanningPokerUser[] users) {
 		for (PlanningPokerUser u : users) {
-			this.planningPokerUsers.add(u);
+			planningPokerUsers.add(u);
 		}
 		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
 	}

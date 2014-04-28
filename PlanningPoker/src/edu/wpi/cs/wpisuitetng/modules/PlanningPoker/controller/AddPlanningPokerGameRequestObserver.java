@@ -22,7 +22,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  */
 public class AddPlanningPokerGameRequestObserver implements RequestObserver {
 
-	private AddPlanningPokerGameController controller;
+	private final AddPlanningPokerGameController controller;
 
 	/**
 	 * Constructs the observer given an AddPlanningPokerGameController

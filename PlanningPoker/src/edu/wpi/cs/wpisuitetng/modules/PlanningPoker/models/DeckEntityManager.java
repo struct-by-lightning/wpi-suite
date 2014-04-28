@@ -51,16 +51,17 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	 * Method makeEntity.
 	 * @param s Session
 	 * @param content String
-	
-	
-	
-	
-	
-	 * @return Deck * @throws BadRequestException * @throws ConflictException * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(Session, String) */
+	 * 
+	 * @return Deck
+	 * @throws BadRequestException
+	 * @throws ConflictException
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(Session, String)
+	 */
 	@Override
 	public Deck makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
-		Deck d;
+		final Deck d;
 		d = Deck.fromJSON(content);
 
 		if (getEntity(s, d.getDeckName())[0] == null) {
@@ -78,15 +79,16 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	 * Method getEntity.
 	 * @param s Session
 	 * @param id String
-	
-	
-	
-	
-	 * @return Deck[] * @throws NotFoundException * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String) */
+	 * 
+	 * @return Deck[]
+	 * @throws NotFoundException
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String)
+	 */
 	@Override
 	public Deck[] getEntity(Session s, String id) throws NotFoundException,
 			WPISuiteException {
-		Deck[] m = new Deck[0];
+		final Deck[] m = new Deck[0];
 		if (id.equals("")) {
 			return getAll(s);
 		} else {
@@ -97,10 +99,11 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	/**
 	 * Method getAll.
 	 * @param s Session
-	
-	
-	
-	 * @return Deck[] * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session) */
+	 * 
+	 * @return Deck[]
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session)
+	 */
 	@Override
 	public Deck[] getAll(Session s) throws WPISuiteException {
 		Deck[] ret = new Deck[0];
@@ -112,22 +115,19 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	 * Method update.
 	 * @param s Session
 	 * @param content String
-	
-	
-	
-	 * @return Deck * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#update(Session, String) */
+	 * 
+	 * @return Deck
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#update(Session, String)
+	 */
 	@Override
 	public Deck update(Session s, String content) throws WPISuiteException {
-		Deck changes = Deck.fromJSON(content);
-		if (true) {
-			System.out.println("Started update.");
-			deleteEntity(s, changes.getDeckName());
-			data.save(changes);
-			System.out.println("Finished update.");
-			return changes;
-		} else {
-			return null;
-		}
+		final Deck changes = Deck.fromJSON(content);
+		System.out.println("Started update.");
+		deleteEntity(s, changes.getDeckName());
+		data.save(changes);
+		System.out.println("Finished update.");
+		return changes;
 	}
 
 	/**
@@ -151,13 +151,14 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	 * Method deleteEntity.
 	 * @param s Session
 	 * @param id String
-	
-	
-	
-	 * @return boolean * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String) */
+	 * 
+	 * @return boolean
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String)
+	 */
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
-		Model m = data.delete(data.retrieve(d, "deckName", id).get(0));
+		final Model m = data.delete(data.retrieve(d, "deckName", id).get(0));
 		logger.log(Level.INFO, "DeckEntityManager deleting deck < " + id + " >");
 		return (m != null) ? true : false;
 	}

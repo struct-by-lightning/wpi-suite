@@ -29,11 +29,13 @@ import edu.wpi.cs.wpisuitetng.modules.Model;
  * @author mamora
  *
  */
-public class PlanningPokerFinalEstimateEntityManager implements EntityManager<PlanningPokerFinalEstimate>{
+public class PlanningPokerFinalEstimateEntityManager implements
+		EntityManager<PlanningPokerFinalEstimate> {
 	Class<PlanningPokerFinalEstimate> ppg = PlanningPokerFinalEstimate.class;
 	Data data;
 
-	private static final Logger logger = Logger.getLogger(PlanningPokerEntityManager.class.getName());
+	private static final Logger logger = Logger
+			.getLogger(PlanningPokerEntityManager.class.getName());
 
 	/**
 	 * Constructor for PlanningPokerFinalEstimateEntityManager.
@@ -55,13 +57,16 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	@Override
 	public PlanningPokerFinalEstimate makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
-		PlanningPokerFinalEstimate p = PlanningPokerFinalEstimate.fromJSON(content);
+		final PlanningPokerFinalEstimate p = PlanningPokerFinalEstimate.fromJSON(content);
 
 		if (getEntity(s, p.getID())[0] == null) {
 			save(s, p);
 		} else {
-			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerFinalEstimateModel creation.");
-			throw new ConflictException("A PlanningPokerFinalEstimateModel with the given ID already exists. Entity String: " + content);
+			logger.log(Level.WARNING,
+					"Conflict Exception during PlanningPokerFinalEstimateModel creation.");
+			throw new ConflictException(
+					"A PlanningPokerFinalEstimateModel with the given ID already exists. Entity String: "
+							+ content);
 		}
 
 		return p;
@@ -76,7 +81,7 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	@Override
 	public PlanningPokerFinalEstimate[] getEntity(Session s, String id)
 			throws NotFoundException, WPISuiteException {
-		PlanningPokerFinalEstimate[] m = new PlanningPokerFinalEstimate[0];
+		final PlanningPokerFinalEstimate[] m = new PlanningPokerFinalEstimate[0];
 		if(id.equals(""))
 		{
 			return getAll(s);
@@ -108,15 +113,16 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	@Override
 	public PlanningPokerFinalEstimate update(Session s, String content)
 			throws WPISuiteException {
-		PlanningPokerFinalEstimate changes = PlanningPokerFinalEstimate.fromJSON(content);
+		final PlanningPokerFinalEstimate changes = PlanningPokerFinalEstimate.fromJSON(content);
 		if(changes.getGameName() != null) {
 			deleteEntity(s, changes.getID());
 			data.save(changes);
 			return changes;
 		}
 		// currently we don't have the ability to deal with updates on more than one entry
-		else
+		else {
 			return null;
+		}
 	}
 
 	/**
@@ -148,7 +154,7 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String) */
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
-		List<Model> retrieval = data.retrieve(ppg, "id", id);
+		final List<Model> retrieval = data.retrieve(ppg, "id", id);
 		for(Model p : retrieval)
 			data.delete(p);
 		return true;
@@ -180,7 +186,11 @@ public class PlanningPokerFinalEstimateEntityManager implements EntityManager<Pl
 
 	/**
 	 * Method Count.
-	 * @return int * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count() */
+	 * 
+	 * @return int
+	 * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count()
+	 */
 	@Override
 	public int Count() throws WPISuiteException {
 		// TODO Auto-generated method stub

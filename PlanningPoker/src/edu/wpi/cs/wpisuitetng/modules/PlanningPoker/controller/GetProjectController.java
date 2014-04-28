@@ -10,10 +10,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import java.awt.event.ActionEvent;
-
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.ProjectModel;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -28,9 +24,9 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class GetProjectController {
 	/** The observer that acts on responses to requests */
-	private GetProjectRequestObserver observer;
+	private final GetProjectRequestObserver observer;
 	/** The singleton instance of the controller */
-	private static GetProjectController instance;
+	private static GetProjectController instance = null;
 
 	/**
 	 * Gets the singleton instance of the GetProjectController, or creates one
@@ -39,8 +35,9 @@ public class GetProjectController {
 	 * @return the singleton instance of the GetProjectController
 	 */
 	public static GetProjectController getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new GetProjectController();
+		}
 		return instance;
 	}
 	

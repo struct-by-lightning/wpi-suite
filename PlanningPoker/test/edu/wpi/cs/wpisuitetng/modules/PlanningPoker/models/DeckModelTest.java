@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
+
 
 /**
  * @author lisabatbouta
@@ -27,7 +27,7 @@ public class DeckModelTest {
 	 */
 	@Test
 	public void testGetInstance() {
-		DeckModel guc = DeckModel.getInstance();
+		final DeckModel guc = DeckModel.getInstance();
 		assertEquals(guc.hashCode(), DeckModel.getInstance().hashCode());
 	}
 	

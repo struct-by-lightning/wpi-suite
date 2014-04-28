@@ -10,7 +10,6 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -19,9 +18,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
  * A model to store the information for a planning poker game
@@ -40,8 +36,8 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 
 	
 	
-	public PlanningPokerUser(String email, String userName, String instantMessage, boolean sendEmail, boolean sendAim) {
-		super();
+	public PlanningPokerUser(String email, String userName,
+			String instantMessage, boolean sendEmail, boolean sendAim) {
 		this.email = email;
 		this.userName = userName;
 		this.instantMessage = instantMessage;
@@ -161,8 +157,8 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 	 * @return
 	 */
 	public static PlanningPokerUser[] fromJSONArray(String jsonArr) {
-		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
-		List<PlanningPokerUser> planningPokerUsers = new ArrayList<PlanningPokerUser>();
+		final JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		final List<PlanningPokerUser> planningPokerUsers = new ArrayList<PlanningPokerUser>();
 
 		for (JsonElement json : array) {
 			planningPokerUsers.add(PlanningPokerUser.fromJSON(json.toString()));

@@ -10,6 +10,7 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	private String deckType;
 
 	/** Requirement IDs associated with this game */
-	private List<Integer> requirementIds;
+	private final List<Integer> requirementIds;
 
 	/** Whether the game is finished */
 	private boolean isFinished;
@@ -82,11 +83,11 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 			String deckType, List<Integer> requirementsIds,
 			boolean isFinished, boolean isLive, GregorianCalendar startDate,
 			GregorianCalendar endDate, String moderator) {
-		super();
 
-		this.requirementIds = new ArrayList<Integer>();
-		if(gameName != null)
+		requirementIds = new ArrayList<Integer>();
+		if(gameName != null) {
 			this.gameName = gameName.replace(';', ':');
+		}
 		this.setDescription(description);
 		this.setDeckType(deckType);
 		if (requirementsIds != null) {
@@ -105,7 +106,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	/**
 	 * @return A list of the requirements which are associated with this planning poker game. 
 	 **/
-	public ArrayList<Requirement> getRequirements() {
+	public List<Requirement> getRequirements() {
 		
 		// Make sure requirements have been loaded from the database.
 		GetRequirementsController.getInstance().retrieveRequirements();
@@ -113,9 +114,9 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 				|| RequirementModel.getInstance().getRequirements().get(0) == null) {
 		}
 		
-		ArrayList<Requirement> toReturn = new ArrayList<Requirement>();
+		final List<Requirement> toReturn = new ArrayList<Requirement>();
 
-		for(int id : this.getRequirementIds()) {
+		for(int id : requirementIds) {
 			toReturn.add(RequirementModel.getInstance().getRequirement(id));
 		}
 		
@@ -126,7 +127,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * Method getDeckValues.
 	
 	 * @return ArrayList<Integer> */
-	public ArrayList<Integer> getDeckValues() {
+	public List<Integer> getDeckValues() {
 		// TODO This method returns mock data, and needs to be correctly implemented.
 		
         return new ArrayList<Integer>() {
@@ -148,8 +149,9 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * @return boolean */
 	public boolean hasEndDate() {
 		// TODO This method returns mock data, and needs to be correctly implemented.
-		if(endDate.get(GregorianCalendar.YEAR) == 9999)
+		if(endDate.get(Calendar.YEAR) == 9999) {
 			return false;
+		}
 		return true;
 	}
 	
@@ -160,7 +162,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * @param selectedRequirement Requirement
 	
 	 * @return ArrayList<Integer> */
-	public ArrayList<Integer> getSelectedCardIndices(Object user, Requirement selectedRequirement) {
+	public List<Integer> getSelectedCardIndices(Object user, Requirement selectedRequirement) {
 		// TODO This method returns mock data, and needs to be correctly implemented.
 		
 		return new ArrayList<Integer>();
@@ -171,7 +173,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 */
 	@Override
 	public String toJSON() {
-		PlanningPokerSerializer pps = new PlanningPokerSerializer();
+		final PlanningPokerSerializer pps = new PlanningPokerSerializer();
 		return pps.serialize(this, null, null).toString();
 	}
 
@@ -183,7 +185,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return The reconstructed PlanningPokerGame */
 	public static PlanningPokerGame fromJSON(String json) {
-		PlanningPokerDeserializer ppd = new PlanningPokerDeserializer();
+		final PlanningPokerDeserializer ppd = new PlanningPokerDeserializer();
 		return ppd.deserialize(new JsonParser().parse(json), null, null);
 	}
 
@@ -195,9 +197,9 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return An array of reconstructed PlanningPokerGames */
 	public static PlanningPokerGame[] fromJsonArray(String jsonArr) {
-		PlanningPokerDeserializer ppd = new PlanningPokerDeserializer();
-		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
-		List<PlanningPokerGame> ppgs = new ArrayList<PlanningPokerGame>();
+		final PlanningPokerDeserializer ppd = new PlanningPokerDeserializer();
+		final JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
+		final List<PlanningPokerGame> ppgs = new ArrayList<PlanningPokerGame>();
 
 		for (JsonElement json : array) {
 			ppgs.add(ppd.deserialize(json, null, null));
@@ -211,7 +213,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 */
 	@Override
 	public String getID() {
-		return this.gameName;
+		return gameName;
 	}
 
 	/**
@@ -227,7 +229,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return String */
 	public String getModerator() {
-		return this.moderator;
+		return moderator;
 	}
 
 	/**
@@ -236,7 +238,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return The game's name */
 	public String getGameName() {
-		return this.gameName;
+		return gameName;
 	}
 
 	/**
@@ -301,7 +303,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return A list of the game's requirement IDs */
 	public List<Integer> getRequirementIds() {
-		return this.requirementIds;
+		return requirementIds;
 	}
 
 	/**
@@ -311,7 +313,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 *            The requirement to add
 	 */
 	public void addRequirementId(Integer requirementID) {
-		this.requirementIds.add(requirementID);
+		requirementIds.add(requirementID);
 	}
 
 	/**
@@ -322,7 +324,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	
 	 * @return {@code true} if the game had the specified requirement */
 	public boolean removeRequirement(Integer requirementID) {
-		return this.requirementIds.remove(requirementID);
+		return requirementIds.remove(requirementID);
 	}
 
 	/**
@@ -414,7 +416,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	}
 	
 	public boolean isArchived() {
-		return this.isArchived;
+		return isArchived;
 	}
 
 }

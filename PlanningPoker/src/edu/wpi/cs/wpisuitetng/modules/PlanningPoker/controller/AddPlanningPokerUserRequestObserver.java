@@ -9,8 +9,8 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
+
+
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -24,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  */
 public class AddPlanningPokerUserRequestObserver implements RequestObserver {
 
-	private AddPlanningPokerUserController controller;
+	private final AddPlanningPokerUserController controller;
 
 	/**
 	 * Constructs the observer given an AddPlanningPokerUserController

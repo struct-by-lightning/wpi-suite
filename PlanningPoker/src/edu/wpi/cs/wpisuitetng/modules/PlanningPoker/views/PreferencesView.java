@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,8 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
+
+
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
@@ -112,10 +112,9 @@ public class PreferencesView extends JPanel {
 		updateUser.setText("Save Changes");
 
 		emailPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
-				javax.swing.BorderFactory.createLineBorder(new java.awt.Color(
-						0, 0, 0)), "Email"));
+				javax.swing.BorderFactory.createLineBorder(Color.black), "Email"));
 
-		javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(
+		final javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(
 				emailPanel);
 		emailPanel.setLayout(emailPanelLayout);
 		emailPanelLayout
@@ -162,17 +161,20 @@ public class PreferencesView extends JPanel {
 				javax.swing.BorderFactory.createLineBorder(new java.awt.Color(
 						0, 0, 0)), "Google Chat"));
 
+
 		sendGoogleChat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				sendGoogleChatActionPerformed(evt);
 			}
 		});
 
+
 		javax.swing.GroupLayout googleChatPanelLayout = new javax.swing.GroupLayout(
 				googleChatPanel);
 		googleChatPanel.setLayout(googleChatPanelLayout);
 		googleChatPanelLayout
 				.setHorizontalGroup(googleChatPanelLayout
+
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
@@ -226,7 +228,7 @@ public class PreferencesView extends JPanel {
 		infoLabel
 				.setText("<html>Please check the method you'd like <br> to use for recieving notifications.</html>");
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
 		layout.setHorizontalGroup(layout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
