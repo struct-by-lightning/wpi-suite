@@ -25,7 +25,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.Model;
 
 /**
  * The Data Model representation of a Project. Offers
@@ -288,7 +287,7 @@ public class Project extends AbstractModel
 	}
 
 	public User[] getTeam() {
-		User[] a = new User[1];
+		User[] a = new User[0];
 		return team.toArray(a);
 	}
 	
