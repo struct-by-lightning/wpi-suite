@@ -25,8 +25,6 @@ import javax.swing.SwingConstants;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 
-//import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
-
 /**
  * @author Batyr, cgwalker, Francisco
  * @version $Revision: 1.0 $ Sets up toolbar buttons (including the new
