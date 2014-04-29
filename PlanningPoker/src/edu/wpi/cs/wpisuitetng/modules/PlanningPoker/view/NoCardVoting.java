@@ -106,8 +106,6 @@ public class NoCardVoting extends JPanel {
 
 				// Requirement ID
 				// @TODO: Get selected requirement ID
-				// int requirementID =
-				// SeeOpenGameViewController.getSelectedRequirement().getId();
 
 				// Game name
 				final String gameName = game.getGameName();
@@ -116,13 +114,9 @@ public class NoCardVoting extends JPanel {
 				final String userName = ConfigManager.getConfig().getUserName();
 
 				// Vote
-				// ppv = new PlanningPokerVote(gameName, userName,
-				// selectedValue, requirementID);
-
+			
 				// Log
-				// System.out.println("User " + userName + " voted " +
-				// selectedValue + " for requirement" + requirementID +
-				// " in game " + gameName);
+				
 			}
 		});
 		estimatePanel.repaint();
