@@ -47,12 +47,18 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
+<<<<<<< HEAD
  * @version $Revision: 1.0 $
  * @author Francisco
  * @author Austin
  * @author Batyr
  * @author Long
  * @author Barry
+=======
+ * @author friscis
+ * @author swconley
+ * @author mamora
+>>>>>>> 6c632254ff2e56340c7c2753cb508edf77ece2ff
  */
 public class ClosedGameView extends JPanel {
 
@@ -185,7 +191,7 @@ public class ClosedGameView extends JPanel {
 								median.setText(medianDef+df.format(Statistics.median(voteNums)));
 								
 								Average = Math.round(Statistics.mean(voteNums));
-								//mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
+								mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
 								
 								if(reqVotes.size()>1) {
 									std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
@@ -218,7 +224,7 @@ public class ClosedGameView extends JPanel {
 							updateButton.setEnabled(false);
 							submitButton.setText("Submit");
 						}
-						else{
+						else if(!game.isArchived()){
 							submitButton.setEnabled(true);
 						}
 					}
@@ -663,12 +669,12 @@ public class ClosedGameView extends JPanel {
 						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-		mean.setFont(new java.awt.Font("Tahoma", 0, 14));
-		median.setFont(new java.awt.Font("Tahoma", 0, 14));
-		mode.setFont(new java.awt.Font("Tahoma", 0, 14));
-		std.setFont(new java.awt.Font("Tahoma", 0, 14));
-		max.setFont(new java.awt.Font("Tahoma", 0, 14));
-		min.setFont(new java.awt.Font("Tahoma", 0, 14));
+		mean.setFont(new java.awt.Font("Tahoma", 0, 16));
+		median.setFont(new java.awt.Font("Tahoma", 0, 16));
+		mode.setFont(new java.awt.Font("Tahoma", 0, 16));
+		std.setFont(new java.awt.Font("Tahoma", 0, 16));
+		max.setFont(new java.awt.Font("Tahoma", 0, 16));
+		min.setFont(new java.awt.Font("Tahoma", 0, 16));
 		stats.add(mean);
 		stats.add(std);
 		stats.add(median);
@@ -725,7 +731,7 @@ public class ClosedGameView extends JPanel {
 
 		estimates.setModel(estimateModel);
 
-		estimates.setFont(new java.awt.Font("Tahoma", 0, 20));
+		estimates.setFont(new java.awt.Font("Tahoma", 0, 16));
 		
 		final JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(estimates);

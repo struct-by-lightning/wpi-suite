@@ -172,8 +172,8 @@ public class ExportButtonPanel extends ToolbarGroupView {
 			});
 			
 			try {
-			    Image img = ImageIO.read(getClass().getResource("export.png"));
-			    exportButton.setIcon(new ImageIcon(img));			    
+			    Image img = ImageIO.read(getClass().getResource("import.png"));
+			    importButton.setIcon(new ImageIcon(img));			    
 			} catch (IOException ex) {}
 			
 			contentPanel.add(exportButton);
