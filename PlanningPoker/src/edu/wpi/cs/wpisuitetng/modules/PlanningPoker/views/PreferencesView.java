@@ -333,16 +333,12 @@ public class PreferencesView extends JPanel {
 	}
 
 	private void updateUserPressed(ActionEvent evt) {
-		if (isValidEmail()) {
-			currentUser.setEmail(emailField.getText());
-		}
+		
+		currentUser.setEmail(emailField.getText());
 
 		final String googleChatText = googleChatField.getText();
-		final boolean validGoogleChat = isValidGoogleAccount();
 
-		if (validGoogleChat) {
-			currentUser.setInstantMessage(googleChatText);
-		}
+		currentUser.setInstantMessage(googleChatText);
 
 		currentUser.setSendAim(sendGoogleChat.isSelected());
 		currentUser.setSendEmail(sendEmail.isSelected());
@@ -355,26 +351,44 @@ public class PreferencesView extends JPanel {
 
 		updateUser.setText("Save Changes");
 		updateUser.setEnabled(true);
-		boolean emailEntered = isValidEmail();
-		boolean googleChatEntered = isValidGoogleAccount();
+		boolean emailEntered = isValidEmail() || emailField.getText().length() == 0;
+		boolean googleChatEntered = isValidGoogleAccount() || googleChatField.getText().length() == 0;
+
+		boolean chatChecked = true;
+		boolean emailChecked = true;
+		
 
 
 
+		if(sendEmail.isSelected() && emailField.getText().length() == 0){
+			emailChecked = false;
+			errorMessage.setText("<html>You've selected to recieve <br> email notifications, but no email <br>was entered");
+		}
+		
 
-		final boolean canUpdate = emailEntered && googleChatEntered;
+		if(sendGoogleChat.isSelected() && googleChatField.getText().length() == 0){
+			chatChecked = false;
+			errorMessage.setText("<html>You've selected to recieve <br> Google Chat notifications,<br> but no account was entered");
+		}
+			
+		final boolean canUpdate = emailEntered && googleChatEntered && emailChecked && chatChecked;
+		
 
 		if(!emailEntered){
 			errorMessage.setText("Not a valid email address");
 		}
 		
 		if(!googleChatEntered){
-				errorMessage.setText("Not a valid Google Account");
+			errorMessage.setText("Not a valid Google Account");
 		}
+		
 		
 		if (canUpdate) {
 			errorMessage.setText("");
 		}
 
+		
+		
 		updateUser.setEnabled(canUpdate);
 
 	}
