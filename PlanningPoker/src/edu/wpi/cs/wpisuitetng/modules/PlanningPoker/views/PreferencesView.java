@@ -25,7 +25,6 @@ import javax.swing.JTextField;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 
-
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
@@ -72,17 +71,18 @@ public class PreferencesView extends JPanel {
 		errorMessage = new javax.swing.JLabel();
 		infoLabel = new JLabel();
 		errorMessage.setForeground(Color.RED);
+		googleChatInfo = new JLabel();
+		infoText = new JLabel();
+		updateUser.setEnabled(false);
 
 		fillAllFields();
 
-		sendEmail.setText("Email");
 		sendEmail.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				sendEmailActionPerformed(evt);
 			}
 		});
 
-		sendGoogleChat.setText("Google Chat");
 		sendGoogleChat.setActionCommand("");
 		sendGoogleChat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,12 +109,18 @@ public class PreferencesView extends JPanel {
 			}
 		});
 
-		updateUser.setText("Save Changes");
+
 
 		emailPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
-				javax.swing.BorderFactory.createLineBorder(Color.black), "Email"));
+				javax.swing.BorderFactory.createLineBorder(new java.awt.Color(
+						0, 0, 0)), "Email",
+				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+				javax.swing.border.TitledBorder.DEFAULT_POSITION,
+				new java.awt.Font("Tahoma", 0, 16))); // NOI18N
 
-		final javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(
+		emailField.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+
+		javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(
 				emailPanel);
 		emailPanel.setLayout(emailPanelLayout);
 		emailPanelLayout
@@ -133,9 +139,7 @@ public class PreferencesView extends JPanel {
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 										.addComponent(sendEmail)
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+										.addContainerGap(12, Short.MAX_VALUE)));
 		emailPanelLayout
 				.setVerticalGroup(emailPanelLayout
 						.createParallelGroup(
@@ -159,8 +163,12 @@ public class PreferencesView extends JPanel {
 
 		googleChatPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
 				javax.swing.BorderFactory.createLineBorder(new java.awt.Color(
-						0, 0, 0)), "Google Chat"));
+						0, 0, 0)), "Google Chat",
+				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+				javax.swing.border.TitledBorder.DEFAULT_POSITION,
+				new java.awt.Font("Tahoma", 0, 16))); // NOI18N
 
+		googleChatField.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
 		sendGoogleChat.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,13 +176,11 @@ public class PreferencesView extends JPanel {
 			}
 		});
 
-
 		javax.swing.GroupLayout googleChatPanelLayout = new javax.swing.GroupLayout(
 				googleChatPanel);
 		googleChatPanel.setLayout(googleChatPanelLayout);
 		googleChatPanelLayout
 				.setHorizontalGroup(googleChatPanelLayout
-
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
@@ -197,38 +203,32 @@ public class PreferencesView extends JPanel {
 						.createParallelGroup(
 								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
-								javax.swing.GroupLayout.Alignment.TRAILING,
 								googleChatPanelLayout
 										.createSequentialGroup()
-										.addContainerGap()
 										.addGroup(
 												googleChatPanelLayout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING)
+																javax.swing.GroupLayout.Alignment.LEADING,
+																false)
+														.addComponent(
+																googleChatField)
 														.addComponent(
 																sendGoogleChat,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
-														.addGroup(
-																googleChatPanelLayout
-																		.createSequentialGroup()
-																		.addGap(0,
-																				0,
-																				Short.MAX_VALUE)
-																		.addComponent(
-																				googleChatField,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				javax.swing.GroupLayout.PREFERRED_SIZE)))
-										.addContainerGap()));
+																Short.MAX_VALUE))
+										.addGap(0, 6, Short.MAX_VALUE)));
 
 		updateUser.setText("Update");
 
-		infoLabel
-				.setText("<html>Please check the method you'd like <br> to use for recieving notifications.</html>");
+		infoText.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+		infoText.setText("<html>Please check which method <br>you'd like to use to recieve notifications.");
 
-		final javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		googleChatInfo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+		googleChatInfo
+				.setText("<html>Add <u><i>struct.by.lightning@gmail.com</i></u><br> to you  contacts in order to receive <br> notifications through Google chat");
+
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
 		this.setLayout(layout);
 		layout.setHorizontalGroup(layout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,74 +237,85 @@ public class PreferencesView extends JPanel {
 								.addContainerGap()
 								.addGroup(
 										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING,
-												false)
-												.addComponent(
-														emailPanel,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														Short.MAX_VALUE)
-												.addComponent(
-														googleChatPanel,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														Short.MAX_VALUE))
-								.addPreferredGap(
-										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-								.addGroup(
-										layout.createParallelGroup(
 												javax.swing.GroupLayout.Alignment.LEADING)
-												.addComponent(updateUser)
-												.addComponent(
-														errorMessage,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														280,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(
-														infoLabel,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														234,
-														javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addContainerGap(310, Short.MAX_VALUE)));
+												.addGroup(
+														layout.createSequentialGroup()
+																.addGroup(
+																		layout.createParallelGroup(
+																				javax.swing.GroupLayout.Alignment.TRAILING,
+																				false)
+																				.addComponent(
+																						infoText)
+																				.addComponent(
+																						emailPanel,
+																						javax.swing.GroupLayout.Alignment.LEADING,
+																						javax.swing.GroupLayout.DEFAULT_SIZE,
+																						javax.swing.GroupLayout.DEFAULT_SIZE,
+																						Short.MAX_VALUE)
+																				.addComponent(
+																						googleChatPanel,
+																						javax.swing.GroupLayout.DEFAULT_SIZE,
+																						javax.swing.GroupLayout.DEFAULT_SIZE,
+																						Short.MAX_VALUE))
+																.addPreferredGap(
+																		javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																.addComponent(
+																		googleChatInfo,
+																		javax.swing.GroupLayout.PREFERRED_SIZE,
+																		262,
+																		javax.swing.GroupLayout.PREFERRED_SIZE))
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		errorMessage,
+																		javax.swing.GroupLayout.PREFERRED_SIZE,
+																		226,
+																		javax.swing.GroupLayout.PREFERRED_SIZE)
+																.addPreferredGap(
+																		javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																.addComponent(
+																		updateUser)))
+								.addContainerGap(361, Short.MAX_VALUE)));
 		layout.setVerticalGroup(layout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(
 						layout.createSequentialGroup()
 								.addContainerGap()
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.TRAILING,
-												false)
-												.addComponent(infoLabel)
-												.addComponent(
-														emailPanel,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														Short.MAX_VALUE))
+								.addComponent(infoText,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										47,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(
 										javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(emailPanel,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(4, 4, 4)
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.TRAILING)
+												.addComponent(
+														googleChatPanel,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addComponent(
+														googleChatInfo,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE))
+								.addGap(13, 13, 13)
 								.addGroup(
 										layout.createParallelGroup(
 												javax.swing.GroupLayout.Alignment.LEADING)
 												.addComponent(
-														googleChatPanel,
-														javax.swing.GroupLayout.Alignment.TRAILING,
+														errorMessage,
 														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
+														63,
 														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addGroup(
-														javax.swing.GroupLayout.Alignment.TRAILING,
-														layout.createSequentialGroup()
-																.addComponent(
-																		errorMessage,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		43,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(
-																		javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-																.addComponent(
-																		updateUser)))
-								.addContainerGap(511, Short.MAX_VALUE)));
+												.addComponent(updateUser))
+								.addContainerGap(426, Short.MAX_VALUE)));
 	}// </editor-fold>
 
 	/**
@@ -333,7 +344,7 @@ public class PreferencesView extends JPanel {
 	}
 
 	private void updateUserPressed(ActionEvent evt) {
-		
+
 		currentUser.setEmail(emailField.getText());
 
 		final String googleChatText = googleChatField.getText();
@@ -349,46 +360,44 @@ public class PreferencesView extends JPanel {
 
 	private void checkAllFields() {
 
-		updateUser.setText("Save Changes");
+		
 		updateUser.setEnabled(true);
-		boolean emailEntered = isValidEmail() || emailField.getText().length() == 0;
-		boolean googleChatEntered = isValidGoogleAccount() || googleChatField.getText().length() == 0;
+		boolean emailEntered = isValidEmail()
+				|| emailField.getText().length() == 0;
+		boolean googleChatEntered = isValidGoogleAccount()
+				|| googleChatField.getText().length() == 0;
 
 		boolean chatChecked = true;
 		boolean emailChecked = true;
-		
 
-
-
-		if(sendEmail.isSelected() && emailField.getText().length() == 0){
+		if (sendEmail.isSelected() && emailField.getText().length() == 0) {
 			emailChecked = false;
-			errorMessage.setText("<html>You've selected to recieve <br> email notifications, but no email <br>was entered");
+			errorMessage
+					.setText("<html>You've selected to recieve <br> email notifications, but no email <br>was entered");
 		}
-		
 
-		if(sendGoogleChat.isSelected() && googleChatField.getText().length() == 0){
+		if (sendGoogleChat.isSelected()
+				&& googleChatField.getText().length() == 0) {
 			chatChecked = false;
-			errorMessage.setText("<html>You've selected to recieve <br> Google Chat notifications,<br> but no account was entered");
+			errorMessage
+					.setText("<html>You've selected to recieve <br> Google Chat notifications,<br> but no account was entered");
 		}
-			
-		final boolean canUpdate = emailEntered && googleChatEntered && emailChecked && chatChecked;
-		
 
-		if(!emailEntered){
-			errorMessage.setText("Not a valid email address");
+		final boolean canUpdate = emailEntered && googleChatEntered
+				&& emailChecked && chatChecked;
+
+		if (!emailEntered) {
+			errorMessage.setText("<html>Not a valid email address");
 		}
-		
-		if(!googleChatEntered){
-			errorMessage.setText("Not a valid Google Account");
+
+		else if (!googleChatEntered) {
+			errorMessage.setText("<html>Not a valid Google Account");
 		}
-		
-		
-		if (canUpdate) {
+
+		else if (canUpdate) {
 			errorMessage.setText("");
 		}
 
-		
-		
 		updateUser.setEnabled(canUpdate);
 
 	}
@@ -403,14 +412,14 @@ public class PreferencesView extends JPanel {
 
 		return matcher.find();
 	}
-	
-	private boolean  isValidGoogleAccount(){
+
+	private boolean isValidGoogleAccount() {
 		final String googleChatText = googleChatField.getText();
-		final Pattern VALID_GOOGLE_ADDRESS_REGEX = Pattern
-				.compile(
-						"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@gmail.com$",
-						Pattern.CASE_INSENSITIVE);
-		final Matcher matcher = VALID_GOOGLE_ADDRESS_REGEX.matcher(googleChatText);
+		final Pattern VALID_GOOGLE_ADDRESS_REGEX = Pattern.compile(
+				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@gmail.com$",
+				Pattern.CASE_INSENSITIVE);
+		final Matcher matcher = VALID_GOOGLE_ADDRESS_REGEX
+				.matcher(googleChatText);
 
 		return matcher.find();
 	}
@@ -449,6 +458,8 @@ public class PreferencesView extends JPanel {
 	private javax.swing.JCheckBox sendEmail;
 	private javax.swing.JPanel textPanel;
 	private javax.swing.JButton updateUser;
+	private javax.swing.JLabel googleChatInfo;
+	private javax.swing.JLabel infoText;
 	// End of variables declaration
 
 }
