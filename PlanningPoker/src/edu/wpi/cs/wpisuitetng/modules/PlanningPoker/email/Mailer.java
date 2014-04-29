@@ -94,32 +94,6 @@ public class Mailer {
 	 *            Hard-coded email address
 	 */
 
-	// public Mailer(String emailAddress) {
-	// session = createSmtpSession();
-	// session.setDebug(true);
-	// message = new MimeMessage(session);
-	//
-	// try {
-	// // testing
-	// if (DEBUG)
-	// transport = session.getTransport("smtp");
-	// // release
-	// String from = "struct.by.lightning@gmail.com";
-	//
-	// // set the message to be from struct by lightning
-	// message.setFrom(new InternetAddress(from));
-	//
-	// // set the header line
-	// message.setSubject("Great news ladies and gentlemen!");
-	// message.setText("Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
-	// this.addEmail(emailAddress);
-	// } catch (MessagingException mex) {
-	// System.out.println("Message creation failed");
-	// mex.printStackTrace();
-	// }
-	// }
-
-
 	/**
 	 * Alternate constructor that takes an array of email addresses as a
 	 * parameter
@@ -128,31 +102,7 @@ public class Mailer {
 	 * @param emailArray
 	 *            String[]
 	 */
-
-	// public Mailer(String[] emailArray) {
-	// session = createSmtpSession();
-	// session.setDebug(true);
-	// message = new MimeMessage(session);
-	//
-	// try {
-	// if (DEBUG)
-	// transport = session.getTransport("smtp");
-	// String from = "struct.by.lightning@gmail.com";
-	//
-	// // set the message to be from struct by lightning
-	// message.setFrom(new InternetAddress(from));
-	//
-	// // set the header line
-	// message.setSubject("Great news ladies and gentlemen!");
-	// message.setText("Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
-	// this.addEmailArray(emailArray);
-	// } catch (MessagingException mex) {
-	// System.out.println("Message creation failed");
-	// mex.printStackTrace();
-	// }
-	// }
-
-
+	
 	public Mailer(String subject, String text) {
 		session = createSmtpSession();
 		session.setDebug(true);
@@ -464,22 +414,6 @@ public class Mailer {
 		}
 		return false;
 	}
-
-	/**
-	 * Adds multiple recipients to the mailer object from an array
-	 * 
-	 * @param recArr
-	 *            Array of email addresses (strings!)
-	 * 
-	 * @return true if all addresses were added successfully, false otherwise
-	 */
-	// public boolean addEmailArray(String[] recArr) {
-	// boolean isSuccess = true;
-	// for (String s : recArr) {
-	// isSuccess &= this.addEmail(s);
-	// }
-	// return isSuccess;
-	// }
 
 	/**
 	 * Method addEmailFromUsers.
