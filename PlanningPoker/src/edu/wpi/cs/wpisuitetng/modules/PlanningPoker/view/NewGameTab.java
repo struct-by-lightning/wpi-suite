@@ -382,9 +382,6 @@ public class NewGameTab extends JPanel {
 		cardDeckPane.add(lblCardDeck);
 
 		deckType.setModel(new DefaultComboBoxModel<String>(new String[] {"Default", "No Deck"}));
-		//deckType.setMinimumSize(new Dimension(
-		//		deckType.getPreferredSize().width,
-		//		deckType.getPreferredSize().height));
 
 		cardDeckPane.add(deckType);
 		final JTextField deckOverview = new JTextField();
@@ -433,21 +430,6 @@ public class NewGameTab extends JPanel {
 			}
 
 		});
-
-		// JPanel panel_20 = new JPanel();
-		// panel_15.add(panel_20);
-		//
-		//
-		//
-		// textField_1 = new JTextField();
-		// panel_21.add(textField_1);
-		// textField_1.setColumns(10);
-		//
-		// JPanel panel_22 = new JPanel();
-		// panel_15.add(panel_22);
-		//
-		// JPanel panel_23 = new JPanel();
-		// panel_15.add(panel_23);
 
 		final JPanel requirementsPanel = new JPanel();
 		requirementsPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -670,7 +652,6 @@ public class NewGameTab extends JPanel {
 						&& deadline.isSelected()) {
 					System.out.println("Please enter a valid date");
 				} else {
-					// String[] startDate = startDateText.getText().split("-");
 					final String[] endDate = endDateText.getText().split("-");
 
 					final Date endVal = (Date) endTime.getValue();
@@ -879,7 +860,6 @@ public class NewGameTab extends JPanel {
 		    	sessionName.setText(dateFormat.format(date));
 
 		    	// Reset start and end date
-		    	//startDateText.setText(defaultCalendarText);
 		    	endDateText.setText(defaultCalendarText);
 		    	btnCreateGame.setEnabled(true);
 	        	createGameErrorText.setText("");
