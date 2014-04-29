@@ -64,7 +64,7 @@ public class NewGameView extends javax.swing.JPanel {
 
     // The game being viewed/edited.
 	private PlanningPokerGame game;
-	
+
 	private Mailer mailer;
 	private InstantMessenger im;
 
@@ -79,12 +79,12 @@ public class NewGameView extends javax.swing.JPanel {
 
     public NewGameView(PlanningPokerGame game) {
     	this.game = game;
-    	
+
 		// Fetch updated set of requirements
 		GetRequirementsController.getInstance().retrieveRequirements();
 		while (game.getRequirements().get(0) == null) {
 		}
-		
+
 		// Get and add the list of emails to the mailer
 		GetPlanningPokerUserController.getInstance().retrieveUser();
 		try {
@@ -265,7 +265,7 @@ public class NewGameView extends javax.swing.JPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		mailer = new Mailer(game);
 		mailer.send();
 		im = new InstantMessenger(game);
