@@ -41,6 +41,8 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	/** Requirement IDs associated with this game */
 	private final List<Integer> requirementIds;
 
+
+
 	/** Whether the game is finished */
 	private boolean isFinished;
 
@@ -155,6 +157,9 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 		return true;
 	}
 	
+	public void clearEndDate() {
+		this.endDate = new GregorianCalendar(9999, 11, 18);
+	}
 
 	/**
 	 * Method getSelectedCardIndices.
@@ -304,6 +309,10 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * @return A list of the game's requirement IDs */
 	public List<Integer> getRequirementIds() {
 		return requirementIds;
+	}
+	
+	public void setRequirementIds(List<Integer> requirementIds) {
+		this.requirementIds = requirementIds;
 	}
 
 	/**

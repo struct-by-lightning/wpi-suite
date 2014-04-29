@@ -357,8 +357,7 @@ public class NewGameTab extends JPanel {
 
 			public void actionPerformed(ActionEvent ae) {
 				if (!open) {
-					dp = new DatePicker(calendarPanel, constraints14,
-							endDateText);
+					dp = new DatePicker(calendarPanel, endDateText);
 					open = true;
 				} else {
 					dp.close();
