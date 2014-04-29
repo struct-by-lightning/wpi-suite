@@ -7,7 +7,7 @@
  * 
  * Contributors: Struct-By-Lightning
  ******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
+package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -21,17 +21,10 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.ClosedGameView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.NewGameView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.OpenGameView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.PreferencesView;
 
 /**
  * This class closes open tabs
