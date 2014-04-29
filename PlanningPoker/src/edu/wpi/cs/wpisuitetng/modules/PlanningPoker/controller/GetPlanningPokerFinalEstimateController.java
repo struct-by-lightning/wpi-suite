@@ -15,10 +15,10 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
+ * @version $Revision: 1.0 $
  * @author friscis
  * @author swconley
  * @author mamora
- *
  */
 public class GetPlanningPokerFinalEstimateController {
 	private final Network network;

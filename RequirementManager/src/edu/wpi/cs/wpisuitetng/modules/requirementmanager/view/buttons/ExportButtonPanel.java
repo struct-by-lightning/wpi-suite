@@ -96,7 +96,7 @@ public class ExportButtonPanel extends ToolbarGroupView {
 			} catch (IOException ex) {}
 			
 			/**
-			 * Import the list of selected requirements to a file when importButton is
+			 * Import a JSON array of requirements from a file when importButton is
 			 * pressed
 			 */
 			importButton.addActionListener(new ActionListener() {
@@ -172,8 +172,8 @@ public class ExportButtonPanel extends ToolbarGroupView {
 			});
 			
 			try {
-			    Image img = ImageIO.read(getClass().getResource("export.png"));
-			    exportButton.setIcon(new ImageIcon(img));			    
+			    Image img = ImageIO.read(getClass().getResource("import.png"));
+			    importButton.setIcon(new ImageIcon(img));			    
 			} catch (IOException ex) {}
 			
 			contentPanel.add(exportButton);

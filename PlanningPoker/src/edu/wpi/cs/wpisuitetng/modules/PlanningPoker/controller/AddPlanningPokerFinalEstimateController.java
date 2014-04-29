@@ -20,6 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * This class constructs a final estimate controller model and adds the planning
  * poker final estimate to the server.
  * 
+ * @version $Revision: 1.0 $
  * @author friscis
  * @author swconley
  * @author mamora

@@ -17,8 +17,8 @@ import org.junit.Test;
 
 
 /**
+ * @version $Revision: 1.0 $
  * @author lisabatbouta
- * 
  */
 public class AddDeckControllerTest {
 

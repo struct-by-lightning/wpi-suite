@@ -47,9 +47,18 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
+<<<<<<< HEAD
+ * @version $Revision: 1.0 $
+ * @author Francisco
+ * @author Austin
+ * @author Batyr
+ * @author Long
+ * @author Barry
+=======
  * @author friscis
  * @author swconley
  * @author mamora
+>>>>>>> 6c632254ff2e56340c7c2753cb508edf77ece2ff
  */
 public class ClosedGameView extends JPanel {
 
@@ -58,8 +67,7 @@ public class ClosedGameView extends JPanel {
 	 * instanse of this GUI for viewing and interacting with a closed planning
 	 * poker game.
 	 *
-	 * @param game
-	 *            The closed planning poker game to open up a new tab for.
+	 * @param game The closed planning poker game to open up a new tab for.
 	 */
 	public static void open(PlanningPokerGame game) {
 		final ClosedGameView view = new ClosedGameView(game);

@@ -21,6 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
  * which prompts a user for contact information before they are able to enter
  * planning poker.
  * 
+ * @version $Revision: 1.0 $
  * @author Austin Rose (atrose)
  */
 public class ContactInformationPromptView extends javax.swing.JPanel {
