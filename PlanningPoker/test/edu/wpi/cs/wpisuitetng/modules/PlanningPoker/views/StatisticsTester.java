@@ -14,8 +14,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
+ * @version $Revision: 1.0 $
  * @author friscis, swconley
- *
  */
 public class StatisticsTester {
 	@Test

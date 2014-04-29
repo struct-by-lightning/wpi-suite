@@ -18,6 +18,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * This controller responds by adding a new planning poker game.
  * 
  * @version $Revision: 1.0 $
+ * @author Sam Mailand
  */
 public class AddPlanningPokerUserController {
 

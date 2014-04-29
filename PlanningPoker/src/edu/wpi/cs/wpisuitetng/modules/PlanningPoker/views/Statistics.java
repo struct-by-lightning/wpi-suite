@@ -12,8 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 import java.util.Arrays;
 
 /**
- * @author Legion
- *
+ * @version $Revision: 1.0 $
+ * @author friscis
  */
 public class Statistics {
 	/**

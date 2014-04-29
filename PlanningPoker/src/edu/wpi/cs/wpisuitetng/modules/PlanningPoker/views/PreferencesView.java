@@ -32,8 +32,8 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 
 /**
+ * @version $Revision: 1.0 $
  * @author sfmailand
- * 
  */
 public class PreferencesView extends JPanel {
 

@@ -96,7 +96,7 @@ public class ExportButtonPanel extends ToolbarGroupView {
 			} catch (IOException ex) {}
 			
 			/**
-			 * Import the list of selected requirements to a file when importButton is
+			 * Import a JSON array of requirements from a file when importButton is
 			 * pressed
 			 */
 			importButton.addActionListener(new ActionListener() {

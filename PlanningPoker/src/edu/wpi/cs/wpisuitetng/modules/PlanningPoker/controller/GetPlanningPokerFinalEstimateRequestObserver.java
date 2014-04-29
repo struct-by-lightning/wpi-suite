@@ -13,6 +13,7 @@ import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
+ * @version $Revision: 1.0 $
  * @author friscis
  * @author swconley
  * @author mamora
