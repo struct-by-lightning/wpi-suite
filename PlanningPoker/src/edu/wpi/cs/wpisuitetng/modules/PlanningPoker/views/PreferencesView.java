@@ -357,28 +357,20 @@ public class PreferencesView extends JPanel {
 		updateUser.setEnabled(true);
 		boolean emailEntered = isValidEmail();
 		boolean googleChatEntered = isValidGoogleAccount();
-		boolean oneOptionSelected = sendEmail.isSelected()
-				|| sendGoogleChat.isSelected();
 
-		boolean googleChatChecked = true;
-		boolean emailChecked = true;
 
-		if (!googleChatEntered && sendGoogleChat.isSelected()) {
-			errorMessage.setText("<html>Google Chat checked, but a <br> valid account is not entered</html>");
-			googleChatChecked = false;
+
+
+		final boolean canUpdate = emailEntered && googleChatEntered;
+
+		if(!emailEntered){
+			errorMessage.setText("Not a valid email address");
 		}
-
-		if (!emailEntered && sendEmail.isSelected()) {
-			errorMessage.setText("Emailed checked, but no valid email entered");
-			emailChecked = false;
+		
+		if(!googleChatEntered){
+				errorMessage.setText("Not a valid Google Account");
 		}
-		if (!oneOptionSelected) {
-			errorMessage.setText("Must have one option checked");
-		}
-
-		final boolean canUpdate = googleChatChecked && emailChecked
-				&& oneOptionSelected;
-
+		
 		if (canUpdate) {
 			errorMessage.setText("");
 		}
