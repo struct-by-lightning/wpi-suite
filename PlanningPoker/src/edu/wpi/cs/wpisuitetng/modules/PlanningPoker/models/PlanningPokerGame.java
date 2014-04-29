@@ -39,7 +39,7 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	private String deckType;
 
 	/** Requirement IDs associated with this game */
-	private final List<Integer> requirementIds;
+	private List<Integer> requirementIds;
 
 
 

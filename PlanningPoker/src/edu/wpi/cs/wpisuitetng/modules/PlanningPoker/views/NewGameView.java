@@ -30,7 +30,10 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im.InstantMessenger;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.DatePicker;
@@ -61,6 +64,9 @@ public class NewGameView extends javax.swing.JPanel {
 
     // The game being viewed/edited.
 	private PlanningPokerGame game;
+	
+	private Mailer mailer;
+	private InstantMessenger im;
 
 	/**
 	 * This method will open up a new tab in the planning poker module with this
@@ -73,10 +79,22 @@ public class NewGameView extends javax.swing.JPanel {
 
     public NewGameView(PlanningPokerGame game) {
     	this.game = game;
+    	
+		// Fetch updated set of requirements
+		GetRequirementsController.getInstance().retrieveRequirements();
+		while (game.getRequirements().get(0) == null) {
+		}
+		
+		// Get and add the list of emails to the mailer
+		GetPlanningPokerUserController.getInstance().retrieveUser();
+		try {
+			Thread.sleep(150);
+		} catch (Exception e) {
+		}
 
         // Populate list of requirements which are going to estimated.
         this.thisGameRequirementsListModel = new DefaultListModel<>();
-        ArrayList<Requirement> requirements = game.getRequirements();
+        ArrayList<Requirement> requirements = (ArrayList<Requirement>) game.getRequirements();
         for (Requirement req : requirements) {
             this.thisGameRequirementsListModel.addElement(req.getName());
         }
@@ -247,6 +265,11 @@ public class NewGameView extends javax.swing.JPanel {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		mailer = new Mailer(game);
+		mailer.send();
+		im = new InstantMessenger(game);
+		im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());
 
 		// Close this tab.
 		MainView.getInstance().removeClosableTab();
