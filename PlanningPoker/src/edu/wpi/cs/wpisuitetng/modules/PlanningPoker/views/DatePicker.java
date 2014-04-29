@@ -7,7 +7,7 @@
 * http://www.eclipse.org/legal/epl-v10.html
 * Contributor: team struct-by-lightning
 *******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
+package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 /**
  * @author friscis
  * 
@@ -52,11 +52,19 @@ public class DatePicker {
 	 * Sets up action listeners that for a user to click one of the dates, and then displays it.
 	 *  Advances calendar pages by months with user input.
 	 * @param box The panel on which the calendar is displayed
-	 * @param c The set of constraints that define the layout of the calendar in a grid
 	 * @param text The text field for the date.
 	 */
 	
-	public DatePicker(JPanel box, GridBagConstraints c, JTextField text) {
+	public DatePicker(JPanel box, JTextField text) {
+		
+		GridBagConstraints constraints = new GridBagConstraints();
+//		c.insets = new Insets(0, 0, 0, 5);
+//		c.gridx = 0;
+//		c.gridy = 4;
+//		c.weightx = 1;
+//		c.weighty = 1;
+//		c.weightx = 0;
+//		c.weighty = 0;
 		
 		top = box;
 		txt = text;
@@ -108,17 +116,17 @@ public class DatePicker {
 			}
 		});
 		p2.add(next);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridwidth = 3;
-		c.gridx = 0;
-		c.gridy = 0;
-		top.add(p2, c);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridwidth = 3;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.weighty = 1;
-		top.add(p1, c);
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.gridwidth = 3;
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		top.add(p2, constraints);
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.gridwidth = 3;
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		constraints.weighty = 1;
+		top.add(p1, constraints);
 		displayDate();
 	}
 	/*
