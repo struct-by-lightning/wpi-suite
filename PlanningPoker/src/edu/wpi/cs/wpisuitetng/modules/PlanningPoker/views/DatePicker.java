@@ -46,6 +46,8 @@ public class DatePicker {
 	JPanel p1, p2, top;
 	JFrame f;
 	JTextField txt;
+	final JButton previous;
+	final JButton next;
 	
 	/**
 	 * Sets up a blank calendar from today's current date.
@@ -99,7 +101,7 @@ public class DatePicker {
 		}
 		p2 = new JPanel(new GridLayout(1, 3));
 		p1.setPreferredSize(new Dimension(430, 60));
-		final JButton previous = new JButton("<< Previous");
+		previous = new JButton("<< Previous");
 		previous.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				month--;
@@ -108,7 +110,7 @@ public class DatePicker {
 		});
 		p2.add(previous);
 		p2.add(l);
-		final JButton next = new JButton("Next >>");
+		next = new JButton("Next >>");
 		next.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				month++;
@@ -188,5 +190,17 @@ public class DatePicker {
 		top.remove(p1);
 		top.remove(p2);
 		top.repaint();
+	}
+	
+	public void setEnabled(boolean enabled) {
+		for(JButton but: button) {
+			but.setEnabled(enabled);
+		}
+		if(enabled) {
+			displayDate();
+		}
+		next.setEnabled(enabled);
+		previous.setEnabled(enabled);
+		l.setEnabled(enabled);
 	}
 }
