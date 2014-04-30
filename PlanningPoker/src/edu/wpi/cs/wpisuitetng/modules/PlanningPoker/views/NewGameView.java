@@ -713,7 +713,7 @@ public class NewGameView extends javax.swing.JPanel {
 
         jPanel8.add(jPanel11);
 
-        loginPane.setText("Logged in as ...");
+        loginPane.setEditable(false);
         jScrollPane3.setViewportView(loginPane);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
