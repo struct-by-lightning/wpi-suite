@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -281,8 +282,9 @@ public class MainView {
 			}
 		} else {
 			System.err.println("Game changed");
-			// popup
-//			MainView.getInstance().refreshGameTree();
+			int n = JOptionPane.showConfirmDialog(null, "The game you have selected" +
+					" has closed. Would you like to refresh the game list?", "", JOptionPane.YES_NO_OPTION);
+			System.err.println("Output: " + n);
 		}
 	}
 
