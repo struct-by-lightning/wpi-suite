@@ -34,8 +34,6 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 

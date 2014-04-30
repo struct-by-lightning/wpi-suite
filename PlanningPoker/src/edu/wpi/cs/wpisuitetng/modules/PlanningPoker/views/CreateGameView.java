@@ -60,8 +60,6 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im.InstantMessenger;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.DatePicker;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -146,7 +144,7 @@ public class CreateGameView extends JPanel {
 			public void actionPerformed(ActionEvent ae) {
 				viewHasBeenEdited = true;
 				if (!open) {
-					dp = new DatePicker(calendarPanel, constraints14, endDateText);
+					dp = new DatePicker(calendarPanel, endDateText);
 					open = true;
 				} else {
 					dp.close();
@@ -371,8 +369,7 @@ public class CreateGameView extends JPanel {
 							final JOptionPane emptyNameErrorPanel = new JOptionPane(
 									"You must enter the session name", JOptionPane.ERROR_MESSAGE);
 							final JDialog errorDialog = emptyNameErrorPanel.createDialog(null);
-							errorDialog.setLocation(thisPanel.getWidth() / 2,
-									thisPanel.getHeight() / 2);
+
 							errorDialog.setVisible(true);
 							btnCreateGame.setEnabled(false);
 						}
@@ -918,7 +915,6 @@ public class CreateGameView extends JPanel {
 	private JButton btn_addToGame;
 	private JButton btn_removeAll;
 	private JTextField sessionName;
-	private NewGameTab thisPanel;
 	private JLabel createGameErrorText;
 	private JPanel titlePanel;
 	private JPanel namePane;
