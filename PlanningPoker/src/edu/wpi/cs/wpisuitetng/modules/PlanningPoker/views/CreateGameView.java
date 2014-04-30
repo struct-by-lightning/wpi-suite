@@ -68,6 +68,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * This JPanel houses the GUI and logic for allowing a user to create a new
  * planning poker game.
  *
+ * @version $Revision: 1.0 $
  * @author Austin Rose (atrose)
  */
 public class CreateGameView extends JPanel {

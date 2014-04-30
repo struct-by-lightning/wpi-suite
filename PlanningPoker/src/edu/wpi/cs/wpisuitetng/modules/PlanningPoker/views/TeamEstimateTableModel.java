@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 /**
  * A Table model that holds the user's estimate
+ * 
+ * @version $Revision: 1.0 $
  * @author hlong290494
  */
 

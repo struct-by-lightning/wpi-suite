@@ -15,9 +15,10 @@ import org.junit.Test;
 
 
 
-/**
+/** Implements a test on deck models
+ * 
+ * @version $Revision: 1.0 $
  * @author lisabatbouta
- *
  */
 public class DeckModelTest {
 	/**

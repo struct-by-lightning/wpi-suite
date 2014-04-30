@@ -20,10 +20,10 @@ import com.google.gson.JsonParser;
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 
 /**
+ * @version $Revision: 1.0 $
  * @author Friscis
  * @author swconley
  * @author mamora
- *
  */
 public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPokerFinalEstimate>{
 	private String gameName;

@@ -13,9 +13,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-/**
+/** Implements tests to ensure the statistics panel works properly
+ * 
+ * @version $Revision: 1.0 $
  * @author friscis, swconley
- *
  */
 public class StatisticsTester {
 	@Test

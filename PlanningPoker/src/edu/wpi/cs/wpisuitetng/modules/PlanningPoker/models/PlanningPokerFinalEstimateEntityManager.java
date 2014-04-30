@@ -24,10 +24,10 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 
 /**
+ * @version $Revision: 1.0 $
  * @author friscis
  * @author swconley
  * @author mamora
- *
  */
 public class PlanningPokerFinalEstimateEntityManager implements
 		EntityManager<PlanningPokerFinalEstimate> {

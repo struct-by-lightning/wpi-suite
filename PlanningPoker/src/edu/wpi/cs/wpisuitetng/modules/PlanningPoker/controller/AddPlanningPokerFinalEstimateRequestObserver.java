@@ -15,6 +15,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
 /**
+ * @version $Revision: 1.0 $
  * @author friscis
  * @author swconley
  *

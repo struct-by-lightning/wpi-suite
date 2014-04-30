@@ -48,6 +48,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * This class is implemented as a singleton because there should only ever be
  * one instance of each of the main UI components.
  * 
+ * @version $Revision: 1.0 $
  * @author Austin Rose (atrose)
  */
 public class MainView {
