@@ -213,7 +213,7 @@ public class MainView {
 	 *            in the main view's game tree.
 	 */
 	private static void gameWasDoubleClicked(PlanningPokerGame selectedGame) {
-
+		boolean originalSelectedState = selectedGame.isFinished();
 		// Ensure that requirements have been updated from the database before
 		// attempting to display them.
 		try {
@@ -225,7 +225,7 @@ public class MainView {
 				RequirementModel rm = RequirementModel.getInstance();
 				int size = rm.getRequirements().size();
 				if (size > 0) {
-					if (rm.getRequirements().get(0) != null) {
+					if (rm.getRequirements().get(0) != null && !GetPlanningPokerGamesController.waitingOnRequest) {
 						break;
 					}
 				}
@@ -257,9 +257,14 @@ public class MainView {
 				}
 			}
 		}
-
-		if (selectedGame.equals(PlanningPokerGameModel
-				.getPlanningPokerGame(selectedGame.getGameName()))) {
+		
+		boolean server = PlanningPokerGameModel.getPlanningPokerGame(selectedGame.getGameName()).isFinished();
+		System.out.println("Client: " + originalSelectedState + " Server: " + server);
+		
+		// check if the original state has changed (ie went from open to finished)
+		// new to open is irrelevant, as only one person can see it, thus it can't be changed be someone else
+		if (originalSelectedState == server) {
+			System.err.println("Game was the same");
 			// Conditions for a game to be "New"
 			if (!selectedGame.isLive() && !selectedGame.isFinished()) {
 				NewGameView.open(selectedGame);
@@ -275,6 +280,7 @@ public class MainView {
 				ClosedGameView.open(selectedGame);
 			}
 		} else {
+			System.err.println("Game changed");
 			// popup
 //			MainView.getInstance().refreshGameTree();
 		}
