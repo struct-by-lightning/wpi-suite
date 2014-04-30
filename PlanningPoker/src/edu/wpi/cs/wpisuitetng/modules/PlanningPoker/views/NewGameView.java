@@ -60,7 +60,6 @@ public class NewGameView extends javax.swing.JPanel {
 
     // Components for the date-picker.
     private JPanel calendarPanel;
-    private DatePicker datePicker;
 
     // The game being viewed/edited.
 	private PlanningPokerGame game;
@@ -136,18 +135,8 @@ public class NewGameView extends javax.swing.JPanel {
 		calendarPanel.setPreferredSize(new Dimension(350, 220));
 		calendarHandlerPanel.add(calendarPanel);
 
-		openCalendarButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				if (datePicker == null) {
-					datePicker = new DatePicker(calendarPanel, dateField);
-					openCalendarButton.setText("Close date picker");
-				} else {
-					datePicker.close();
-					datePicker = null;
-					openCalendarButton.setText("Open date picker");
-				}
-			}
-		});
+		datePicker = new DatePicker(calendarPanel, dateField);
+        this.datePicker.setEnabled(false);
 
 		dateField.setEditable(false);
 
@@ -157,7 +146,7 @@ public class NewGameView extends javax.swing.JPanel {
 			timePicker.setValue(game.getEndDate().getTime());
 			dateField.setText(sdf.format(game.getEndDate().getTime()));
 		} else {
-			dateField.setText("Use date picker to choose");
+			dateField.setText("Click Calendar");
 		}
 
 
@@ -169,6 +158,7 @@ public class NewGameView extends javax.swing.JPanel {
 
         // Set the deadline checkbox to be toggled correctly for the game.
         this.deadlineCheckbox.setSelected(game.hasEndDate());
+        deadlineCheckboxToggled();
 //		if (game.hasEndDate()) {
 //			datePicker = new DatePicker(calendarPanel, dateField);
 //			openCalendarButton.setText("Close date picker");
@@ -245,7 +235,7 @@ public class NewGameView extends javax.swing.JPanel {
 		String[] endDate = dateField.getText().split("-");
 		Date endVal = (Date) timePicker.getValue();
 
-		if (deadlineCheckbox.isSelected()) {
+		if (deadlineCheckbox.isSelected() && dateField.getText().equals("Click Calendar")) {
 			endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer.parseInt(endDate[1]) - 1, Integer.parseInt(endDate[0]), endVal.getHours(), endVal.getMinutes());
 
 			if (startCal.before(endCal)) {
@@ -333,16 +323,11 @@ public class NewGameView extends javax.swing.JPanel {
     private void deadlineCheckboxToggled() {
         boolean checked = this.deadlineCheckbox.isSelected();
 
-        if (!checked) {
-        	openCalendarButton.doClick();
-        }
-
         this.dateLabel.setEnabled(checked);
         this.dateField.setEnabled(checked);
-        this.openCalendarButton.setEnabled(checked);
         this.timeLabel.setEnabled(checked);
         this.timePicker.setEnabled(checked);
-
+        datePicker.setEnabled(checked);
         updateControlButtons();
     }
 
@@ -381,7 +366,6 @@ public class NewGameView extends javax.swing.JPanel {
         deadlineCheckbox = new javax.swing.JCheckBox();
         dateLabel = new javax.swing.JLabel();
         timeLabel = new javax.swing.JLabel();
-        openCalendarButton = new javax.swing.JButton();
         dateField = new javax.swing.JTextField();
         timePicker = new javax.swing.JSpinner();
         calendarHandlerPanel = new javax.swing.JPanel();
@@ -392,6 +376,7 @@ public class NewGameView extends javax.swing.JPanel {
         deckValuesLabel = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         loginPane = new javax.swing.JTextPane();
+        //datePicker = new DatePicker(calendarPanel, dateField);
 
         gameNameLabel.setFont(new java.awt.Font("Lucida Grande", 2, 16));
         gameNameFieldPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Game name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Al Bayan", 0, 10))); // NOI18N
@@ -609,7 +594,6 @@ public class NewGameView extends javax.swing.JPanel {
 
         timeLabel.setText("Time:");
 
-        openCalendarButton.setText("Open date picker");
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -626,9 +610,8 @@ public class NewGameView extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel9Layout.createSequentialGroup()
-                                .addComponent(dateField, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(openCalendarButton))
+                                .addComponent(dateField, javax.swing.GroupLayout.DEFAULT_SIZE, 5, 120)
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel9Layout.createSequentialGroup()
                                 .addComponent(timePicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
@@ -642,7 +625,6 @@ public class NewGameView extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dateLabel)
-                    .addComponent(openCalendarButton)
                     .addComponent(dateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -750,7 +732,10 @@ public class NewGameView extends javax.swing.JPanel {
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {buttonsPanel, gameNameFieldPanel});
-
+        this.dateLabel.setEnabled(false);
+        this.dateField.setEnabled(false);
+        this.timeLabel.setEnabled(false);
+        this.timePicker.setEnabled(false);
     }// </editor-fold>
 
     private void singleRightArrowButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -818,7 +803,6 @@ public class NewGameView extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextPane loginPane;
-    private javax.swing.JButton openCalendarButton;
     private javax.swing.JButton openGameForVotingButton;
     private javax.swing.JPanel requirementListsPanel;
     private javax.swing.JButton saveChangesButton;
@@ -828,6 +812,7 @@ public class NewGameView extends javax.swing.JPanel {
     private javax.swing.JList thisGameRequirementsList;
     private javax.swing.JLabel timeLabel;
     private javax.swing.JSpinner timePicker;
+    private DatePicker datePicker;
     // End of variables declaration
 }
 
