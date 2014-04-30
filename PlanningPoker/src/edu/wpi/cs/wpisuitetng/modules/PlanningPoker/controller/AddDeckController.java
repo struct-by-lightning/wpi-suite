@@ -1,72 +1,65 @@
 /*******************************************************************************
- * Copyright (c) 2012-2014 -- WPI Suite
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: team struct-by-lightning
- *******************************************************************************/
+* Copyright (c) 2012-2014 -- WPI Suite
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+* Contributor: team struct-by-lightning
+*******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
- * The controller responds by adding a new Deck
- * 
- * @author Alec Thompson - ajthompson
- * @version Apr 10, 2014
+ * @author sfmailand
+ *
  */
 public class AddDeckController {
-	/** The singleton instance of the controller */
+
 	private static AddDeckController instance = null;
-	/** The observer for this controller */
 	private final AddDeckRequestObserver observer;
 
-
-
-
+	/**
+	 * Construct an AddDeckController for the given model, view
+	 * pair
+	 */
+	private AddDeckController() {
+		observer = new AddDeckRequestObserver(this);
+	}
 
 	/**
-	 * Returns the singleton instance of the AddDeckController, or creates it if
-	 * it does not yet exist.
 	 * 
-	 * 
-	 * @return the singleton instance of the addDeckController
+	 * @return the instance of the AddDeckController or creates one
+	 *         if it does not exist.
 	 */
 	public static AddDeckController getInstance() {
-		if (instance == null){
+		if (instance == null) {
 			instance = new AddDeckController();
 		}
+
 		return instance;
 	}
 
-
-	/** Construct an AddDeckController */
-	private AddDeckController() {
-		observer = new AddDeckRequestObserver(this);
-	
-	}
-
-
 	/**
-	 * Method addDeck.
+	 * This method adds a PlanningPokerGame to the server.
 	 * 
-	 * @param newDeck
-	 *            Deck
+	 * @param newPlanningPokerGame
+	 *            is the PlanningPokerGame to be added to the server.
 	 */
-	public void addDeck(Deck newDeck) {
-
+	public void AddUser(Deck newDeck) {
 		final Request request = Network.getInstance().makeRequest(
-				"planningpoker/deck", HttpMethod.PUT); // PUT equals create
-
-
-		request.setBody(newDeck.toJSON()); // put the new Deck into the request
-		request.addObserver(observer);
+				"planningpoker/deck", HttpMethod.PUT); // PUT ==
+																	// create
+		request.setBody(newDeck.toJSON()); // put the new
+											// Deck in
+											// the body of the
+											// request
+		request.addObserver(observer); // add an observer to process the
+										// response
 		request.send();
 	}
 }
