@@ -12,7 +12,6 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons.PlanningPokerButtonsPanel;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.buttons.PreferencesButtonPanel;
 
 /**
  * @author Miguel
