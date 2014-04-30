@@ -275,6 +275,7 @@ public class MainView {
 			}
 		} else {
 			// popup
+//			MainView.getInstance().refreshGameTree();
 		}
 	}
 

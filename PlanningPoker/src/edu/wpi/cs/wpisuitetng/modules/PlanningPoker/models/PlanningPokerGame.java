@@ -489,8 +489,9 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 					return false;
 				if (this.isArchived != ((PlanningPokerGame) o).isArchived)
 					return false;
+				return true;
 			}
-			return true;
+			return false;
 		}
 		return false;
 	}
