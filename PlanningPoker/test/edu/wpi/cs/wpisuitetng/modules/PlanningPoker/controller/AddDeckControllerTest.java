@@ -16,9 +16,10 @@ import org.junit.Test;
 
 
 
-/**
- * @author lisabatbouta
+/**  This class implements test cases for the addDeckController
  * 
+ * @version $Revision: 1.0 $
+ * @author lisabatbouta
  */
 public class AddDeckControllerTest {
 

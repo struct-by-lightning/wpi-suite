@@ -27,6 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 /**
  * Authenticator abstract class. Defines the login function with an abstract parsePost() function.
  * 	Subclasses implement the decoding of the user credentials in the POST string.
+ * @version $Revision: 1.0 $
  * @author twack
  *
  */

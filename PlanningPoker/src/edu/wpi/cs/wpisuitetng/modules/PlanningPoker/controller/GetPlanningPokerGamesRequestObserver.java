@@ -17,6 +17,8 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * This observer handles responses to requests for all PlanningPokerGames
  *
  * @version $Revision: 1.0 $
+ * @author Barry
+ * @author Austin
  */
 public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	

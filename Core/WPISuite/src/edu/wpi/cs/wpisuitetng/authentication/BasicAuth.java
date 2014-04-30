@@ -22,6 +22,7 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * BasicAuth implementation of the Authenticator.
  * 	BasicAuth: "Authorization: Basic [Base64:]username:password"
+ * @version $Revision: 1.0 $
  * @author twack
  *
  */

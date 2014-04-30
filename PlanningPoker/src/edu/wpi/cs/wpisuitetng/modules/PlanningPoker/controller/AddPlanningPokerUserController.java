@@ -18,6 +18,9 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * This controller responds by adding a new planning poker game.
  * 
  * @version $Revision: 1.0 $
+ * @author Sam Mailand
+ * @author Barry
+ * @author Alec
  */
 public class AddPlanningPokerUserController {
 
@@ -48,8 +51,7 @@ public class AddPlanningPokerUserController {
 	/**
 	 * This method adds a PlanningPokerGame to the server.
 	 * 
-	 * @param newPlanningPokerGame
-	 *            is the PlanningPokerGame to be added to the server.
+	 * @param newPlanningPokerGame is the PlanningPokerGame to be added to the server.
 	 */
 	public void AddUser(PlanningPokerUser newUser) {
 		final Request request = Network.getInstance().makeRequest(

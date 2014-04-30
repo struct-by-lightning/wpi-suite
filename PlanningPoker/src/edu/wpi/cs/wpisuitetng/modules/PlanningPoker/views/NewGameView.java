@@ -44,6 +44,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * An instance of this class is a JPanel containing the GUI for interacting with
  * a planning poker game which is not yet open for voting.
  *
+ * @version $Revision: 1.0 $
  * @author Austin Rose (atrose)
  */
 public class NewGameView extends javax.swing.JPanel {
