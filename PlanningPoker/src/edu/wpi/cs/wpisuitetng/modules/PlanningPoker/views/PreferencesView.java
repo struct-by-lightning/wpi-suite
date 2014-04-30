@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,7 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
@@ -356,6 +354,8 @@ public class PreferencesView extends JPanel {
 		UpdatePlanningPokerUserController.getInstance().update(currentUser);
 		updateUser.setText("Saved!");
 		updateUser.setEnabled(false);
+		MainView.getInstance().refreshGameTree();
+		MainView.getInstance().removeClosableTab();
 	}
 
 	private void checkAllFields() {
