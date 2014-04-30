@@ -50,7 +50,7 @@ public class AddDeckController {
 	 * @param newPlanningPokerGame
 	 *            is the PlanningPokerGame to be added to the server.
 	 */
-	public void AddUser(Deck newDeck) {
+	public void AddDeck(Deck newDeck) {
 		final Request request = Network.getInstance().makeRequest(
 				"planningpoker/deck", HttpMethod.PUT); // PUT ==
 																	// create

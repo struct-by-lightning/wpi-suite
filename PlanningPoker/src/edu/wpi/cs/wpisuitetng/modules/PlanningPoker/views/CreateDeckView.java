@@ -14,6 +14,8 @@ import java.util.Collections;
 
 import javax.swing.DefaultListModel;
 
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddDeckController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
 
 /**
@@ -206,7 +208,9 @@ public class CreateDeckView extends javax.swing.JPanel {
     }                                           
 
     private void createDeckBtnActionPerformed(java.awt.event.ActionEvent evt) {                                              
-    	checkAllFields();
+    	Deck deck = new Deck(deckNameField.getText(), deckValuesListModel);
+    	
+    	AddDeckController.getInstance().AddDeck(deck);
     }                                             
 
     private void removeValuesBtnActionPerformed(java.awt.event.ActionEvent evt) {                                                

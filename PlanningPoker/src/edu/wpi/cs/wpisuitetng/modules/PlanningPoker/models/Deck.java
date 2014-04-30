@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -27,12 +29,12 @@ public class Deck extends RegularAbstractModel<Deck>{
 
 	private String deckName;
 	
-	private ArrayList<Integer> deckNumbers = new ArrayList<Integer>();
+	private DefaultListModel<Integer> deckNumbers = new DefaultListModel<Integer>();
 	
 	
-	public Deck(String deckName, ArrayList<Integer> deckNumbers){
+	public Deck(String deckName, DefaultListModel<Integer> deckValuesListModel){
 		this.deckName = deckName;
-		this.deckNumbers = deckNumbers;
+		this.deckNumbers = deckValuesListModel;
 	}
 	/* (non-Javadoc)
 	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
@@ -88,13 +90,13 @@ public class Deck extends RegularAbstractModel<Deck>{
 	/**
 	 * @return the deckNumbers
 	 */
-	public ArrayList<Integer> getDeckNumbers() {
+	public DefaultListModel<Integer> getDeckNumbers() {
 		return deckNumbers;
 	}
 	/**
 	 * @param deckNumbers the deckNumbers to set
 	 */
-	public void setDeckNumbers(ArrayList<Integer> deckNumbers) {
+	public void setDeckNumbers(DefaultListModel<Integer> deckNumbers) {
 		this.deckNumbers = deckNumbers;
 	}
 	
