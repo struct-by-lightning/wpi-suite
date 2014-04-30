@@ -110,6 +110,10 @@ public class Deck extends RegularAbstractModel<Deck>{
 
 		return decks.toArray(new Deck[0]);
 	}
+	
+	public String toString(){
+		return deckName;
+	}
 
 	
 }
