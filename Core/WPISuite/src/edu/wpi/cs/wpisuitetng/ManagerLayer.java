@@ -27,6 +27,11 @@ import edu.wpi.cs.wpisuitetng.exceptions.UnauthorizedException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEstimateEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVoteEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.core.entitymanagers.ProjectManager;
 import edu.wpi.cs.wpisuitetng.modules.core.entitymanagers.UserManager;
@@ -77,7 +82,11 @@ public class ManagerLayer {
 		map.put("requirementmanager" + "requirement", new RequirementEntityManager(data));
 		map.put("requirementmanager" + "iteration", new IterationEntityManager(data));
 		map.put("planningpoker" + "planningpokergame", new PlanningPokerEntityManager(data));
-
+		map.put("planningpoker" + "planningpokeruser", new PlanningPokerUserEntityManager(data));
+		map.put("planningpoker" + "planningpokervote", new PlanningPokerVoteEntityManager(data));
+		map.put("planningpoker" + "deck", new DeckEntityManager(data));
+		map.put("planningpoker"+"planningpokerfinalestimate", new PlanningPokerFinalEstimateEntityManager(data));
+		map.put("planningpoker" + "project", new ProjectManager(data));
 		//add just your module to this list
 		String[] fullModuleList = {"core","defecttracker","postboard","requirementmanager","planningpoker"};
 		((ProjectManager)map.get("coreproject")).setAllModules(fullModuleList);

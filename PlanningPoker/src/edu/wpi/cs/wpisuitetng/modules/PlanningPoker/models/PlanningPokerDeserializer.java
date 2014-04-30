@@ -1,3 +1,12 @@
+/*******************************************************************************
+* Copyright (c) 2012-2014 -- WPI Suite
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+* Contributor: team struct-by-lightning
+*******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import java.lang.reflect.Type;
@@ -10,6 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -17,17 +27,30 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.UserDeserializer;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
+/**
+ * @author Miguel
+ * @version $Revision: 1.0 $
+ */
 public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPokerGame> {
 
 	private static final Logger logger = Logger
 			.getLogger(UserDeserializer.class.getName());
 
+	/**
+	 * Method deserialize.
+	 * @param ppmElement JsonElement
+	 * @param ppmType Type
+	 * @param context JsonDeserializationContext
+	 * 
+	 * @return PlanningPokerGame
+	 * @throws JsonParseException
+	 * @see com.google.gson.JsonDeserializer#deserialize(JsonElement, Type, JsonDeserializationContext)
+	 */
 	@Override
 	public PlanningPokerGame deserialize(JsonElement ppmElement, Type ppmType,
 			JsonDeserializationContext context) throws JsonParseException {
-		JsonObject deflated = ppmElement.getAsJsonObject();
+		final JsonObject deflated = ppmElement.getAsJsonObject();
 
 		if (!deflated.has("gameName")) {
 			throw new JsonParseException(
@@ -58,30 +81,44 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 			throw new JsonParseException(
 					"The serialized PlanningPokerModel did not contain the required endData field.");
 		}
-
+		
+		if (!deflated.has("moderator")) {
+			throw new JsonParseException(
+					"The serialized PlanningPokerModel did not contain the required endData field.");
+		}
+		if (!deflated.has("isArchived")) {
+			throw new JsonParseException(
+					"The serialized PlanningPokerModel did not contain the required isArchived field.");
+		}
 		// for all other attributes: instantiate as null, fill in if given.
 
-		String gameName = deflated.get("gameName").getAsString();
-		String description = null;
+		final String gameName = deflated.get("gameName").getAsString();
+		final String description = null;
 		String deckType = null;
-		List<Requirement> requirements = new ArrayList<Requirement>();
+		final List<Integer> requirements = new ArrayList<Integer>();
 		boolean isFinished = false;
+		boolean isArchived = false;
 		boolean isLive = false;
 		GregorianCalendar startDate = null;
 		GregorianCalendar endDate = null;
+		String moderator = null;
 
 		if (deflated.has("deckType")
 				&& !deflated.get("deckType").getAsString().equals("")) {
 			deckType = deflated.get("deckType").getAsString();
 		}
 		
+		JsonArray jsonRequirements = null;
+		
 		try {
-			for(JsonElement jsonRequirement : deflated.get("requirements").getAsJsonArray()) {
-				requirements.add(Requirement.fromJson(jsonRequirement.toString()));
-			}
+			jsonRequirements = deflated.get("requirements").getAsJsonArray();
 		} catch (java.lang.ClassCastException e) {
 			logger.log(Level.FINER,
 					"PlanningPokerModel transmitted with non-array in requirements field");
+		}
+
+		for(JsonElement jsonRequirement : jsonRequirements) {
+			requirements.add(jsonRequirement.getAsInt());
 		}
 		
 		try {
@@ -98,10 +135,10 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 					"PlanningPokerModel transmitted with String in isLive field");
 		}
 
-		DateFormat df = new SimpleDateFormat("dd MM yyyy");
+		final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 		try {
-			Date date = df.parse(deflated.get("startDate").getAsString());
+			final Date date = df.parse(deflated.get("startDate").getAsString());
 			startDate = new GregorianCalendar();
 			startDate.setTime(date);
 		} catch (java.text.ParseException e) {
@@ -111,7 +148,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 		}
 		
 		try {
-			Date date = df.parse(deflated.get("endDate").getAsString());
+			final Date date = df.parse(deflated.get("endDate").getAsString());
 			endDate = new GregorianCalendar();
 			endDate.setTime(date);
 		} catch (java.text.ParseException e) {
@@ -119,10 +156,20 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 					"PlanningPokerModel transmitted with String in endDate field");
 			endDate = null;
 		}
-
-		PlanningPokerGame inflated = new PlanningPokerGame(gameName, description,
-				deckType, requirements, isFinished, isLive, startDate, endDate);
-
+		
+		try {
+			isArchived = deflated.get("isArchived").getAsBoolean();
+		} catch (java.lang.ClassCastException e) {
+			logger.log(Level.FINER,
+					"PlanningPokerModel transmitted with String in isArchived field");
+		}
+		
+		moderator = deflated.get("moderator").getAsString();
+		
+		
+		final PlanningPokerGame inflated = new PlanningPokerGame(gameName, description,
+				deckType, requirements, isFinished, isLive, startDate, endDate, moderator);
+		inflated.setArchived(isArchived);
 		return inflated;
 	}
 

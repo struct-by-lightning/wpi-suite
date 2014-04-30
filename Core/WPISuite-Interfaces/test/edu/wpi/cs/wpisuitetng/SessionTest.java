@@ -37,25 +37,25 @@ public class SessionTest {
 	String ssid2 = "def";
 	User u1;
 	User u2;
-	
+
 	@Before
 	public void setUp()
 	{
-		this.u1 = new User("Prometheus", "twack", "twack@twack.com", null, 0);
+		this.u1 = new User("Prometheus", "twack", null, 0);
 		this.ses1 = new Session(u1, ssid1);
-		
-		this.u2 = new User("Bob", "caveman", "caveman@cave.com", null, 1);
+
+		this.u2 = new User("Bob", "caveman", null, 1);
 		this.ses2 = new Session(u2, ssid2);
 	}
-	
+
 	/* Testing Session accessors */
-	
+
 	@Test
 	public void testUsername()
 	{
 		assertTrue(this.ses1.getUsername().equals("twack"));
 	}
-	
+
 	@Test
 	/**
 	 * Test the LoginTime generation. Should initialize to the current time (new Date())
@@ -63,10 +63,10 @@ public class SessionTest {
 	public void testLoginTime()
 	{
 		Date now = new Date();
-		
+
 		assertTrue(now.equals(this.ses1.getLoginTime()));
 	}
-	
+
 	@Test
 	@Ignore
 	public void testToString()
@@ -74,12 +74,12 @@ public class SessionTest {
 		// DateFormat for the gson serializer: MMM d, yyyy h:mm:ss a
 		SimpleDateFormat format = new SimpleDateFormat("MMM d, yyyy h:mm:ss a");
 		Date loginTime = this.ses1.getLoginTime();
-		
+
 		String json = "{\"user\":" + this.u1.toString() + ",\"loginTime\":\"" + format.format(loginTime) + "\"}";		
 		String sessionJson = this.ses1.toString();
 		assertTrue(json.equals(sessionJson));
 	}
-	
+
 	@Test
 	/**
 	 * Tests the cookie serialization of the Session object.
@@ -91,17 +91,17 @@ public class SessionTest {
 		Cookie cook = this.ses1.toCookie();
 		String header = "WPISUITE-twack";
 		String body = this.ses1.getSessionId();
-		
+
 		assertTrue(cook.getName().equals(header)); // test cookie Header correctness
 		assertTrue(cook.getValue().equals(body)); // test cookie Body correctness
 	}
-	
+
 	@Test
 	public void testGetProject()
 	{
 		Project p1 = new Project("defectTracker", "proj1");
 		Session projectSes = new Session(u2, p1, ssid1);
-		
+
 		assertTrue(p1.equals(projectSes.getProject()));
 	}
 }

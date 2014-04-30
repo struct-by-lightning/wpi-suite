@@ -10,17 +10,10 @@
 package edu.wpi.cs.wpisuitetng.modules.requirementmanager.view;
 
 
-import java.awt.GridLayout;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.border.EtchedBorder;
-
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
-import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.ChartButtonsPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.EditButtonsPanel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.ExportButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.RequirementButtonsPanel;
 
 /**
@@ -35,6 +28,7 @@ public class ToolbarView  extends DefaultToolbarView {
 	public ChartButtonsPanel chartButton = new ChartButtonsPanel();
 	public EditButtonsPanel editButton = new EditButtonsPanel();
 	public RequirementButtonsPanel reqButton = new RequirementButtonsPanel();
+	public ExportButtonPanel exportButton = new ExportButtonPanel();
 	
 	/**
 	 * Creates and positions option buttons in upper toolbar
@@ -45,7 +39,7 @@ public class ToolbarView  extends DefaultToolbarView {
 		this.addGroup(reqButton);
 		this.addGroup(chartButton);
 		this.addGroup(editButton);
-
+		this.addGroup(exportButton);
 	}
 	
 	/**
@@ -70,5 +64,13 @@ public class ToolbarView  extends DefaultToolbarView {
 	 * @return RequirementButtonsPanel */
 	public RequirementButtonsPanel getReqButton() {
 		return reqButton;
+	}
+	
+	/**
+	 * Method getExportButton.
+	
+	 * @return RequirementButtonsPanel */
+	public ExportButtonPanel getExportButton() {
+		return exportButton;
 	}
 }

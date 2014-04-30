@@ -1,103 +1,88 @@
 /*******************************************************************************
- * Copyright (c) 2012-2014 -- WPI Suite
- *
+ * Copyright (c) 2013-2014 WPI-Suite
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
+ * 
+ * Contributors: Team Rolling Thunder, struct-by-lightning
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+/**
+ * Main class that adds the Planning Poker tab to Janeway and activates it.
+ * 
+ */
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ClosableTabComponent;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.GameSettingsWindow;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.MainView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.NewGameTab;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.ToolbarView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view.Overview.OverviewPanel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 
+/**
+ * An instance of this class is what Janeway requires to display the planning
+ * poker module as a tab.
+ */
 public class PlanningPoker implements IJanewayModule {
-	
+
 	/**
-	 * A list of tabs owned by this module
+	 * The list of tabs to create for the planning poker module. There is only
+	 * one tab to create for the planning poker module.
 	 */
-	List<JanewayTabModel> tabs;
-	JTabbedPane pokerTabs;
-	NewGameTab newGameWindow;
-    int nextTab = 1;
-    
-    ClosableTabComponent clsblTab;
-    
+	private final List<JanewayTabModel> tabs;
+
+	/**
+	 * The gui component to display in the toolbar area for the planning poker
+	 * module.
+	 */
+	private final JComponent toolbarComponent;
+
+	/**
+	 * The gui component to display in the main area for the planning poker
+	 * module.
+	 */
+	private final JComponent mainComponent;
+
+	/**
+	 * Constructor adds a planning poker tab with the necessary gui components.
+	 */
 	public PlanningPoker() {
-		
-		// Initialize the list of tabs (however, this module has only one tab)
-	    tabs = new ArrayList<JanewayTabModel>();
 
-	    //Create a JPanel to hold the toolbar for the tab
-	    ToolbarView toolbarView = new ToolbarView();
-		
-	    // Create a JPanel to hold the main contents of the tab
-	    JPanel overviewPanel = new OverviewPanel();
-	    
-	    //The inner tabs of the planning poker module in Janeway
-	    pokerTabs = new JTabbedPane();
-	    
-		//Adds the Overview tab (permanent fixture of GUI)
-	    pokerTabs.addTab( "Overview", overviewPanel );
-	    
-	    
-	    //pokerTabs.setTabComponentAt(0, new ClosableTabComponent(pokerTabs));
-	    /**
-	     * Listens to check if the "New Game" button has been clicked and opens the 
-	     * new game window in a new tab when it is. It will automatically switch to 
-	     * the new tab. Currently only one new game tab can be open at at time
-	     */
-	    
+		// Initialize the list of tabs (however, this module has only one tab).
+		tabs = new ArrayList<JanewayTabModel>();
 
-		toolbarView.getToolBarPanel().getButton().getnewGameButton().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			    //Window to create/modify game
-			    newGameWindow = new NewGameTab();
-				pokerTabs.addTab("New Game", newGameWindow);
-				pokerTabs.setTabComponentAt(pokerTabs.indexOfComponent(newGameWindow), new ClosableTabComponent(pokerTabs));			
-				pokerTabs.setSelectedComponent(newGameWindow);
-			}
-		});	
-	    
+		// Initialize the gui component for the toolbar area
+		toolbarComponent = MainView.getInstance().getToolbarComponent();
 		
-	    // Create a tab model that contains the toolbar panel and the main content panel
-	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarView, pokerTabs);
+		// Initialize the gui component for the main area
+		mainComponent = MainView.getInstance().getMainComponent();
 
-	    // Add the tab to the list of tabs owned by this module
-	    tabs.add(tab1);
+		// Create a tab model that contains the toolbar component and the main
+		// component
+		final JanewayTabModel tab = new JanewayTabModel(this.getName(), new ImageIcon(),
+				toolbarComponent, mainComponent);
+
+		// Add the tab to the list of tabs owned by this module
+		tabs.add(tab);
 	}
 
-	/*
+	/**
 	 * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName()
 	 */
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "PlanningPoker";
 	}
 
-	/*
+	/**
 	 * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs()
 	 */
 	@Override
 	public List<JanewayTabModel> getTabs() {
-		// TODO Auto-generated method stub
 		return tabs;
 	}
 

@@ -1,11 +1,11 @@
 /*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
+ * Copyright (c) 2013-2014 WPI-Suite
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Contributors: Team Rolling Thunder
+ * Contributors: Team Rolling Thunder, struct-by-lightning
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
@@ -17,11 +17,10 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * This observer handles responses to requests for all PlanningPokerGames
  *
  * @version $Revision: 1.0 $
- * @author justinhess
  */
 public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	
-	private GetPlanningPokerGamesController controller;
+	private final GetPlanningPokerGamesController controller;
 	
 	/**
 	 * Constructs the observer given a GetPlanningPokerGamesController
@@ -39,10 +38,13 @@ public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of PlanningPokerGames to a PlanningPokerGame object array
-		PlanningPokerGame[] PlanningPokerGames = PlanningPokerGame.fromJsonArray(iReq.getResponse().getBody());
+		final PlanningPokerGame[] PlanningPokerGames = PlanningPokerGame
+				.fromJsonArray(iReq.getResponse().getBody());
 		
 		// Pass these PlanningPokerGames to the controller
 		controller.receivedPlanningPokerGames(PlanningPokerGames);
+		
+		GetPlanningPokerGamesController.waitingOnRequest = false;
 	}
 
 	/**
@@ -51,6 +53,7 @@ public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	@Override
 	public void responseError(IRequest iReq) {
 		fail(iReq, null);
+		GetPlanningPokerGamesController.waitingOnRequest = false;
 	}
 
 	/**
@@ -60,8 +63,7 @@ public class GetPlanningPokerGamesRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		//Do something suitable for an error condition.
-		;
+		GetPlanningPokerGamesController.waitingOnRequest = false;
 	}
 
 }

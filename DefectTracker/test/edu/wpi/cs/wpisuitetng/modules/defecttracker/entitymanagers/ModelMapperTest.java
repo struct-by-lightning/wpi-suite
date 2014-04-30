@@ -32,11 +32,11 @@ public class ModelMapperTest {
 	User user;
 	Defect a;
 	Defect b;
-	
+
 	@Before
 	public void setUp() {
 		mapper = new ModelMapper();
-		user = new User("a", "a", "a", "a@test.com", 1);
+		user = new User("a", "a", "a", 1);
 		a = new Defect(1, "a", "a", user);
 		b = new Defect(2, "b", "b", null);
 	}
@@ -49,22 +49,22 @@ public class ModelMapperTest {
 		assertEquals("a", b.getDescription());
 		assertSame(user, b.getCreator());
 	}
-	
+
 	@Test(expected=RuntimeException.class)
 	public void testBrokenMapping() {
 		mapper.getBlacklist().remove("permission");
 		mapper.map(a, b);
 	}
-	
+
 	@Test
 	public void testTypeMismatch() {
 		mapper.map(user, a); // no shared fields, nothing happens, no exception
 	}
-	
+
 	public abstract class TestMapCallback implements MapCallback{
 		List<String> receivedNames = new ArrayList<String>();
 	}
-	
+
 	@Test
 	public void testCallback() {
 		TestMapCallback callback = new TestMapCallback() {

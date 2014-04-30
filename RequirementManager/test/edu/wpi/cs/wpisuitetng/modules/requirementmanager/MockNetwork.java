@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.requirementmanager;
 
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
@@ -33,7 +34,7 @@ public class MockNetwork extends Network {
 			throw new NullPointerException("requestMethod may not be null");
 		}
 		
-		lastRequestMade = new MockRequest(defaultNetworkConfiguration, path, requestMethod); 
+		lastRequestMade = new MockRequest(new NetworkConfiguration("aaaaa.com"), path, requestMethod); 
 		
 		return lastRequestMade;
 	}
