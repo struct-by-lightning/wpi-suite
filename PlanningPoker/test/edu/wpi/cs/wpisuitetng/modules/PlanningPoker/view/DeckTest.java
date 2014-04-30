@@ -9,7 +9,9 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,6 @@ import java.util.List;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
-import com.google.gson.JsonElement;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
 
@@ -44,19 +44,19 @@ public class DeckTest {
 	@Test
 	public void testDeckString() {
 		// set up unordered list of cards in deck
-		Integer[] cards = new Integer[] { 3, 1, 13, 21, 5, 8, 2, 1 };
+		final Integer[] cards = new Integer[] { 3, 1, 13, 21, 5, 8, 2, 1 };
 
-		Deck test = new Deck("test");
+		final Deck test = new Deck("test");
 
 		for (Integer i : cards) {
 			test.addCard(i);
 		}
 
 		// set up expected values and results
-		String expectedName = "test";
-		String name = test.getDeckName();
-		Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
-		Object[] deckResult = test.getCards().toArray();
+		final String expectedName = "test";
+		final String name = test.getDeckName();
+		final Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Object[] deckResult = test.getCards().toArray();
 
 		// tests
 		assertTrue(expectedName.equals(name));
@@ -75,21 +75,21 @@ public class DeckTest {
 	@Test
 	public void testDeckStringArrayListOfIntegerOrdered() {
 		// set up ordered list of cards in deck
-		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		final List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
 		}
 
-		Deck test = new Deck("test", cardList);
+		final Deck test = new Deck("test", cardList);
 
 		// set up expected values and results
-		String expectedName = "test";
-		String name = test.getDeckName();
-		Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
-		Object[] deckResult = test.getCards().toArray();
+		final String expectedName = "test";
+		final String name = test.getDeckName();
+		final Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Object[] deckResult = test.getCards().toArray();
 
 		// tests
 		assertTrue(expectedName.equals(name));
@@ -108,21 +108,21 @@ public class DeckTest {
 	@Test
 	public void testDeckStringArrayListOfIntegerUnOrdered() {
 		// set up unordered list of cards in deck
-		Integer[] cards = new Integer[] { 3, 1, 13, 21, 5, 8, 2, 1 };
+		final Integer[] cards = new Integer[] { 3, 1, 13, 21, 5, 8, 2, 1 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		final List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
 		}
 
-		Deck test = new Deck("test", cardList);
+		final Deck test = new Deck("test", cardList);
 
 		// set up expected values and results
-		String expectedName = "test";
-		String name = test.getDeckName();
-		Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
-		Object[] deckResult = test.getCards().toArray();
+		final String expectedName = "test";
+		final String name = test.getDeckName();
+		final Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Object[] deckResult = test.getCards().toArray();
 
 		// tests
 		assertTrue(expectedName.equals(name));
@@ -144,22 +144,22 @@ public class DeckTest {
 	@Test
 	public void testAddCard() {
 		// set up ordered list of cards in deck
-		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		final List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
 		}
 
-		Deck test = new Deck("test", cardList);
+		final Deck test = new Deck("test", cardList);
 
 		// add a value to the list
 		test.addCard(11);
 
 		// set up expected values and results
-		Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 11, 13, 21 };
-		Object[] deckResult = test.getCards().toArray();
+		final Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 11, 13, 21 };
+		final Object[] deckResult = test.getCards().toArray();
 
 		// compare the arrays
 		assertEquals(expected.length, deckResult.length);
@@ -176,22 +176,22 @@ public class DeckTest {
 	@Test
 	public void testRemoveCard() {
 		// set up ordered list of cards in deck
-		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		final List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
 		}
 
-		Deck test = new Deck("test", cardList);
+		final Deck test = new Deck("test", cardList);
 
 		// remove a value to the list
 		test.removeCard(8);
 
 		// set up expected values and results
-		Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 13, 21 };
-		Object[] deckResult = test.getCards().toArray();
+		final Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 13, 21 };
+		final Object[] deckResult = test.getCards().toArray();
 
 		// compare the arrays
 		assertEquals(expected.length, deckResult.length);
@@ -208,19 +208,19 @@ public class DeckTest {
 	@Test
 	public void testGetDeckName() {
 		// set up ordered list of cards in deck
-		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		final List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
 		}
 
-		Deck test = new Deck("test", cardList);
+		final Deck test = new Deck("test", cardList);
 
 		// set up expected values and results
-		String expectedName = "test";
-		String name = test.getDeckName();
+		final String expectedName = "test";
+		final String name = test.getDeckName();
 
 		// tests
 		assertTrue(expectedName.equals(name));
@@ -234,19 +234,19 @@ public class DeckTest {
 	@Test
 	public void testGetCards() {
 		// set up ordered list of cards in deck
-		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		final List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
 		}
 
-		Deck test = new Deck("test", cardList);
+		final Deck test = new Deck("test", cardList);
 
 		// set up expected values and results
-		Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
-		Object[] deckResult = test.getCards().toArray();
+		final Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Object[] deckResult = test.getCards().toArray();
 
 		// compare the arrays
 		assertEquals(expected.length, deckResult.length);
@@ -263,19 +263,19 @@ public class DeckTest {
 	@Test
 	public void testSetDeckName() {
 		// set up ordered list of cards in deck
-		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		final List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
 		}
 
-		Deck test = new Deck("test", cardList);
+		final Deck test = new Deck("test", cardList);
 
 		// set up expected values and results
-		String expectedName = "test";
-		String name = test.getDeckName();
+		final String expectedName = "test";
+		final String name = test.getDeckName();
 
 		// tests
 		assertTrue(expectedName.equals(name));
@@ -293,23 +293,23 @@ public class DeckTest {
 	@Test
 	public void testSetCards() {
 		// set up ordered list of cards in deck
-		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		final List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
 		}
 
-		Deck test = new Deck("test");
+		final Deck test = new Deck("test");
 
 		test.setCards(cardList);
 
 		// set up expected values and results
-		String expectedName = "test";
-		String name = test.getDeckName();
-		Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
-		Object[] deckResult = test.getCards().toArray();
+		final String expectedName = "test";
+		final String name = test.getDeckName();
+		final Integer[] expected = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Object[] deckResult = test.getCards().toArray();
 
 		// tests
 		assertTrue(expectedName.equals(name));
@@ -323,16 +323,16 @@ public class DeckTest {
 	@Test
 	public void testSerialize() {
 		// set up ordered list of cards in deck
-		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		final List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
 		}
 
-		Deck test = new Deck("test", cardList);
-		String serialized = test.toJSON();
+		final Deck test = new Deck("test", cardList);
+		final String serialized = test.toJSON();
 		
 		assertTrue(serialized.contains("deckName"));
 		assertTrue(serialized.contains("test"));
@@ -343,11 +343,11 @@ public class DeckTest {
 	@Test
 	public void testSerializeArray() {
 		// set up ordered list of cards in deck
-		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
-		Integer[] cards2 = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		final Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+		final Integer[] cards2 = new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
-		ArrayList<Integer> cardList2 = new ArrayList<Integer>();
+		final List<Integer> cardList = new ArrayList<Integer>();
+		final List<Integer> cardList2 = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
@@ -357,15 +357,15 @@ public class DeckTest {
 			cardList2.add(i);
 		}
 
-		Deck test = new Deck("test", cardList);
-		Deck test2 = new Deck("test2", cardList2);
+		final Deck test = new Deck("test", cardList);
+		final Deck test2 = new Deck("test2", cardList2);
 		
-		Deck[] dArr = new Deck[2];
+		final Deck[] dArr = new Deck[2];
 		
 		dArr[0] = test;
 		dArr[1] = test2;
 		
-		String serialized = Deck.toJSON(dArr);
+		final String serialized = Deck.toJSON(dArr);
 		
 		assertTrue(serialized.contains("deckName"));
 		assertTrue(serialized.contains("test"));
@@ -378,19 +378,19 @@ public class DeckTest {
 	}
 	
 	@Test
-	public void constructorNullName() { 
+	public void testConstructorNullName() { 
 		thrown.expect(NullPointerException.class);
 		thrown.expectMessage("DeckName must not be null");
-		Deck test = new Deck(null, null);
+		final Deck test = new Deck(null, null);
 	}
 	
 	@Test
-	public void serializeNullCards() {
-		Deck test1 = new Deck("test1");
-		Deck test2 = new Deck("test2", null);
+	public void testSerializeNullCards() {
+		final Deck test1 = new Deck("test1");
+		final Deck test2 = new Deck("test2", null);
 		
-		String serialized1 = test1.toJSON();
-		String serialized2 = test2.toJSON();
+		final String serialized1 = test1.toJSON();
+		final String serialized2 = test2.toJSON();
 		
 		assertTrue(serialized1.contains("deckName"));
 		assertTrue(serialized2.contains("deckName"));
@@ -401,23 +401,23 @@ public class DeckTest {
 	}
 	
 	@Test
-	public final void toStringTest() {
-		Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
+	public final void testToString() {
+		final Integer[] cards = new Integer[] { 1, 1, 2, 3, 5, 8, 13, 21 };
 
-		ArrayList<Integer> cardList = new ArrayList<Integer>();
+		final List<Integer> cardList = new ArrayList<Integer>();
 
 		for (Integer i : cards) {
 			cardList.add(i);
 		}
 
-		Deck test = new Deck("test", cardList);
+		final Deck test = new Deck("test", cardList);
 		
 		assertTrue(test.toString().equals("test"));
 	}
 	
 	@Test
-	public final void removeCardNullTest() {
-		Deck test1 = new Deck("test1");
+	public final void testRemoveCardNull() {
+		final Deck test1 = new Deck("test1");
 		
 		assertEquals(null, test1.getCards());
 		

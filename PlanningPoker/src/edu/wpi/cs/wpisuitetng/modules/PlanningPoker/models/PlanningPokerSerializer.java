@@ -35,9 +35,9 @@ public class PlanningPokerSerializer implements JsonSerializer<PlanningPokerGame
 	 * @return JsonElement */
 	@Override
 	public JsonElement serialize(PlanningPokerGame m, Type t, JsonSerializationContext context) {
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-		JsonObject deflated = new JsonObject();
-		JsonArray deflatedReqs = new JsonArray();
+		final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+		final JsonObject deflated = new JsonObject();
+		final JsonArray deflatedReqs = new JsonArray();
 		
 		deflated.addProperty("gameName", m.getID());
 		deflated.addProperty("moderator", m.getModerator());

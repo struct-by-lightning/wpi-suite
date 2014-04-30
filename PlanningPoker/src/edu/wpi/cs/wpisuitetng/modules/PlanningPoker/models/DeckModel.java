@@ -27,9 +27,9 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.deck.Deck;
  */
 public class DeckModel extends AbstractListModel<Deck> {
 	/** The list in which all the Decks for a single project are contained */
-	private List<Deck> Decks;
+	private final List<Deck> Decks;
 	/** The singleton instance of the DeckModel */
-	private static DeckModel instance;
+	private static DeckModel instance = null;
 
 	/**
 	 * Retrieves the singleton instance of the DeckModel, or creates it if it
@@ -38,8 +38,9 @@ public class DeckModel extends AbstractListModel<Deck> {
 	
 	 * @return the singleton instance of the DeckModel */
 	public static DeckModel getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new DeckModel();
+		}
 		return instance;
 	}
 
@@ -96,9 +97,8 @@ public class DeckModel extends AbstractListModel<Deck> {
 	/**
 	 * Provides the number of elements in the list of Decks for the project.
 	 * 
-	
-	
-	 * @return the number of Decks in the project * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize()
+	 * @return the number of Decks in the project
+	 * @see javax.swing.ListModel#getSize()
 	 */
 	public int getSize() {
 		return Decks.size();
@@ -110,9 +110,8 @@ public class DeckModel extends AbstractListModel<Deck> {
 	 * @param index
 	 *            the index from which you want to retrieve a Deck
 	 * 
-	
-	
-	 * @return the Deck at the given index * @see javax.swing.ListModel#getElementAt(int) * @see javax.swing.ListModel#getElementAt(int)
+	 * @return the Deck at the given index
+	 * @see javax.swing.ListModel#getElementAt(int)
 	 */
 	@Override
 	public Deck getElementAt(int index) {
@@ -127,8 +126,8 @@ public class DeckModel extends AbstractListModel<Deck> {
 	 * PlanningPokerUser from the model.
 	 */
 	public void emptyModel() {
-		int oldSize = getSize();
-		Iterator<Deck> iterator = Decks.iterator();
+		final int oldSize = getSize();
+		final Iterator<Deck> iterator = Decks.iterator();
 		while (iterator.hasNext()) {
 			iterator.next();
 			iterator.remove();

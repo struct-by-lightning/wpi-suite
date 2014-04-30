@@ -56,13 +56,7 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	 * @param requirementID int
 	 */
 	public PlanningPokerVote(String gameName, String userName, int vote, int requirementID) {
-		if(gameName != null){
-			this.gameName = gameName.replace(':', ';');
-		}
-		
-		else{
-			this.gameName = null;
-		}
+		this.gameName = gameName;
 		if(userName != null){
 			this.userName = userName.toLowerCase();
 		}
@@ -72,16 +66,22 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 		this.vote = vote;
 		this.requirementID = requirementID;
 	}
+	
 	/**
-	 * in ppvotemodel, this does not extend easily to the standard one given to us by a gson object
-	
-	
-	 * @return the JSON string with id being the primary key concat of gamename and username as well as vote * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
+	 * in ppvotemodel, this does not extend easily to the standard one given to
+	 * us by a gson object
+	 * 
+	 * 
+	 * @return the JSON string with id being the primary key concat of gamename
+	 *         and username as well as vote * @see
+	 *         edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see
+	 *         edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
 	@Override
 	public String toJSON() {
-		// TODO Auto-generated method stub
-		return "{\"id\":\"" + gameName + ":" + userName + ":" + requirementID + "\",\"vote\":\"" + vote + "\"}";
+
+		return "{\"id\":\"" + gameName.replace(':', ';') + ":" + userName + ":" + requirementID + "\",\"vote\":\"" + vote + "\"}";
+
 	}
 	/**
 	 * gives the cannonical styling (as would appear in the JSON) of the primary key
@@ -99,7 +99,7 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	 */
 	@Override
 	public void setID(String toSet) {
-		Scanner scTemp = new Scanner(toSet);
+		final Scanner scTemp = new Scanner(toSet);
 		scTemp.useDelimiter("\\s*:\\s*");
 		gameName = scTemp.next();
 		userName = scTemp.next();
@@ -142,34 +142,41 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	public void setUserName(String toSet) {
 		userName = toSet.toLowerCase();
 	}
-	/**
-	 * This method makes a JSON string into a votemodel.
-	 * It is currently fairly brittle, but should work if the standards for usernames and gamenames don't change.
-	 * @param json assumes a JSON string generated from a model of this type
 	
-	 * @return the object form of the JSON */
+	/**
+	 * This method makes a JSON string into a votemodel. It is currently fairly
+	 * brittle, but should work if the standards for usernames and gamenames
+	 * don't change.
+	 * 
+	 * @param json
+	 *            assumes a JSON string generated from a model of this type
+	 * 
+	 * @return the object form of the JSON
+	 */
 	public static PlanningPokerVote fromJSON(String json) {
-		Scanner scTemp = new Scanner(json);
+		final Scanner scTemp = new Scanner(json);
 		System.out.println(json);
 		// skip the boilerplate
 		scTemp.useDelimiter("\\\"?[:,{}]\\\"?");
 		scTemp.next();
+		// get the gameName
+		String retGameName = scTemp.next().replace(';', ':');
+		// check if the gameName is null
+		if(retGameName.equals("null")) {
+			retGameName = null;
+		}
 		// get the userName
 		String retUserName = scTemp.next();
-		// get the gameName
-		String retGameName = scTemp.next();
-		// check if the gameName is null
-		if(retGameName.equals("null"))
-			retGameName = null;
 		
 		// get the requirement ID
-		Integer retRequirementID = Integer.parseInt(scTemp.next());
+		final Integer retRequirementID = Integer.parseInt(scTemp.next());
 		// check if the userName is null
-		if(retUserName.equals("null"))
+		if(retUserName.equals("null")) {
 			retUserName = null;
+		}
 		scTemp.next();
 		// get and format the vote
-		int retVote = Integer.parseInt(scTemp.next());
+		final int retVote = Integer.parseInt(scTemp.next());
 		
 		return new PlanningPokerVote(retGameName, retUserName, retVote, retRequirementID);
 	}
@@ -182,12 +189,13 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	
 	 * @return An array of reconstructed PlanningPokerGames */
 	public static PlanningPokerVote[] fromJsonArray(String jsonArr) {
-		PlanningPokerVoteDeserializer ppd = new PlanningPokerVoteDeserializer();
+
+
 		JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
 		List<PlanningPokerVote> ppvs = new ArrayList<PlanningPokerVote>();
 
 		for (JsonElement json : array) {
-			ppvs.add(ppd.deserialize(json, null, null));
+			ppvs.add(PlanningPokerVote.fromJSON(json.toString()));
 		}
 
 		return ppvs.toArray(new PlanningPokerVote[0]);

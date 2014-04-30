@@ -22,7 +22,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class GetPlanningPokerUserRequestObserver implements RequestObserver {
 
-	private GetPlanningPokerUserController controller;
+	private final GetPlanningPokerUserController controller;
 
 	/**
 	 * Parse the Users out of the response body and pass them the controller
@@ -42,7 +42,8 @@ public class GetPlanningPokerUserRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of Users to a PlanningPokerUser object array
-		PlanningPokerUser[] users = PlanningPokerUser.fromJSONArray(iReq.getResponse().getBody());
+		final PlanningPokerUser[] users = PlanningPokerUser.fromJSONArray(iReq
+				.getResponse().getBody());
 
 		// pass these users to the controller
 		controller.receivedUser(users);

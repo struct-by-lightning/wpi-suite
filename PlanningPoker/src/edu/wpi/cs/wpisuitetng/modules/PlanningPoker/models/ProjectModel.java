@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 public class ProjectModel extends AbstractListModel<Project> {
 
 	/** the singleton instance of the ProjectModel */
-	private static ProjectModel instance;
+	private static ProjectModel instance = null;
 	/**
 	 * Returns the singleton instance of the ProjectModel, or creates one if it
 	 * does not yet exist.
@@ -38,13 +38,14 @@ public class ProjectModel extends AbstractListModel<Project> {
 	 * @return the singleton instance of the ProjectModel
 	 */
 	public static ProjectModel getInstance() {
-		if (instance == null)
+		if (instance == null) {
 			instance = new ProjectModel();
+		}
 		return instance;
 	}
 
 	/** The list of all projects on the server */
-	private List<Project> projects;
+	private final List<Project> projects;
 
 	/** Constructs an empty project model */
 	private ProjectModel() {
@@ -82,8 +83,8 @@ public class ProjectModel extends AbstractListModel<Project> {
 	 * model.
 	 */
 	public void emptyModel() {
-		int oldSize = getSize();
-		Iterator<Project> iterator = projects.iterator();
+		final int oldSize = getSize();
+		final Iterator<Project> iterator = projects.iterator();
 		while (iterator.hasNext()) {
 			iterator.next();
 			iterator.remove();
@@ -115,8 +116,9 @@ public class ProjectModel extends AbstractListModel<Project> {
 	public Project getProject(String name) {
 		// iterate through the list of Projects until name is found
 		for (Project p : projects) {
-			if (p.getName().equals(name))
+			if (p.getName().equals(name)) {
 				return p;
+			}
 		}
 		return null;
 	}

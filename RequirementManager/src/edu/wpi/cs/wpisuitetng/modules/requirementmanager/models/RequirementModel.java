@@ -206,7 +206,7 @@ public class RequirementModel extends AbstractListModel{
 	public List<Requirement> getRequirements() {
 		return requirements;
 	}
-
+	
 	/**
 	 * Returns the list of children for the given requirement.
 	 * @param requirement the parent requirement to find children for.

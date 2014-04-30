@@ -22,11 +22,22 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.AddRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementPriority;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementStatus;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.Transaction;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.TransactionHistory;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.Exporter;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.Importer;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.iterations.IterationRequirements;
 
 /**
  * @author Benjamin
@@ -35,6 +46,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventControlle
 public class ExportButtonPanel extends ToolbarGroupView {
 	// initialize the main view toolbar buttons	
 	private final JButton exportButton = new JButton("<html>Export Requirements</html>");
+	private final JButton importButton = new JButton("<html>Import Requirements</html>");
 	private final JPanel contentPanel = new JPanel();
 		
 		public ExportButtonPanel(){
@@ -46,6 +58,7 @@ public class ExportButtonPanel extends ToolbarGroupView {
 			//this.createIterationButton.setSize(200, 200);
 			//this.createButton.setPreferredSize(new Dimension(200, 200));
 			this.exportButton.setHorizontalAlignment(SwingConstants.CENTER);
+			this.importButton.setHorizontalAlignment(SwingConstants.CENTER);
 			
 			/**
 			 * Exports the list of selected requirements to a file when btnExport is
@@ -82,13 +95,96 @@ public class ExportButtonPanel extends ToolbarGroupView {
 			    exportButton.setIcon(new ImageIcon(img));			    
 			} catch (IOException ex) {}
 			
+			/**
+			 * Import the list of selected requirements to a file when importButton is
+			 * pressed
+			 */
+			importButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					// Create default list model
+					String str;
+					//Create a file chooser
+					final JFileChooser fc = new JFileChooser();
+					//In response to a button click:
+					int returnVal = fc.showOpenDialog(contentPanel);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						// Create importer
+						Importer im = new Importer();
+						// Import requirements
+						try {
+							str = im.importFromJSON(fc.getSelectedFile().getAbsolutePath());
+							// Add the requirements
+							Requirement[] req = Requirement.fromJsonArray(str);
+							for(int i = 0; i < req.length; i++) {
+								req[i].setId(ViewEventController.getInstance().getOverviewTable().getRowCount() + i);
+								// Prepare the transaction history
+								TransactionHistory history = req[i].getHistory();
+								Transaction t = new Transaction(ConfigManager.getConfig().getUserName(), System.currentTimeMillis(), "Requirement imported");
+								int j = 0;
+								while(history.getIterator(j).hasNext()) {
+									j++;
+								}
+								history.getIterator(j).add(t);
+								req[i].setHistory(history);
+								// Set the status to new
+								req[i].setStatus(RequirementStatus.NEW);
+								// Set the priority
+								req[i].setPriority(RequirementPriority.BLANK);
+								// Set the release number
+								req[i].setRelease("");
+								// Set the estimate
+								req[i].setEstimate(0);
+								// Put it in the backlog
+								req[i].setIteration("Backlog");
+								// Add the requirement
+								AddRequirementController.getInstance().addRequirement(req[i]);
+								try {
+									Thread.sleep(150);
+								} catch (InterruptedException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+							// Because why not
+							try {
+								Thread.sleep(150);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							GetRequirementsController.getInstance().retrieveRequirements();
+							try {
+								Thread.sleep(150);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							ViewEventController.getInstance().refreshTree();
+							ViewEventController.getInstance().refreshTable();
+							//RequirementModel.getInstance().setRequirements(GetRequirementsController.getInstance().);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						System.out.println("Imported all selected requirements");
+					}
+				}
+			});
+			
+			try {
+			    Image img = ImageIO.read(getClass().getResource("export.png"));
+			    exportButton.setIcon(new ImageIcon(img));			    
+			} catch (IOException ex) {}
+			
 			contentPanel.add(exportButton);
+			contentPanel.add(importButton);
 			contentPanel.setOpaque(false);
 			
 			this.add(contentPanel);
 		}
+		
 		/**
-		 * Method getCreateButton.
+		 * Method getExportButton.
 		
 		 * @return JButton Returns the export button
 		 */
@@ -96,5 +192,12 @@ public class ExportButtonPanel extends ToolbarGroupView {
 			return exportButton;
 		}
 
+		/**
+		 * Method getImportButton.
 		
+		 * @return JButton Returns the export button
+		 */
+		public JButton getImportButton() {
+			return importButton;
+		}
 }

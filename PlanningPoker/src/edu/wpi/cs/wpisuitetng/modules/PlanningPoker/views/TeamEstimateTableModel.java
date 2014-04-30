@@ -11,9 +11,11 @@ import javax.swing.table.AbstractTableModel;
 
 public class TeamEstimateTableModel extends AbstractTableModel
 {
+
     private List<String> columnNames = new ArrayList();
     private List<List> data = new ArrayList();
     {	// Add the columns
+
         columnNames.add("Username");
         columnNames.add("Vote");
     }

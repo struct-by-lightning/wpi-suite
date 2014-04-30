@@ -28,13 +28,13 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerFinalEstimateController;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerFinalEstimateController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerVoteController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
@@ -47,7 +47,9 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
- * @author ?
+ * @author friscis
+ * @author swconley
+ * @author mamora
  */
 public class ClosedGameView extends JPanel {
 
@@ -60,19 +62,19 @@ public class ClosedGameView extends JPanel {
 	 *            The closed planning poker game to open up a new tab for.
 	 */
 	public static void open(PlanningPokerGame game) {
-		ClosedGameView view = new ClosedGameView(game);
+		final ClosedGameView view = new ClosedGameView(game);
 		MainView.getInstance().addCloseableTab(game.getGameName(), view);
 	}
 
 	/**
 	 * The game which this instance of a closed game view is created from.
 	 */
-	private PlanningPokerGame game;
+	private final PlanningPokerGame game;
 
 	/**
 	 * The list of requirements associated with this instance's game.
 	 */
-	private ArrayList<Requirement> requirements;
+	private List<Requirement> requirements;
 
 	/**
 	 * Constructor initializes GUI components, then updates them based on the
@@ -83,14 +85,14 @@ public class ClosedGameView extends JPanel {
 	 */
 	private ClosedGameView(PlanningPokerGame game) {
 		this.game = game;
-		this.requirements = this.game.getRequirements();
+		requirements = this.game.getRequirements();
 
 		initComponents();
 		initLogic();
 		initForGame();
 
 		// Initially select the first item in the tree.
-		this.requirementList.setSelectedIndex(0);
+		requirementList.setSelectedIndex(0);
 	}
 	/**
 	 * 
@@ -108,13 +110,13 @@ public class ClosedGameView extends JPanel {
 		// selected in the tree.
 		System.out.println("**Initforgame was called");
 		
-		this.requirements = game.getRequirements();
-		this.requirementList
+		requirements = game.getRequirements();
+		requirementList
 				.addListSelectionListener(new ListSelectionListener() {
 					@Override
 					public void valueChanged(ListSelectionEvent ev) {
 						System.out.println("***The listener has been activated***");
-						JList list;
+						final JList list;
 						list = (JList) ev.getSource();
 						if(list.getSelectedIndex() != -1) {
 							
@@ -128,7 +130,20 @@ public class ClosedGameView extends JPanel {
 							requirementDescriptionLabel.setText(selected
 									.getDescription());
 							updateEstimateTotal(currentID);
-							ArrayList<Double> reqVotes = new ArrayList<Double>();
+
+							final ArrayList<Double> reqVotes = new ArrayList<Double>();
+
+							estimateModel = new TeamEstimateTableModel();
+							
+							for(PlanningPokerVote v : gameVotes) {
+								if(v.getRequirementID() == currentID) {
+									reqVotes.add((double)v.getVote());
+									estimateModel.addRow(Arrays.asList(v.getUserName(),
+											v.getVote()));
+								}
+							}
+							// Estimates
+							estimates.setModel(estimateModel);
 							
 							// Resize the table row height
 						    try
@@ -137,33 +152,28 @@ public class ClosedGameView extends JPanel {
 						        {
 						            int rowHeight = estimates.getRowHeight();
 
-						            for (int column = 0; column < estimates.getColumnCount(); column++)
+						            for (int column = 0; column < estimates
+						            		.getColumnCount(); column++)
 						            {
-						                Component comp = estimates.prepareRenderer(estimates.getCellRenderer(row, column), row, column);
-						                rowHeight = Math.max(rowHeight, comp.getPreferredSize().height) + 5;
+						                Component comp = estimates.prepareRenderer(
+						                		estimates.getCellRenderer(row, column),
+						                		row, column);
+						                rowHeight = Math.max(rowHeight,
+						                		comp.getPreferredSize().height) + 5;
 						            }
 
 						            estimates.setRowHeight(row, rowHeight);
 						        }
 						    }
 						    catch(ClassCastException e) {}
-						    // Align text center
+
+						    
+						    // Align text center in table
 						    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 						    centerRenderer.setHorizontalAlignment( JLabel.CENTER );
 						    estimates.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 						    estimates.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-						    // Table
-							estimateModel = new TeamEstimateTableModel();
-							
-							for(PlanningPokerVote v : gameVotes) {
-								if(v.getRequirementID() == currentID) {
-									reqVotes.add((double)v.getVote());
-									estimateModel.addRow(Arrays.asList(v.getUserName(), v.getVote()));
-								}
-							}
-							// Estimates
-							estimates.setModel(estimateModel);
-							
+						    
 							if(reqVotes.size()!= 0) {
 								double[] voteNums = new double[reqVotes.size()];
 								for(int i = 0; i< reqVotes.size(); i++) {
@@ -171,27 +181,32 @@ public class ClosedGameView extends JPanel {
 								}
 								mean.setText(meanDef+df.format(Statistics.mean(voteNums)));
 								median.setText(medianDef+df.format(Statistics.median(voteNums)));
+								
 								Average = Math.round(Statistics.mean(voteNums));
 								mode.setText(modeDef+df.format(Statistics.mode(voteNums)));
+								
 								if(reqVotes.size()>1) {
 									std.setText(stdDef+df.format(Statistics.StdDev(voteNums)));
+
 								}
 								else {
-									std.setText(stdDef+"N/A");
+									std.setText(stdDef + "N/A");
 								}
-								max.setText(maxDef+df.format(Statistics.max(voteNums)));
-								min.setText(minDef+df.format(Statistics.min(voteNums)));
+								max.setText(maxDef + df.format(Statistics.max(voteNums)));
+								min.setText(minDef + df.format(Statistics.min(voteNums)));
 							}
 							else {
-								mean.setText(meanDef+"N/A");
-								median.setText(medianDef+"N/A");
-								mode.setText(modeDef+"N/A");
-								std.setText(stdDef+"N/A");
-								max.setText(maxDef+"N/A");
-								min.setText(minDef+"N/A");
+								mean.setText(meanDef + "N/A");
+								median.setText(medianDef + "N/A");
+								mode.setText(modeDef + "N/A");
+								std.setText(stdDef + "N/A");
+								max.setText(maxDef + "N/A");
+								min.setText(minDef + "N/A");
 							}
 							
-							estimateNumberBox.setText(""+Average);
+							if (estimateNumberBox.getText().equals("0")) {
+								estimateNumberBox.setText(""+Average);
+							}
 							
 							previousID = currentID;
 						}
@@ -201,7 +216,7 @@ public class ClosedGameView extends JPanel {
 							updateButton.setEnabled(false);
 							submitButton.setText("Submit");
 						}
-						else{
+						else if(!game.isArchived()){
 							submitButton.setEnabled(true);
 						}
 					}
@@ -209,18 +224,18 @@ public class ClosedGameView extends JPanel {
 				});
 
 		// Populate the list with each requirement.
-		DefaultListModel<String> model = new DefaultListModel<String>();
-		for (Requirement r : this.requirements) {
+		final DefaultListModel<String> model = new DefaultListModel<String>();
+		for (Requirement r : requirements) {
 			model.addElement(r.getName());
 		}
 
-		this.requirementList.setModel(model);
+		requirementList.setModel(model);
 
 		// Show the name of the game.
-		this.gameNameLabel.setText(game.getGameName());
+		gameNameLabel.setText(game.getGameName());
 
 		// Show the deadline of the game if there is one.
-		this.gameDeadlineDateLabel.setText("Game is Finished");
+		gameDeadlineDateLabel.setText("Game is Finished");
 		if (!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {
 			submitButton.setEnabled(false);
 			estimateNumberBox.setEnabled(false);
@@ -302,11 +317,13 @@ public class ClosedGameView extends JPanel {
 	 *            The requriement currently being viewed by the user.
 	 */
 	private void updateEstimateTotal(int selected) {
-		PlanningPokerFinalEstimate[] finalEsts = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
-		this.estimateNumberBox.setText("0");
+		final PlanningPokerFinalEstimate[] finalEsts = GetPlanningPokerFinalEstimateController
+				.getInstance().retrievePlanningPokerFinalEstimate();
+		estimateNumberBox.setText("0");
 		for(PlanningPokerFinalEstimate ppfe : finalEsts) {
-			if(ppfe.getRequirementID() ==  selected && ppfe.getGameName().equals(game.getGameName())) {
-				this.estimateNumberBox.setText("" + ppfe.getEstimate());
+			if (ppfe.getRequirementID() == selected
+					&& ppfe.getGameName().equals(game.getGameName())) {
+				estimateNumberBox.setText("" + ppfe.getEstimate());
 			}
 		}
 		enableUpdateButton(finalEsts);
@@ -319,7 +336,7 @@ public class ClosedGameView extends JPanel {
 			estimateNumberBox.setEnabled(false);
 		}
 		else {
-			List<Integer> gameReqIds = new ArrayList<Integer>();
+			final List<Integer> gameReqIds = new ArrayList<Integer>();
 			boolean gameHasEstimates = true;
 			for(PlanningPokerFinalEstimate ppfe : finalEsts) {
 				if(ppfe.getGameName().equals(game.getGameName())) {
@@ -329,9 +346,11 @@ public class ClosedGameView extends JPanel {
 					}
 				}
 			}
-			System.out.println("The game req ids: " +gameReqIds);
-			for(Requirement r : this.requirements){
-				System.out.println("the req id from this game: "+r.getId() +"and has a fianl estimate "+ gameReqIds.contains((Integer)r.getId()));
+			System.out.println("The game req ids: " + gameReqIds);
+			for(Requirement r : requirements){
+				System.out.println("the req id from this game: " + r.getId()
+						+ "and has a fianl estimate "
+						+ gameReqIds.contains((Integer) r.getId()));
 				if(gameReqIds.contains((Integer)r.getId())){
 					updateButton.setEnabled(gameHasEstimates);
 				}
@@ -348,7 +367,7 @@ public class ClosedGameView extends JPanel {
 	 * THIS METHOD WAS AUTOMATICALLY GENERATED BY NETBEANS.
 	 */
 	private void initComponents() {
-		java.awt.GridBagConstraints gridBagConstraints;
+		final java.awt.GridBagConstraints gridBagConstraints;
 
 		splitPane = new javax.swing.JSplitPane();
 		leftSplitPanel = new javax.swing.JPanel();
@@ -392,7 +411,7 @@ public class ClosedGameView extends JPanel {
 		requirementsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		requirementsLabel.setText("Requirements");
 
-		javax.swing.GroupLayout requirementsLabelPanelLayout = new javax.swing.GroupLayout(
+		final javax.swing.GroupLayout requirementsLabelPanelLayout = new javax.swing.GroupLayout(
 				requirementsLabelPanel);
 		requirementsLabelPanel.setLayout(requirementsLabelPanelLayout);
 		requirementsLabelPanelLayout.setHorizontalGroup(requirementsLabelPanelLayout
@@ -415,7 +434,8 @@ public class ClosedGameView extends JPanel {
 
 		requirementListScrollPane.setViewportView(requirementList);
 
-		javax.swing.GroupLayout leftSplitPanelLayout = new javax.swing.GroupLayout(leftSplitPanel);
+		final javax.swing.GroupLayout leftSplitPanelLayout = new javax.swing.GroupLayout(
+				leftSplitPanel);
 		leftSplitPanel.setLayout(leftSplitPanelLayout);
 		leftSplitPanelLayout.setHorizontalGroup(leftSplitPanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -458,7 +478,8 @@ public class ClosedGameView extends JPanel {
 		gameDeadlineDateLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		gameDeadlineDateLabel.setText("game.getDeadlineDate()");
 
-		javax.swing.GroupLayout gameTitlePanelLayout = new javax.swing.GroupLayout(gameTitlePanel);
+		final javax.swing.GroupLayout gameTitlePanelLayout = new javax.swing.GroupLayout(
+				gameTitlePanel);
 		gameTitlePanel.setLayout(gameTitlePanelLayout);
 		gameTitlePanelLayout.setHorizontalGroup(gameTitlePanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -492,7 +513,7 @@ public class ClosedGameView extends JPanel {
 		requirementNameLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		requirementNameLabel.setText("game.getRequirements.get(LIST SELECTION NUM).name()");
 
-		javax.swing.GroupLayout requirementNamePanelLayout = new javax.swing.GroupLayout(
+		final javax.swing.GroupLayout requirementNamePanelLayout = new javax.swing.GroupLayout(
 				requirementNamePanel);
 		requirementNamePanel.setLayout(requirementNamePanelLayout);
 		requirementNamePanelLayout.setHorizontalGroup(requirementNamePanelLayout
@@ -522,7 +543,7 @@ public class ClosedGameView extends JPanel {
 		requirementDescriptionLabel
 				.setText("game.getRequirements.get(LIST SELECTION NUM).description()");
 
-		javax.swing.GroupLayout requirementDescriptionLabelPanelLayout = new javax.swing.GroupLayout(
+		final javax.swing.GroupLayout requirementDescriptionLabelPanelLayout = new javax.swing.GroupLayout(
 				requirementDescriptionLabelPanel);
 		requirementDescriptionLabelPanel.setLayout(requirementDescriptionLabelPanelLayout);
 		requirementDescriptionLabelPanelLayout
@@ -545,7 +566,7 @@ public class ClosedGameView extends JPanel {
 										javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
 								.addContainerGap()));
 
-		javax.swing.GroupLayout requirementPanelLayout = new javax.swing.GroupLayout(
+		final javax.swing.GroupLayout requirementPanelLayout = new javax.swing.GroupLayout(
 				requirementPanel);
 		requirementPanel.setLayout(requirementPanelLayout);
 		requirementPanelLayout.setHorizontalGroup(requirementPanelLayout
@@ -582,7 +603,7 @@ public class ClosedGameView extends JPanel {
 		estimateTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		estimateTitleLabel.setText("<html>Final estimate</html>");
 
-		javax.swing.GroupLayout estimateTitlePanelLayout = new javax.swing.GroupLayout(
+		final javax.swing.GroupLayout estimateTitlePanelLayout = new javax.swing.GroupLayout(
 				estimateTitlePanel);
 		estimateTitlePanel.setLayout(estimateTitlePanelLayout);
 		estimateTitlePanelLayout.setHorizontalGroup(estimateTitlePanelLayout.createParallelGroup(
@@ -607,8 +628,9 @@ public class ClosedGameView extends JPanel {
 		estimateNumberBox.setText("0");
 		estimateNumberBox.addKeyListener(new KeyAdapter() {
 			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) || (c == KeyEvent.VK_DELETE))) {
+				final char c = e.getKeyChar();
+				if (!((c >= '0') && (c <= '9') || (c == KeyEvent.VK_BACK_SPACE) ||
+						(c == KeyEvent.VK_DELETE))) {
 					getToolkit().beep();
 					e.consume();
 					System.out.println("Please enter a number");
@@ -620,7 +642,7 @@ public class ClosedGameView extends JPanel {
 			}
 		});
 
-		javax.swing.GroupLayout estimateNumberPanelLayout = new javax.swing.GroupLayout(
+		final javax.swing.GroupLayout estimateNumberPanelLayout = new javax.swing.GroupLayout(
 				estimateNumberPanel);
 		estimateNumberPanel.setLayout(estimateNumberPanelLayout);
 		estimateNumberPanelLayout.setHorizontalGroup(estimateNumberPanelLayout.createParallelGroup(
@@ -639,12 +661,12 @@ public class ClosedGameView extends JPanel {
 						.addComponent(estimateNumberBox, javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
-		mean.setFont(new java.awt.Font("Tahoma", 0, 14));
-		median.setFont(new java.awt.Font("Tahoma", 0, 14));
-		mode.setFont(new java.awt.Font("Tahoma", 0, 14));
-		std.setFont(new java.awt.Font("Tahoma", 0, 14));
-		max.setFont(new java.awt.Font("Tahoma", 0, 14));
-		min.setFont(new java.awt.Font("Tahoma", 0, 14));
+		mean.setFont(new java.awt.Font("Tahoma", 0, 16));
+		median.setFont(new java.awt.Font("Tahoma", 0, 16));
+		mode.setFont(new java.awt.Font("Tahoma", 0, 16));
+		std.setFont(new java.awt.Font("Tahoma", 0, 16));
+		max.setFont(new java.awt.Font("Tahoma", 0, 16));
+		min.setFont(new java.awt.Font("Tahoma", 0, 16));
 		stats.add(mean);
 		stats.add(std);
 		stats.add(median);
@@ -654,7 +676,8 @@ public class ClosedGameView extends JPanel {
 		// stats.setPreferredSize(new Dimension(stats.getWidth(), 50));
 		stats.setBorder(null);
 
-		javax.swing.GroupLayout rightBlankPanelLayout = new javax.swing.GroupLayout(rightBlankPanel);
+		final javax.swing.GroupLayout rightBlankPanelLayout = new javax.swing.GroupLayout(
+				rightBlankPanel);
 		rightBlankPanel.setLayout(rightBlankPanelLayout);
 		rightBlankPanelLayout.setHorizontalGroup(rightBlankPanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -700,9 +723,9 @@ public class ClosedGameView extends JPanel {
 
 		estimates.setModel(estimateModel);
 
-		estimates.setFont(new java.awt.Font("Tahoma", 0, 20));
+		estimates.setFont(new java.awt.Font("Tahoma", 0, 16));
 		
-		JScrollPane scroll = new JScrollPane();
+		final JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(estimates);
 		// scroll.setPreferredSize(new Dimension(500, 400));
 
@@ -726,11 +749,13 @@ public class ClosedGameView extends JPanel {
 		updateButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
-				System.out.println("These are the current final estimates:" +Arrays.asList(stuff));
+				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController
+						.getInstance().retrievePlanningPokerFinalEstimate();
+				System.out.println("These are the current final estimates:" + Arrays.asList(stuff));
 				for(PlanningPokerFinalEstimate ppfe : stuff) {
 					if(ppfe.getGameName().equals(game.getGameName())) {
-						Requirement req2set = RequirementModel.getInstance().getRequirement(ppfe.getRequirementID());
+						Requirement req2set = RequirementModel.getInstance()
+								.getRequirement(ppfe.getRequirementID());
 						req2set.setEstimate(ppfe.getEstimate());
 						UpdateRequirementController.getInstance().updateRequirement(req2set);
 					}
@@ -751,7 +776,7 @@ public class ClosedGameView extends JPanel {
 		});
 		updateButton.setEnabled(false);
 		
-		javax.swing.GroupLayout estimateSubmitPanelLayout = new javax.swing.GroupLayout(
+		final javax.swing.GroupLayout estimateSubmitPanelLayout = new javax.swing.GroupLayout(
 				estimateSubmitPanel);
 		estimateSubmitPanel.setLayout(estimateSubmitPanelLayout);
 		estimateSubmitPanelLayout.setHorizontalGroup(estimateSubmitPanelLayout.createParallelGroup(
@@ -771,7 +796,8 @@ public class ClosedGameView extends JPanel {
 								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
 
-		javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(estimatePanel);
+		final javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(
+				estimatePanel);
 		estimatePanel.setLayout(estimatePanelLayout);
 		estimatePanelLayout.setHorizontalGroup(estimatePanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -823,7 +849,7 @@ public class ClosedGameView extends JPanel {
 		submitButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				List<Requirement> req = RequirementModel.getInstance().getRequirements();
+				final List<Requirement> req = RequirementModel.getInstance().getRequirements();
 				int n = 0;
 				for (int i = 0; i < req.size(); i++) {
 					if (req.get(i).getName().equals(selected.getName())) {
@@ -835,18 +861,21 @@ public class ClosedGameView extends JPanel {
 						.getName()
 						+ " set estimate to " + estimateNumberBox.getText());
 
-				Requirement req2set = RequirementModel.getInstance().getRequirement(n);
-				PlanningPokerFinalEstimate ppfe = new PlanningPokerFinalEstimate(game.getGameName(), n);
+				final Requirement req2set = RequirementModel.getInstance().getRequirement(n);
+				final PlanningPokerFinalEstimate ppfe = new PlanningPokerFinalEstimate(
+						game.getGameName(), n);
 				ppfe.setEstimate(Integer.parseInt(estimateNumberBox.getText()));
-				AddPlanningPokerFinalEstimateController.getInstance().addPlanningPokerFinalEstimate(ppfe);
+				AddPlanningPokerFinalEstimateController.getInstance()
+						.addPlanningPokerFinalEstimate(ppfe);
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController.getInstance().retrievePlanningPokerFinalEstimate();
-				System.out.println("These are the current final estimates:" +Arrays.asList(stuff));
+				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController
+						.getInstance().retrievePlanningPokerFinalEstimate();
+				System.out.println("These are the current final estimates:" + Arrays.asList(stuff));
 				enableUpdateButton(stuff);
 				
 				submitButton.setEnabled(false);
@@ -859,7 +888,8 @@ public class ClosedGameView extends JPanel {
 			estimateTitleLabel.setEnabled(false);
 			updateButton.setEnabled(false);
 		}
-		javax.swing.GroupLayout rightSplitPanelLayout = new javax.swing.GroupLayout(rightSplitPanel);
+		final javax.swing.GroupLayout rightSplitPanelLayout = new javax.swing.GroupLayout(
+				rightSplitPanel);
 		rightSplitPanel.setLayout(rightSplitPanelLayout);
 		rightSplitPanelLayout.setHorizontalGroup(rightSplitPanelLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
@@ -937,15 +967,15 @@ public class ClosedGameView extends JPanel {
 	private javax.swing.JPanel allEstimates;
 	private TeamEstimateTableModel  estimateModel;
 	private PlanningPokerVote[] allVotes;
-	private String meanDef = "    Mean: ";
-	private String medianDef = "  Median: ";
-	private String modeDef = "    Mode: ";
-	private String stdDef = "Std Dev: ";
-	private String maxDef = "    Max: ";
-	private String minDef = "    Min: ";
+	private final String meanDef = "    Mean: ";
+	private final String medianDef = "  Median: ";
+	private final String modeDef = "    Mode: ";
+	private final String stdDef = "Std Dev: ";
+	private final String maxDef = "    Max: ";
+	private final String minDef = "    Min: ";
 	private List<PlanningPokerVote> gameVotes;
 	private int currentID;
-	private DecimalFormat df = new DecimalFormat("#.###");
+	private final DecimalFormat df = new DecimalFormat("#.###");
 	private int previousID = -1;
 	private JButton submitButton;
 	private JButton updateButton;

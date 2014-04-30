@@ -7,7 +7,7 @@
  * 
  * Contributors: Struct-By-Lightning
  ******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.view;
+package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -21,17 +21,10 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.ClosedGameView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.NewGameView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.OpenGameView;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.PreferencesView;
 
 /**
  * This class closes open tabs
@@ -114,6 +107,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 			System.out.println(index);
 			System.out.println(tabbedPane);
 			System.out.println(tabbedPane.getComponentAt(index));
+
 			Component tabView = tabbedPane.getComponentAt(index);
 
 			if (tabView instanceof CreateGameView) {
@@ -124,6 +118,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 							"Are you sure, you want to close the current tab?",
 							"Warning",
 							JOptionPane.YES_NO_OPTION);
+
 
 					if (n == JOptionPane.YES_OPTION) {
 						tabbedPane.removeTabAt(index);

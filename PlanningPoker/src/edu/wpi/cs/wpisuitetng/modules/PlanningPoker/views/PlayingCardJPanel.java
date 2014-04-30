@@ -9,13 +9,8 @@
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -30,8 +25,8 @@ public class PlayingCardJPanel extends JPanel {
 	private final int value;
 	private boolean selected;
 	private Image img;
-	private GroupLayout innerCardPanelLayout;
-	private GroupLayout thisLayout;
+	private final GroupLayout innerCardPanelLayout;
+	private final GroupLayout thisLayout;
 
 	/**
 	 * Inner panels for displaying this card.
@@ -52,24 +47,24 @@ public class PlayingCardJPanel extends JPanel {
 		this.value = value;
 		this.selected = selected;
 		this.updateBorder();
-		this.innerCardPanel = new CardImgPanel();
-		this.cardLabel = new JLabel();
-		this.innerCardPanelLayout = new GroupLayout(innerCardPanel);
-		this.thisLayout = new GroupLayout(this);
+		innerCardPanel = new CardImgPanel();
+		cardLabel = new JLabel();
+		innerCardPanelLayout = new GroupLayout(innerCardPanel);
+		thisLayout = new GroupLayout(this);
 
-		setCardlabel();
-		setInnerCardPanelBorder();
-		setInnerCardLayoutVertical();
-		setInnerCardLayoutHorizontal();
-		setThisLayoutHorizontal();
-		setThisLayoutVertical();
+		setupCardlabel();
+		setupInnerCardPanelBorder();
+		setupInnerCardLayoutVertical();
+		setupInnerCardLayoutHorizontal();
+		setupThisLayoutHorizontal();
+		setupThisLayoutVertical();
 
 	}
 	/**
 	 * sets the label format for the cars in the playing card panel
 	 */
 
-	private void setCardlabel() {
+	private void setupCardlabel() {
 		cardLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
 		cardLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		cardLabel.setText(Integer.toString(value));
@@ -79,7 +74,7 @@ public class PlayingCardJPanel extends JPanel {
 	/**
 	 * sets the inner card panel border
 	 */
-	private void setInnerCardPanelBorder(){
+	private void setupInnerCardPanelBorder(){
 		innerCardPanel.setBorder(javax.swing.BorderFactory
 				.createLineBorder(new java.awt.Color(153, 153, 153)));
 	}
@@ -87,7 +82,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * sets the horizontal inner card layout
 	 */
 
-	private void setInnerCardLayoutHorizontal() {
+	private void setupInnerCardLayoutHorizontal() {
 		innerCardPanel.setLayout(innerCardPanelLayout);
 		innerCardPanelLayout
 				.setHorizontalGroup(innerCardPanelLayout.createParallelGroup(
@@ -104,7 +99,7 @@ public class PlayingCardJPanel extends JPanel {
 	/**
 	 * sets vertical inner card layout
 	 */
-	private void setInnerCardLayoutVertical() {
+	private void setupInnerCardLayoutVertical() {
 		innerCardPanelLayout
 				.setVerticalGroup(innerCardPanelLayout
 						.createParallelGroup(
@@ -124,7 +119,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * sets the overall panel horizontal layout
 	 */
 
-	private void setThisLayoutHorizontal() {
+	private void setupThisLayoutHorizontal() {
 		this.setLayout(thisLayout);
 		thisLayout.setHorizontalGroup(thisLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
@@ -137,7 +132,7 @@ public class PlayingCardJPanel extends JPanel {
 	/**
 	 * sets the overall vertical layout
 	 */
-	private void setThisLayoutVertical() {
+	private void setupThisLayoutVertical() {
 		thisLayout.setVerticalGroup(thisLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
 				innerCardPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
@@ -150,7 +145,7 @@ public class PlayingCardJPanel extends JPanel {
 	 */
 
 	public void toggle() {
-		this.selected = !this.selected;
+		selected = !selected;
 		this.updateBorder();
 	}
 
@@ -158,7 +153,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * allows user to select
 	 */
 	public void select() {
-		this.selected = true;
+		selected = true;
 		this.updateBorder();
 	}
 
@@ -166,7 +161,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * allows you to deselect
 	 */
 	public void deselect() {
-		this.selected = false;
+		selected = false;
 		this.updateBorder();
 	}
 
@@ -174,7 +169,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * updates the border
 	 */
 	private void updateBorder() {
-		Color borderColor = (this.selected ? new Color(0,111,255)
+		final Color borderColor = (selected ? new Color(0, 111, 255)
 				: Color.white);
 		this.setBorder(BorderFactory.createLineBorder(borderColor, 10));
 	}
@@ -185,7 +180,7 @@ public class PlayingCardJPanel extends JPanel {
 	 * @return int
 	 */
 	public int getValue() {
-		return (this.selected ? value : 0);
+		return (selected ? value : 0);
 	}
 
 }
