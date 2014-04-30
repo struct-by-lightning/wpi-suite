@@ -36,25 +36,52 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 
 	// initialize the main view toolbar buttons
 	private final JButton newGameButton = new JButton("<html>Create New Game</html>");
-	private final JButton refreshButton = new JButton("<html>Refresh</html>");
-	private final JButton helpButton = new JButton("<html>Help</html>");
 	private final JPanel contentPanel = new JPanel();
-
+	private final JButton prefButton = new JButton("<html>Preferences</html>");
+	
 	public PlanningPokerButtonsPanel() {
 		super("");
+
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		this.setPreferredWidth(200);
+
+		this.add(contentPanel);
+		
+
+		/**
+		 *  the action listener for the Preferences Button
+		 */
+		prefButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainView.preferencesButtonClicked();
+			}
+		});		
+
+		prefButton.setHorizontalAlignment(SwingConstants.CENTER);	
+
+		/**
+		 *  the action listener for the Preferences Button
+		 */
+		prefButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainView.preferencesButtonClicked();
+			}
+		});
 
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredWidth(360);
 
 		newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		newGameButton.setPreferredSize(new Dimension(150, 50));
-		refreshButton.setHorizontalAlignment(SwingConstants.CENTER);
+
 
 		try {
 			final Image img = ImageIO.read(getClass().getResource("new_req.png"));
-			final Image imgRef = ImageIO.read(getClass().getResource("refresh.png"));
 			newGameButton.setIcon(new ImageIcon(img));
-			refreshButton.setIcon(new ImageIcon(imgRef));
+			final Image imgPref = ImageIO.read(getClass().getResource("pref.png"));
+			prefButton.setIcon(new ImageIcon(imgPref));
 		} catch (IOException ex) {
 			System.out.print(ex.getMessage());
 
@@ -70,15 +97,8 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 			}
 		});
 
-		refreshButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MainView.getInstance().refreshGameTree();
-			}
-		});
-
 		contentPanel.add(newGameButton);
-		contentPanel.add(refreshButton);
+		contentPanel.add(prefButton);
 		contentPanel.setOpaque(true);
 
 		this.add(contentPanel);
