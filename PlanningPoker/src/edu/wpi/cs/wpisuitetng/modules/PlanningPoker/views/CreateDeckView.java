@@ -9,6 +9,8 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import javax.swing.DefaultListModel;
+
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
 
 /**
@@ -17,6 +19,10 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
  */
 public class CreateDeckView extends javax.swing.JPanel {
 
+	
+	DefaultListModel<Integer> deckValuesListModel = new DefaultListModel<Integer>();
+	
+	
     /**
      * Creates new form CreateDeckView
      */
@@ -40,11 +46,15 @@ public class CreateDeckView extends javax.swing.JPanel {
         newValueField = new javax.swing.JTextField();
         addValueBtn = new javax.swing.JButton();
         deckValuesScrollPane = new javax.swing.JScrollPane();
-        deckValuesList = new javax.swing.JList<Deck>();
+        deckValuesList = new javax.swing.JList<Integer>();
         removeValuesBtn = new javax.swing.JButton();
         createDeckBtn = new javax.swing.JButton();
         errorMessage = new javax.swing.JLabel();
 
+        
+        
+        deckValuesList.setModel(deckValuesListModel);
+        
         titleLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         titleLabel.setText("Creating your new deck");
@@ -185,7 +195,7 @@ public class CreateDeckView extends javax.swing.JPanel {
     }// </editor-fold>                        
 
     private void addValueBtnActionPerformed(java.awt.event.ActionEvent evt) {                                            
-    	checkAllFields();
+    	deckValuesListModel.addElement(Integer.parseInt(newValueField.getText()));
     }                                           
 
     private void createDeckBtnActionPerformed(java.awt.event.ActionEvent evt) {                                              
@@ -209,8 +219,8 @@ public class CreateDeckView extends javax.swing.JPanel {
     }   
     
     
-    public boolean checkAllFields(){
-    	return true;
+    public void checkAllFields(){
+    	
     }
     
     
@@ -230,7 +240,7 @@ public class CreateDeckView extends javax.swing.JPanel {
     private javax.swing.JTextField deckNameField;
     private javax.swing.JPanel deckNamePanel;
     private javax.swing.JPanel deckPanel;
-    private javax.swing.JList<Deck> deckValuesList;
+    private javax.swing.JList<Integer> deckValuesList;
     private javax.swing.JScrollPane deckValuesScrollPane;
     private javax.swing.JLabel errorMessage;
     private javax.swing.JTextField newValueField;
