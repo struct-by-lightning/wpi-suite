@@ -9,6 +9,9 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import javax.swing.DefaultListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
@@ -88,7 +91,6 @@ public class CreateDeckView extends javax.swing.JPanel {
 
         newValueField.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         newValueField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        newValueField.setText("20");
         newValueField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 newValueFieldKeyTyped(evt);
@@ -194,8 +196,13 @@ public class CreateDeckView extends javax.swing.JPanel {
         );
     }// </editor-fold>                        
 
-    private void addValueBtnActionPerformed(java.awt.event.ActionEvent evt) {                                            
-    	deckValuesListModel.addElement(Integer.parseInt(newValueField.getText()));
+    private void addValueBtnActionPerformed(java.awt.event.ActionEvent evt) { 
+
+		deckValuesListModel.addElement(Integer.parseInt(newValueField.getText()));
+
+    	deckValuesList.setModel(deckValuesListModel);
+    	
+    	
     }                                           
 
     private void createDeckBtnActionPerformed(java.awt.event.ActionEvent evt) {                                              
@@ -203,7 +210,7 @@ public class CreateDeckView extends javax.swing.JPanel {
     }                                             
 
     private void removeValuesBtnActionPerformed(java.awt.event.ActionEvent evt) {                                                
-    	checkAllFields();
+    	deckValuesListModel.removeElementAt(deckValuesList.getSelectedIndex());
     }                                               
 
     private void deckValuesListMouseClicked(java.awt.event.MouseEvent evt) {                                            
