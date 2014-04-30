@@ -15,10 +15,10 @@ import org.junit.Test;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 
-/**
- * @author cgwalker, rbkillea
+/** Test for the GetPlanningPokerGames class.
  * 
- * Test for the GetPlanningPokerGames class.
+ * @version $Revision: 1.0 $
+ * @author cgwalker, rbkillea
  *
  */
 public class GetPlanningPokerGamesControllerTest {

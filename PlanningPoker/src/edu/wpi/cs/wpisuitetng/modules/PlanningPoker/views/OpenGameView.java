@@ -56,6 +56,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * An instance of this class is a JPanel containing the GUI for interacting with
  * a planning poker game which is open for voting.
  * 
+ * @version $Revision: 1.0 $
  * @author Austin Rose (atrose)
  */
 @SuppressWarnings("serial")
@@ -237,6 +238,13 @@ public class OpenGameView extends JPanel {
 		allCardsPanel.setBackground(new Color(232, 232, 232));
 	}
 
+	/** This class implements the document listener used for the text field that allows
+	 * users to manually enter their own estimates.
+	 * 
+	 * @version $Revision: 1.0 $
+	 * @author Benjamin
+	 * @author Batyr
+	 */
 	class MyDocumentListener implements DocumentListener {
 		public void insertUpdate(DocumentEvent e) {
 
@@ -292,6 +300,13 @@ public class OpenGameView extends JPanel {
 		}
 	}
 
+	/** This class implements the plain document used to prevent the user from inputing
+	 * letters and copy-pasting into the manual estimation text field.
+	 * 
+	 * @version $Revision: 1.0 $
+	 * @author Benjamin
+	 * @author Batyr
+	 */
 	class LimitedDocument extends PlainDocument {
 		private final int MAX_LENGTH = 3;
 		private final JTextArea field;

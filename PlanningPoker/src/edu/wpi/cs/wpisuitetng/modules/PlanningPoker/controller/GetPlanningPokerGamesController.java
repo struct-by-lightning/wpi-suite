@@ -23,7 +23,9 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * the server.
  * 
  * @version $Revision: 1.0 $
- **/
+ * @author Barry
+ * @author Miguel
+ */
 public class GetPlanningPokerGamesController implements ActionListener {
 	
 	public static volatile boolean waitingOnRequest = false;

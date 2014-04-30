@@ -23,6 +23,7 @@ import javax.swing.AbstractListModel;
  * Add functions only add planningPokerUsers to the local instance, as the
  * planningPokerUsers already exist on the server
  * 
+ * @version $Revision: 1.0 $
  * @author Alec Thompson
  */
 public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser> {

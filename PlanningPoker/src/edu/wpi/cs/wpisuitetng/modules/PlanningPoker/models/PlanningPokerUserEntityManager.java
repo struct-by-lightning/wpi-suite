@@ -23,8 +23,8 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 
 /**
+ * @version $Revision: 1.0 $
  * @author sfmailand
- *
  */
 public class PlanningPokerUserEntityManager implements EntityManager<PlanningPokerUser> {
 	

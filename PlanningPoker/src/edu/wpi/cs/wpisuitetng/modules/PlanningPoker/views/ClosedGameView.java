@@ -47,6 +47,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
+ * @version $Revision: 1.0 $
  * @author friscis
  * @author swconley
  * @author mamora

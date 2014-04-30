@@ -18,6 +18,9 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * This controller responds by adding a new planning poker vote.
  * 
  * @version $Revision: 1.0 $
+ * @author Long
+ * @author Miguel
+ * @author Barry
  */
 public class AddPlanningPokerVoteController {
 
