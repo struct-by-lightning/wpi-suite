@@ -268,6 +268,10 @@ public class MainView {
 	public static void createGameButtonClicked() {
 		CreateGameView.openNewTab();
 	}
+	
+	public static void createDeckButtonClicked(){
+		CreateDeckView.openNewTab();
+	}
 
 	/**
 	 * The name which components related to the contact prompt are indexed by in

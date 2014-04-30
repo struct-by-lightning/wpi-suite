@@ -38,6 +38,7 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 	private final JButton newGameButton = new JButton("<html>Create New Game</html>");
 	private final JPanel contentPanel = new JPanel();
 	private final JButton prefButton = new JButton("<html>Preferences</html>");
+	private final JButton createDeckButton = new JButton("<html>Create New Deck</html>");
 	
 	public PlanningPokerButtonsPanel() {
 		super("");
@@ -60,18 +61,8 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 
 		prefButton.setHorizontalAlignment(SwingConstants.CENTER);	
 
-		/**
-		 *  the action listener for the Preferences Button
-		 */
-		prefButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				MainView.preferencesButtonClicked();
-			}
-		});
-
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-		this.setPreferredWidth(360);
+		this.setPreferredWidth(460);
 
 		newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		newGameButton.setPreferredSize(new Dimension(150, 50));
@@ -96,9 +87,21 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 				MainView.createGameButtonClicked();
 			}
 		});
+		
+		
+		/**
+		 *  the action listener for the Create Deck Button
+		 */
+		createDeckButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainView.createDeckButtonClicked();
+			}
+		});
 
 		contentPanel.add(newGameButton);
 		contentPanel.add(prefButton);
+		contentPanel.add(createDeckButton);
 		contentPanel.setOpaque(true);
 
 		this.add(contentPanel);
