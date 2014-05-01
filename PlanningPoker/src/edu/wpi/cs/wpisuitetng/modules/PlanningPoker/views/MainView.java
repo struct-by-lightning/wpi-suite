@@ -16,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -28,8 +29,10 @@ import javax.swing.tree.TreePath;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.TabPanel;
 import edu.wpi.cs.wpisuitetng.janeway.interfaces.ContactChecker;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddDeckController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
@@ -301,6 +304,22 @@ public class MainView {
 		final CardLayout mainArea = (CardLayout) cardMainAreaComponent.getLayout();
 		toolbar.show(cardToolbarComponent, MAIN_VIEW);
 		mainArea.show(cardMainAreaComponent, MAIN_VIEW);
+		DefaultListModel<Integer> deckListModel = new DefaultListModel<Integer>();
+		Deck noDeck = new Deck("No Deck", new DefaultListModel<Integer>());
+		
+		deckListModel.addElement(1);
+		deckListModel.addElement(1);
+		deckListModel.addElement(2);
+		deckListModel.addElement(3);
+		deckListModel.addElement(5);
+		deckListModel.addElement(8);
+		deckListModel.addElement(13);
+		
+		Deck defaultDeck = new Deck("Default Deck", deckListModel);
+		
+		AddDeckController.getInstance().AddDeck(defaultDeck);
+    	AddDeckController.getInstance().AddDeck(noDeck);
+    	
 	}
 
 	/**
