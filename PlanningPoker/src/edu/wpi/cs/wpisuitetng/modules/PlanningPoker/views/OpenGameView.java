@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -61,6 +62,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  */
 @SuppressWarnings("serial")
 public class OpenGameView extends JPanel {
+	private LinkedList<PlanningPokerVote> allVotes;
+	private String username;
 
 	// TODO: The transition from this screen to the overview tab appears to be
 	// the only one which doesn't refresh the tree properly.
@@ -127,6 +130,7 @@ public class OpenGameView extends JPanel {
 	
 	// instant messenger
 	private InstantMessenger im;
+	private RequirementVoteIconRenderer requirementListRenderer;
 	private static boolean hasOpenedOnce = false;
 
 	/**
@@ -138,6 +142,7 @@ public class OpenGameView extends JPanel {
 	 *            JPanel.
 	 */
 	private OpenGameView(PlanningPokerGame game) {
+		this.username = ConfigManager.getConfig().getUserName();
 		this.game = game;
 
 		requirements = game.getRequirements();
@@ -377,6 +382,7 @@ public class OpenGameView extends JPanel {
 												requirementList
 														.getSelectedIndex())
 												.getId());
+						
 						if (voteNumber != Integer.MIN_VALUE) {
 							estimateNumberLabel.setText("" + voteNumber);
 						}
@@ -391,7 +397,7 @@ public class OpenGameView extends JPanel {
 						if (game.getDeckType().equals("No Deck")) {
 							textArea.setText("");
 						}
-
+						requirementList.repaint();
 					}
 				});
 
@@ -402,8 +408,14 @@ public class OpenGameView extends JPanel {
 			model.addElement(r.getName());
 		}
 
+		// Long's icon addition
+		requirementListRenderer = new RequirementVoteIconRenderer(requirements, allVotes);
+		requirementListRenderer.setGameName(game.getGameName());
+		
 		requirementList.setModel(model);
-
+		requirementList.setCellRenderer(requirementListRenderer);
+		
+		requirementList.repaint();
 		// Initially select the first item in the tree.
 		requirementList.setSelectedIndex(0);
 
@@ -493,6 +505,7 @@ public class OpenGameView extends JPanel {
 	// <editor-fold defaultstate="collapsed"
 	// desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
+		allVotes = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVoteByGameAndUser(game.getGameName(), username);
 		final java.awt.GridBagConstraints gridBagConstraints;
 
 		splitPane = new javax.swing.JSplitPane();

@@ -13,6 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.DefaultListCellRenderer;
@@ -22,6 +23,7 @@ import javax.swing.JList;
 import javax.swing.filechooser.FileSystemView;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEstimate;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -32,7 +34,9 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 class RequirementVoteIconRenderer extends DefaultListCellRenderer {
     private List<Requirement> requirements;
     private PlanningPokerFinalEstimate[] finalEsts;
-    String gameName;
+    private LinkedList<PlanningPokerVote> allVotes;
+    private String gameName;
+    private boolean inOpenGameView = false; 
     
     private ImageIcon blankIcon;
     private ImageIcon tickIcon;
@@ -45,8 +49,23 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
         tickIcon = new ImageIcon(getClass().getResource("accept.png"));
         blankIcon = new ImageIcon(getClass().getResource("blank.png"));
     }
+    
+    /**
+     * A constructor for requirements JLIst in the OpenGameView
+     * @param requirements: The List of Requirements name
+     * @param allVotes: All the votes that the current user have submitted.
+     */
+    public RequirementVoteIconRenderer(List<Requirement> requirements,
+			LinkedList<PlanningPokerVote> allVotes) {
+		this.inOpenGameView = true;
+		this.requirements = requirements;
+		this.allVotes = allVotes;
+		
+        tickIcon = new ImageIcon(getClass().getResource("accept.png"));
+        blankIcon = new ImageIcon(getClass().getResource("blank.png"));
+	}
 
-    @Override
+	@Override
     public Component getListCellRendererComponent(
         JList list,
         Object value,
@@ -74,17 +93,27 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
         
         // Assume this requirement hasn't been voted yet
         label.setIcon(blankIcon);
-        
+
         // Loop through to see which requirement has been voted.
-		for(PlanningPokerFinalEstimate ppfe : finalEsts) {
-			if (this.gameName.equals(ppfe.getGameName())) {
-				if (ppfe.getRequirementID() == currentReqID && ppfe.getEstimate() != 0) {
-					thisEstimation = ppfe.getEstimate();
+        if (this.inOpenGameView) {
+			for(PlanningPokerVote ppv : allVotes) {
+				if (ppv.getRequirementID() == currentReqID && ppv.getVote() != 0) {
+					thisEstimation = ppv.getVote();
 					label.setIcon(tickIcon);
 					break;
 				}
+			}       	
+        } else {
+			for(PlanningPokerFinalEstimate ppfe : finalEsts) {
+				if (this.gameName.equals(ppfe.getGameName())) {
+					if (ppfe.getRequirementID() == currentReqID && ppfe.getEstimate() != 0) {
+						thisEstimation = ppfe.getEstimate();
+						label.setIcon(tickIcon);
+						break;
+					}
+				}
 			}
-		}
+        }
 		
         label.setText(requirementName);
         

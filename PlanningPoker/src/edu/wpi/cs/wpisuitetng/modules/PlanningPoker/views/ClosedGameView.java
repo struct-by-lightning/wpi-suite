@@ -235,6 +235,7 @@ public class ClosedGameView extends JPanel {
 		
 		voteRenderer = new RequirementVoteIconRenderer(requirements, finalEsts);
 		voteRenderer.setGameName(game.getGameName());
+		
 		requirementList.setModel(model);
 		requirementList.setCellRenderer(voteRenderer);
 
