@@ -160,7 +160,9 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 		}
 		return true;
 	}
-
+	
+	/** Clears the end date on this planning poker game
+	 */
 	public void clearEndDate() {
 		this.endDate = new GregorianCalendar(9999, 11, 18);
 	}

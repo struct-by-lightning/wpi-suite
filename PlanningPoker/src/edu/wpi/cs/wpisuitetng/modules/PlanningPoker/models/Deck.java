@@ -20,8 +20,8 @@ import com.google.gson.JsonParser;
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
 
 /**
+ * @version $Revision: 1.0 $
  * @author sfmailand
- *
  */
 public class Deck extends RegularAbstractModel<Deck>{
 
@@ -29,7 +29,11 @@ public class Deck extends RegularAbstractModel<Deck>{
 	
 	private ArrayList<Integer> deckNumbers = new ArrayList<Integer>();
 	
-	
+	/** Constructor for the deck class
+	 * 
+	 * @param deckName The name of the deck
+	 * @param deckNumbers The numbers the deck containers
+	 */
 	public Deck(String deckName, ArrayList<Integer> deckNumbers){
 		this.deckName = deckName;
 		this.deckNumbers = deckNumbers;
@@ -42,7 +46,11 @@ public class Deck extends RegularAbstractModel<Deck>{
 		return new Gson().toJson(this, Deck.class);
 	}
 
-	
+	/** Creates a new deck from a JSON string
+	 * 
+	 * @param json The string that contains the deck information
+	 * @return the Deck created from the JSON data
+	 */
 	public static Deck fromJSON(String json){
 		final Gson parser = new Gson();
 		return parser.fromJson(json, Deck.class);
@@ -98,6 +106,11 @@ public class Deck extends RegularAbstractModel<Deck>{
 		this.deckNumbers = deckNumbers;
 	}
 	
+	/** Makes an array of Decks from a string in JSON format
+	 * 
+	 * @param jsonArr the string that contains the Deck data
+	 * @return an array of Decks made from the JSON data
+	 */
 	public static Deck[] fromJSONArray(String jsonArr) {
 		final JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();
 		final List<Deck> decks = new ArrayList<Deck>();

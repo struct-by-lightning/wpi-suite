@@ -318,6 +318,10 @@ public class OpenGameView extends JPanel {
 		private final int MAX_LENGTH = 3;
 		private final JTextArea field;
 
+		/** This constructor creates the LimitedDocument 
+		 * 
+		 * @param input Sets the text area field
+		 */
 		LimitedDocument(JTextArea input) {
 			field = input;
 		}

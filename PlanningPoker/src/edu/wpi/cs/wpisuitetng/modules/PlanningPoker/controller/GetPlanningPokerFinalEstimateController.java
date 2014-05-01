@@ -50,6 +50,7 @@ public class GetPlanningPokerFinalEstimateController {
 
 	/**
 	 * Sends an HTTP request to retrieve all PlanningPokerFinalEstimates
+	 * @return an array of final estimates for a planning poker session
 	 */
 	public PlanningPokerFinalEstimate[] retrievePlanningPokerFinalEstimate() {
 		final Request request = network.makeRequest(
@@ -84,7 +85,6 @@ public class GetPlanningPokerFinalEstimateController {
 	/**
 	 * Retrieves the planning poker final estimates from the server
 	 * @param gameName the gameName of the final estimate to retrieve
-	 * @param userName the userName of the final estimate to retrieve
 	 * @param requirementID the requirementID of the vote to retrieve
 	 * @return the vote if it exists, Integer.MIN_VALUE otherwise
 	 */
