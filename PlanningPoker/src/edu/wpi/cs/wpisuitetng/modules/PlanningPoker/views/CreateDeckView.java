@@ -200,10 +200,24 @@ public class CreateDeckView extends javax.swing.JPanel {
 
     private void addValueBtnActionPerformed(java.awt.event.ActionEvent evt) { 
 
-		deckValuesListModel.addElement(Integer.parseInt(newValueField.getText()));
+    	
+    	Integer newValueEntered = Integer.parseInt(newValueField.getText());
+    	boolean wasAdded = false;
+    	for(int i = 0; i < deckValuesListModel.size(); i ++){
+    		if(newValueEntered < deckValuesListModel.get(i)){
+				deckValuesListModel.add(i, newValueEntered);
+
+    			wasAdded = true;
+    			break;
+    		}
+    	}
+    	
+    	if(!wasAdded){
+    		deckValuesListModel.add(deckValuesListModel.size(), newValueEntered);
+    	}
 
     	deckValuesList.setModel(deckValuesListModel);
-    	
+    	newValueField.setText("");
     	
     }                                           
 

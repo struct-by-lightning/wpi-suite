@@ -93,6 +93,8 @@ public class Deck extends RegularAbstractModel<Deck>{
 	public DefaultListModel<Integer> getDeckNumbers() {
 		return deckNumbers;
 	}
+	
+
 	/**
 	 * @param deckNumbers the deckNumbers to set
 	 */
