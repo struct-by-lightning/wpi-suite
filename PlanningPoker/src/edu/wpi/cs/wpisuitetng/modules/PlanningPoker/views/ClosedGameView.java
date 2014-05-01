@@ -53,7 +53,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * @author mamora
  */
 public class ClosedGameView extends JPanel {
-	RequirementVoteIconRenderer voteRenderer;
+	RequirementVoteIconRenderer requirementListRenderer;
 	/**
 	 * Open up a new closeable tab in the planning poker module with a new
 	 * instanse of this GUI for viewing and interacting with a closed planning
@@ -223,8 +223,8 @@ public class ClosedGameView extends JPanel {
 					}
 					
 				});
-		/** Long's icon addition here **/
-		// Populate the list with each requirement.
+		
+		// Icons for requirement List
 		final PlanningPokerFinalEstimate[] finalEsts = GetPlanningPokerFinalEstimateController
 				.getInstance().retrievePlanningPokerFinalEstimate();
 		
@@ -233,11 +233,11 @@ public class ClosedGameView extends JPanel {
 			model.addElement(r.getName());
 		}
 		
-		voteRenderer = new RequirementVoteIconRenderer(requirements, finalEsts);
-		voteRenderer.setGameName(game.getGameName());
+		requirementListRenderer = new RequirementVoteIconRenderer(requirements, finalEsts);
+		requirementListRenderer.setGameName(game.getGameName());
 		
 		requirementList.setModel(model);
-		requirementList.setCellRenderer(voteRenderer);
+		requirementList.setCellRenderer(requirementListRenderer);
 
 		// Show the name of the game.
 		gameNameLabel.setText(game.getGameName());
@@ -838,8 +838,8 @@ public class ClosedGameView extends JPanel {
 				submitButton.setEnabled(false);
 				submitButton.setText("Submitted");
 				
-				// Long's Icon addition
-				voteRenderer.updateFinalEstimation(stuff);
+				// Repaint the panel when a fianl estimate has been submitted
+				requirementListRenderer.updateFinalEstimation(stuff);
 				requirementList.repaint();
 			}
 		});

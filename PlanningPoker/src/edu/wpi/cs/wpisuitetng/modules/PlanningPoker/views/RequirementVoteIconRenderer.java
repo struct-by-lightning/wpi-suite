@@ -13,6 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 import java.awt.Color;
 import java.awt.Component;
 import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,8 +36,10 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
     private List<Requirement> requirements;
     private PlanningPokerFinalEstimate[] finalEsts;
     private LinkedList<PlanningPokerVote> allVotes;
+    private HashMap<Integer, Boolean> checkMap = new HashMap<Integer, Boolean>();
     private String gameName;
     private boolean inOpenGameView = false; 
+    private JList originalList = null;
     
     private ImageIcon blankIcon;
     private ImageIcon tickIcon;
@@ -76,12 +79,30 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
         String requirementName = (String) value;
         int currentReqID = -1;
         JLabel label;
-        int thisEstimation = 0;
-        
+
+        this.originalList = list;
         label = new JLabel();
         label.setOpaque(true);
         
-        boolean voteSubmitted = false;
+
+        // Set up the label
+        label.setText(requirementName);
+
+        if (!selected) {
+        	label.setBackground(Color.WHITE);
+        } else {
+        	label.setBackground(javax.swing.UIManager.getDefaults().getColor("List.selectionBackground"));
+        }
+        
+        // Check to see if it's specially checked by the hashmap
+        if (index > -1) {
+	        if (checkMap.get(index) != null) {
+	        	label.setIcon(tickIcon);
+	        	
+	        	return label;
+	        }
+        }
+
         
         // Get Requirement by string
         for (Requirement r : requirements) {
@@ -98,7 +119,6 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
         if (this.inOpenGameView) {
 			for(PlanningPokerVote ppv : allVotes) {
 				if (ppv.getRequirementID() == currentReqID && ppv.getVote() != 0) {
-					thisEstimation = ppv.getVote();
 					label.setIcon(tickIcon);
 					break;
 				}
@@ -106,8 +126,7 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
         } else {
 			for(PlanningPokerFinalEstimate ppfe : finalEsts) {
 				if (this.gameName.equals(ppfe.getGameName())) {
-					if (ppfe.getRequirementID() == currentReqID && ppfe.getEstimate() != 0) {
-						thisEstimation = ppfe.getEstimate();
+					if (ppfe.getRequirementID() == currentReqID) { // Final estimate can be 0
 						label.setIcon(tickIcon);
 						break;
 					}
@@ -115,16 +134,6 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
 			}
         }
 		
-        label.setText(requirementName);
-        
-        System.out.println("Rendering requiremnent \"" + requirementName + "\". It has an ID of " + currentReqID + " and estimation of " + thisEstimation);
-        
-        if (!selected) {
-        	label.setBackground(Color.WHITE);
-        } else {
-        	label.setBackground(javax.swing.UIManager.getDefaults().getColor("List.selectionBackground"));
-        }
-
         return label;
     }
     
@@ -134,6 +143,16 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
     
     public void setGameName(String gameName) {
     	this.gameName = gameName;
+    }
+    
+    public void goCheck(int index) {
+    	if (index > -1) {
+	    	checkMap.put(index, true);
+	    	
+	    	if (originalList != null) {
+	    		originalList.repaint();
+	    	}
+    	}
     }
 }
 

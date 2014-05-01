@@ -397,7 +397,8 @@ public class OpenGameView extends JPanel {
 						if (game.getDeckType().equals("No Deck")) {
 							textArea.setText("");
 						}
-						requirementList.repaint();
+						
+						
 					}
 				});
 
@@ -408,7 +409,7 @@ public class OpenGameView extends JPanel {
 			model.addElement(r.getName());
 		}
 
-		// Long's icon addition
+		// Icons for requirement List
 		requirementListRenderer = new RequirementVoteIconRenderer(requirements, allVotes);
 		requirementListRenderer.setGameName(game.getGameName());
 		
@@ -559,6 +560,9 @@ public class OpenGameView extends JPanel {
 					// Submit button disable
 					submitButton.setEnabled(false);
 					submitButton.setText("Submitted!");
+					
+					// Check it!
+					requirementListRenderer.goCheck(requirementList.getSelectedIndex());
 				}
 
 			}
