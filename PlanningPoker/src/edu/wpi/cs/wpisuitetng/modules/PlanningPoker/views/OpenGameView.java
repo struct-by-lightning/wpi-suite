@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -61,6 +62,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  */
 @SuppressWarnings("serial")
 public class OpenGameView extends JPanel {
+	private LinkedList<PlanningPokerVote> allVotes;
+	private String username;
 
 	// TODO: The transition from this screen to the overview tab appears to be
 	// the only one which doesn't refresh the tree properly.
@@ -84,7 +87,7 @@ public class OpenGameView extends JPanel {
 
 		// Update the database with the changes.
 		UpdatePlanningPokerGameController.getInstance()
-				.updatePlanningPokerGame(game);
+		.updatePlanningPokerGame(game);
 
 		// Don't proceed until the changes to this planning poker game have been
 		// recognized by the database.
@@ -93,7 +96,7 @@ public class OpenGameView extends JPanel {
 				|| !PlanningPokerGameModel.getPlanningPokerGame(
 						game.getGameName()).isFinished()) {
 			GetPlanningPokerGamesController.getInstance()
-					.retrievePlanningPokerGames();
+			.retrievePlanningPokerGames();
 		}
 
 		// Close this tab.
@@ -124,9 +127,10 @@ public class OpenGameView extends JPanel {
 
 	// Mailer for this view
 	private Mailer closedNotification;
-	
+
 	// instant messenger
 	private InstantMessenger im;
+	private RequirementVoteIconRenderer requirementListRenderer;
 	private static boolean hasOpenedOnce = false;
 
 	/**
@@ -138,6 +142,7 @@ public class OpenGameView extends JPanel {
 	 *            JPanel.
 	 */
 	private OpenGameView(PlanningPokerGame game) {
+		this.username = ConfigManager.getConfig().getUserName();
 		this.game = game;
 
 		requirements = game.getRequirements();
@@ -149,15 +154,16 @@ public class OpenGameView extends JPanel {
 
 		// Fill components with data from the planning poker game.
 		initForGame();
-		
-		if (!hasOpenedOnce) {
+
+		// Long: I do not know why you need to do this?
+		/*if (!hasOpenedOnce) {
 			estimateNumberLabel.setText("?");
 			hasOpenedOnce = true;
+		}*/
+
+		if (!game.getDeckType().equals("No Deck")) {
+			submitButton.setEnabled(false);
 		}
-		
-			if (!game.getDeckType().equals("No Deck")) {
-		submitButton.setEnabled(false);
-			}
 	}
 
 	/**
@@ -349,55 +355,57 @@ public class OpenGameView extends JPanel {
 		// selected in the tree.
 
 		requirementList
-				.addListSelectionListener(new ListSelectionListener() {
-					@Override
-					public void valueChanged(ListSelectionEvent ev) {
-						final JList list;
-						list = (JList) ev.getSource();
-						final Requirement selected = requirements.get(list
-								.getSelectedIndex());
-						currentlySelectedRequirement = selected;
-						requirementNameLabel.setText(selected.getName());
-						requirementDescriptionLabel.setText(selected
-								.getDescription());
-						final int vote = GetPlanningPokerVoteController
-								.getInstance()
-								.retrievePlanningPokerVote(
-										game.getGameName(),
-										ConfigManager.getConfig().getUserName(),
-										selected.getId());
-						final String strVote = vote > 0 ? ((Integer) vote).toString()
-								: "?";
-						System.out.println("Retrieved vote: " + vote + ": "
-								+ strVote);
-						estimateNumberLabel.setText(strVote);
-						submitButton.setEnabled(false);
-						final int voteNumber = GetPlanningPokerVoteController
-								.getInstance()
-								.retrievePlanningPokerVote(
-										game.getGameName(),
-										ConfigManager.getConfig().getUserName(),
-										requirements.get(
-												requirementList
-														.getSelectedIndex())
-												.getId());
-						if (voteNumber != Integer.MIN_VALUE) {
-							estimateNumberLabel.setText("" + voteNumber);
-						}
+		.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent ev) {
+				final JList list;
+				list = (JList) ev.getSource();
+				final Requirement selected = requirements.get(list
+						.getSelectedIndex());
+				currentlySelectedRequirement = selected;
+				requirementNameLabel.setText(selected.getName());
+				requirementDescriptionLabel.setText(selected
+						.getDescription());
+				final int vote = GetPlanningPokerVoteController
+						.getInstance()
+						.retrievePlanningPokerVote(
+								game.getGameName(),
+								ConfigManager.getConfig().getUserName(),
+								selected.getId());
+				final String strVote = vote > 0 ? ((Integer) vote).toString()
+						: "?";
+				System.out.println("Retrieved vote: " + vote + ": "
+						+ strVote);
+				estimateNumberLabel.setText(strVote);
+				submitButton.setEnabled(false);
+				final int voteNumber = GetPlanningPokerVoteController
+						.getInstance()
+						.retrievePlanningPokerVote(
+								game.getGameName(),
+								ConfigManager.getConfig().getUserName(),
+								requirements.get(
+										requirementList
+										.getSelectedIndex())
+										.getId());
 
-						for (PlayingCardJPanel card : cards) {
-							card.deselect();
-						}
+				if (voteNumber != Integer.MIN_VALUE) {
+					estimateNumberLabel.setText("" + voteNumber);
+				}
 
-						submitButton.setEnabled(true);
-						submitButton.setText("Submit Vote");
+				for (PlayingCardJPanel card : cards) {
+					card.deselect();
+				}
 
-						if (game.getDeckType().equals("No Deck")) {
-							textArea.setText("");
-						}
+				submitButton.setEnabled(true);
+				submitButton.setText("Submit Vote");
 
-					}
-				});
+				if (game.getDeckType().equals("No Deck")) {
+					textArea.setText("");
+				}
+
+
+			}
+		});
 
 		// Populate the list with each requirement.
 		final DefaultListModel<String> model = new DefaultListModel<String>();
@@ -406,8 +414,14 @@ public class OpenGameView extends JPanel {
 			model.addElement(r.getName());
 		}
 
-		requirementList.setModel(model);
+		// Icons for requirement List
+		requirementListRenderer = new RequirementVoteIconRenderer(requirements, allVotes);
+		requirementListRenderer.setGameName(game.getGameName());
 
+		requirementList.setModel(model);
+		requirementList.setCellRenderer(requirementListRenderer);
+
+		requirementList.repaint();
 		// Initially select the first item in the tree.
 		requirementList.setSelectedIndex(0);
 
@@ -497,6 +511,7 @@ public class OpenGameView extends JPanel {
 	// <editor-fold defaultstate="collapsed"
 	// desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
+		allVotes = GetPlanningPokerVoteController.getInstance().retrievePlanningPokerVoteByGameAndUser(game.getGameName(), username);
 		final java.awt.GridBagConstraints gridBagConstraints;
 
 		splitPane = new javax.swing.JSplitPane();
@@ -536,7 +551,7 @@ public class OpenGameView extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				if (game.isLive() && !game.isFinished()) {
 					AddPlanningPokerVoteController.getInstance()
-							.addPlanningPokerVote(ppv);
+					.addPlanningPokerVote(ppv);
 
 					// List the users first
 					/*
@@ -550,6 +565,9 @@ public class OpenGameView extends JPanel {
 					// Submit button disable
 					submitButton.setEnabled(false);
 					submitButton.setText("Submitted!");
+
+					// Check it!
+					requirementListRenderer.goCheck(requirementList.getSelectedIndex());
 				}
 
 			}
@@ -563,38 +581,38 @@ public class OpenGameView extends JPanel {
 
 		requirementsLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		requirementsLabel
-				.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		requirementsLabel.setText("Requirements");
 
 		final javax.swing.GroupLayout requirementsLabelPanelLayout = new javax.swing.GroupLayout(
 				requirementsLabelPanel);
 		requirementsLabelPanel.setLayout(requirementsLabelPanelLayout);
 		requirementsLabelPanelLayout
-				.setHorizontalGroup(requirementsLabelPanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setHorizontalGroup(requirementsLabelPanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								requirementsLabelPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(
-												requirementsLabel,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(
+										requirementsLabel,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
 										.addContainerGap()));
 		requirementsLabelPanelLayout
-				.setVerticalGroup(requirementsLabelPanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setVerticalGroup(requirementsLabelPanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								requirementsLabelPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(requirementsLabel)
-										.addContainerGap(
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)));
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(requirementsLabel)
+								.addContainerGap(
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)));
 
 		requirementListScrollPane.setViewportView(requirementList);
 
@@ -602,48 +620,48 @@ public class OpenGameView extends JPanel {
 				leftSplitPanel);
 		leftSplitPanel.setLayout(leftSplitPanelLayout);
 		leftSplitPanelLayout
-				.setHorizontalGroup(leftSplitPanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setHorizontalGroup(leftSplitPanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								leftSplitPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												leftSplitPanelLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																requirementsLabelPanel,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
+								.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										leftSplitPanelLayout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(
+														requirementsLabelPanel,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)
 														.addComponent(
 																requirementListScrollPane,
 																javax.swing.GroupLayout.PREFERRED_SIZE,
 																0,
 																Short.MAX_VALUE))
-										.addContainerGap()));
+																.addContainerGap()));
 		leftSplitPanelLayout
-				.setVerticalGroup(leftSplitPanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setVerticalGroup(leftSplitPanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								leftSplitPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(
-												requirementsLabelPanel,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(
+										requirementsLabelPanel,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-										.addComponent(
-												requirementListScrollPane,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												624, Short.MAX_VALUE)
-										.addContainerGap()));
+												.addComponent(
+														requirementListScrollPane,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														624, Short.MAX_VALUE)
+														.addContainerGap()));
 
 		splitPane.setLeftComponent(leftSplitPanel);
 
@@ -682,33 +700,33 @@ public class OpenGameView extends JPanel {
 		gameTitlePanelLayout.setHorizontalGroup(gameTitlePanelLayout
 				.createParallelGroup(Alignment.TRAILING).addGroup(
 						gameTitlePanelLayout
-								.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(gameNameLabel,
-										GroupLayout.DEFAULT_SIZE, 341,
-										Short.MAX_VALUE)
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(gameNameLabel,
+								GroupLayout.DEFAULT_SIZE, 341,
+								Short.MAX_VALUE)
 								.addGap(18)
 								.addComponent(btnEndGame)
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(gameDeadlineDateLabel,
 										GroupLayout.PREFERRED_SIZE, 160,
 										GroupLayout.PREFERRED_SIZE)
-								.addContainerGap()));
+										.addContainerGap()));
 		gameTitlePanelLayout.setVerticalGroup(gameTitlePanelLayout
 				.createParallelGroup(Alignment.LEADING).addGroup(
 						gameTitlePanelLayout
-								.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										gameTitlePanelLayout
-												.createParallelGroup(
-														Alignment.BASELINE)
-												.addComponent(gameNameLabel)
-												.addComponent(
-														gameDeadlineDateLabel)
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								gameTitlePanelLayout
+								.createParallelGroup(
+										Alignment.BASELINE)
+										.addComponent(gameNameLabel)
+										.addComponent(
+												gameDeadlineDateLabel)
 												.addComponent(btnEndGame))
-								.addContainerGap(GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)));
+												.addContainerGap(GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)));
 		gameTitlePanel.setLayout(gameTitlePanelLayout);
 
 		rowSplitPanel.setLayout(new java.awt.GridLayout(2, 1));
@@ -720,35 +738,35 @@ public class OpenGameView extends JPanel {
 
 		requirementNameLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		requirementNameLabel
-				.setText("game.getRequirements.get(LIST SELECTION NUM).name()");
+		.setText("game.getRequirements.get(LIST SELECTION NUM).name()");
 
 		final javax.swing.GroupLayout requirementNamePanelLayout = new javax.swing.GroupLayout(
 				requirementNamePanel);
 		requirementNamePanel.setLayout(requirementNamePanelLayout);
 		requirementNamePanelLayout
-				.setHorizontalGroup(requirementNamePanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setHorizontalGroup(requirementNamePanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								requirementNamePanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(
-												requirementNameLabel,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(
+										requirementNameLabel,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
 										.addContainerGap()));
 		requirementNamePanelLayout.setVerticalGroup(requirementNamePanelLayout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(
 						requirementNamePanelLayout
-								.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(requirementNameLabel)
-								.addContainerGap(
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)));
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(requirementNameLabel)
+						.addContainerGap(
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)));
 
 		requirementDescriptionLabelPanel.setBackground(Color.white);
 		requirementDescriptionLabel.setLineWrap(true);
@@ -759,38 +777,38 @@ public class OpenGameView extends JPanel {
 
 		requirementDescriptionLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		requirementDescriptionLabel
-				.setText("game.getRequirements.get(LIST SELECTION NUM).description()");
+		.setText("game.getRequirements.get(LIST SELECTION NUM).description()");
 
 		final javax.swing.GroupLayout requirementDescriptionLabelPanelLayout = new
 				javax.swing.GroupLayout(requirementDescriptionLabelPanel);
 		requirementDescriptionLabelPanel
-				.setLayout(requirementDescriptionLabelPanelLayout);
+		.setLayout(requirementDescriptionLabelPanelLayout);
 		requirementDescriptionLabelPanelLayout
-				.setHorizontalGroup(requirementDescriptionLabelPanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setHorizontalGroup(requirementDescriptionLabelPanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								requirementDescriptionLabelPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(
-												requirementDescriptionLabel,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(
+										requirementDescriptionLabel,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
 										.addContainerGap()));
 		requirementDescriptionLabelPanelLayout
-				.setVerticalGroup(requirementDescriptionLabelPanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setVerticalGroup(requirementDescriptionLabelPanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								requirementDescriptionLabelPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(
-												requirementDescriptionLabel,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												230, Short.MAX_VALUE)
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(
+										requirementDescriptionLabel,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										230, Short.MAX_VALUE)
 										.addContainerGap()));
 
 		final javax.swing.GroupLayout requirementPanelLayout = new javax.swing.GroupLayout(
@@ -801,41 +819,41 @@ public class OpenGameView extends JPanel {
 				.addComponent(requirementNamePanel,
 						javax.swing.GroupLayout.DEFAULT_SIZE,
 						javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-				.addComponent(requirementDescriptionLabelPanel,
-						javax.swing.GroupLayout.DEFAULT_SIZE,
-						javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+						.addComponent(requirementDescriptionLabelPanel,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
 		requirementPanelLayout
-				.setVerticalGroup(requirementPanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setVerticalGroup(requirementPanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								requirementPanelLayout
-										.createSequentialGroup()
-										.addComponent(
-												requirementNamePanel,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
+								.createSequentialGroup()
+								.addComponent(
+										requirementNamePanel,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												requirementDescriptionLabelPanel,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addContainerGap()));
+												.addComponent(
+														requirementDescriptionLabelPanel,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)
+														.addContainerGap()));
 
 		topRowRequirementPanel.add(requirementPanel);
 
 		instructionsLabel.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
 		instructionsLabel
-				.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+		.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 		if (!game.getDeckType().equals("No Deck")) {
 			instructionsLabel
-					.setText("<html>Click on one or more cards below to sum up your estimate&nbsp</html>");
+			.setText("<html>Click on one or more cards below to sum up your estimate&nbsp</html>");
 		} else {
 			instructionsLabel
-					.setText("<html>Enter your estimate into the text field below&nbsp</html>");
+			.setText("<html>Enter your estimate into the text field below&nbsp</html>");
 		}
 
 		estimateCenteringPanel.setLayout(new java.awt.GridBagLayout());
@@ -844,7 +862,7 @@ public class OpenGameView extends JPanel {
 
 		estimateTitleLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 		estimateTitleLabel
-				.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		estimateTitleLabel.setText("<html>Your estimate</html>");
 
 		final javax.swing.GroupLayout estimateTitlePanelLayout = new javax.swing.GroupLayout(
@@ -853,18 +871,18 @@ public class OpenGameView extends JPanel {
 				.createParallelGroup(Alignment.TRAILING).addGroup(
 						Alignment.LEADING,
 						estimateTitlePanelLayout
-								.createSequentialGroup()
-								.addComponent(estimateTitleLabel,
-										GroupLayout.DEFAULT_SIZE, 108,
-										Short.MAX_VALUE).addContainerGap()));
+						.createSequentialGroup()
+						.addComponent(estimateTitleLabel,
+								GroupLayout.DEFAULT_SIZE, 108,
+								Short.MAX_VALUE).addContainerGap()));
 		estimateTitlePanelLayout.setVerticalGroup(estimateTitlePanelLayout
 				.createParallelGroup(Alignment.LEADING).addGroup(
 						estimateTitlePanelLayout
-								.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(estimateTitleLabel)
-								.addContainerGap(GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)));
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(estimateTitleLabel)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE)));
 		estimateTitlePanel.setLayout(estimateTitlePanelLayout);
 
 		estimateNumberPanel.setBorder(new javax.swing.border.SoftBevelBorder(
@@ -872,7 +890,7 @@ public class OpenGameView extends JPanel {
 
 		estimateNumberLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
 		estimateNumberLabel
-				.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 		estimateNumberLabel.setText("?");
 
 		final javax.swing.GroupLayout estimateNumberPanelLayout = new javax.swing.GroupLayout(
@@ -882,77 +900,77 @@ public class OpenGameView extends JPanel {
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(
 						estimateNumberPanelLayout
-								.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(estimateNumberLabel,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE).addContainerGap()));
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(estimateNumberLabel,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE).addContainerGap()));
 		estimateNumberPanelLayout.setVerticalGroup(estimateNumberPanelLayout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(
 						estimateNumberPanelLayout
-								.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(estimateNumberLabel,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE).addContainerGap()));
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(estimateNumberLabel,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE).addContainerGap()));
 		final javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(
 				estimatePanel);
 		estimatePanel.setLayout(estimatePanelLayout);
 		estimatePanelLayout
-				.setHorizontalGroup(estimatePanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setHorizontalGroup(estimatePanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								estimatePanelLayout
-										.createSequentialGroup()
-										.addGap(0, 0, Short.MAX_VALUE)
-										.addGroup(
-												estimatePanelLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING,
-																false)
-														.addComponent(
-																estimateTitlePanel,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
+								.createSequentialGroup()
+								.addGap(0, 0, Short.MAX_VALUE)
+								.addGroup(
+										estimatePanelLayout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING,
+												false)
+												.addComponent(
+														estimateTitlePanel,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)
 														.addComponent(
 																estimateNumberPanel,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE)
-														.addComponent(
-																submitButton,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))));
+																.addComponent(
+																		submitButton,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE))));
 		estimatePanelLayout
-				.setVerticalGroup(estimatePanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setVerticalGroup(estimatePanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								estimatePanelLayout
-										.createSequentialGroup()
-										.addComponent(
-												estimateTitlePanel,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
+								.createSequentialGroup()
+								.addComponent(
+										estimateTitlePanel,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												estimateNumberPanel,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addComponent(
-												submitButton,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)));
+												.addComponent(
+														estimateNumberPanel,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addComponent(
+																submitButton,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE)));
 
 		estimateCenteringPanel.add(estimatePanel,
 				new java.awt.GridBagConstraints());
@@ -961,54 +979,54 @@ public class OpenGameView extends JPanel {
 				rightBlankPanel);
 		rightBlankPanel.setLayout(rightBlankPanelLayout);
 		rightBlankPanelLayout
-				.setHorizontalGroup(rightBlankPanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setHorizontalGroup(rightBlankPanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								rightBlankPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												rightBlankPanelLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																rightBlankPanelLayout
-																		.createSequentialGroup()
-																		.addComponent(
-																				instructionsLabel,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				598,
-																				Short.MAX_VALUE)
-																		.addContainerGap())
+								.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										rightBlankPanelLayout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+												.addGroup(
+														javax.swing.GroupLayout.Alignment.TRAILING,
+														rightBlankPanelLayout
+														.createSequentialGroup()
 														.addComponent(
-																estimateCenteringPanel,
-																javax.swing.GroupLayout.Alignment.TRAILING,
+																instructionsLabel,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE))));
+																598,
+																Short.MAX_VALUE)
+																.addContainerGap())
+																.addComponent(
+																		estimateCenteringPanel,
+																		javax.swing.GroupLayout.Alignment.TRAILING,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE))));
 		rightBlankPanelLayout
-				.setVerticalGroup(rightBlankPanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setVerticalGroup(rightBlankPanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								javax.swing.GroupLayout.Alignment.TRAILING,
 								rightBlankPanelLayout
-										.createSequentialGroup()
-										.addComponent(
-												estimateCenteringPanel,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
+								.createSequentialGroup()
+								.addComponent(
+										estimateCenteringPanel,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-										.addComponent(
-												instructionsLabel,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap()));
+												.addComponent(
+														instructionsLabel,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addContainerGap()));
 
 		topRowRequirementPanel.add(rightBlankPanel);
 
@@ -1024,49 +1042,49 @@ public class OpenGameView extends JPanel {
 				rightSplitPanel);
 		rightSplitPanel.setLayout(rightSplitPanelLayout);
 		rightSplitPanelLayout
-				.setHorizontalGroup(rightSplitPanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setHorizontalGroup(rightSplitPanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								rightSplitPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addGroup(
-												rightSplitPanelLayout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
-														.addComponent(
-																gameTitlePanel,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																Short.MAX_VALUE)
+								.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										rightSplitPanelLayout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(
+														gameTitlePanel,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)
 														.addComponent(
 																rowSplitPanel,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																Short.MAX_VALUE))
-										.addContainerGap()));
+																.addContainerGap()));
 		rightSplitPanelLayout
-				.setVerticalGroup(rightSplitPanelLayout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
+		.setVerticalGroup(rightSplitPanelLayout
+				.createParallelGroup(
+						javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								rightSplitPanelLayout
-										.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(
-												gameTitlePanel,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(
+										gameTitlePanel,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
 										.addPreferredGap(
 												javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-										.addComponent(
-												rowSplitPanel,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												Short.MAX_VALUE)
-										.addContainerGap()));
+												.addComponent(
+														rowSplitPanel,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)
+														.addContainerGap()));
 
 		splitPane.setRightComponent(rightSplitPanel);
 
