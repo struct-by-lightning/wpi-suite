@@ -35,6 +35,7 @@ public class PlanningPokerVoteDeserializer {
 	 * @param ppmElement JsonElement
 	 * @param ppmType Type
 	 * @param context JsonDeserializationContext
+	 * @throws JsonParseException
 	
 	
 	 * @return PlanningPokerVote * @throws JsonParseException */

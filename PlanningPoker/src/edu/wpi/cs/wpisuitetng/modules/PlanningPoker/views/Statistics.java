@@ -43,7 +43,7 @@ public class Statistics {
 	}
 	
 	/**
-	 * @param m input array
+	 * @param a input array
 	 * @return mode
 	 */
 	public static double mode(double a[]) {

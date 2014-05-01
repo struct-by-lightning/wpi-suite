@@ -99,8 +99,8 @@ public class Mailer {
 	 * parameter
 	 * 
 	 * 
-	 * @param emailArray
-	 *            String[]
+	 * @param subject the subject of the message
+	 * @param text the content of the message
 	 */
 	
 	public Mailer(String subject, String text) {
@@ -387,9 +387,8 @@ public class Mailer {
 	/**
 	 * Adds a recipient to the Mailer object
 	 * 
-	 * @param recipient
-	 *            The target's email address
-	 * 
+	 * @param recipient The target's email address
+	 * @param pref whether the user receives emails or not
 	 * @return true if the recipient is added, false otherwise
 	 */
 	public boolean addEmail(String recipient, boolean pref) {

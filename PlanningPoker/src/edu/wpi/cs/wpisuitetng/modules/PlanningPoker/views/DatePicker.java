@@ -186,12 +186,17 @@ public class DatePicker {
 		return sdf.format(cal.getTime());
 	}
 	
+	/** the method is used to close the date picker 
+	 */
 	public void close() {
 		top.remove(p1);
 		top.remove(p2);
 		top.repaint();
 	}
 	
+	/** Enables or disables the deck model
+	 * @param enabled whether to enable or disable the DatePicker
+	 */
 	public void setEnabled(boolean enabled) {
 		for(JButton but: button) {
 			but.setEnabled(enabled);

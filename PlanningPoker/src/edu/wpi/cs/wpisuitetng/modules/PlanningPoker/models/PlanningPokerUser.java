@@ -35,6 +35,14 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 	private boolean sendEmail, sendAim;
 
 	
+	/** A constructor that creates a planning poker user
+	 * 
+	 * @param email the user's email address
+	 * @param userName the user's username
+	 * @param instantMessage the IM
+	 * @param sendEmail whether to send emails or not
+	 * @param sendAim whether to send AIMs or not
+	 */
 	
 	public PlanningPokerUser(String email, String userName,
 			String instantMessage, boolean sendEmail, boolean sendAim) {
@@ -49,6 +57,11 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 		return new Gson().toJson(this, PlanningPokerUser.class);
 	}
 
+	/** Attain a planning poker user by parsing a JSON
+	 * 
+	 * @param json the JSON containing the user data
+	 * @return the user from the JSON
+	 */
 	public static PlanningPokerUser fromJSON(String json){
 		final Gson parser = new Gson();
 		return parser.fromJson(json, PlanningPokerUser.class);
@@ -151,10 +164,11 @@ public class PlanningPokerUser extends RegularAbstractModel<PlanningPokerUser> {
 		this.sendAim = sendAim;
 	}
 
-	/**
-	 * Description
-	 * @param body
-	 * @return
+	/** Gets an array of planning poker user by parsing a JSON that contains 
+	 * multiple users
+	 * 
+	 * @param jsonArr A string that contains an array of users in JSON format
+	 * @return an array of Planning Poker users
 	 */
 	public static PlanningPokerUser[] fromJSONArray(String jsonArr) {
 		final JsonArray array = new JsonParser().parse(jsonArr).getAsJsonArray();

@@ -65,6 +65,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 
 	/**
 	 * Sends an HTTP request to retrieve all PlanningPokerGames
+	 * @return an array of planning poker votes attained from the server
 	 */
 	public PlanningPokerVote[] retrievePlanningPokerVote() {
 		final Request request = Network.getInstance().makeRequest(

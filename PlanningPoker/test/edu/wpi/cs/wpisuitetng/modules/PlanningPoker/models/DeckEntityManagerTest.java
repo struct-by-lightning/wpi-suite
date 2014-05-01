@@ -28,8 +28,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.MockData;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
+ * @version $Revision: 1.0 $
  * @author lisabatbouta
- *
  */
 public class DeckEntityManagerTest {
 	MockData db;

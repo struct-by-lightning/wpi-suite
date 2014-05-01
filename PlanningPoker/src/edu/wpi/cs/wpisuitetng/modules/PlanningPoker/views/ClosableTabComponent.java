@@ -40,6 +40,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 	 * Create a closable tab component belonging to the given tabbedPane.
 	 * The title is extracted with {@link JTabbedPane#getTitleAt(int)}.
 	 * @param tabbedPane  The JTabbedPane this tab component belongs to
+	 * @param typeOfPanelAdded used to identify the icon to display based on the type of Panel
 	 */
 	public ClosableTabComponent(JTabbedPane tabbedPane, JPanel typeOfPanelAdded) {
 		super(new FlowLayout(FlowLayout.LEFT, 0, 0));
