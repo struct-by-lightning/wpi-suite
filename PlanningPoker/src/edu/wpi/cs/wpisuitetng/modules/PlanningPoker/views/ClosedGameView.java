@@ -53,7 +53,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
  * @author mamora
  */
 public class ClosedGameView extends JPanel {
-
+	RequirementVoteIconRenderer voteRenderer;
 	/**
 	 * Open up a new closeable tab in the planning poker module with a new
 	 * instanse of this GUI for viewing and interacting with a closed planning
@@ -223,7 +223,7 @@ public class ClosedGameView extends JPanel {
 					}
 					
 				});
-		/** Long's fix here **/
+		/** Long's icon addition here **/
 		// Populate the list with each requirement.
 		final PlanningPokerFinalEstimate[] finalEsts = GetPlanningPokerFinalEstimateController
 				.getInstance().retrievePlanningPokerFinalEstimate();
@@ -232,9 +232,11 @@ public class ClosedGameView extends JPanel {
 		for (Requirement r : requirements) {
 			model.addElement(r.getName());
 		}
-
+		
+		voteRenderer = new RequirementVoteIconRenderer(requirements, finalEsts);
+		voteRenderer.setGameName(game.getGameName());
 		requirementList.setModel(model);
-		requirementList.setCellRenderer(new RequirementVoteIconRenderer(requirements, finalEsts));
+		requirementList.setCellRenderer(voteRenderer);
 
 		// Show the name of the game.
 		gameNameLabel.setText(game.getGameName());
@@ -269,6 +271,8 @@ public class ClosedGameView extends JPanel {
 	 *            The requriement currently being viewed by the user.
 	 */
 	private void updateEstimateTotal(int selected) {
+		System.out.println("Update Estimate Total");
+		
 		final PlanningPokerFinalEstimate[] finalEsts = GetPlanningPokerFinalEstimateController
 				.getInstance().retrievePlanningPokerFinalEstimate();
 		estimateNumberBox.setText("0");
@@ -832,6 +836,10 @@ public class ClosedGameView extends JPanel {
 				
 				submitButton.setEnabled(false);
 				submitButton.setText("Submitted");
+				
+				// Long's Icon addition
+				voteRenderer.updateFinalEstimation(stuff);
+				requirementList.repaint();
 			}
 		});
 		if (!ConfigManager.getConfig().getUserName().equals(game.getModerator())) {

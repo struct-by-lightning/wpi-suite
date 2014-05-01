@@ -30,13 +30,10 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * Will render a check mark on the requirement you have voted
  */
 class RequirementVoteIconRenderer extends DefaultListCellRenderer {
-    private FileSystemView fileSystemView;
-    private Color textSelectionColor = Color.BLACK;
-    private Color backgroundSelectionColor = Color.CYAN;
-    private Color textNonSelectionColor = Color.BLACK;
-    private Color backgroundNonSelectionColor = Color.WHITE;
     private List<Requirement> requirements;
     private PlanningPokerFinalEstimate[] finalEsts;
+    String gameName;
+    
     private ImageIcon blankIcon;
     private ImageIcon tickIcon;
     private javax.swing.JLabel iconTab;
@@ -60,6 +57,7 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
         String requirementName = (String) value;
         int currentReqID = -1;
         JLabel label;
+        int thisEstimation = 0;
         
         label = new JLabel();
         label.setOpaque(true);
@@ -79,15 +77,18 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
         
         // Loop through to see which requirement has been voted.
 		for(PlanningPokerFinalEstimate ppfe : finalEsts) {
-			if (ppfe.getRequirementID() == currentReqID && ppfe.getEstimate() != 0) {
-				label.setIcon(tickIcon);
-				break;
+			if (this.gameName.equals(ppfe.getGameName())) {
+				if (ppfe.getRequirementID() == currentReqID && ppfe.getEstimate() != 0) {
+					thisEstimation = ppfe.getEstimate();
+					label.setIcon(tickIcon);
+					break;
+				}
 			}
 		}
 		
         label.setText(requirementName);
         
-        System.out.println("Rendering requiremnent \"" + requirementName + "\"");
+        System.out.println("Rendering requiremnent \"" + requirementName + "\". It has an ID of " + currentReqID + " and estimation of " + thisEstimation);
         
         if (!selected) {
         	label.setBackground(Color.WHITE);
@@ -96,6 +97,14 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
         }
 
         return label;
+    }
+    
+    public void updateFinalEstimation(PlanningPokerFinalEstimate[] finalEsts) {
+    	this.finalEsts = finalEsts;
+    }
+    
+    public void setGameName(String gameName) {
+    	this.gameName = gameName;
     }
 }
 
