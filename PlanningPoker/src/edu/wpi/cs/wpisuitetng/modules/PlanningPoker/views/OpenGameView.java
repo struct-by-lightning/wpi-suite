@@ -92,9 +92,13 @@ public class OpenGameView extends JPanel {
 				.isLive()
 				|| !PlanningPokerGameModel.getPlanningPokerGame(
 						game.getGameName()).isFinished()) {
-			if (!GetPlanningPokerGamesController.waitingOnRequest) {
-				GetPlanningPokerGamesController.getInstance()
-						.retrievePlanningPokerGames();
+			GetPlanningPokerGamesController.getInstance()
+					.retrievePlanningPokerGames();
+
+			// wait until the request has been answered before continuing so we
+			// don't send literally fifty thousand requests
+			while (GetPlanningPokerGamesController.waitingOnRequest) {
+				continue;
 			}
 		}
 
