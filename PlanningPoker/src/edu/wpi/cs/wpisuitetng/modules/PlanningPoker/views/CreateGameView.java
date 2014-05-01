@@ -33,7 +33,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.BoxLayout;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -353,7 +352,7 @@ public class CreateGameView extends JPanel {
 
 						} else {
 							game = new PlanningPokerGame(enteredName, "Default description",
-									(String) deckType.getSelectedItem(), gameRequirementIDsList,
+									deckType.getSelectedItem().toString(), gameRequirementIDsList,
 									false, false, startCal, endCal, ConfigManager.getConfig()
 											.getUserName());
 
