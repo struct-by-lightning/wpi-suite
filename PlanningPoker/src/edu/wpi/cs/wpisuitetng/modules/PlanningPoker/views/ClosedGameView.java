@@ -223,14 +223,18 @@ public class ClosedGameView extends JPanel {
 					}
 					
 				});
-
+		/** Long's fix here **/
 		// Populate the list with each requirement.
+		final PlanningPokerFinalEstimate[] finalEsts = GetPlanningPokerFinalEstimateController
+				.getInstance().retrievePlanningPokerFinalEstimate();
+		
 		final DefaultListModel<String> model = new DefaultListModel<String>();
 		for (Requirement r : requirements) {
 			model.addElement(r.getName());
 		}
 
 		requirementList.setModel(model);
+		requirementList.setCellRenderer(new RequirementVoteIconRenderer(requirements, finalEsts));
 
 		// Show the name of the game.
 		gameNameLabel.setText(game.getGameName());
@@ -255,60 +259,7 @@ public class ClosedGameView extends JPanel {
 	 * Add necesary listeners to GUI components.
 	 */
 	private void initLogic() {
-
-		// Listener which updates the UI each time a requirement is selected
-		// from the list of this game's requirements.
 		System.out.println("**InitLogic has been called");
-//		this.requirementList.addListSelectionListener(new ListSelectionListener() {
-//			int currentID = 0;
-//			@Override
-//			public void valueChanged(ListSelectionEvent ev) {
-//				System.out.println("*****Requirement listener called*****");
-//				JList list;
-//				list = (JList) ev.getSource();
-//				if (list.getSelectedIndex() != -1) {
-//					selected = requirements.get(list.getSelectedIndex());
-//					currentID = selected.getId();
-//					requirementNameLabel.setText(selected.getName());
-//					requirementDescriptionLabel.setText(selected.getDescription());
-//					updateEstimateTotal(currentID);
-//				}
-//				ArrayList<Double> reqVotes = new ArrayList<Double>();
-//				estimateModel = new DefaultListModel<String>();
-//				for (PlanningPokerVote v : gameVotes) {
-//					if (v.getRequirementID() == currentID) {
-//						reqVotes.add((double) v.getVote());
-//						estimateModel.addElement("   " + v.getUserName() + ": " + v.getVote());
-//					}
-//				}
-////				System.out.println(estimateModel);
-////				System.out.println(gameVotes);
-//				estimates.setModel(estimateModel);
-//				if (reqVotes.size() != 0) {
-//					double[] voteNums = new double[reqVotes.size()];
-//					for (int i = 0; i < reqVotes.size(); i++) {
-//						voteNums[i] = (double) reqVotes.get(i);
-//					}
-//					mean.setText(meanDef + df.format(Statistics.mean(voteNums)));
-//					median.setText(medianDef + df.format(Statistics.median(voteNums)));
-//					mode.setText(modeDef + df.format(Statistics.mode(voteNums)));
-//					if (reqVotes.size() > 1) {
-//						std.setText(stdDef + df.format(Statistics.StdDev(voteNums)));
-//					} else {
-//						std.setText(stdDef + "?");
-//					}
-//					max.setText(maxDef + df.format(Statistics.max(voteNums)));
-//					min.setText(minDef + df.format(Statistics.min(voteNums)));
-//				} else {
-//					mean.setText(meanDef + "?");
-//					median.setText(medianDef + "?");
-//					mode.setText(modeDef + "?");
-//					std.setText(stdDef + "?");
-//					max.setText(maxDef + "?");
-//					min.setText(minDef + "?");
-//				}
-//			}
-//		});
 	}
 
 	/**
