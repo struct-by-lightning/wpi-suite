@@ -92,8 +92,10 @@ public class OpenGameView extends JPanel {
 				.isLive()
 				|| !PlanningPokerGameModel.getPlanningPokerGame(
 						game.getGameName()).isFinished()) {
-			GetPlanningPokerGamesController.getInstance()
-					.retrievePlanningPokerGames();
+			if (!GetPlanningPokerGamesController.waitingOnRequest) {
+				GetPlanningPokerGamesController.getInstance()
+						.retrievePlanningPokerGames();
+			}
 		}
 
 		// Close this tab.
@@ -124,7 +126,7 @@ public class OpenGameView extends JPanel {
 
 	// Mailer for this view
 	private Mailer closedNotification;
-	
+
 	// instant messenger
 	private InstantMessenger im;
 	private static boolean hasOpenedOnce = false;
@@ -149,15 +151,15 @@ public class OpenGameView extends JPanel {
 
 		// Fill components with data from the planning poker game.
 		initForGame();
-		
+
 		if (!hasOpenedOnce) {
 			estimateNumberLabel.setText("?");
 			hasOpenedOnce = true;
 		}
-		
-			if (!game.getDeckType().equals("No Deck")) {
-		submitButton.setEnabled(false);
-			}
+
+		if (!game.getDeckType().equals("No Deck")) {
+			submitButton.setEnabled(false);
+		}
 	}
 
 	/**
@@ -203,8 +205,7 @@ public class OpenGameView extends JPanel {
 					// Vote
 					if (estimateNumberLabel.getText().equals("?")) {
 						submitButton.setEnabled(false);
-					}
-					else {
+					} else {
 						submitButton.setEnabled(true);
 						ppv = new PlanningPokerVote(gameName, userName, Integer
 								.parseInt(estimateNumberLabel.getText()),
@@ -238,8 +239,9 @@ public class OpenGameView extends JPanel {
 		allCardsPanel.setBackground(new Color(232, 232, 232));
 	}
 
-	/** This class implements the document listener used for the text field that allows
-	 * users to manually enter their own estimates.
+	/**
+	 * This class implements the document listener used for the text field that
+	 * allows users to manually enter their own estimates.
 	 * 
 	 * @version $Revision: 1.0 $
 	 * @author Benjamin
@@ -300,8 +302,9 @@ public class OpenGameView extends JPanel {
 		}
 	}
 
-	/** This class implements the plain document used to prevent the user from inputing
-	 * letters and copy-pasting into the manual estimation text field.
+	/**
+	 * This class implements the plain document used to prevent the user from
+	 * inputing letters and copy-pasting into the manual estimation text field.
 	 * 
 	 * @version $Revision: 1.0 $
 	 * @author Benjamin
@@ -344,56 +347,49 @@ public class OpenGameView extends JPanel {
 		// Listener which updates the requirement displayed based on what is
 		// selected in the tree.
 
-		requirementList
-				.addListSelectionListener(new ListSelectionListener() {
-					@Override
-					public void valueChanged(ListSelectionEvent ev) {
-						final JList list;
-						list = (JList) ev.getSource();
-						final Requirement selected = requirements.get(list
-								.getSelectedIndex());
-						currentlySelectedRequirement = selected;
-						requirementNameLabel.setText(selected.getName());
-						requirementDescriptionLabel.setText(selected
-								.getDescription());
-						final int vote = GetPlanningPokerVoteController
-								.getInstance()
-								.retrievePlanningPokerVote(
-										game.getGameName(),
-										ConfigManager.getConfig().getUserName(),
-										selected.getId());
-						final String strVote = vote > 0 ? ((Integer) vote).toString()
-								: "?";
-						System.out.println("Retrieved vote: " + vote + ": "
-								+ strVote);
-						estimateNumberLabel.setText(strVote);
-						submitButton.setEnabled(false);
-						final int voteNumber = GetPlanningPokerVoteController
-								.getInstance()
-								.retrievePlanningPokerVote(
-										game.getGameName(),
-										ConfigManager.getConfig().getUserName(),
-										requirements.get(
-												requirementList
-														.getSelectedIndex())
-												.getId());
-						if (voteNumber != Integer.MIN_VALUE) {
-							estimateNumberLabel.setText("" + voteNumber);
-						}
+		requirementList.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent ev) {
+				final JList list;
+				list = (JList) ev.getSource();
+				final Requirement selected = requirements.get(list
+						.getSelectedIndex());
+				currentlySelectedRequirement = selected;
+				requirementNameLabel.setText(selected.getName());
+				requirementDescriptionLabel.setText(selected.getDescription());
+				final int vote = GetPlanningPokerVoteController.getInstance()
+						.retrievePlanningPokerVote(game.getGameName(),
+								ConfigManager.getConfig().getUserName(),
+								selected.getId());
+				final String strVote = vote > 0 ? ((Integer) vote).toString()
+						: "?";
+				System.out.println("Retrieved vote: " + vote + ": " + strVote);
+				estimateNumberLabel.setText(strVote);
+				submitButton.setEnabled(false);
+				final int voteNumber = GetPlanningPokerVoteController
+						.getInstance().retrievePlanningPokerVote(
+								game.getGameName(),
+								ConfigManager.getConfig().getUserName(),
+								requirements.get(
+										requirementList.getSelectedIndex())
+										.getId());
+				if (voteNumber != Integer.MIN_VALUE) {
+					estimateNumberLabel.setText("" + voteNumber);
+				}
 
-						for (PlayingCardJPanel card : cards) {
-							card.deselect();
-						}
+				for (PlayingCardJPanel card : cards) {
+					card.deselect();
+				}
 
-						submitButton.setEnabled(true);
-						submitButton.setText("Submit Vote");
+				submitButton.setEnabled(true);
+				submitButton.setText("Submit Vote");
 
-						if (game.getDeckType().equals("No Deck")) {
-							textArea.setText("");
-						}
+				if (game.getDeckType().equals("No Deck")) {
+					textArea.setText("");
+				}
 
-					}
-				});
+			}
+		});
 
 		// Populate the list with each requirement.
 		final DefaultListModel<String> model = new DefaultListModel<String>();
@@ -414,7 +410,8 @@ public class OpenGameView extends JPanel {
 		if (game.hasEndDate()) {
 			final SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
 			fmt.setCalendar(game.getEndDate());
-			final String dateFormatted = fmt.format(game.getEndDate().getTime());
+			final String dateFormatted = fmt
+					.format(game.getEndDate().getTime());
 			gameDeadlineDateLabel.setText(dateFormatted);
 		} else {
 			gameDeadlineDateLabel.setText("No Deadline");
@@ -757,8 +754,8 @@ public class OpenGameView extends JPanel {
 		requirementDescriptionLabel
 				.setText("game.getRequirements.get(LIST SELECTION NUM).description()");
 
-		final javax.swing.GroupLayout requirementDescriptionLabelPanelLayout = new
-				javax.swing.GroupLayout(requirementDescriptionLabelPanel);
+		final javax.swing.GroupLayout requirementDescriptionLabelPanelLayout = new javax.swing.GroupLayout(
+				requirementDescriptionLabelPanel);
 		requirementDescriptionLabelPanel
 				.setLayout(requirementDescriptionLabelPanelLayout);
 		requirementDescriptionLabelPanelLayout

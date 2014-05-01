@@ -226,11 +226,12 @@ public class MainView {
 				RequirementModel rm = RequirementModel.getInstance();
 				int size = rm.getRequirements().size();
 				if (size > 0) {
-					if (rm.getRequirements().get(0) != null && !GetPlanningPokerGamesController.waitingOnRequest) {
+					if (rm.getRequirements().get(0) != null) {
 						break;
 					}
 				}
 			}
+			
 		} catch (Exception e) {
 			System.out
 					.println("Exception in gameWasDoubleClicked() from retrieveRequirements()");
@@ -258,6 +259,9 @@ public class MainView {
 				}
 			}
 		}
+		
+		// wait for games to be retrieved
+//		while (GetPlanningPokerGamesController.waitingOnRequest) {}
 		
 		boolean server = PlanningPokerGameModel.getPlanningPokerGame(selectedGame.getGameName()).isFinished();
 		System.out.println("Client: " + originalSelectedState + " Server: " + server);
