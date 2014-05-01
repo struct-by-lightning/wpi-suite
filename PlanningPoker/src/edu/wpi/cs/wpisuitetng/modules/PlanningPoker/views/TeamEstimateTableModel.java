@@ -24,7 +24,7 @@ public class TeamEstimateTableModel extends AbstractTableModel
 
     /**
      * Add a serialized object into a new row of table
-     * @param rowData: A list of data to be added
+     * @param rowData A list of data to be added
      */
     public void addRow(List rowData)
     {

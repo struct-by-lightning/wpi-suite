@@ -15,8 +15,8 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
+ * @version $Revision: 1.0 $
  * @author sfmailand
- *
  */
 public class AddDeckController {
 
@@ -47,8 +47,7 @@ public class AddDeckController {
 	/**
 	 * This method adds a PlanningPokerGame to the server.
 	 * 
-	 * @param newPlanningPokerGame
-	 *            is the PlanningPokerGame to be added to the server.
+	 * @param newDeck is the PlanningPokerGame to be added to the server.
 	 */
 	public void AddDeck(Deck newDeck) {
 		final Request request = Network.getInstance().makeRequest(

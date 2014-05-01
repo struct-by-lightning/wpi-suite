@@ -74,14 +74,15 @@ public class PlanningPokerGameModel {
 				PlanningPokerGameModel.planningPokerGamesDict.values());
 	}
 
-	/**
-	 * Method getSize.
-	
-	 * @return int */
+	/** Returns the size of this game model
+	 * @return the size of this game model 
+	 */
 	public static int getSize() {
 		return PlanningPokerGameModel.planningPokerGamesDict.size();
 	}
 
+	/** Clears this game model
+	 */
 	public static void emptyModel() {
 		PlanningPokerGameModel.planningPokerGamesDict.clear();
 	}

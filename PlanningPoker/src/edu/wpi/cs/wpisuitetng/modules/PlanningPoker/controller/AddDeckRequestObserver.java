@@ -14,8 +14,8 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
 /**
+ * @version $Revision: 1.0 $
  * @author sfmailand
- *
  */
 public class AddDeckRequestObserver implements RequestObserver {
 	private final AddDeckController controller;

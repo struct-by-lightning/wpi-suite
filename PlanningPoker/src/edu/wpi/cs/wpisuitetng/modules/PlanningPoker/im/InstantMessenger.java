@@ -40,6 +40,10 @@ public class InstantMessenger {
 	private String text;
 	private final PacketListener pl;
 
+	/** A constructor for the Instant Messenger class
+	 * 
+	 * @param game the game that the IM will reference
+	 */
 	public InstantMessenger(PlanningPokerGame game) {
 		config = new ConnectionConfiguration("talk.google.com", 5222,
 				"gmail.com");
@@ -96,8 +100,9 @@ public class InstantMessenger {
 	/**
 	 * Sends a message to the given username
 	 * 
-	 * @param username
-	 *            the username to send the message to
+	 * @param username the username to send the message to
+	 * @param preference whether the user receives emails or not
+	 *
 	 */
 
 	public void sendMessage(String username, boolean preference) {

@@ -23,8 +23,8 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
 
 /**
+ * @version $Revision: 1.0 $
  * @author sfmailand
- *
  */
 public class DeckEntityManager implements EntityManager<Deck> {
 
@@ -34,7 +34,6 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	
 	private static final Logger logger = Logger
 			.getLogger(DeckEntityManager.class.getName());
-	
 	
 	public DeckEntityManager(Data data){
 		this.data = data;

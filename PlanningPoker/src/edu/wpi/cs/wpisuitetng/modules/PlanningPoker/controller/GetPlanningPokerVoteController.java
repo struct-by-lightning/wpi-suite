@@ -11,6 +11,7 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -64,7 +65,8 @@ public class GetPlanningPokerVoteController implements ActionListener {
 	}
 
 	/**
-	 * Sends an HTTP request to retrieve all PlanningPokerGames
+	 * Sends an HTTP request to retrieve all PlanningPokerVotes
+	 * @return an array of planning poker votes attained from the server
 	 */
 	public PlanningPokerVote[] retrievePlanningPokerVote() {
 		final Request request = Network.getInstance().makeRequest(
@@ -117,6 +119,39 @@ public class GetPlanningPokerVoteController implements ActionListener {
 			return ret.getVote();
 		} else {
 			return Integer.MIN_VALUE;
+		}
+	}
+	
+	/**
+	 * Sends an HTTP request to retrieve all PlanningPokerVotes from a specific user in a specific game
+	 */
+	public LinkedList<PlanningPokerVote> retrievePlanningPokerVoteByGameAndUser(String gameName, String userName) {
+		LinkedList<PlanningPokerVote> returnData = new LinkedList<PlanningPokerVote>();
+		final Request request = Network.getInstance().makeRequest(
+				"planningpoker/planningpokervote", HttpMethod.GET); // GET equals read
+		request.addObserver(observer); // add an observer to process the response
+		request.send(); // send the request
+		
+		try {
+			Thread.sleep(300);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(request.getResponse() != null) {
+			final PlanningPokerVote[] a = PlanningPokerVote
+					.fromJsonArray(request.getResponse().getBody());
+			
+			
+			for(PlanningPokerVote v : a) {
+				if(v.getID().indexOf(gameName + ":" + userName) != -1) {
+						returnData.add(v);
+				}
+			}			
+			
+			return returnData;
+		} else {
+			return returnData;
 		}
 	}
 }

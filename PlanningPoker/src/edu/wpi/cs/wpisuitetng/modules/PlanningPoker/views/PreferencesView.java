@@ -36,6 +36,8 @@ public class PreferencesView extends JPanel {
 
 	PlanningPokerUser currentUser;
 
+	/** Create a new tab that displays user preferences
+	 */
 	public static void openNewTab() {
 		final PreferencesView view = new PreferencesView();
 		MainView.getInstance().addCloseableTab("Preferences", view);
@@ -325,6 +327,10 @@ public class PreferencesView extends JPanel {
 		checkAllFields();
 	}
 
+	/**
+	 * 
+	 * @param evt
+	 */
 	protected void smsFieldKeyTyped(KeyEvent evt) {
 		checkAllFields();
 	}

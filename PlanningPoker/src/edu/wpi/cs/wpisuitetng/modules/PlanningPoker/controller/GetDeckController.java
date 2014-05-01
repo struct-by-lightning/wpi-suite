@@ -19,8 +19,8 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
+ * @version $Revision: 1.0 $
  * @author sfmailand
- *
  */
 public class GetDeckController implements ActionListener {
 
@@ -74,11 +74,10 @@ public class GetDeckController implements ActionListener {
 	}
 
 	/**
-	 * Add the given Users to the local model (they were received from the core
+	 * Add the given Decks to the local model (they were received from the core)
 	 * 
 	 * 
-	 * @param Users
-	 *            array of Users received from the server
+	 * @param decks array of Decks received from the server
 	 */
 	public void receivedDeck(Deck[] decks) {
 
@@ -88,7 +87,7 @@ public class GetDeckController implements ActionListener {
 			// empty the local model to eliminate duplications
 			DeckModel.getInstance().emptyModel();
 			
-			// add the users to the local model
+			// add the decks to the local model
 			DeckModel.getInstance().addDecks(decks);
 		}
 	}
