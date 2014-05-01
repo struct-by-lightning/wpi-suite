@@ -65,8 +65,7 @@ public class ProjectModel extends AbstractListModel<Project> {
 	/**
 	 * Adds the given array of Projects to the list
 	 * 
-	 * @param Projects
-	 *            the array of Projects to add
+	 * @param projects the array of Projects to add
 	 */
 	public void addProjects(Project[] projects) {
 		for (Project p : projects) {

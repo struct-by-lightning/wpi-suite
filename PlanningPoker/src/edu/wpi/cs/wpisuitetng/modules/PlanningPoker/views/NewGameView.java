@@ -70,12 +70,18 @@ public class NewGameView extends javax.swing.JPanel {
 	/**
 	 * This method will open up a new tab in the planning poker module with this
 	 * UI for viewing a the planning poker game.
+	 * 
+	 * @param game the game to open view
 	 */
 	public static void open(PlanningPokerGame game) {
 		final NewGameView view = new NewGameView(game);
 		MainView.getInstance().addCloseableTab(game.getGameName(), view);
 	}
 
+	/** The constructor for the NewGameView
+	 * 
+	 * @param game the game this NewGameView will open
+	 */
     public NewGameView(PlanningPokerGame game) {
     	this.game = game;
 

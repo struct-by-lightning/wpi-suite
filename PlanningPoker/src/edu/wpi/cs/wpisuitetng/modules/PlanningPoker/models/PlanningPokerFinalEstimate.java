@@ -31,6 +31,11 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	private int requirementID;
 	private boolean hasEstimate;
 	
+	/** A constructor for the PlanningPokerFinalEstimate class
+	 * 
+	 * @param gameName the name of the game for this final estimate
+	 * @param requirementID the ID of the requirement this estimate is for
+	 */
 	public PlanningPokerFinalEstimate(String gameName, int requirementID) {
 		hasEstimate = false;
 		if(gameName != null){
@@ -92,6 +97,9 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		return requirementID;
 	}
 	
+	/**  This function is used to see if there is an estimate or not
+	 * @return whether there is an estimate or not
+	 */
 	public boolean hasEstimate() {
 		return hasEstimate;
 	}

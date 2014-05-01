@@ -147,8 +147,7 @@ public class PlanningPokerUserModel extends AbstractListModel<PlanningPokerUser>
 	/**
 	 * Adds the given array of planningPokerUsers to the list
 	 * 
-	 * @param Users
-	 *            the array of Users to add
+	 * @param users the array of Users to add
 	 */
 	public void addUsers(PlanningPokerUser[] users) {
 		for (PlanningPokerUser u : users) {

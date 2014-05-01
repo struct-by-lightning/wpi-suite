@@ -16,8 +16,8 @@ import java.util.List;
 import javax.swing.AbstractListModel;
 
 /**
+ * @version $Revision: 1.0 $
  * @author sfmailand
- *
  */
 public class DeckModel extends AbstractListModel<Deck> {
 
@@ -32,7 +32,10 @@ public class DeckModel extends AbstractListModel<Deck> {
 		decks = new ArrayList<Deck>();
 	}
 	
-	
+	/** Singleton function
+	 * 
+	 * @return the single instance of the deck model class
+	 */
 	public static DeckModel getInstance(){
 		if(instance == null){
 			instance = new DeckModel();
@@ -40,12 +43,19 @@ public class DeckModel extends AbstractListModel<Deck> {
 		return instance;
 	}
 	
-	
+	/** Adds a deck to the this DeckModel
+	 * 
+	 * @param newDeck the deck to be added
+	 */
 	public void addDeck(Deck newDeck){
 		decks.add(newDeck);
 	}
 	
-	
+	/** Retrieves a deck based on the input ID
+	 * 
+	 * @param id the ID of the deck to return
+	 * @return the deck identified
+	 */
 	public Deck getDeck(String id){
 		for(Deck deck: decks){
 			if(deck.getDeckName().equals(id)){
@@ -56,6 +66,10 @@ public class DeckModel extends AbstractListModel<Deck> {
 		return null;
 	}
 	
+	/** Removes the user with the input id
+	 * 
+	 * @param id The ID of the user to remove
+	 */
 	public void removeUser(String id){
 		for(int i = 0; i < decks.size(); i++){
 			if(decks.get(i).getID().equals(id)){
@@ -81,7 +95,6 @@ public class DeckModel extends AbstractListModel<Deck> {
 		return decks.get(decks.size() - 1 -index);
 	}
 	
-	
 	public void emptyModel() {
 		final int oldSize = getSize();
 		final Iterator<Deck> iterator = decks.iterator();
@@ -92,7 +105,9 @@ public class DeckModel extends AbstractListModel<Deck> {
 		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
 	}
 	
-	
+	/** Add the given array of decks to the Deck Model
+	 * @param decks the array of decks to be added
+	 */
 	public void addDecks(Deck[] decks) {
 		for (Deck u : decks) {
 			this.decks.add(u);
