@@ -9,6 +9,7 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -55,11 +56,16 @@ public class CreateDeckView extends javax.swing.JPanel {
         removeValuesBtn = new javax.swing.JButton();
         createDeckBtn = new javax.swing.JButton();
         errorMessage = new javax.swing.JLabel();
-
+        addValueErrorMessage = new javax.swing.JLabel();
+        errorMessage.setForeground(Color.RED);
+        addValueErrorMessage.setForeground(Color.RED);
         
+
+        checkAllFields();
         
         deckValuesList.setModel(deckValuesListModel);
         
+
         titleLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         titleLabel.setText("Creating your new deck");
@@ -123,15 +129,20 @@ public class CreateDeckView extends javax.swing.JPanel {
             }
         });
 
+        addValueErrorMessage.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+
         javax.swing.GroupLayout deckPanelLayout = new javax.swing.GroupLayout(deckPanel);
         deckPanel.setLayout(deckPanelLayout);
         deckPanelLayout.setHorizontalGroup(
             deckPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(deckPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(newValueField, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addValueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(deckPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(deckPanelLayout.createSequentialGroup()
+                        .addComponent(newValueField, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addValueBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(addValueErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deckValuesScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -152,6 +163,8 @@ public class CreateDeckView extends javax.swing.JPanel {
                             .addGroup(deckPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(newValueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(addValueBtn)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addValueErrorMessage)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -173,12 +186,11 @@ public class CreateDeckView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(deckNamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(deckPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(createDeckBtn)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(errorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(createDeckBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(errorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(485, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -193,8 +205,8 @@ public class CreateDeckView extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(createDeckBtn)
-                    .addComponent(errorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(276, Short.MAX_VALUE))
+                    .addComponent(errorMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(267, Short.MAX_VALUE))
         );
     }// </editor-fold>                        
 
@@ -219,6 +231,9 @@ public class CreateDeckView extends javax.swing.JPanel {
     	deckValuesList.setModel(deckValuesListModel);
     	newValueField.setText("");
     	
+    	checkAllFields();
+    	newValueField.requestFocusInWindow();
+    	
     }                                           
 
     private void createDeckBtnActionPerformed(java.awt.event.ActionEvent evt) {                                              
@@ -229,6 +244,7 @@ public class CreateDeckView extends javax.swing.JPanel {
 
     private void removeValuesBtnActionPerformed(java.awt.event.ActionEvent evt) {                                                
     	deckValuesListModel.removeElementAt(deckValuesList.getSelectedIndex());
+    	checkAllFields();
     }                                               
 
     private void deckValuesListMouseClicked(java.awt.event.MouseEvent evt) {                                            
@@ -245,7 +261,17 @@ public class CreateDeckView extends javax.swing.JPanel {
     
     
     public void checkAllFields(){
-    	
+    	if(deckValuesListModel.size() == 0){
+    		removeValuesBtn.setEnabled(false);
+    		createDeckBtn.setEnabled(false);
+    		errorMessage.setText("<html>Cannot create a deck with no<br> values</html>");
+    	}
+    	else{
+    		removeValuesBtn.setEnabled(true);
+    		createDeckBtn.setEnabled(true);
+    		errorMessage.setText("");
+    	}
+
     }
     
     
@@ -271,5 +297,6 @@ public class CreateDeckView extends javax.swing.JPanel {
     private javax.swing.JTextField newValueField;
     private javax.swing.JButton removeValuesBtn;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JLabel addValueErrorMessage;
     // End of variables declaration                   
 }
