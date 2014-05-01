@@ -231,7 +231,13 @@ public class MainView {
 					}
 				}
 			}
-			
+
+			// Make sure the a reply to the GetPlanningPokerGames request has
+			// been received
+			while (GetPlanningPokerGamesController.waitingOnRequest) {
+				continue;
+			}
+
 		} catch (Exception e) {
 			System.out
 					.println("Exception in gameWasDoubleClicked() from retrieveRequirements()");
@@ -259,15 +265,19 @@ public class MainView {
 				}
 			}
 		}
-		
+
 		// wait for games to be retrieved
-//		while (GetPlanningPokerGamesController.waitingOnRequest) {}
-		
-		boolean server = PlanningPokerGameModel.getPlanningPokerGame(selectedGame.getGameName()).isFinished();
-		System.out.println("Client: " + originalSelectedState + " Server: " + server);
-		
-		// check if the original state has changed (ie went from open to finished)
-		// new to open is irrelevant, as only one person can see it, thus it can't be changed be someone else
+		// while (GetPlanningPokerGamesController.waitingOnRequest) {}
+
+		boolean server = PlanningPokerGameModel.getPlanningPokerGame(
+				selectedGame.getGameName()).isFinished();
+		System.out.println("Client: " + originalSelectedState + " Server: "
+				+ server);
+
+		// check if the original state has changed (ie went from open to
+		// finished)
+		// new to open is irrelevant, as only one person can see it, thus it
+		// can't be changed be someone else
 		if (originalSelectedState == server) {
 			System.err.println("Game was the same");
 			// Conditions for a game to be "New"
@@ -286,9 +296,19 @@ public class MainView {
 			}
 		} else {
 			System.err.println("Game changed");
-			int n = JOptionPane.showConfirmDialog(null, "The game you have selected" +
-					" has closed. Would you like to refresh the game list?", "", JOptionPane.YES_NO_OPTION);
+			int n = JOptionPane
+					.showConfirmDialog(
+							null,
+							"The game you have selected"
+									+ " has closed. Would you like to open the finished game?",
+							"", JOptionPane.YES_NO_OPTION);
 			System.err.println("Output: " + n);
+			
+			if (n == 0) { // yes
+				ClosedGameView.open(selectedGame); // this will automatically refresh the tree
+			} else { // no, so just refresh the tree
+				MainView.getInstance().refreshGameTree();
+			}
 		}
 	}
 
