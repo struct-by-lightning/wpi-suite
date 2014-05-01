@@ -93,7 +93,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 		// for all other attributes: instantiate as null, fill in if given.
 
 		final String gameName = deflated.get("gameName").getAsString();
-		final String description = null;
+		String description = null;
 		String deckType = null;
 		final List<Integer> requirements = new ArrayList<Integer>();
 		boolean isFinished = false;
@@ -102,6 +102,11 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 		GregorianCalendar startDate = null;
 		GregorianCalendar endDate = null;
 		String moderator = null;
+
+		if (deflated.has("description") && !deflated.get("description").isJsonNull()
+				&& !deflated.get("description").getAsString().equals("")) {
+			description = deflated.get("description").getAsString();
+		}
 
 		if (deflated.has("deckType")
 				&& !deflated.get("deckType").getAsString().equals("")) {
