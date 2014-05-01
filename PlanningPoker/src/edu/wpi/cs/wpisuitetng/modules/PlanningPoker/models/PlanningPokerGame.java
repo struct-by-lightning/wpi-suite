@@ -14,6 +14,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -131,17 +133,19 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 * @return ArrayList<Integer> */
 	public List<Integer> getDeckValues() {
 		// TODO This method returns mock data, and needs to be correctly implemented.
+		DefaultListModel<Integer> deckNumbers = DeckModel.getInstance().getDeck(deckType).getDeckNumbers();
 		
-        return new ArrayList<Integer>() {
-            {
-                add(1);
-                add(1);
-                add(2);
-                add(3);
-                add(5);
-                add(8);
-            }
-        };
+		ArrayList<Integer> deckValues = new ArrayList<Integer>();
+		
+		Integer[] deckArray = new Integer[deckNumbers.size()];
+		
+		deckNumbers.copyInto(deckArray);
+		
+		for(int i = 0; i < deckArray.length; i++){
+			deckValues.add(deckArray[i]);
+		}
+		
+		return deckValues;
 	}
 	
 

@@ -293,7 +293,7 @@ public class CreateGameView extends JPanel {
 				viewHasBeenEdited = false;
 
 				enteredName = sessionName.getText();
-				selectedDeckType = (String) deckType.getSelectedItem();
+				//selectedDeckType = deckType.getSelectedItem().toString();
 				final GregorianCalendar startCal, endCal;
 
 				// Checks to see if the user set the date to something other
@@ -338,7 +338,7 @@ public class CreateGameView extends JPanel {
 						if (startNow.isSelected()) {
 							game = new PlanningPokerGame(enteredName, "Default description",
 
-									(String) deckType.getSelectedItem(),
+									deckType.getSelectedItem().toString(),
 									gameRequirementIDsList, false, true,
 									startCal, endCal, ConfigManager.getConfig()
 											.getUserName());
