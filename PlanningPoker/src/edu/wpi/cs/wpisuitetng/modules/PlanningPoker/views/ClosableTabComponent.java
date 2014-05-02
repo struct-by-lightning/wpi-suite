@@ -112,7 +112,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 			Component tabView = tabbedPane.getComponentAt(index);
 
 			if (tabView instanceof CreateGameView) {
-				if (((CreateGameView) tabView).isViewHasBeenEdited()) {
+				if (((CreateGameView) tabView).hasBeenEdited()) {
 					//default icon, custom title
 					int n = JOptionPane.showConfirmDialog(
 							this.getParent().getParent(),
