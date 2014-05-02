@@ -9,7 +9,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
@@ -78,8 +77,7 @@ public class Mailer {
 
 			// set the header line
 			message.setSubject("Great news ladies and gentlemen!");
-			message.setText(
-					"Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
+			message.setText("Our favorite past time in which we predict the effort in which we must exert our fingers and minds has begun anew! I request that all ye whom have felt the stern blow of Thor's mighty hammer attend the session, so we may reach a general consensus!");
 		} catch (MessagingException mex) {
 			System.out.println("Message creation failed");
 			mex.printStackTrace();
@@ -98,10 +96,12 @@ public class Mailer {
 	 * parameter
 	 * 
 	 * 
-	 * @param subject the subject of the message
-	 * @param text the content of the message
+	 * @param subject
+	 *            the subject of the message
+	 * @param text
+	 *            the content of the message
 	 */
-	
+
 	public Mailer(String subject, String text) {
 		session = createSmtpSession();
 		session.setDebug(true);
@@ -195,22 +195,25 @@ public class Mailer {
 			mex.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Creates an email notification with the name of the game, the requirements
 	 * being estimated, and the deadline if the game has one from a given
 	 * PlanningPokerGame. If this occurs at a change in state of the game, the
 	 * mailer must be constructed AFTER the change in state.
 	 * 
+	 * This overload accounts for when the server closes a game, and thus does
+	 * not have access to the network classes to retrieve requirements
+	 * 
 	 * @param game
 	 *            the given PlanningPokerGame
-	 * @param requirements the list of requirements manually retrieved from the server
+	 * @param requirements
+	 *            the list of requirements manually retrieved from the server
 	 */
 	public Mailer(PlanningPokerGame game, Requirement[] requirements) {
 		session = createSmtpSession();
 		session.setDebug(true);
 		message = new MimeMessage(session);
-		ArrayList<Requirement> r = new ArrayList<Requirement>();
 
 		// set up the subject
 		String subject = "The Planning Poker Game " + game.getGameName()
@@ -233,7 +236,7 @@ public class Mailer {
 
 		text += "Requirements:\n";
 		// add the requirement names for this games requirements
-		for (Requirement req : r) {
+		for (Requirement req : requirements) {
 			if (game.getRequirementIds().contains(req.getId()))
 				text += "-" + req.getName() + "\n";
 		}
@@ -408,9 +411,10 @@ public class Mailer {
 			if (message.getAllRecipients() != null) {
 				if (DEBUG) {
 					transport.connect(host, login, pass);
-				}
-				else
-					transport.connect("smtp.gmail.com", "struct.by.lightning@gmail.com", "Donthackthis!12358");
+				} else
+					transport.connect("smtp.gmail.com",
+							"struct.by.lightning@gmail.com",
+							"Donthackthis!12358");
 
 				// send the message
 				System.out.println("Ready to send message");
@@ -457,8 +461,10 @@ public class Mailer {
 	/**
 	 * Adds a recipient to the Mailer object
 	 * 
-	 * @param recipient The target's email address
-	 * @param pref whether the user receives emails or not
+	 * @param recipient
+	 *            The target's email address
+	 * @param pref
+	 *            whether the user receives emails or not
 	 * @return true if the recipient is added, false otherwise
 	 */
 	public boolean addEmail(String recipient, boolean pref) {
