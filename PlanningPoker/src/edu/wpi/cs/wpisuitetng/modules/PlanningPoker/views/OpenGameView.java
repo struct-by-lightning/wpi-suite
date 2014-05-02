@@ -639,7 +639,6 @@ public class OpenGameView extends JPanel {
 						}
 
 						if (n == 0) { // return to mainview
-							MainView.getInstance().refreshGameTree();
 							MainView.getInstance().removeClosableTab();
 						} else { // answered no, disable all buttons
 							submitButton.setEnabled(false);
