@@ -14,8 +14,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,8 +31,10 @@ import javax.swing.tree.TreePath;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.TabPanel;
 import edu.wpi.cs.wpisuitetng.janeway.interfaces.ContactChecker;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddDeckController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
@@ -238,6 +242,20 @@ public class MainView {
 				continue;
 			}
 
+			/*
+			 * If a game has a deadline, it is only closed when the first get
+			 * request after the deadline has passed is sent. Send a second
+			 * request so that the local game is updated if the game has a
+			 * deadline
+			 */
+			if (selectedGame.hasEndDate() && selectedGame.isLive() && new Date().after(selectedGame.getEndDate().getTime())) {
+				GetPlanningPokerGamesController.getInstance()
+						.retrievePlanningPokerGames();
+				while (GetPlanningPokerGamesController.waitingOnRequest) {
+					continue;
+				}
+			}
+
 		} catch (Exception e) {
 			System.out
 					.println("Exception in gameWasDoubleClicked() from retrieveRequirements()");
@@ -303,9 +321,10 @@ public class MainView {
 									+ " has closed. Would you like to open the finished game?",
 							"", JOptionPane.YES_NO_OPTION);
 			System.err.println("Output: " + n);
-			
+
 			if (n == 0) { // yes
-				ClosedGameView.open(selectedGame); // this will automatically refresh the tree
+				ClosedGameView.open(selectedGame); // this will automatically
+													// refresh the tree
 			} else { // no, so just refresh the tree
 				MainView.getInstance().refreshGameTree();
 			}
@@ -319,6 +338,10 @@ public class MainView {
 	 */
 	public static void createGameButtonClicked() {
 		CreateGameView.openNewTab();
+	}
+	
+	public static void createDeckButtonClicked(){
+		CreateDeckView.openNewTab();
 	}
 
 	/**
@@ -351,6 +374,8 @@ public class MainView {
 				.getLayout();
 		toolbar.show(cardToolbarComponent, MAIN_VIEW);
 		mainArea.show(cardMainAreaComponent, MAIN_VIEW);
+
+    	
 	}
 
 	/**

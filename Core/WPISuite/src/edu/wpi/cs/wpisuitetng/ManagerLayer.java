@@ -32,7 +32,6 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerEntityMa
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEstimateEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVoteEntityManager;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.core.entitymanagers.ProjectManager;
 import edu.wpi.cs.wpisuitetng.modules.core.entitymanagers.UserManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
@@ -93,6 +92,7 @@ public class ManagerLayer {
 		String ssid = null;
 		
 		((UserManager)map.get("coreuser")).createAdmin();
+		((DeckEntityManager)map.get("planningpokerdeck")).createDefaultDecks();
 		
 		try {
 			ssid = sessions.createSession((User)map.get("coreuser").getEntity(null, "admin")[0]);

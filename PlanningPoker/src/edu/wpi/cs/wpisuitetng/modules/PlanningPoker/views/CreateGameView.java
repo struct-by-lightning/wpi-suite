@@ -54,9 +54,12 @@ import javax.swing.border.LineBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetDeckController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im.InstantMessenger;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
@@ -157,26 +160,26 @@ public class CreateGameView extends JPanel {
 
 		// TODO:
 		// There should be some deck selection logic here.
-		deckType.setModel(new DefaultComboBoxModel<String>(new String[] { "Default", "No Deck" }));
+		
+		GetDeckController.getInstance().retrieveDeck();
+		try {
+			Thread.sleep(150);
+		} catch (Exception e) {
+		}
 
+		deckType.setModel(new DefaultComboBoxModel(DeckModel.getInstance().getDecks().toArray()));
+		deckOverview.setText(""+(DeckModel.getInstance().getDeck(deckType.getSelectedItem().toString()).getDeckNumbers()));
+		
+		
 		deckType.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 
 				viewHasBeenEdited = true;
 
-				final JComboBox<String> combo = (JComboBox<String>) e.getSource();
-
-				final String selection = (String) combo.getSelectedItem();
-
-				if (selection.contentEquals("Default")) {
-					deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
-				}
-
-				else if (selection.contentEquals("No Deck")) {
-					deckOverview
-							.setText("PlanningPokerUser will be able to enter their own estimation");
-				}
+				deckOverview.setText(""+(DeckModel.getInstance().getDeck(deckType.getSelectedItem().toString()).getDeckNumbers()));
+				
+				
 			}
 
 		});
@@ -289,7 +292,7 @@ public class CreateGameView extends JPanel {
 				viewHasBeenEdited = false;
 
 				enteredName = sessionName.getText();
-				selectedDeckType = (String) deckType.getSelectedItem();
+				//selectedDeckType = deckType.getSelectedItem().toString();
 				final GregorianCalendar startCal, endCal;
 
 				// Checks to see if the user set the date to something other
@@ -334,7 +337,7 @@ public class CreateGameView extends JPanel {
 						if (startNow.isSelected()) {
 							game = new PlanningPokerGame(enteredName, "Default description",
 
-									(String) deckType.getSelectedItem(),
+									deckType.getSelectedItem().toString(),
 									gameRequirementIDsList, false, true,
 									startCal, endCal, ConfigManager.getConfig()
 											.getUserName());
@@ -349,7 +352,7 @@ public class CreateGameView extends JPanel {
 
 						} else {
 							game = new PlanningPokerGame(enteredName, "Default description",
-									(String) deckType.getSelectedItem(), gameRequirementIDsList,
+									deckType.getSelectedItem().toString(), gameRequirementIDsList,
 									false, false, startCal, endCal, ConfigManager.getConfig()
 											.getUserName());
 
@@ -543,7 +546,7 @@ public class CreateGameView extends JPanel {
 		/**
 		 * A dropdown box that contains the default deck to choose.
 		 */
-		deckType = new JComboBox<String>();
+		deckType = new JComboBox<Deck>();
 
 		backlogRequirementList = new JList<Requirement>();
 		thisGameRequirementList = new JList<Requirement>();
@@ -737,7 +740,6 @@ public class CreateGameView extends JPanel {
 
 		cardDeckPane.add(deckType);
 		deckOverview = new JTextField();
-		deckOverview.setText("1, 1, 2, 3, 5, 8, 13, 0?");
 
 		deckOverview.setEditable(false);
 
@@ -967,7 +969,7 @@ public class CreateGameView extends JPanel {
 	private JPanel gameList;
 	private JScrollPane scroller_2;
 	private JTextPane txtpnLoggedInAs;
-	private JComboBox<String> deckType;
+	private JComboBox<Deck> deckType;
 	private GridBagConstraints constraints14;
 	
 	public boolean isViewHasBeenEdited() {
