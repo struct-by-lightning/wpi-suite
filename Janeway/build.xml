@@ -3,6 +3,7 @@
 	<import file="../build-common.xml" />
 	<path id="classpath">
 		<pathelement path="../PlanningPoker/lib/mail.jar"/>
+		<pathelement path="../PlanningPoker/lib/swingx-all-1.6.4.jar"/>
 		<pathelement path="../Network/build" />
 		<pathelement path="../Core/WPISuite-Interfaces/build" />
 		<fileset dir="${core-lib}">
