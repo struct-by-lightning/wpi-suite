@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.DefaultListModel;
+
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.database.Data;
 import edu.wpi.cs.wpisuitetng.exceptions.BadRequestException;
@@ -33,7 +35,7 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	Data data;
 	
 	private static final Logger logger = Logger
-			.getLogger(PlanningPokerUserEntityManager.class.getName());
+			.getLogger(DeckEntityManager.class.getName());
 	
 	public DeckEntityManager(Data data){
 		this.data = data;
@@ -53,9 +55,9 @@ public class DeckEntityManager implements EntityManager<Deck> {
 			save(s, u);
 		}
 		else{
-			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerUser creation.");
+			logger.log(Level.WARNING, "Conflict Exception during Deck creation.");
 			throw new ConflictException(
-					"A PlanningPokerUser with the given ID already exists. Entity String "
+					"A Deck with the given ID already exists. Entity String "
 							+ content);
 		}
 		
@@ -144,7 +146,7 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
 		logger.log(Level.INFO, "DeckEntityManager involking DeleteAll...");
-		data.deleteAll(new PlanningPokerUser(null, null, null, false, false));
+		data.deleteAll(new Deck(null, null));
 		
 	}
 
@@ -177,4 +179,33 @@ public class DeckEntityManager implements EntityManager<Deck> {
 		return null;
 	}
 
+	public void createDefaultDecks() {
+		DefaultListModel<Integer> deckListModel = new DefaultListModel<Integer>();
+		Deck noDeck = new Deck("No Deck", new DefaultListModel<Integer>());
+
+		deckListModel.addElement(1);
+		deckListModel.addElement(1);
+		deckListModel.addElement(2);
+		deckListModel.addElement(3);
+		deckListModel.addElement(5);
+		deckListModel.addElement(8);
+		deckListModel.addElement(13);
+
+		Deck defaultDeck = new Deck("Default Deck", deckListModel);
+
+		try {
+			if (getEntity(null, defaultDeck.getID()).length == 0) {
+				save(null, defaultDeck);
+			}
+		} catch (WPISuiteException e) {
+		}
+
+		try {
+			if (getEntity(null, noDeck.getID()).length == 0) {
+				save(null, noDeck);
+			}
+		} catch (WPISuiteException e) {
+		}
+		logger.log(Level.INFO, "Default deck creation success!");
+	}
 }
