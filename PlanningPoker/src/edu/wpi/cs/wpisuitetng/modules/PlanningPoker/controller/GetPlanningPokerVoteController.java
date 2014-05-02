@@ -124,6 +124,10 @@ public class GetPlanningPokerVoteController implements ActionListener {
 	
 	/**
 	 * Sends an HTTP request to retrieve all PlanningPokerVotes from a specific user in a specific game
+	 *
+	 *@param gameName The name of the game votes will be retrieved from
+	 *@param userName The name of the user votes will be retrieved from
+	 *@return a linked list of all the game user's votes
 	 */
 	public LinkedList<PlanningPokerVote> retrievePlanningPokerVoteByGameAndUser(String gameName, String userName) {
 		LinkedList<PlanningPokerVote> returnData = new LinkedList<PlanningPokerVote>();

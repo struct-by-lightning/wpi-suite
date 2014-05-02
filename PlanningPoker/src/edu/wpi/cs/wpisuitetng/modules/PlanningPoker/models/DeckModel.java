@@ -95,6 +95,8 @@ public class DeckModel extends AbstractListModel<Deck> {
 		return decks.get(decks.size() - 1 -index);
 	}
 	
+	/** Clear the deckModel
+	 */
 	public void emptyModel() {
 		final int oldSize = getSize();
 		final Iterator<Deck> iterator = decks.iterator();
