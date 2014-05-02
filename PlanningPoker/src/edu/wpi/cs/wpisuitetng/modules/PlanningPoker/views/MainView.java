@@ -106,7 +106,7 @@ public class MainView {
 	 * This method brings the game-displaying tree in the main overview tab up
 	 * to date with the database.
 	 */
-	public void refreshGameTree() {
+	public int refreshGameTree() {
 
 		// Send a request for an updated set of planning poker games and wait
 		// until it is processed.
@@ -152,6 +152,11 @@ public class MainView {
 			// the model), and then we can filter against that here.
 			else if (game.isLive() && !game.isFinished()) {
 				openGames.add(nodeToAdd);
+				
+				if (game.hasEndDate() && new Date().after(game.getEndDate().getTime())) {
+					MainView.getInstance().refreshGameTree();
+					return 0;
+				}
 			}
 
 			// Conditions for a game to be "Finished".
@@ -189,6 +194,8 @@ public class MainView {
 		for (int i = 0; i < gameTree.getRowCount(); i++) {
 			gameTree.expandRow(i);
 		}
+		
+		return 1;
 	}
 
 	/**

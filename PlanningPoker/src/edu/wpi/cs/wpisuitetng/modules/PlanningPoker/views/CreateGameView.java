@@ -364,7 +364,6 @@ public class CreateGameView extends JPanel {
 						lblGameCreated.setVisible(true);
 						btnCreateGame.setEnabled(false);
 
-						MainView.getInstance().refreshGameTree();
 						MainView.getInstance().removeClosableTab();
 					} else {
 						// Error message when the session name is empty
