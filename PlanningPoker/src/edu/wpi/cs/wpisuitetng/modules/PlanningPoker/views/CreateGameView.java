@@ -45,8 +45,8 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
- * An instance of this class is a JPanel containing the GUI for creating a new
- * planning poker game.
+ * An instance of this class is a JPanel containing the GUI for interacting with
+ * a planning poker game which has not yet been opened for voting.
  * 
  * @author Austin Rose (atrose)
  */
@@ -437,9 +437,10 @@ public class CreateGameView extends javax.swing.JPanel {
 						javax.swing.border.TitledBorder.DEFAULT_POSITION,
 						new java.awt.Font("Al Bayan", 0, 10))); // NOI18N
 
-		gameNameField.setColumns(15);
+		gameNameField.setColumns(20);
 		gameNameField.setText("Game on "
-				+ new SimpleDateFormat("EEEE, MM/dd").format(new Date()));
+				+ new SimpleDateFormat("EEEE, MM/dd 'at' hh:mm a")
+						.format(new Date()));
 		gameNameField.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				gameNameFieldActionPerformed(evt);
