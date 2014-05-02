@@ -26,7 +26,7 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.MainView;
 
 /**
- * @author Batyr, cgwalker, Francisco
+ * @author Batyr, cgwalker, Francisco, Benjamin, mamora
  * @version $Revision: 1.0 $ Sets up toolbar buttons (including the new
  *          requirement image) for the main view and handles the initial
  *          "Create Game Button" click.
@@ -44,7 +44,7 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 		super("");
 
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-		this.setPreferredWidth(205);
+		this.setPreferredWidth(405);
 
 		this.add(contentPanel);
 		
@@ -62,16 +62,21 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 		prefButton.setHorizontalAlignment(SwingConstants.CENTER);	
 
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-		this.setPreferredWidth(460);
+		this.setPreferredWidth(510);
 
 		newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-		newGameButton.setPreferredSize(new Dimension(150, 50));
+		newGameButton.setPreferredSize(new Dimension(500, 50));
+		
+		createDeckButton.setHorizontalAlignment(SwingConstants.CENTER);
+		createDeckButton.setPreferredSize(new Dimension(500, 50));
 
 		try {
 			final Image img = ImageIO.read(getClass().getResource("new_req.png"));
 			newGameButton.setIcon(new ImageIcon(img));
 			final Image imgPref = ImageIO.read(getClass().getResource("pref.png"));
 			prefButton.setIcon(new ImageIcon(imgPref));
+			final Image imgDeck = ImageIO.read(getClass().getResource("cards.png"));
+			createDeckButton.setIcon(new ImageIcon(imgDeck));
 		} catch (IOException ex) {
 			System.out.print(ex.getMessage());
 
