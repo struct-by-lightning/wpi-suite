@@ -358,21 +358,7 @@ public class MainView {
 				.getLayout();
 		toolbar.show(cardToolbarComponent, MAIN_VIEW);
 		mainArea.show(cardMainAreaComponent, MAIN_VIEW);
-		DefaultListModel<Integer> deckListModel = new DefaultListModel<Integer>();
-		Deck noDeck = new Deck("No Deck", new DefaultListModel<Integer>());
-		
-		deckListModel.addElement(1);
-		deckListModel.addElement(1);
-		deckListModel.addElement(2);
-		deckListModel.addElement(3);
-		deckListModel.addElement(5);
-		deckListModel.addElement(8);
-		deckListModel.addElement(13);
-		
-		Deck defaultDeck = new Deck("Default Deck", deckListModel);
-		
-		AddDeckController.getInstance().AddDeck(defaultDeck);
-    	AddDeckController.getInstance().AddDeck(noDeck);
+
     	
 	}
 

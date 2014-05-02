@@ -21,6 +21,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetDeckController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
@@ -135,6 +136,11 @@ public class PlanningPokerGame extends RegularAbstractModel<PlanningPokerGame> {
 	 */
 	public List<Integer> getDeckValues() {
 
+		GetDeckController.getInstance().retrieveDeck();
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+		}
 		// TODO This method returns mock data, and needs to be correctly implemented.
 		DefaultListModel<Integer> deckNumbers = DeckModel.getInstance().getDeck(deckType).getDeckNumbers();
 		
