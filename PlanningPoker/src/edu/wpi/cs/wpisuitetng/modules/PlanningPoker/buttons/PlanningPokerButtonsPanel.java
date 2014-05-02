@@ -44,7 +44,7 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 		super("");
 
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-		this.setPreferredWidth(200);
+		this.setPreferredWidth(205);
 
 		this.add(contentPanel);
 		
@@ -66,7 +66,6 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 
 		newGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		newGameButton.setPreferredSize(new Dimension(150, 50));
-
 
 		try {
 			final Image img = ImageIO.read(getClass().getResource("new_req.png"));

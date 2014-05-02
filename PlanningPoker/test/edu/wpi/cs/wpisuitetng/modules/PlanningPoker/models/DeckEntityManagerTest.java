@@ -71,8 +71,6 @@ public class DeckEntityManagerTest {
 		numsInDeck.add(7);
 		numsInDeck.add(20);
 		
-		newDeck = new Deck("deck1", numsInDeck );
-		newDeck2 = new Deck("deck3", numsInDeck2 );
 		existingUser = new User("joe", "joe", "1234", 2);
 		
 		defaultSession = new Session(existingUser, testProject, mockSsid);
