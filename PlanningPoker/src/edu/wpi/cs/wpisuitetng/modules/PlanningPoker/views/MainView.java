@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -238,6 +239,20 @@ public class MainView {
 				continue;
 			}
 
+			/*
+			 * If a game has a deadline, it is only closed when the first get
+			 * request after the deadline has passed is sent. Send a second
+			 * request so that the local game is updated if the game has a
+			 * deadline
+			 */
+			if (selectedGame.hasEndDate() && selectedGame.isLive() && new Date().after(selectedGame.getEndDate().getTime())) {
+				GetPlanningPokerGamesController.getInstance()
+						.retrievePlanningPokerGames();
+				while (GetPlanningPokerGamesController.waitingOnRequest) {
+					continue;
+				}
+			}
+
 		} catch (Exception e) {
 			System.out
 					.println("Exception in gameWasDoubleClicked() from retrieveRequirements()");
@@ -303,9 +318,10 @@ public class MainView {
 									+ " has closed. Would you like to open the finished game?",
 							"", JOptionPane.YES_NO_OPTION);
 			System.err.println("Output: " + n);
-			
+
 			if (n == 0) { // yes
-				ClosedGameView.open(selectedGame); // this will automatically refresh the tree
+				ClosedGameView.open(selectedGame); // this will automatically
+													// refresh the tree
 			} else { // no, so just refresh the tree
 				MainView.getInstance().refreshGameTree();
 			}
