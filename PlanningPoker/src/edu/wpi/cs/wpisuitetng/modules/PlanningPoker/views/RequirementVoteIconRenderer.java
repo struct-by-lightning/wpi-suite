@@ -45,6 +45,11 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
     private ImageIcon tickIcon;
     private javax.swing.JLabel iconTab;
     
+    /** * A constructor for requirements JList in the OpenGameView
+     * 
+     * @param requirements The List of Requirements name
+     * @param finalEsts An array of final estimates the current user os submitted
+     */
     RequirementVoteIconRenderer(List<Requirement> requirements, PlanningPokerFinalEstimate[] finalEsts) {
         this.requirements = requirements;
         this.finalEsts = finalEsts;
@@ -54,9 +59,10 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
     }
     
     /**
-     * A constructor for requirements JLIst in the OpenGameView
-     * @param requirements: The List of Requirements name
-     * @param allVotes: All the votes that the current user have submitted.
+     * A constructor for requirements JList in the OpenGameView
+     * 
+     * @param requirements The List of Requirements name
+     * @param allVotes All the votes that the current user have submitted.
      */
     public RequirementVoteIconRenderer(List<Requirement> requirements,
 			LinkedList<PlanningPokerVote> allVotes) {
@@ -137,10 +143,18 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
         return label;
     }
     
+	/** Update the final estimates
+	 * 
+	 * @param finalEsts An array of final estimates to update from
+	 */
     public void updateFinalEstimation(PlanningPokerFinalEstimate[] finalEsts) {
     	this.finalEsts = finalEsts;
     }
     
+    /** Set the game name
+     * 
+     * @param gameName the new name of the game
+     */
     public void setGameName(String gameName) {
     	this.gameName = gameName;
     }

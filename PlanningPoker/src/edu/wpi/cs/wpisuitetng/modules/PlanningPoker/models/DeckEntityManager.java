@@ -35,6 +35,10 @@ public class DeckEntityManager implements EntityManager<Deck> {
 	private static final Logger logger = Logger
 			.getLogger(PlanningPokerUserEntityManager.class.getName());
 	
+	/** A constructor for the deck entity manager
+	 * 
+	 * @param data The database
+	 */
 	public DeckEntityManager(Data data){
 		this.data = data;
 	}
