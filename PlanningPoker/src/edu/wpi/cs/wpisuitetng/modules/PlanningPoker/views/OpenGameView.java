@@ -443,7 +443,7 @@ public class OpenGameView extends JPanel {
 
 		// Show the deadline of the game if there is one.
 		if (game.hasEndDate()) {
-			final SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
+			final SimpleDateFormat fmt = new SimpleDateFormat("'Closes' MMM dd, yyyy 'at' hh:mm a");
 			fmt.setCalendar(game.getEndDate());
 			final String dateFormatted = fmt
 					.format(game.getEndDate().getTime());
@@ -783,11 +783,11 @@ public class OpenGameView extends JPanel {
 										GroupLayout.DEFAULT_SIZE, 341,
 										Short.MAX_VALUE)
 								.addGap(18)
-								.addComponent(btnEndGame)
 								.addPreferredGap(ComponentPlacement.RELATED)
 								.addComponent(gameDeadlineDateLabel,
-										GroupLayout.PREFERRED_SIZE, 160,
+										GroupLayout.PREFERRED_SIZE, 240,
 										GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnEndGame)
 								.addContainerGap()));
 		gameTitlePanelLayout.setVerticalGroup(gameTitlePanelLayout
 				.createParallelGroup(Alignment.LEADING).addGroup(
