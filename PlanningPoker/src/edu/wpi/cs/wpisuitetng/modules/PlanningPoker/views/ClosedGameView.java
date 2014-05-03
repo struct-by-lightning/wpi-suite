@@ -708,29 +708,30 @@ public class ClosedGameView extends JPanel {
 		updateButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController
-						.getInstance().retrievePlanningPokerFinalEstimate();
-				System.out.println("These are the current final estimates:" + Arrays.asList(stuff));
-				for(PlanningPokerFinalEstimate ppfe : stuff) {
-					if(ppfe.getGameName().equals(game.getGameName())) {
-						Requirement req2set = RequirementModel.getInstance()
-								.getRequirement(ppfe.getRequirementID());
-						req2set.setEstimate(ppfe.getEstimate());
-						UpdateRequirementController.getInstance().updateRequirement(req2set);
-					}
-				}
-				game.setArchived(true);
-				submitButton.setEnabled(false);
-				updateButton.setEnabled(false);
-				estimateNumberBox.setEnabled(false);
-				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
-				try {
-					Thread.sleep(300);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				GetRequirementsController.getInstance().retrieveRequirements();
+//				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController
+//						.getInstance().retrievePlanningPokerFinalEstimate();
+//				System.out.println("These are the current final estimates:" + Arrays.asList(stuff));
+//				for(PlanningPokerFinalEstimate ppfe : stuff) {
+//					if(ppfe.getGameName().equals(game.getGameName())) {
+//						Requirement req2set = RequirementModel.getInstance()
+//								.getRequirement(ppfe.getRequirementID());
+//						req2set.setEstimate(ppfe.getEstimate());
+//						UpdateRequirementController.getInstance().updateRequirement(req2set);
+//					}
+//				}
+//				game.setArchived(true);
+//				submitButton.setEnabled(false);
+//				updateButton.setEnabled(false);
+//				estimateNumberBox.setEnabled(false);
+//				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+//				try {
+//					Thread.sleep(300);
+//				} catch (InterruptedException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				GetRequirementsController.getInstance().retrieveRequirements();
+				FinalEstimateView.open(game);
 			}
 		});
 		updateButton.setEnabled(false);
