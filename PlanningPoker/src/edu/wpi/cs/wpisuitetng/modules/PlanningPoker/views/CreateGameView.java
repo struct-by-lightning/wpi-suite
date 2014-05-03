@@ -44,6 +44,13 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequireme
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+import java.awt.Color;
+import java.awt.Font;
+
 /**
  * An instance of this class is a JPanel containing the GUI for interacting with
  * a planning poker game which has not yet been opened for voting.
@@ -426,7 +433,6 @@ public class CreateGameView extends javax.swing.JPanel {
 		timePicker = new javax.swing.JSpinner();
 		datePicker = new org.jdesktop.swingx.JXDatePicker();
 		blankMiddlePanel = new javax.swing.JPanel();
-		errorTextLabel = new javax.swing.JLabel();
 		deckOptionsPanel = new javax.swing.JPanel();
 		chooseDeckLabel = new javax.swing.JLabel();
 		deckChoiceComboBox = new javax.swing.JComboBox();
@@ -899,10 +905,6 @@ public class CreateGameView extends javax.swing.JPanel {
 
 		blankMiddlePanel.setLayout(new java.awt.GridBagLayout());
 
-		errorTextLabel.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-		errorTextLabel.setForeground(new java.awt.Color(153, 0, 0));
-		blankMiddlePanel.add(errorTextLabel, new java.awt.GridBagConstraints());
-
 		optionsPanel.add(blankMiddlePanel);
 
 		deckOptionsPanel.setBorder(javax.swing.BorderFactory
@@ -1047,98 +1049,52 @@ public class CreateGameView extends javax.swing.JPanel {
 
 		loggedInAsLabel.setText("Logged in as: "
 				+ ConfigManager.getConfig().getUserName());
+		errorTextLabel = new javax.swing.JLabel();
+		
+				errorTextLabel.setFont(new Font("Tahoma", Font.PLAIN, 16)); // NOI18N
+				errorTextLabel.setForeground(Color.RED);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		layout.setHorizontalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+						.addComponent(optionsPanel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE)
+						.addComponent(requirementListsPanel, GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE)
+						.addGroup(layout.createSequentialGroup()
+							.addComponent(loggedInAsLabel)
+							.addGap(0, 813, Short.MAX_VALUE))
+						.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+							.addComponent(gameNameLabelPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(gameDescriptionFieldPanel, GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+							.addGap(18)
+							.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(errorTextLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(buttonsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+					.addContainerGap())
+		);
+		layout.setVerticalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+						.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(gameNameLabelPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(gameDescriptionFieldPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addGap(2)
+					.addComponent(errorTextLabel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(requirementListsPanel, GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+					.addGap(18)
+					.addComponent(optionsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(loggedInAsLabel)
+					.addContainerGap())
+		);
 		this.setLayout(layout);
-		layout.setHorizontalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-												.addComponent(
-														optionsPanel,
-														javax.swing.GroupLayout.Alignment.TRAILING,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														1357, Short.MAX_VALUE)
-												.addComponent(
-														requirementListsPanel,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														Short.MAX_VALUE)
-												.addGroup(
-														layout.createSequentialGroup()
-																.addComponent(
-																		gameNameLabelPanel,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)
-																.addGap(18, 18,
-																		18)
-																.addComponent(
-																		gameDescriptionFieldPanel,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		Short.MAX_VALUE)
-																.addGap(18, 18,
-																		18)
-																.addComponent(
-																		buttonsPanel,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		javax.swing.GroupLayout.PREFERRED_SIZE))
-												.addGroup(
-														layout.createSequentialGroup()
-																.addComponent(
-																		loggedInAsLabel)
-																.addGap(0,
-																		0,
-																		Short.MAX_VALUE)))
-								.addContainerGap()));
-		layout.setVerticalGroup(layout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(
-						layout.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(
-										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-												.addComponent(
-														buttonsPanel,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addGroup(
-														layout.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																false)
-																.addComponent(
-																		gameNameLabelPanel,
-																		javax.swing.GroupLayout.Alignment.LEADING,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		Short.MAX_VALUE)
-																.addComponent(
-																		gameDescriptionFieldPanel,
-																		javax.swing.GroupLayout.Alignment.LEADING,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		javax.swing.GroupLayout.DEFAULT_SIZE,
-																		Short.MAX_VALUE)))
-								.addGap(30, 30, 30)
-								.addComponent(requirementListsPanel,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE)
-								.addGap(18, 18, 18)
-								.addComponent(optionsPanel,
-										javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(18, 18, 18)
-								.addComponent(loggedInAsLabel)
-								.addContainerGap()));
 	}// </editor-fold>
 
 	private void singleRightArrowButtonActionPerformed(
