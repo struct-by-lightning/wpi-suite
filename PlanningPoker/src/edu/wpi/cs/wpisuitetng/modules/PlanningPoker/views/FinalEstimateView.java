@@ -9,6 +9,7 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
@@ -16,11 +17,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerFinalEstimateController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerFinalEstimate;
@@ -53,10 +57,16 @@ public class FinalEstimateView extends JPanel {
 	private JButton submitOne;
 	private JButton submitAll;
 	private  ListSelectionModel listSelectionModel;
+	private JScrollPane scroll;
+	private javax.swing.JLabel gameDeadlineDateLabel;
+	private javax.swing.JLabel gameNameLabel;
+	private javax.swing.JPanel gameTitlePanel;
+	private JPanel buttons;
+	private JLabel estimatesLabelPanel;
 	
 	public static void open(PlanningPokerGame game) {
 		final FinalEstimateView view = new FinalEstimateView(game);
-		MainView.getInstance().addCloseableTab(game.getGameName(), view);
+		MainView.getInstance().addCloseableTab("Final Estimates for: "+game.getGameName(), view);
 	}
 	
 	private FinalEstimateView(PlanningPokerGame game) {
@@ -70,13 +80,64 @@ public class FinalEstimateView extends JPanel {
 	}
 	
 	private void initComponents() {
+		gameTitlePanel = new javax.swing.JPanel();
+		gameNameLabel = new javax.swing.JLabel();
+		gameDeadlineDateLabel = new javax.swing.JLabel();
+		
 		splitPane = new javax.swing.JSplitPane();
 		leftSplitPanel = new javax.swing.JPanel();
 		rightSplitPanel = new javax.swing.JPanel();
 		estimates = new JTable();
 		estimateModel = new FinalEstimateTableModel();
-		submitOne = new JButton("Submit this Estimate");
+		submitOne = new JButton("Submit Estimate: ");
 		submitAll = new JButton("Submit all Estimates");
+	    scroll = new JScrollPane();
+	    buttons = new JPanel(new GridLayout(2,1));
+	    estimatesLabelPanel = new JLabel();
+		
+	    
+	    gameTitlePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153,
+				153, 153)));
+
+		gameNameLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+		gameNameLabel.setText("game.getGameName()");
+
+		gameDeadlineDateLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		gameDeadlineDateLabel.setText("game.getDeadlineDate()");
+
+		final javax.swing.GroupLayout gameTitlePanelLayout = new javax.swing.GroupLayout(
+				gameTitlePanel);
+		gameTitlePanel.setLayout(gameTitlePanelLayout);
+		gameTitlePanelLayout.setHorizontalGroup(gameTitlePanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				gameTitlePanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(gameNameLabel)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(gameDeadlineDateLabel).addContainerGap()));
+		gameTitlePanelLayout.setVerticalGroup(gameTitlePanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				gameTitlePanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								gameTitlePanelLayout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.BASELINE)
+										.addComponent(gameNameLabel)
+										.addComponent(gameDeadlineDateLabel))
+						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		// Show the name of the game.
+		gameNameLabel.setText(game.getGameName());
+
+		// Show the deadline of the game if there is one.
+		gameDeadlineDateLabel.setText("Submit Final Estimates");
+		
+		submitOne.setFont(new java.awt.Font("Tahoma", 0, 16));
+		submitAll.setFont(new java.awt.Font("Tahoma", 0, 16));
+		estimates.setFont(new java.awt.Font("Tahoma", 0, 16));
 		
 		splitPane.setLeftComponent(leftSplitPanel);
 		splitPane.setRightComponent(rightSplitPanel);
@@ -90,10 +151,83 @@ public class FinalEstimateView extends JPanel {
 			}
 		}
 		
+		buttons.add(submitOne);
+		buttons.add(submitAll);
+		estimatesLabelPanel.setText("Final Estimates");
+		
+		
+		final javax.swing.GroupLayout rightSplitPanelLayout = new javax.swing.GroupLayout(
+				rightSplitPanel);
+		rightSplitPanel.setLayout(rightSplitPanelLayout);
+		rightSplitPanelLayout.setHorizontalGroup(rightSplitPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				rightSplitPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								rightSplitPanelLayout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+										.addComponent(gameTitlePanel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(buttons,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)).addContainerGap()));
+		rightSplitPanelLayout.setVerticalGroup(rightSplitPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				rightSplitPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(gameTitlePanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addComponent(buttons, javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addContainerGap()));
+		
+		final javax.swing.GroupLayout leftSplitPanelLayout = new javax.swing.GroupLayout(
+				leftSplitPanel);
+		leftSplitPanel.setLayout(leftSplitPanelLayout);
+		leftSplitPanelLayout.setHorizontalGroup(leftSplitPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				leftSplitPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(
+								leftSplitPanelLayout
+										.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+										.addComponent(estimatesLabelPanel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(scroll,
+												javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE,
+												Short.MAX_VALUE)).addContainerGap()));
+		leftSplitPanelLayout.setVerticalGroup(leftSplitPanelLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				leftSplitPanelLayout
+						.createSequentialGroup()
+						.addContainerGap()
+						.addComponent(estimatesLabelPanel,
+								javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addComponent(scroll,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE, Short.MAX_VALUE)
+						.addContainerGap()));
+
+		
+		
 		estimates.setModel(estimateModel);
-		rightSplitPanel.add(estimates);
-		leftSplitPanel.add(submitOne);
-		leftSplitPanel.add(submitAll);
+		//rightSplitPanel.add(scroll);
+		leftSplitPanel.add(gameTitlePanel);
+		
 		this.add(splitPane);
 		
 		submitOne.setEnabled(false);
@@ -102,9 +236,17 @@ public class FinalEstimateView extends JPanel {
         listSelectionModel.addListSelectionListener(new ListSelectionListener() {
         	public void valueChanged(ListSelectionEvent ev) {
         		submitOne.setEnabled(estimates.getSelectedRow() != -1);
+        		submitOne.setText("Submit Estimate: "+estimates.getValueAt(estimates.getSelectedRow(), 0));
         	}
         });
         
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+	    centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+	    estimates.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+	    estimates.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+        
+		scroll.setViewportView(estimates);
+	    
         submitOne.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Requirement req2set = (Requirement)estimates.getValueAt(estimates.getSelectedRow(), 0);
@@ -117,6 +259,7 @@ public class FinalEstimateView extends JPanel {
 					e1.printStackTrace();
 				}
 				GetRequirementsController.getInstance().retrieveRequirements();
+				gameDeadlineDateLabel.setText("Submitted the Final Estimate for "+req2set.getName());
         	}
         });
         
@@ -134,8 +277,10 @@ public class FinalEstimateView extends JPanel {
 					e1.printStackTrace();
 				}
 				GetRequirementsController.getInstance().retrieveRequirements();
+				gameDeadlineDateLabel.setText("Submitted all Final Estimates for this game");
         	}
         });
+        add(splitPane, java.awt.BorderLayout.CENTER);
 	}
 	
 }
