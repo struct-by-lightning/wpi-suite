@@ -218,7 +218,7 @@ public class CreateGameView extends javax.swing.JPanel {
 		// What if there are no requirements in the game?
 		if (this.thisGameRequirementsListModel.isEmpty()) {
 			createGameButtonEnabled = false;
-			errorText = "Game must have at least one requirement.";
+			//errorText = "Game must have at least one requirement.";
 		}
 
 		// What if the date field does not contain a legal date?
