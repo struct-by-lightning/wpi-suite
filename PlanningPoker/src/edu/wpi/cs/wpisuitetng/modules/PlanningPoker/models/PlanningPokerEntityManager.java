@@ -111,7 +111,9 @@ public class PlanningPokerEntityManager implements
 			final PlanningPokerGame[] rv = data.retrieve(ppg, "gameName", id)
 					.toArray(m);
 
-			for (PlanningPokerGame game : rv) {
+			for (int i = 0; i < rv.length; i++) {
+				PlanningPokerGame game = rv[i];
+				
 				if (!game.isFinished()
 						&& new Date().after(game.getEndDate().getTime())) {
 					System.out.println("Game \"" + game.getGameName()
@@ -130,6 +132,7 @@ public class PlanningPokerEntityManager implements
 					close.send();
 					game.setFinished(true);
 					game.setLive(false);
+					rv[i] = game; // update the game in the returned array
 					this.save(s, game);
 				}
 			}

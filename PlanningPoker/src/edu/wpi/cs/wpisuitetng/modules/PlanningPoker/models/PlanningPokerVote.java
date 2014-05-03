@@ -80,7 +80,7 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 	@Override
 	public String toJSON() {
 
-		return "{\"id\":\"" + gameName.replace(':', ';') + ":" + userName + ":" + requirementID + "\",\"vote\":\"" + vote + "\"}";
+		return "{\"id\":\"" + gameName.replace(':', ';').replace(',', '|') + ":" + userName + ":" + requirementID + "\",\"vote\":\"" + vote + "\"}";
 
 	}
 	/**
@@ -158,9 +158,11 @@ public class PlanningPokerVote extends RegularAbstractModel<PlanningPokerVote>{
 		System.out.println(json);
 		// skip the boilerplate
 		scTemp.useDelimiter("\\\"?[:,{}]\\\"?");
+		
 		scTemp.next();
 		// get the gameName
-		String retGameName = scTemp.next().replace(';', ':');
+		String retGameName = scTemp.next().replace(';', ':').replace('|', ',');
+		System.err.println(retGameName);
 		// check if the gameName is null
 		if(retGameName.equals("null")) {
 			retGameName = null;
