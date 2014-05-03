@@ -147,8 +147,8 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		}
 		
 		String gName = json.get("gameName").getAsString();
-		int reqId;
-		int estimate;
+		int reqId = 0;
+		int est = 0;
 		
 		try {
 			reqId = json.get("requirementID").getAsInt();
@@ -157,12 +157,19 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		}
 		
 		try {
-			estimate = json.get("estimate").getAsInt();
+			est = json.get("estimate").getAsInt();
 		} catch (java.lang.ClassCastException e) {
 			System.out.println("estimate field is false");
 		}
 		
-		return null;
+		PlanningPokerFinalEstimate ppfe =  new PlanningPokerFinalEstimate(gName, reqId);
+		ppfe.setEstimate(est);
+		return ppfe;
+		
+	}
+	
+	public static PlanningPokerFinalEstimate fromJSON(String json) {
+		return fromJSON(new JsonParser().parse(json).getAsJsonObject());
 	}
 	
 	/**
