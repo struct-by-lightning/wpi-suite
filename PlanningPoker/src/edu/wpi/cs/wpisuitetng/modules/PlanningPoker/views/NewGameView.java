@@ -266,6 +266,7 @@ public class NewGameView extends javax.swing.JPanel {
                         
         // Send out notifications of the game starting. Do this after the tab has already closed, because it is slow.
         mailer = new Mailer(game);
+        mailer.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
         mailer.send();
         im = new InstantMessenger(game);
         im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());

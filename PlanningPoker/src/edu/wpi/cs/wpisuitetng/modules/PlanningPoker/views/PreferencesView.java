@@ -360,7 +360,6 @@ public class PreferencesView extends JPanel {
 		UpdatePlanningPokerUserController.getInstance().update(currentUser);
 		updateUser.setText("Saved!");
 		updateUser.setEnabled(false);
-		MainView.getInstance().refreshGameTree();
 		MainView.getInstance().removeClosableTab();
 	}
 

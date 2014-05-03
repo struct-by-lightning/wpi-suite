@@ -336,11 +336,13 @@ public class CreateGameView extends javax.swing.JPanel {
 		// Close the tab.
 		MainView.getInstance().removeClosableTab();
 
-		// Send out notifications of the game starting. Do this after the tab
-		// has already closed, because it is slow. Only send this if the game is
-		// open for voting immediately
+		// Send out notifications of the game starting. Do this after the tabe
+		// closes because it takes a while. Only send this if the
+		// game is open for voting immediately
 		if (this.openForVotingImmediatelyCheckbox.isSelected()) {
 			mailer = new Mailer(game);
+			mailer.addEmailFromUsers(PlanningPokerUserModel.getInstance()
+					.getUsers());
 			mailer.send();
 			im = new InstantMessenger(game);
 			im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());
