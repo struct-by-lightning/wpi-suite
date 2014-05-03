@@ -1050,50 +1050,107 @@ public class CreateGameView extends javax.swing.JPanel {
 		loggedInAsLabel.setText("Logged in as: "
 				+ ConfigManager.getConfig().getUserName());
 		errorTextLabel = new javax.swing.JLabel();
-		
-				errorTextLabel.setFont(new Font("Tahoma", Font.PLAIN, 16)); // NOI18N
-				errorTextLabel.setForeground(Color.RED);
+
+		errorTextLabel.setFont(new Font("Tahoma", Font.PLAIN, 16)); // NOI18N
+		errorTextLabel.setForeground(Color.RED);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-		layout.setHorizontalGroup(
-			layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-						.addComponent(optionsPanel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE)
-						.addComponent(requirementListsPanel, GroupLayout.DEFAULT_SIZE, 901, Short.MAX_VALUE)
-						.addGroup(layout.createSequentialGroup()
-							.addComponent(loggedInAsLabel)
-							.addGap(0, 813, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
-							.addComponent(gameNameLabelPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(gameDescriptionFieldPanel, GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-							.addGap(18)
-							.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(errorTextLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(buttonsPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-					.addContainerGap())
-		);
-		layout.setVerticalGroup(
-			layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-						.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(gameNameLabelPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(gameDescriptionFieldPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-					.addGap(2)
-					.addComponent(errorTextLabel)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(requirementListsPanel, GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-					.addGap(18)
-					.addComponent(optionsPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(loggedInAsLabel)
-					.addContainerGap())
-		);
+		layout.setHorizontalGroup(layout
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(
+												Alignment.LEADING)
+												.addComponent(
+														optionsPanel,
+														Alignment.TRAILING,
+														GroupLayout.DEFAULT_SIZE,
+														901, Short.MAX_VALUE)
+												.addComponent(
+														requirementListsPanel,
+														GroupLayout.DEFAULT_SIZE,
+														901, Short.MAX_VALUE)
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		loggedInAsLabel)
+																.addGap(0,
+																		813,
+																		Short.MAX_VALUE))
+												.addGroup(
+														Alignment.TRAILING,
+														layout.createSequentialGroup()
+																.addComponent(
+																		gameNameLabelPanel,
+																		GroupLayout.PREFERRED_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.PREFERRED_SIZE)
+																.addGap(18)
+																.addComponent(
+																		gameDescriptionFieldPanel,
+																		GroupLayout.DEFAULT_SIZE,
+																		290,
+																		Short.MAX_VALUE)
+																.addGap(18)
+																.addGroup(
+																		layout.createParallelGroup(
+																				Alignment.LEADING,
+																				false)
+																				.addComponent(
+																						errorTextLabel,
+																						GroupLayout.DEFAULT_SIZE,
+																						GroupLayout.DEFAULT_SIZE,
+																						Short.MAX_VALUE)
+																				.addComponent(
+																						buttonsPanel,
+																						GroupLayout.DEFAULT_SIZE,
+																						GroupLayout.DEFAULT_SIZE,
+																						Short.MAX_VALUE))))
+								.addContainerGap()));
+		layout.setVerticalGroup(layout
+				.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(
+												Alignment.LEADING)
+												.addComponent(
+														buttonsPanel,
+														GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addGroup(
+														layout.createParallelGroup(
+																Alignment.TRAILING,
+																false)
+																.addComponent(
+																		gameNameLabelPanel,
+																		Alignment.LEADING,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE)
+																.addComponent(
+																		gameDescriptionFieldPanel,
+																		Alignment.LEADING,
+																		GroupLayout.DEFAULT_SIZE,
+																		GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE)))
+								.addGap(2)
+								.addComponent(errorTextLabel)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(requirementListsPanel,
+										GroupLayout.DEFAULT_SIZE, 320,
+										Short.MAX_VALUE)
+								.addGap(18)
+								.addComponent(optionsPanel,
+										GroupLayout.PREFERRED_SIZE,
+										GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE).addGap(18)
+								.addComponent(loggedInAsLabel)
+								.addContainerGap()));
 		this.setLayout(layout);
 	}// </editor-fold>
 
