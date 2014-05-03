@@ -668,6 +668,8 @@ public class ClosedGameView extends JPanel {
 
 		gameVotes = new ArrayList<PlanningPokerVote>();
 		for (PlanningPokerVote v : allVotes) {
+			System.err.println("Vote gameName: " + v.getGameName());
+			System.err.println("Game name: " + game.getGameName());
 			if (v.getGameName().equalsIgnoreCase(game.getGameName())) {
 				gameVotes.add(v);
 			}

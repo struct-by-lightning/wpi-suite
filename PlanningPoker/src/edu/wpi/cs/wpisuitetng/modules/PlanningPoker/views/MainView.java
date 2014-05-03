@@ -106,7 +106,7 @@ public class MainView {
 	 * This method brings the game-displaying tree in the main overview tab up
 	 * to date with the database.
 	 */
-	public void refreshGameTree() {
+	public int refreshGameTree() {
 
 		// Send a request for an updated set of planning poker games and wait
 		// until it is processed.
@@ -189,6 +189,8 @@ public class MainView {
 		for (int i = 0; i < gameTree.getRowCount(); i++) {
 			gameTree.expandRow(i);
 		}
+		
+		return 1;
 	}
 
 	/**
@@ -240,20 +242,6 @@ public class MainView {
 			// been received
 			while (GetPlanningPokerGamesController.waitingOnRequest) {
 				continue;
-			}
-
-			/*
-			 * If a game has a deadline, it is only closed when the first get
-			 * request after the deadline has passed is sent. Send a second
-			 * request so that the local game is updated if the game has a
-			 * deadline
-			 */
-			if (selectedGame.hasEndDate() && selectedGame.isLive() && new Date().after(selectedGame.getEndDate().getTime())) {
-				GetPlanningPokerGamesController.getInstance()
-						.retrievePlanningPokerGames();
-				while (GetPlanningPokerGamesController.waitingOnRequest) {
-					continue;
-				}
 			}
 
 		} catch (Exception e) {

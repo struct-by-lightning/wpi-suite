@@ -1,15 +1,17 @@
 /*******************************************************************************
-* Copyright (c) 2012-2014 -- WPI Suite
-*
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-* Contributor: team struct-by-lightning
-*******************************************************************************/
+ * Copyright (c) 2012-2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * Contributor: team struct-by-lightning
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,12 +24,14 @@ import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * @author Miguel
  * @version $Revision: 1.0 $
  */
-public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGame> {
+public class PlanningPokerEntityManager implements
+		EntityManager<PlanningPokerGame> {
 
 	Class<PlanningPokerGame> ppg = PlanningPokerGame.class;
 	Data data;
@@ -37,22 +41,28 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 
 	/**
 	 * Constructor for PlanningPokerEntityManager.
-	 * @param data Data
+	 * 
+	 * @param data
+	 *            Data
 	 */
 	public PlanningPokerEntityManager(Data data) {
 		this.data = data;
 	}
-	
+
 	/**
 	 * Method makeEntity.
-	 * @param s Session
-	 * @param content String
+	 * 
+	 * @param s
+	 *            Session
+	 * @param content
+	 *            String
 	 * 
 	 * @return PlanningPokerGame
 	 * @throws BadRequestException
 	 * @throws ConflictException
 	 * @throws WPISuiteException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(Session, String)
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(Session,
+	 *      String)
 	 */
 	@Override
 	public PlanningPokerGame makeEntity(Session s, String content)
@@ -64,7 +74,8 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 		if (existing.length == 0 || existing[0] == null) {
 			save(s, p);
 		} else {
-			logger.log(Level.WARNING, "Conflict Exception during PlanningPokerGame creation.");
+			logger.log(Level.WARNING,
+					"Conflict Exception during PlanningPokerGame creation.");
 			throw new ConflictException(
 					"A PlanningPokerGame with the given ID already exists. Entity String: "
 							+ content);
@@ -72,15 +83,20 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 
 		return p;
 	}
+
 	/**
 	 * Method getEntity.
-	 * @param s Session
-	 * @param id String
+	 * 
+	 * @param s
+	 *            Session
+	 * @param id
+	 *            String
 	 * 
 	 * @return PlanningPokerGame[]
 	 * @throws NotFoundException
 	 * @throws WPISuiteException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String)
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session,
+	 *      String)
 	 */
 	@Override
 	public PlanningPokerGame[] getEntity(Session s, String id)
@@ -88,17 +104,18 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 		final PlanningPokerGame[] m = new PlanningPokerGame[0];
 		PlanningPokerUser[] u;
 		Mailer close;
-		
-		if(id.equals(""))
-		{
+
+		if (id.equals("")) {
 			return getAll(s);
-		}
-		else
-		{
-			final PlanningPokerGame[] rv = data.retrieve(ppg, "gameName", id).toArray(m);
-			
-			for(PlanningPokerGame game : rv) {
-				if(!game.isFinished() && new Date().after(game.getEndDate().getTime())) {
+		} else {
+			final PlanningPokerGame[] rv = data.retrieve(ppg, "gameName", id)
+					.toArray(m);
+
+			for (int i = 0; i < rv.length; i++) {
+				PlanningPokerGame game = rv[i];
+				
+				if (!game.isFinished()
+						&& new Date().after(game.getEndDate().getTime())) {
 					System.out.println("Game \"" + game.getGameName()
 							+ "\" has passed its deadline; closing.");
 					close = new Mailer(game);
@@ -110,21 +127,25 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 									false)).toArray(new PlanningPokerUser[0]);
 					// add the users to the model
 					PlanningPokerUserModel.getInstance().addUsers(u);
-					close.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
+					close.addEmailFromUsers(PlanningPokerUserModel
+							.getInstance().getUsers());
 					close.send();
 					game.setFinished(true);
 					game.setLive(false);
+					rv[i] = game; // update the game in the returned array
 					this.save(s, game);
 				}
 			}
-			
+
 			return rv;
 		}
 	}
 
 	/**
 	 * Method getAll.
-	 * @param s Session
+	 * 
+	 * @param s
+	 *            Session
 	 * 
 	 * @return PlanningPokerGame[]
 	 * @throws WPISuiteException
@@ -134,19 +155,27 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 	public PlanningPokerGame[] getAll(Session s) throws WPISuiteException {
 		PlanningPokerGame[] ret = new PlanningPokerGame[0];
 		PlanningPokerUser[] u;
+		Requirement[] r;
+
 		Mailer close;
 		ret = data.retrieveAll(
 				new PlanningPokerGame(null, null, null, null, false, false,
 						null, null, null)).toArray(ret);
-		
-		for(PlanningPokerGame game : ret) {
-			if(!game.isFinished() && new Date().after(game.getEndDate().getTime())) {
+
+		for (PlanningPokerGame game : ret) {
+			if (!game.isFinished()
+					&& new Date().after(game.getEndDate().getTime())) {
 				System.out.println("Game \"" + game.getGameName()
 						+ "\" has passed its deadline; closing.");
 				game.setFinished(true);
 				game.setLive(false);
-				
-				close = new Mailer(game);
+
+				// retrieve requirements manually, as the server cannot access
+				// the network calls made to access them from within Mailer
+				r = data.retrieveAll(new Requirement(), s.getProject())
+						.toArray(new Requirement[0]);
+
+				close = new Mailer(game, r);
 				// clear the UserModel
 				PlanningPokerUserModel.getInstance().emptyModel();
 				// add the users to the array
@@ -155,20 +184,24 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 						.toArray(new PlanningPokerUser[0]);
 				// add the users to the model
 				PlanningPokerUserModel.getInstance().addUsers(u);
-				close.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
+				close.addEmailFromUsers(PlanningPokerUserModel.getInstance()
+						.getUsers());
 				close.send();
 
 				this.save(s, game);
 			}
 		}
-		
+
 		return ret;
 	}
 
 	/**
 	 * Method update.
-	 * @param s Session
-	 * @param content String
+	 * 
+	 * @param s
+	 *            Session
+	 * @param content
+	 *            String
 	 * 
 	 * @return PlanningPokerGame
 	 * @throws WPISuiteException
@@ -187,21 +220,22 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 
 	/**
 	 * Method save.
-	 * @param s Session
-	 * @param model PlanningPokerGame
-	
-	 * @throws WPISuiteException */
+	 * 
+	 * @param s
+	 *            Session
+	 * @param model
+	 *            PlanningPokerGame
+	 * 
+	 * @throws WPISuiteException
+	 */
 	@Override
 	public void save(Session s, PlanningPokerGame model)
 			throws WPISuiteException {
-		if(data.save(model))
-		{
+		if (data.save(model)) {
 			logger.log(Level.FINE, "PlanningPokerGame Saved :" + model);
 
-			return ;
-		}
-		else
-		{
+			return;
+		} else {
 			logger.log(Level.WARNING, "PlanningPokerGame Save Failure!");
 			throw new DatabaseException("Save failure for PlanningPokerGame.");
 		}
@@ -209,12 +243,16 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 
 	/**
 	 * Method deleteEntity.
-	 * @param s Session
-	 * @param id String
+	 * 
+	 * @param s
+	 *            Session
+	 * @param id
+	 *            String
 	 * 
 	 * @return boolean
 	 * @throws WPISuiteException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String)
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session,
+	 *      String)
 	 */
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
@@ -224,11 +262,15 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 
 	/**
 	 * Method advancedGet.
-	 * @param s Session
-	 * @param args String[]
+	 * 
+	 * @param s
+	 *            Session
+	 * @param args
+	 *            String[]
 	 * @return String
 	 * @throws WPISuiteException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedGet(Session, String[])
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedGet(Session,
+	 *      String[])
 	 */
 	@Override
 	public String advancedGet(Session s, String[] args)
@@ -239,14 +281,17 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 
 	/**
 	 * Method deleteAll.
-	 * @param s Session
+	 * 
+	 * @param s
+	 *            Session
 	 * 
 	 * @throws WPISuiteException
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteAll(Session)
 	 */
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
-		logger.log(Level.INFO, "PlanningPokerEntityManager invoking DeleteAll...");
+		logger.log(Level.INFO,
+				"PlanningPokerEntityManager invoking DeleteAll...");
 		data.deleteAll(new PlanningPokerGame(null, null, null, null, false,
 				false, null, null, null));
 	}
@@ -266,13 +311,18 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 
 	/**
 	 * Method advancedPut.
-	 * @param s Session
-	 * @param args String[]
-	 * @param content String
+	 * 
+	 * @param s
+	 *            Session
+	 * @param args
+	 *            String[]
+	 * @param content
+	 *            String
 	 * 
 	 * @return String
 	 * @throws WPISuiteException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPut(Session, String[], String)
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPut(Session,
+	 *      String[], String)
 	 */
 	@Override
 	public String advancedPut(Session s, String[] args, String content)
@@ -283,13 +333,18 @@ public class PlanningPokerEntityManager implements EntityManager<PlanningPokerGa
 
 	/**
 	 * Method advancedPost.
-	 * @param s Session
-	 * @param string String
-	 * @param content String
+	 * 
+	 * @param s
+	 *            Session
+	 * @param string
+	 *            String
+	 * @param content
+	 *            String
 	 * 
 	 * @return String
 	 * @throws WPISuiteException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPost(Session, String, String)
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPost(Session,
+	 *      String, String)
 	 */
 	@Override
 	public String advancedPost(Session s, String string, String content)

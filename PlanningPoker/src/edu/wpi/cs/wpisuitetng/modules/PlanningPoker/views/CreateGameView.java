@@ -1,56 +1,34 @@
-/*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+/**
+ * *****************************************************************************
+ * Copyright (c) 2012-2014 -- WPI Suite
  *
- * Contributors: Struct-By-Lightning
- ******************************************************************************/
+ * All rights reserved. This program and the accompanying materials are made
+ * available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html Contributor: team
+ * struct-by-lightning
+ * *****************************************************************************
+ */
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.JFrame;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.SpinnerDateModel;
-import javax.swing.border.LineBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerGameController;
@@ -61,47 +39,73 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im.InstantMessenger;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 
 /**
- * This JPanel houses the GUI and logic for allowing a user to create a new
- * planning poker game.
- *
- * @version $Revision: 1.0 $
+ * An instance of this class is a JPanel containing the GUI for interacting with
+ * a planning poker game which has not yet been opened for voting.
+ * 
  * @author Austin Rose (atrose)
  */
-public class CreateGameView extends JPanel {
+public class CreateGameView extends javax.swing.JPanel {
+
+	/**
+	 * The list model for the list of requirements for this game.
+	 */
+	private DefaultListModel<String> thisGameRequirementsListModel;
+
+	/**
+	 * The list model for the list of requirements remaining in the backlog.
+	 */
+	private DefaultListModel<String> backlogRequirementsListModel;
+
+	/**
+	 * The combo box model for deck type options the user has.
+	 */
+	private DefaultComboBoxModel<String> deckTypeComboBoxModel;
+
+	/**
+	 * The mailer used when the game is opened for voting and users need to be
+	 * notified.
+	 */
+	private Mailer mailer;
+
+	/**
+	 * The instant messenger used when the game is opened for voting and users
+	 * need to be notified.
+	 */
+	private InstantMessenger im;
+
+	/**
+	 * This is used to determine whether or not a popup should warn of unsaved
+	 * inputs.
+	 */
+	private boolean changedSinceOpened = false;
 
 	/**
 	 * This method will open up a new tab in the planning poker module with this
 	 * UI for creating a new planning poker game.
 	 */
 	public static void openNewTab() {
-		final CreateGameView view = new CreateGameView();
-		MainView.getInstance().addCloseableTab("Create Game", view);
+		CreateGameView view = new CreateGameView();
+		MainView.getInstance().addCloseableTab("Create game", view);
 	}
 
-	/**
-	 * Constructor initializes all GUI components, then fills in the logic
-	 * between them.
-	 *
-	 * This constructor is private so that this class can only be initialized
-	 * through the static "open" method.
-	 */
-	private CreateGameView() {
-		initComponents();
-		initComponentLogic();
+	public boolean hasBeenEdited() {
+		return this.changedSinceOpened;
 	}
 
-	/**
-	 * Fills in all dynamic data displayed by components, and adds appropriate
-	 * listeners.
-	 */
-	private void initComponentLogic() {
+	public CreateGameView() {
+
+		// Fetch updated set of requirements from the database.
+		GetRequirementsController.getInstance().retrieveRequirements();
+		try {
+			Thread.sleep(150);
+		} catch (Exception e) {
+		}
 
 		// Get and add the list of emails to the mailer
 		GetPlanningPokerUserController.getInstance().retrieveUser();
@@ -110,870 +114,1201 @@ public class CreateGameView extends JPanel {
 		} catch (Exception e) {
 		}
 
-		GetRequirementsController.getInstance().retrieveRequirements();
-		try {
-			Thread.sleep(150);
-		} catch (Exception e) {
-		}
-
-		// The "have a deadline" checkbox listener
-		deadline.addActionListener(new ActionListener() {
-			private boolean checked = false;
-			
-			public void actionPerformed(ActionEvent ae) {
-				viewHasBeenEdited = true;
-				if (!checked) {
-					calendarButton_2.setEnabled(true);
-					endTime.setEnabled(true);
-					checked = true;
-				} else {
-					if (calendarOpen) {
-						calendarButton_2.doClick();
-					}
-					calendarButton_2.setEnabled(false);
-					endTime.setEnabled(false);
-					checked = false;
-				}
-			}
-		});
-
-		calendarButton_2.addActionListener(new ActionListener() {
-			private boolean open = false;
-			private DatePicker dp;
-
-			/**
-			 * action for using the calendar method for enabling it and
-			 * selecting a date
-			 */
-			public void actionPerformed(ActionEvent ae) {
-				viewHasBeenEdited = true;
-				if (!open) {
-					dp = new DatePicker(calendarPanel, endDateText);
-					open = true;
-				} else {
-					dp.close();
-					open = false;
-				}
-				calendarOpen = open;
-			}
-		});
-
-		// TODO:
-		// There should be some deck selection logic here.
-		
 		GetDeckController.getInstance().retrieveDeck();
 		try {
 			Thread.sleep(150);
 		} catch (Exception e) {
 		}
 
-		deckType.setModel(new DefaultComboBoxModel(DeckModel.getInstance().getDecks().toArray()));
-		deckOverview.setText(""+(DeckModel.getInstance().getDeck(deckType.getSelectedItem().toString()).getDeckNumbers()));
-		
-		
-		deckType.addActionListener(new ActionListener() {
+		this.thisGameRequirementsListModel = new DefaultListModel<>();
 
-			public void actionPerformed(ActionEvent e) {
+		// Populate list of requirements which are remaining in the backlog.
+		this.backlogRequirementsListModel = new DefaultListModel<>();
+		for (Requirement req : RequirementModel.getInstance().getRequirements()) {
+			this.backlogRequirementsListModel.addElement(req.getName());
+		}
 
-				viewHasBeenEdited = true;
+		// Populate list of deck types.
+		this.deckTypeComboBoxModel = new DefaultComboBoxModel<>();
+		for (Deck d : DeckModel.getInstance().getDecks()) {
+			this.deckTypeComboBoxModel.addElement(d.getDeckName());
+		}
 
-				deckOverview.setText(""+(DeckModel.getInstance().getDeck(deckType.getSelectedItem().toString()).getDeckNumbers()));
-				
-				
-			}
+		// Run NetBeans-generated UI initialization code.
+		initComponents();
 
-		});
+		String selectedDeckName = (String) deckChoiceComboBox.getSelectedItem();
+		Deck selectedDeck = DeckModel.getInstance().getDeck(selectedDeckName);
+		this.deckValues.setText(selectedDeck.getDeckNumbers().toString());
 
-		/**
-		 * Listens to the session name field and disables "Create Game" button
-		 * if the field is empty.
-		 */
-		sessionName.addKeyListener(new KeyListener() {
+		// Set up the date/time pickers.
+		SpinnerDateModel timePickerModel = new SpinnerDateModel();
+		timePickerModel.setCalendarField(Calendar.MINUTE);
+		final String timeFieldFormatString = "h:mm a";
+		DateFormat timeFieldFormat = new SimpleDateFormat(timeFieldFormatString);
+		timePicker.setModel(timePickerModel);
+		timePicker.setEditor(new JSpinner.DateEditor(timePicker,
+				timeFieldFormatString));
+		GregorianCalendar tomorrow = new GregorianCalendar();
+		tomorrow.add(Calendar.DAY_OF_YEAR, 1);
 
-			@Override
-			public void keyTyped(KeyEvent arg0) {
+		// Set the default deadline (if a deadline is enforced) to 24 hours from
+		// now.
+		datePicker.setDate(tomorrow.getTime());
 
-			}
+		// Add change listeners to both the game description and game name text
+		// fields.
+		for (JTextField field : Arrays.asList(gameDescriptionField,
+				gameNameField)) {
+			field.getDocument().addDocumentListener(new DocumentListener() {
 
-			/**
-			 * Enables create button key to work if all fields are properly
-			 * filled out else tells user what is still needed.
-			 */
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-
-				viewHasBeenEdited = true;
-
-				final String currentText = sessionName.getText();
-
-				if (currentText.length() < 1) {
-
-					btnCreateGame.setEnabled(false);
-					createGameErrorText.setText("Session needs a name");
-
-				} else if (!currentText.trim().equals(currentText))
-				{
-					btnCreateGame.setEnabled(false);
-					createGameErrorText.setText("Session name cannot start or end with whitespace");
+				@Override
+				public void insertUpdate(DocumentEvent e) {
+					changedSinceOpened = true;
+					runErrorChecks();
 				}
-				else
-				{
-					// Don't enable the "Create Game" button if there are no
-					// requirements
 
-					if (listModelForThisGame.size() == 0) {
-						btnCreateGame.setEnabled(false);
-					} else {
-						btnCreateGame.setEnabled(true);
-						createGameErrorText.setText("");
-					}
+				@Override
+				public void removeUpdate(DocumentEvent e) {
+					changedSinceOpened = true;
+					runErrorChecks();
 				}
+
+				@Override
+				public void changedUpdate(DocumentEvent e) {
+					changedSinceOpened = true;
+					runErrorChecks();
+				}
+			});
+		}
+
+		// Run error validation once before finishing.
+		runErrorChecks();
+	}
+
+	/**
+	 * This method checks whether or not each component should be enabled, and
+	 * whether any any text should be displayed.
+	 */
+	private void runErrorChecks() {
+		String errorText = "";
+		boolean createGameButtonEnabled = true;
+
+		String gameName = this.gameNameField.getText();
+
+		// What if the game name is blank?
+		if (gameName.length() == 0) {
+			createGameButtonEnabled = false;
+			errorText = "Name cannot be blank.";
+
+		} // What if the game name starts or ends with whitespace?
+		else {
+			String firstCharOfName = gameName.substring(0, 1);
+			String lastCharOfName = gameName.substring(gameName.length() - 1,
+					gameName.length());
+
+			if (firstCharOfName.trim().length() == 0
+					|| lastCharOfName.trim().length() == 0) {
+				createGameButtonEnabled = false;
+				errorText = "Name cannot begin or end with whitespace.";
 			}
 
-			@Override
-			public void keyPressed(KeyEvent arg0) {
+		}
 
-			}
-		});
+		// What if there are no requirements in the game?
+		if (this.thisGameRequirementsListModel.isEmpty()) {
+			createGameButtonEnabled = false;
+			errorText = "Game must have at least one requirement.";
+		}
 
-		backlogRequirementList.setModel(listModelForThisGame);
+		// What if the date field does not contain a legal date?
+		if (!this.datePicker.isEditValid()
+				&& this.deadlineCheckbox.isSelected()) {
+			createGameButtonEnabled = false;
+			errorText = "Invalid deadline date given.";
+		}
 
-		// TODO:
-		// As per a meeting with Pollice, we need to only select users which
-		// have been explicitly added to the project through the web-interface.
+		// What if the deadline given has already passed?
+		Date today = new Date();
+		Date timeGiven = (Date) timePicker.getValue();
+		Date deadlineGiven = datePicker.getDate();
+		deadlineGiven.setHours(timeGiven.getHours());
+		deadlineGiven.setMinutes(timeGiven.getMinutes());
+		if (deadlineGiven.before(today) && this.deadlineCheckbox.isSelected()) {
+			createGameButtonEnabled = false;
+			errorText = "Deadline cannot occur in the past.";
+		}
 
-		/**
-		 * Adds list of current requirements in requirement model to the list
-		 * that will be added to the JList that will hold the requirements to be
-		 * added to the game
-		 */
-		final List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
+		// Should the double right arrow button be enabled?
+		this.doubleRightArrowButton
+				.setEnabled(!this.backlogRequirementsListModel.isEmpty());
 
-		// Disable the add all button when the requirement size is 0
-		if (requirements.size() == 0) {
-			btn_addAll.setEnabled(false);
-		} else {
-			// We iterate through the requirements list and add to that JList.
-			for (int i = 0; i < requirements.size(); i++) {
-				Requirement req = requirements.get(i);
+		// Should the double left arrow button be enabled?
+		this.doubleLeftArrowButton
+				.setEnabled(!this.thisGameRequirementsListModel.isEmpty());
 
-				if (req.getIteration().equals("Backlog")) {
-					listModelForBacklog.addElement(req);
-					listModelForReseting.addElement(req);
+		// Should the single right arrow button be enabled?
+		this.singleRightArrowButton.setEnabled(this.backlogRequirementsList
+				.getSelectedIndices().length > 0);
+
+		// Should the single left arrow button be enabled?
+		this.singleLeftArrowButton.setEnabled(this.thisGameRequirementsList
+				.getSelectedIndices().length > 0);
+
+		this.createGameButton.setEnabled(createGameButtonEnabled);
+		this.defaultSettingsButton.setEnabled(this.changedSinceOpened);
+		this.errorTextLabel.setText(errorText);
+	}
+
+	/**
+	 * This method is called when the user clicks the "Create Game" button.
+	 */
+	private void createGameButtonClicked() {
+
+		// The game to construct and add to the database.
+		PlanningPokerGame game;
+
+		// Declare each of the parameters necessary for creating a planning
+		// poker game.
+		String name;
+		String description;
+		String deckType;
+		List<Integer> requirementIds;
+		boolean isFinished = false;
+		boolean isLive;
+		GregorianCalendar startDate = new GregorianCalendar();
+		GregorianCalendar endDate;
+		String moderator = ConfigManager.getConfig().getUserName();
+
+		name = this.gameNameField.getText();
+
+		description = this.gameDescriptionField.getText();
+
+		deckType = (String) this.deckChoiceComboBox.getSelectedItem();
+
+		// Get the list of all requirements (so we can check their name/id
+		// pairings).
+		List<Requirement> allRequirements = RequirementModel.getInstance()
+				.getRequirements();
+
+		// Construct the list of requirement IDs for this game.
+		requirementIds = new ArrayList<>();
+		for (int i = 0; i < thisGameRequirementsListModel.size(); i++) {
+			String reqName = thisGameRequirementsListModel.get(i);
+			for (Requirement req : allRequirements) {
+				if (req.getName().equals(reqName)) {
+					requirementIds.add(new Integer(req.getId()));
+					break;
 				}
 			}
 		}
 
-		thisGameRequirementList.setModel(listModelForBacklog);
+		// Construct the endDate GregorianCalendar from the UI components.
+		if (this.deadlineCheckbox.isSelected()) {
+			final Date baseDate = datePicker.getDate();
+			Date timeValues = (Date) timePicker.getValue();
 
-		thisGameRequirementList.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				btn_addToGame.setEnabled(true);
-				btn_addAll.setEnabled(true);
-				btn_removeFromGame.setEnabled(false);
-			}
-		});
+			baseDate.setHours(timeValues.getHours());
+			baseDate.setMinutes(timeValues.getMinutes());
 
-		backlogRequirementList.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				btn_addToGame.setEnabled(false);
-				btn_removeFromGame.setEnabled(true);
-				btn_removeAll.setEnabled(true);
-			}
-		});
-
-		/**
-		 * Saves data entered about the game when 'Create Game' button is
-		 * pressed
-		 */
-		btnCreateGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				gameRequirementIDsList.clear();
-				viewHasBeenEdited = false;
-
-				enteredName = sessionName.getText();
-				//selectedDeckType = deckType.getSelectedItem().toString();
-				final GregorianCalendar startCal, endCal;
-
-				// Checks to see if the user set the date to something other
-				// than default text
-				if (endDateText.getText().equals("Click Calendar to set date")
-						&& deadline.isSelected()) {
-					System.out.println("Please enter a valid date");
-				} else {
-					// String[] startDate = startDateText.getText().split("-");
-					final String[] endDate = endDateText.getText().split("-");
-
-					final Date endVal = (Date) endTime.getValue();
-
-					/**
-					 * Gregorian Calendars save month values starting at 0, so
-					 * the months in both of the below calendar has has 1
-					 * subtracted from it, as the values are being pulled from
-					 * the text field, which does not start at zero
-					 */
-					startCal = new GregorianCalendar();
-					if (deadline.isSelected()) {
-						endCal = new GregorianCalendar(Integer.parseInt(endDate[2]), Integer
-								.parseInt(endDate[1]) - 1, Integer.parseInt(endDate[0]), endVal
-								.getHours(), endVal.getMinutes());
-					} else {
-						endCal = new GregorianCalendar(9999, 11, 18);
-					}
-					System.out.println(startCal.toString() + "\n" + endCal.toString());
-					System.out.println(enteredName);
-					System.out.println(selectedDeckType);
-
-					for (int i = 0; i < listModelForThisGame.size(); i++) {
-						gameRequirementIDsList.add(listModelForThisGame.getElementAt(i).getId());
-						System.out.println("Requirement Name: " + listModelForThisGame.get(i));
-					}
-
-					System.out.println(gameRequirementIDsList.size());
-
-					if (startCal.before(endCal)) {
-
-						PlanningPokerGame game;
-						if (startNow.isSelected()) {
-							game = new PlanningPokerGame(enteredName, "Default description",
-
-									deckType.getSelectedItem().toString(),
-									gameRequirementIDsList, false, true,
-									startCal, endCal, ConfigManager.getConfig()
-											.getUserName());
-							game.setFinished(false);
-							game.setLive(true);
-							mailer = new Mailer(game);
-							mailer.addEmailFromUsers(PlanningPokerUserModel
-									.getInstance().getUsers());
-							mailer.send();
-							im = new InstantMessenger(game);
-							im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());
-
-						} else {
-							game = new PlanningPokerGame(enteredName, "Default description",
-									deckType.getSelectedItem().toString(), gameRequirementIDsList,
-									false, false, startCal, endCal, ConfigManager.getConfig()
-											.getUserName());
-
-						}
-						System.out.println("PlanningPokerUser Moderator: "
-								+ ConfigManager.getConfig().getUserName());
-						System.out.println("Planning Poker Live: " + game.isLive());
-						AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
-						lblGameCreated.setVisible(true);
-						btnCreateGame.setEnabled(false);
-
-						MainView.getInstance().refreshGameTree();
-						MainView.getInstance().removeClosableTab();
-					} else {
-						// Error message when the session name is empty
-						if (sessionName.getText().isEmpty()) {
-							btnCreateGame.setEnabled(false);
-							final JOptionPane emptyNameErrorPanel = new JOptionPane(
-									"You must enter the session name", JOptionPane.ERROR_MESSAGE);
-							final JDialog errorDialog = emptyNameErrorPanel.createDialog(null);
-
-							errorDialog.setVisible(true);
-							btnCreateGame.setEnabled(false);
-						}
-						System.out.println("Start date is after the end date.");
-
-						txtpnLoggedInAs.setText(txtpnLoggedInAs.getText() + " -- INVALID DEADLINE");
-					}
+			endDate = new GregorianCalendar() {
+				{
+					setTime(baseDate);
 				}
+			};
+		} else {
+			endDate = new GregorianCalendar(9999, 11, 18);
+		}
 
-			}
+		isLive = this.openForVotingImmediatelyCheckbox.isSelected();
 
-		});
+		game = new PlanningPokerGame(name, description, deckType,
+				requirementIds, isFinished, isLive, startDate, endDate,
+				moderator);
 
-		/**
-		 * Removes all items from box of all requirements and adds them to the
-		 * box of requirements that will be used in the session
-		 */
-		btn_addAll.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				viewHasBeenEdited = true;
+		// Add the game to the database.
+		AddPlanningPokerGameController.getInstance().addPlanningPokerGame(game);
+		try {
+			Thread.sleep(150);
+		} catch (Exception e) {
+		}
 
-				while (listModelForBacklog.getSize() > 0) {
-					System.out.println(listModelForBacklog.elementAt(0));
-					listModelForThisGame.addElement(listModelForBacklog.remove(0));
-				}
+		// Close the tab.
+		MainView.getInstance().removeClosableTab();
 
-				backlogRequirementList.setModel(listModelForThisGame);
-				thisGameRequirementList.setModel(listModelForBacklog);
-
-				btn_removeFromGame.setEnabled(false);
-				btn_removeAll.setEnabled(true);
-				// btnCreateGame.setEnabled(false);
-
-				btn_addAll.setEnabled(false);
-				btn_addToGame.setEnabled(false);
-				btnCreateGame.setEnabled(true);
-				
-
-			}
-		});
-
-		/**
-		 * Removes selected item from box of all requirements and adds it to the
-		 * box of requirements that will be used in the session
-		 */
-		btn_addToGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				viewHasBeenEdited = true;
-
-				for (Requirement req : thisGameRequirementList.getSelectedValuesList()) {
-
-					System.out.println("Added " + req + "to selected requirements");
-
-					listModelForThisGame.addElement(req);
-					listModelForBacklog.removeElement(req);
-					backlogRequirementList.setModel(listModelForThisGame);
-					thisGameRequirementList.setModel(listModelForBacklog);
-
-					//btn_removeFromGame.setEnabled(true);
-					btn_removeAll.setEnabled(true);
-
-					if (listModelForBacklog.size() == 0) {
-						btn_addAll.setEnabled(false);
-						btnCreateGame.setEnabled(false);
-					}
-
-				}
-				btn_addToGame.setEnabled(false);
-				btnCreateGame.setEnabled(true);
-			}
-		});
-
-		/**
-		 * Removes selected item from box of selected requirements for session
-		 * and adds it back to the total list of requirements
-		 */
-		btn_removeFromGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				viewHasBeenEdited = true;
-
-				for (Requirement req : backlogRequirementList.getSelectedValuesList()) {
-
-					System.out.println("Added " + req + "to selected requirements");
-
-					listModelForBacklog.addElement(req);
-					listModelForThisGame.removeElement(req);
-					thisGameRequirementList.setModel(listModelForBacklog);
-					backlogRequirementList.setModel(listModelForThisGame);
-
-					btn_addToGame.setEnabled(false);
-					btn_addAll.setEnabled(false);
-
-					if (listModelForThisGame.size() == 0) {
-						btn_removeFromGame.setEnabled(false);
-						btn_removeAll.setEnabled(false);
-					}
-				}
-
-				if (listModelForThisGame.size() == 0) {
-					btnCreateGame.setEnabled(false);
-				}
-				btn_removeFromGame.setEnabled(false);
-				btn_addAll.setEnabled(true);
-
-			}
-		});
-
-		/**
-		 * Removes selected item from box of selected requirements for session
-		 * and adds it back to the total list of requirements
-		 */
-		btn_removeAll.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				viewHasBeenEdited = true;
-				btnCreateGame.setEnabled(false);
-
-				while (listModelForThisGame.getSize() > 0) {
-					System.out.println(listModelForThisGame.elementAt(0));
-					listModelForBacklog.addElement(listModelForThisGame.remove(0));
-				}
-
-				backlogRequirementList.setModel(listModelForThisGame);
-				thisGameRequirementList.setModel(listModelForBacklog);
-
-				btn_addToGame.setEnabled(false);
-				btn_addAll.setEnabled(true);
-				btn_removeFromGame.setEnabled(false);
-				btn_removeAll.setEnabled(false);
-
-			}
-		});
-
-		/**
-		 * Reset the input field after the user changed the data.
-		 */
-
-		btnResetGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				viewHasBeenEdited = true;
-				// Reset game name
-				sessionName.setText(dateFormat.format(date));
-
-				// Reset start and end date
-				// startDateText.setText(defaultCalendarText);
-				endDateText.setText(defaultCalendarText);
-				btnCreateGame.setEnabled(true);
-				createGameErrorText.setText("");
-				// Reset start and end time
-				endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
-				// Reset the requirements boxes
-
-				viewHasBeenEdited = true;
-
-				while (listModelForThisGame.getSize() > 0) {
-					System.out.println(listModelForThisGame.elementAt(0));
-					listModelForBacklog.addElement(listModelForThisGame.remove(0));
-				}
-
-				backlogRequirementList.setModel(listModelForThisGame);
-				thisGameRequirementList.setModel(listModelForBacklog);
-
-				btn_removeFromGame.setEnabled(false);
-				btn_removeAll.setEnabled(false);
-			}
-		});
+		// Send out notifications of the game starting. Do this after the tabe
+		// closes because it takes a while. Only send this if the
+		// game is open for voting immediately
+		if (this.openForVotingImmediatelyCheckbox.isSelected()) {
+			mailer = new Mailer(game);
+			mailer.addEmailFromUsers(PlanningPokerUserModel.getInstance()
+					.getUsers());
+			mailer.send();
+			im = new InstantMessenger(game);
+			im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());
+		}
 	}
 
+	/**
+	 * This method is called when the user clicks the "Default settings" button.
+	 */
+	private void defaultSettingsButtonClicked() {
+		// TODO
+	}
+
+	/**
+	 * This method is called with an appropriate argument when the user selects
+	 * a deck type from the drop down menu.
+	 * 
+	 * @param deckName
+	 *            The deck type the user chose.
+	 */
+	private void deckChoiceClicked(String deckName) {
+		Deck selectedDeck = DeckModel.getInstance().getDeck(deckName);
+		if (selectedDeck.getDeckNumbers().isEmpty()) {
+			this.deckValues.setText("N/A");
+		} else {
+			this.deckValues.setText(selectedDeck.getDeckNumbers().toString());
+		}
+	}
+
+	/**
+	 * This method exists to allow for testing of this UI directly - without
+	 * actually running Janeway.
+	 */
+	public static void main(String[] args) {
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setContentPane(new CreateGameView());
+		frame.pack();
+		frame.setVisible(true);
+		frame.pack();
+	}
+
+	/**
+	 * This method is called from within the constructor to initialize the form.
+	 * WARNING: Do NOT modify this code. The content of this method is always
+	 * regenerated by the Form Editor.
+	 */
+	@SuppressWarnings("unchecked")
+	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
-		
-		/**
-		 * A dropdown box that contains the default deck to choose.
-		 */
-		deckType = new JComboBox<Deck>();
+		java.awt.GridBagConstraints gridBagConstraints;
 
-		backlogRequirementList = new JList<Requirement>();
-		thisGameRequirementList = new JList<Requirement>();
+		gameNameLabelPanel = new javax.swing.JPanel();
+		gameNameField = new javax.swing.JTextField();
+		buttonsPanel = new javax.swing.JPanel();
+		createGameButton = new javax.swing.JButton();
+		defaultSettingsButton = new javax.swing.JButton();
+		openForVotingImmediatelyCheckbox = new javax.swing.JCheckBox();
+		requirementListsPanel = new javax.swing.JPanel();
+		backlogRequirementsListPanel = new javax.swing.JPanel();
+		backlogRequirementsLabel = new javax.swing.JLabel();
+		backlogRequirementsListScrollPane = new javax.swing.JScrollPane();
+		backlogRequirementsList = new javax.swing.JList();
+		verticalSpaceFiller = new javax.swing.Box.Filler(
+				new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30),
+				new java.awt.Dimension(32767, 30));
+		arrowButtonsPanel = new javax.swing.JPanel();
+		doubleRightArrowButton = new javax.swing.JButton();
+		singleRightArrowButton = new javax.swing.JButton();
+		singleLeftArrowButton = new javax.swing.JButton();
+		doubleLeftArrowButton = new javax.swing.JButton();
+		thisGameReqsPanel = new javax.swing.JPanel();
+		thisGameRequirementsLabel = new javax.swing.JLabel();
+		thisGameRequirementsListScrollPane = new javax.swing.JScrollPane();
+		thisGameRequirementsList = new javax.swing.JList();
+		optionsPanel = new javax.swing.JPanel();
+		deadlineOptionsPanel = new javax.swing.JPanel();
+		deadlineCheckbox = new javax.swing.JCheckBox();
+		dateLabel = new javax.swing.JLabel();
+		timeLabel = new javax.swing.JLabel();
+		timePicker = new javax.swing.JSpinner();
+		datePicker = new org.jdesktop.swingx.JXDatePicker();
+		blankMiddlePanel = new javax.swing.JPanel();
+		errorTextLabel = new javax.swing.JLabel();
+		deckOptionsPanel = new javax.swing.JPanel();
+		chooseDeckLabel = new javax.swing.JLabel();
+		deckChoiceComboBox = new javax.swing.JComboBox();
+		deckValuesLabel = new javax.swing.JLabel();
+		deckValues = new javax.swing.JLabel();
+		gameDescriptionFieldPanel = new javax.swing.JPanel();
+		gameDescriptionField = new javax.swing.JTextField();
+		loggedInAsLabel = new javax.swing.JLabel();
 
-		// List models for the two lists of requirements, and one backup to
-		// reset from
-		listModelForReseting = new DefaultListModel<Requirement>();
-		listModelForThisGame = new DefaultListModel<Requirement>();
-		listModelForBacklog = new DefaultListModel<Requirement>();
+		gameNameLabelPanel.setBorder(javax.swing.BorderFactory
+				.createTitledBorder(null, "Game name",
+						javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+						javax.swing.border.TitledBorder.DEFAULT_POSITION,
+						new java.awt.Font("Al Bayan", 0, 10))); // NOI18N
 
-		gameRequirementIDsList = new ArrayList<Integer>();
+		gameNameField.setColumns(20);
+		gameNameField.setText("Game on "
+				+ new SimpleDateFormat("EEEE, MM/dd 'at' hh:mm a")
+						.format(new Date()));
+		gameNameField.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				gameNameFieldActionPerformed(evt);
+			}
+		});
 
-		userList = new ArrayList<PlanningPokerUser>();
-
-		this.setBorder(new LineBorder(Color.DARK_GRAY));
-		this.setLayout(new BorderLayout(0, 0));
-
-		titlePanel = new JPanel();
-		titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
-		titlePanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		this.add(titlePanel, BorderLayout.NORTH);
-
-		namePane = new JPanel();
-		namePane.setLayout(new BoxLayout(namePane, BoxLayout.X_AXIS));
-		titlePanel.add(namePane);
-
-		lblName = new JLabel("Name:");
-		namePane.add(lblName);
-		lblName.setFont(new Font("Tahoma", Font.BOLD, 14));
-
-		sessionName = new JTextField();
-		namePane.add(sessionName);
-		sessionName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-		date = new Date();
-		sessionName.setText(dateFormat.format(date));
-		sessionName.setColumns(50);
-
-		createGamePane = new JPanel();
-		titlePanel.add(createGamePane);
-		createGamePane.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-
-		btnCreateGame = new JButton("Create");
-		createGamePane.add(btnCreateGame);
-		btnCreateGame.setEnabled(false);
-
-		btnResetGame = new JButton("Reset");
-		createGamePane.add(btnResetGame);
-
-		//btnExport = new JButton("Export requirements");
-		//createGamePane.add(btnExport);
-
-		startNow = new JCheckBox("Start Game Now?");
-		createGamePane.add(startNow);
-
-		createGameErrorText = new JLabel("");
-		titlePanel.add(createGameErrorText);
-
-		label = new JLabel("");
-		titlePanel.add(label);
-
-		lblGameCreated = new JLabel("Session Created!");
-		titlePanel.add(lblGameCreated);
-		lblGameCreated.setVisible(false);
-
-		settingsPanel = new JPanel();
-		settingsPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		this.add(settingsPanel, BorderLayout.SOUTH);
-		settingsPanel.setLayout(new BorderLayout(0, 0));
-
-		configPanel = new JPanel();
-		configPanel.setBorder(new LineBorder(Color.DARK_GRAY));
-		settingsPanel.add(configPanel, BorderLayout.NORTH);
-
-		lblConfigureGameSettings = new JLabel("Configure game settings");
-		configPanel.add(lblConfigureGameSettings);
-
-		calendarOverview = new JPanel();
-		calendarOverview.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		settingsPanel.add(calendarOverview, BorderLayout.CENTER);
-		calendarOverview.setLayout(new GridLayout(1, 2, 0, 0));
-
-		final SpinnerDateModel model_2 = new SpinnerDateModel();
-		model_2.setCalendarField(Calendar.MINUTE);
-
-		calendar = new JPanel();
-		calendarOverview.add(calendar);
-
-		lblEndDate = new JLabel("End Date:");
-
-		endDateText = new JTextField(13);
-		endDateText.setText(defaultCalendarText);
-		endDateText.setEditable(false);
-		endDateText.setMinimumSize(new Dimension(endDateText.getPreferredSize().width, endDateText
-				.getPreferredSize().height));
-		calendarButton_2 = new JButton("Calendar");
-		endPanel = new JPanel(new GridBagLayout());
-		endPanel.setPreferredSize(new Dimension(350, 220));
-
-		final GridBagConstraints constraints1 = new GridBagConstraints();
-		constraints1.insets = new Insets(0, 0, 5, 5);
-		constraints1.fill = GridBagConstraints.HORIZONTAL;
-		constraints1.gridx = 1;
-		constraints1.gridy = 0;
-		constraints1.gridwidth = 3;
-		constraints1.anchor = GridBagConstraints.LINE_START;
-		deadline = new JCheckBox("Have a Deadline?");
-		endPanel.add(deadline, constraints1);
-
-		final GridBagConstraints constraints8 = new GridBagConstraints();
-		constraints8.insets = new Insets(0, 0, 5, 5);
-		constraints8.fill = GridBagConstraints.HORIZONTAL;
-		constraints8.gridx = 0;
-		constraints8.gridy = 1;
-		constraints8.anchor = GridBagConstraints.LINE_START;
-		endPanel.add(new JLabel("End Time:"), constraints8);
-		final GridBagConstraints constraints9 = new GridBagConstraints();
-		constraints9.insets = new Insets(0, 0, 5, 5);
-		constraints9.fill = GridBagConstraints.HORIZONTAL;
-		constraints9.gridx = 1;
-		constraints9.gridy = 1;
-		endTime = new JSpinner();
-		endTime.setEnabled(false);
-		endTime.setModel(model_2);
-		endTime.setEditor(new JSpinner.DateEditor(endTime, "h:mm a"));
-		endPanel.add(endTime, constraints9);
-
-		lblrequired2 = new JLabel("*");
-		final GridBagConstraints gbc_lblrequired2 = new GridBagConstraints();
-		gbc_lblrequired2.insets = new Insets(0, 0, 5, 0);
-		gbc_lblrequired2.anchor = GridBagConstraints.LINE_START;
-		gbc_lblrequired2.gridx = 2;
-		gbc_lblrequired2.gridy = 1;
-		endPanel.add(lblrequired2, gbc_lblrequired2);
-		final GridBagConstraints constraints10 = new GridBagConstraints();
-		constraints10.insets = new Insets(0, 0, 5, 5);
-		constraints10.fill = GridBagConstraints.HORIZONTAL;
-		constraints10.gridx = 0;
-		constraints10.gridy = 2;
-		constraints10.weightx = 0;
-		constraints10.anchor = GridBagConstraints.LINE_START;
-		endPanel.add(lblEndDate, constraints10);
-		final GridBagConstraints constraints11 = new GridBagConstraints();
-		constraints11.insets = new Insets(0, 0, 5, 5);
-		constraints11.fill = GridBagConstraints.HORIZONTAL;
-		constraints11.weightx = 1;
-		constraints11.gridx = 1;
-		constraints11.gridy = 2;
-		endPanel.add(endDateText, constraints11);
-		final GridBagConstraints constraints12 = new GridBagConstraints();
-		constraints12.insets = new Insets(0, 0, 5, 0);
-		constraints12.fill = GridBagConstraints.HORIZONTAL;
-		constraints12.weightx = 0;
-		constraints12.gridx = 2;
-		constraints12.gridy = 2;
-		calendarButton_2.setEnabled(false);
-		endPanel.add(calendarButton_2, constraints12);
-		final GridBagConstraints constraints13 = new GridBagConstraints();
-		constraints13.insets = new Insets(0, 0, 5, 5);
-		constraints13.gridx = 0;
-		constraints13.gridy = 3;
-		constraints13.weightx = 1;
-		constraints13.weighty = 1;
-		endPanel.add(new JLabel(), constraints13);
-		constraints14 = new GridBagConstraints();
-		constraints14.insets = new Insets(0, 0, 0, 5);
-		constraints14.gridx = 0;
-		constraints14.gridy = 4;
-		constraints14.weightx = 1;
-		constraints14.weighty = 1;
-		endPanel.add(new JLabel(), constraints14);
-		constraints14.weightx = 0;
-		constraints14.weighty = 0;
-
-		calendarHandler = new JPanel();
-		calendarPanel = new JPanel(new GridBagLayout());
-		calendarPanel.setPreferredSize(new Dimension(350, 220));
-		calendarHandler.add(calendarPanel);
-		calendarOverview.add(calendarHandler);
-
-		calendar.add(endPanel);
-
-		cardPanel = new JPanel(new GridBagLayout());
-		deckPanel = new JPanel();
-		cardDeckPane = new JPanel();
-
-		calendarOverview.add(deckPanel);
-
-		lblCardDeck = new JLabel("Card deck:");
-		cardDeckPane.add(lblCardDeck);
-
-		cardDeckPane.add(deckType);
-		deckOverview = new JTextField();
-
-		deckOverview.setEditable(false);
-
-		cardPanel.setPreferredSize(new Dimension(350, 220));
-		final GridBagConstraints constraints15 = new GridBagConstraints();
-		constraints15.fill = GridBagConstraints.HORIZONTAL;
-		constraints15.gridx = 0;
-		constraints15.gridy = 0;
-		cardPanel.add(cardDeckPane, constraints15);
-		final GridBagConstraints constraints16 = new GridBagConstraints();
-		constraints16.fill = GridBagConstraints.HORIZONTAL;
-		constraints16.anchor = GridBagConstraints.LINE_END;
-		constraints16.gridx = 0;
-		constraints16.gridy = 1;
-		cardPanel.add(deckOverview, constraints16);
-		final GridBagConstraints constraints17 = new GridBagConstraints();
-		constraints17.gridx = 0;
-		constraints17.gridy = 2;
-		constraints17.weightx = 1;
-		constraints17.weighty = 1;
-		cardPanel.add(new JLabel(), constraints17);
-		deckPanel.add(cardPanel);
-
-		requirementsPanel = new JPanel();
-		requirementsPanel.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		this.add(requirementsPanel, BorderLayout.CENTER);
-		requirementsPanel.setLayout(new BorderLayout(0, 0));
-
-		requirementsHeader = new JPanel();
-		requirementsHeader.setBorder(new LineBorder(Color.DARK_GRAY));
-		requirementsPanel.add(requirementsHeader, BorderLayout.NORTH);
-
-		lblChooseRequirementsTo = new JLabel("Choose requirements to estimate");
-		lblChooseRequirementsTo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		requirementsHeader.add(lblChooseRequirementsTo);
-
-		requirementsSelector = new JPanel();
-		requirementsPanel.add(requirementsSelector, BorderLayout.CENTER);
-		requirementsSelector.setLayout(new BoxLayout(requirementsSelector, BoxLayout.X_AXIS));
-
-		projectRequirements = new JPanel();
-		projectRequirements.setBorder(null);
-		requirementsSelector.add(projectRequirements);
-		projectRequirements.setLayout(new BorderLayout(0, 0));
-
-		projectHeader = new JPanel();
-		projectHeader.setBorder(null);
-		projectRequirements.add(projectHeader, BorderLayout.NORTH);
-
-		lblAllProjectRequirements = new JLabel("All project requirements");
-		projectHeader.add(lblAllProjectRequirements);
-
-		projectList = new JPanel();
-		projectList.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		scroller = new JScrollPane(projectList);
-		projectRequirements.add(scroller, BorderLayout.CENTER);
-		projectList.setLayout(new BorderLayout(0, 0));
-
-		projectList.add(thisGameRequirementList);
-
-		addRemPanel = new JPanel();
-		addRemPanel.setBorder(new LineBorder(Color.lightGray, 0));
-		requirementsSelector.add(addRemPanel);
-
-		topSpacer = new JPanel();
-
-		buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(new GridLayout(4, 1, 4, 4));
-
-		topmostButton = new JPanel();
-		buttonsPanel.add(topmostButton);
-		topmostButton.setLayout(new BorderLayout(0, 0));
-
-		btn_addAll = new JButton(">>");
-		topmostButton.add(btn_addAll, BorderLayout.CENTER);
-
-		topButton = new JPanel();
-		buttonsPanel.add(topButton);
-		topButton.setLayout(new BorderLayout(0, 0));
-
-		btn_addToGame = new JButton(">");
-		btn_addToGame.setEnabled(false);
-
-		topButton.add(btn_addToGame, BorderLayout.CENTER);
-
-		bottomButton = new JPanel();
-		buttonsPanel.add(bottomButton);
-		bottomButton.setLayout(new BorderLayout(0, 0));
-
-		btn_removeFromGame = new JButton("<");
-		bottomButton.add(btn_removeFromGame, BorderLayout.CENTER);
-
-		btn_removeFromGame.setEnabled(false);
-
-		bottommostButton = new JPanel();
-		buttonsPanel.add(bottommostButton);
-		bottommostButton.setLayout(new BorderLayout(0, 0));
-
-		btn_removeAll = new JButton("<<");
-		bottommostButton.add(btn_removeAll);
-		btn_removeAll.setEnabled(false);
-
-		bottomSpacer = new JPanel();
-		final GroupLayout gl_addRemPanel = new GroupLayout(addRemPanel);
-		gl_addRemPanel
-				.setHorizontalGroup(gl_addRemPanel
-						.createParallelGroup(Alignment.LEADING)
-						.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE, 49,
-								GroupLayout.PREFERRED_SIZE)
-						.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE,
-								GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 49,
-								GroupLayout.PREFERRED_SIZE));
-		gl_addRemPanel.setVerticalGroup(gl_addRemPanel.createParallelGroup(Alignment.LEADING)
+		javax.swing.GroupLayout gameNameLabelPanelLayout = new javax.swing.GroupLayout(
+				gameNameLabelPanel);
+		gameNameLabelPanel.setLayout(gameNameLabelPanelLayout);
+		gameNameLabelPanelLayout.setHorizontalGroup(gameNameLabelPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(
-						gl_addRemPanel
+						gameNameLabelPanelLayout.createSequentialGroup()
+								.addContainerGap().addComponent(gameNameField)
+								.addContainerGap()));
+		gameNameLabelPanelLayout.setVerticalGroup(gameNameLabelPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						gameNameLabelPanelLayout
 								.createSequentialGroup()
-								.addComponent(topSpacer, GroupLayout.PREFERRED_SIZE, 25,
-										GroupLayout.PREFERRED_SIZE)
-								.addGap(3)
-								.addComponent(buttonsPanel, GroupLayout.PREFERRED_SIZE, 121,
-										GroupLayout.PREFERRED_SIZE)
-								.addGap(3)
-								.addComponent(bottomSpacer, GroupLayout.PREFERRED_SIZE, 25,
-										GroupLayout.PREFERRED_SIZE)));
-		addRemPanel.setLayout(gl_addRemPanel);
+								.addComponent(gameNameField,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(0, 0, Short.MAX_VALUE)));
 
-		gameRequirements = new JPanel();
-		gameRequirements.setBorder(null);
-		requirementsSelector.add(gameRequirements);
-		gameRequirements.setLayout(new BorderLayout(0, 0));
+		createGameButton.setText("Create game");
+		createGameButton.setEnabled(false);
+		createGameButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				createGameButtonActionPerformed(evt);
+			}
+		});
 
-		gameHeader = new JPanel();
-		gameHeader.setBorder(null);
-		gameRequirements.add(gameHeader, BorderLayout.NORTH);
+		defaultSettingsButton.setText("Default settings");
+		defaultSettingsButton.setEnabled(false);
+		defaultSettingsButton
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						defaultSettingsButtonActionPerformed(evt);
+					}
+				});
 
-		lblRequirementsToEstimate = new JLabel("Requirements to estimate");
-		gameHeader.add(lblRequirementsToEstimate);
+		openForVotingImmediatelyCheckbox.setSelected(true);
+		openForVotingImmediatelyCheckbox.setText("Open for voting immediately");
+		openForVotingImmediatelyCheckbox
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						openForVotingImmediatelyCheckboxActionPerformed(evt);
+					}
+				});
 
-		gameList = new JPanel();
-		gameList.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		scroller_2 = new JScrollPane(gameList);
-		gameRequirements.add(scroller_2, BorderLayout.CENTER);
-		gameList.setLayout(new BorderLayout(0, 0));
+		javax.swing.GroupLayout buttonsPanelLayout = new javax.swing.GroupLayout(
+				buttonsPanel);
+		buttonsPanel.setLayout(buttonsPanelLayout);
+		buttonsPanelLayout.setHorizontalGroup(buttonsPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						javax.swing.GroupLayout.Alignment.TRAILING,
+						buttonsPanelLayout
+								.createSequentialGroup()
+								.addContainerGap(
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addComponent(createGameButton)
+								.addGap(18, 18, 18)
+								.addComponent(defaultSettingsButton)
+								.addContainerGap())
+				.addGroup(
+						buttonsPanelLayout
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(openForVotingImmediatelyCheckbox)
+								.addContainerGap(
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)));
+		buttonsPanelLayout
+				.setVerticalGroup(buttonsPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								buttonsPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												buttonsPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																false)
+														.addComponent(
+																defaultSettingsButton,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addComponent(
+																createGameButton,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addComponent(
+												openForVotingImmediatelyCheckbox)
+										.addContainerGap()));
 
-		txtpnLoggedInAs = new JTextPane();
-		txtpnLoggedInAs.setText("Logged in as: " + ConfigManager.getConfig().getUserName());
-		txtpnLoggedInAs.setFocusable(false);
-		settingsPanel.add(txtpnLoggedInAs, BorderLayout.SOUTH);
+		requirementListsPanel.setLayout(new java.awt.GridBagLayout());
 
-		gameList.add(backlogRequirementList);
+		backlogRequirementsLabel.setFont(new java.awt.Font("Lucida Grande", 3,
+				13)); // NOI18N
+		backlogRequirementsLabel
+				.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		backlogRequirementsLabel.setText("Backlog requirements");
+
+		backlogRequirementsListScrollPane
+				.setPreferredSize(new java.awt.Dimension(300, 200));
+
+		backlogRequirementsList.setModel(this.backlogRequirementsListModel);
+		backlogRequirementsList
+				.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+					public void valueChanged(
+							javax.swing.event.ListSelectionEvent evt) {
+						backlogRequirementsListValueChanged(evt);
+					}
+				});
+		backlogRequirementsListScrollPane
+				.setViewportView(backlogRequirementsList);
+
+		javax.swing.GroupLayout backlogRequirementsListPanelLayout = new javax.swing.GroupLayout(
+				backlogRequirementsListPanel);
+		backlogRequirementsListPanel
+				.setLayout(backlogRequirementsListPanelLayout);
+		backlogRequirementsListPanelLayout
+				.setHorizontalGroup(backlogRequirementsListPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								backlogRequirementsListPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												backlogRequirementsListPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(
+																backlogRequirementsListScrollPane,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addComponent(
+																backlogRequirementsLabel,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		backlogRequirementsListPanelLayout
+				.setVerticalGroup(backlogRequirementsListPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								backlogRequirementsListPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(backlogRequirementsLabel)
+										.addGap(18, 18, 18)
+										.addComponent(
+												backlogRequirementsListScrollPane,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												438, Short.MAX_VALUE)
+										.addContainerGap()));
+
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridwidth = 3;
+		gridBagConstraints.gridheight = 3;
+		gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+		gridBagConstraints.weightx = 0.2;
+		gridBagConstraints.weighty = 1.0;
+		requirementListsPanel.add(backlogRequirementsListPanel,
+				gridBagConstraints);
+		requirementListsPanel.add(verticalSpaceFiller,
+				new java.awt.GridBagConstraints());
+
+		arrowButtonsPanel.setLayout(new java.awt.GridBagLayout());
+
+		doubleRightArrowButton.setFont(new java.awt.Font("Courier New", 1, 13)); // NOI18N
+		doubleRightArrowButton.setText(">>");
+		doubleRightArrowButton.setFocusable(false);
+		doubleRightArrowButton
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						doubleRightArrowButtonActionPerformed(evt);
+					}
+				});
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+		arrowButtonsPanel.add(doubleRightArrowButton, gridBagConstraints);
+
+		singleRightArrowButton.setFont(new java.awt.Font("Courier New", 1, 13)); // NOI18N
+		singleRightArrowButton.setText(" >");
+		singleRightArrowButton.setFocusable(false);
+		singleRightArrowButton
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						singleRightArrowButtonActionPerformed(evt);
+					}
+				});
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+		arrowButtonsPanel.add(singleRightArrowButton, gridBagConstraints);
+
+		singleLeftArrowButton.setFont(new java.awt.Font("Courier New", 1, 13)); // NOI18N
+		singleLeftArrowButton.setText("< ");
+		singleLeftArrowButton.setFocusable(false);
+		singleLeftArrowButton
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						singleLeftArrowButtonActionPerformed(evt);
+					}
+				});
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+		arrowButtonsPanel.add(singleLeftArrowButton, gridBagConstraints);
+
+		doubleLeftArrowButton.setFont(new java.awt.Font("Courier New", 1, 13)); // NOI18N
+		doubleLeftArrowButton.setText("<<");
+		doubleLeftArrowButton.setFocusable(false);
+		doubleLeftArrowButton
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						doubleLeftArrowButtonActionPerformed(evt);
+					}
+				});
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 0;
+		gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+		arrowButtonsPanel.add(doubleLeftArrowButton, gridBagConstraints);
+
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 3;
+		gridBagConstraints.gridy = 1;
+		gridBagConstraints.gridheight = 2;
+		gridBagConstraints.weightx = 0.1;
+		requirementListsPanel.add(arrowButtonsPanel, gridBagConstraints);
+
+		thisGameRequirementsLabel.setFont(new java.awt.Font("Lucida Grande", 3,
+				13)); // NOI18N
+		thisGameRequirementsLabel
+				.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		thisGameRequirementsLabel.setText("This game's requirements");
+
+		thisGameRequirementsListScrollPane
+				.setPreferredSize(new java.awt.Dimension(300, 200));
+
+		thisGameRequirementsList.setModel(this.thisGameRequirementsListModel);
+		thisGameRequirementsList
+				.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+					public void valueChanged(
+							javax.swing.event.ListSelectionEvent evt) {
+						thisGameRequirementsListValueChanged(evt);
+					}
+				});
+		thisGameRequirementsListScrollPane
+				.setViewportView(thisGameRequirementsList);
+
+		javax.swing.GroupLayout thisGameReqsPanelLayout = new javax.swing.GroupLayout(
+				thisGameReqsPanel);
+		thisGameReqsPanel.setLayout(thisGameReqsPanelLayout);
+		thisGameReqsPanelLayout
+				.setHorizontalGroup(thisGameReqsPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								thisGameReqsPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												thisGameReqsPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(
+																thisGameRequirementsListScrollPane,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addComponent(
+																thisGameRequirementsLabel,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		thisGameReqsPanelLayout
+				.setVerticalGroup(thisGameReqsPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								thisGameReqsPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(thisGameRequirementsLabel)
+										.addGap(18, 18, 18)
+										.addComponent(
+												thisGameRequirementsListScrollPane,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												438, Short.MAX_VALUE)
+										.addContainerGap()));
+
+		gridBagConstraints = new java.awt.GridBagConstraints();
+		gridBagConstraints.gridx = 4;
+		gridBagConstraints.gridy = 0;
+		gridBagConstraints.gridwidth = 3;
+		gridBagConstraints.gridheight = 3;
+		gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+		gridBagConstraints.weightx = 0.2;
+		gridBagConstraints.weighty = 1.0;
+		requirementListsPanel.add(thisGameReqsPanel, gridBagConstraints);
+
+		optionsPanel.setLayout(new java.awt.GridLayout(1, 3, 10, 0));
+
+		deadlineOptionsPanel.setBorder(javax.swing.BorderFactory
+				.createTitledBorder(null, "Game deadline",
+						javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+						javax.swing.border.TitledBorder.DEFAULT_POSITION,
+						new java.awt.Font("Al Bayan", 0, 10))); // NOI18N
+
+		deadlineCheckbox.setText("This game has a deadline");
+		deadlineCheckbox.setFocusable(false);
+		deadlineCheckbox.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				deadlineCheckboxActionPerformed(evt);
+			}
+		});
+
+		dateLabel.setText("Date:");
+		dateLabel.setEnabled(false);
+
+		timeLabel.setText("Time:");
+		timeLabel.setEnabled(false);
+
+		timePicker.setEnabled(false);
+		timePicker.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(javax.swing.event.ChangeEvent evt) {
+				timePickerStateChanged(evt);
+			}
+		});
+
+		datePicker.setEnabled(false);
+		datePicker.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				datePickerActionPerformed(evt);
+			}
+		});
+
+		javax.swing.GroupLayout deadlineOptionsPanelLayout = new javax.swing.GroupLayout(
+				deadlineOptionsPanel);
+		deadlineOptionsPanel.setLayout(deadlineOptionsPanelLayout);
+		deadlineOptionsPanelLayout
+				.setHorizontalGroup(deadlineOptionsPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								deadlineOptionsPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												deadlineOptionsPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(
+																deadlineCheckbox,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addGroup(
+																deadlineOptionsPanelLayout
+																		.createSequentialGroup()
+																		.addGroup(
+																				deadlineOptionsPanelLayout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING,
+																								false)
+																						.addComponent(
+																								timeLabel,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								dateLabel,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE))
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addGroup(
+																				deadlineOptionsPanelLayout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING,
+																								false)
+																						.addComponent(
+																								datePicker,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								timePicker))
+																		.addGap(0,
+																				0,
+																				Short.MAX_VALUE)))
+										.addContainerGap()));
+		deadlineOptionsPanelLayout
+				.setVerticalGroup(deadlineOptionsPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								deadlineOptionsPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(deadlineCheckbox)
+										.addGap(18, 18, 18)
+										.addGroup(
+												deadlineOptionsPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(dateLabel)
+														.addComponent(
+																datePicker,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addGap(18, 18, 18)
+										.addGroup(
+												deadlineOptionsPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(timeLabel)
+														.addComponent(
+																timePicker,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
+
+		optionsPanel.add(deadlineOptionsPanel);
+
+		blankMiddlePanel.setLayout(new java.awt.GridBagLayout());
+
+		errorTextLabel.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+		errorTextLabel.setForeground(new java.awt.Color(153, 0, 0));
+		blankMiddlePanel.add(errorTextLabel, new java.awt.GridBagConstraints());
+
+		optionsPanel.add(blankMiddlePanel);
+
+		deckOptionsPanel.setBorder(javax.swing.BorderFactory
+				.createTitledBorder(null, "Game deck",
+						javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+						javax.swing.border.TitledBorder.DEFAULT_POSITION,
+						new java.awt.Font("Al Bayan", 0, 10))); // NOI18N
+
+		chooseDeckLabel.setText("Choose deck:");
+
+		deckChoiceComboBox.setModel(this.deckTypeComboBoxModel);
+		deckChoiceComboBox
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						deckChoiceComboBoxActionPerformed(evt);
+					}
+				});
+
+		deckValuesLabel.setText("Values:");
+
+		deckValues.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+		deckValues.setText("[0, 1, 1, 2, 3, 5, 8]");
+
+		javax.swing.GroupLayout deckOptionsPanelLayout = new javax.swing.GroupLayout(
+				deckOptionsPanel);
+		deckOptionsPanel.setLayout(deckOptionsPanelLayout);
+		deckOptionsPanelLayout
+				.setHorizontalGroup(deckOptionsPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								deckOptionsPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												deckOptionsPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																deckOptionsPanelLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				chooseDeckLabel)
+																		.addGap(18,
+																				18,
+																				18)
+																		.addComponent(
+																				deckChoiceComboBox,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addGroup(
+																deckOptionsPanelLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				deckValuesLabel)
+																		.addGap(18,
+																				18,
+																				18)
+																		.addComponent(
+																				deckValues)))
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
+		deckOptionsPanelLayout
+				.setVerticalGroup(deckOptionsPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								deckOptionsPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												deckOptionsPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																chooseDeckLabel)
+														.addComponent(
+																deckChoiceComboBox,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE))
+										.addGap(18, 18, 18)
+										.addGroup(
+												deckOptionsPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.BASELINE)
+														.addComponent(
+																deckValuesLabel)
+														.addComponent(
+																deckValues))
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
+
+		optionsPanel.add(deckOptionsPanel);
+
+		gameDescriptionFieldPanel.setBorder(javax.swing.BorderFactory
+				.createTitledBorder(null, "Game description",
+						javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+						javax.swing.border.TitledBorder.DEFAULT_POSITION,
+						new java.awt.Font("Al Bayan", 0, 10))); // NOI18N
+
+		gameDescriptionField.setText("Game created by "
+				+ ConfigManager.getConfig().getUserName() + ".");
+		gameDescriptionField
+				.addActionListener(new java.awt.event.ActionListener() {
+					public void actionPerformed(java.awt.event.ActionEvent evt) {
+						gameDescriptionFieldActionPerformed(evt);
+					}
+				});
+
+		javax.swing.GroupLayout gameDescriptionFieldPanelLayout = new javax.swing.GroupLayout(
+				gameDescriptionFieldPanel);
+		gameDescriptionFieldPanel.setLayout(gameDescriptionFieldPanelLayout);
+		gameDescriptionFieldPanelLayout
+				.setHorizontalGroup(gameDescriptionFieldPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								gameDescriptionFieldPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(gameDescriptionField)
+										.addContainerGap()));
+		gameDescriptionFieldPanelLayout
+				.setVerticalGroup(gameDescriptionFieldPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								gameDescriptionFieldPanelLayout
+										.createSequentialGroup()
+										.addComponent(
+												gameDescriptionField,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addContainerGap(
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)));
+
+		loggedInAsLabel.setText("Logged in as: "
+				+ ConfigManager.getConfig().getUserName());
+
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		this.setLayout(layout);
+		layout.setHorizontalGroup(layout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(
+														optionsPanel,
+														javax.swing.GroupLayout.Alignment.TRAILING,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														1357, Short.MAX_VALUE)
+												.addComponent(
+														requirementListsPanel,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		gameNameLabelPanel,
+																		javax.swing.GroupLayout.PREFERRED_SIZE,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		javax.swing.GroupLayout.PREFERRED_SIZE)
+																.addGap(18, 18,
+																		18)
+																.addComponent(
+																		gameDescriptionFieldPanel,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE)
+																.addGap(18, 18,
+																		18)
+																.addComponent(
+																		buttonsPanel,
+																		javax.swing.GroupLayout.PREFERRED_SIZE,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		javax.swing.GroupLayout.PREFERRED_SIZE))
+												.addGroup(
+														layout.createSequentialGroup()
+																.addComponent(
+																		loggedInAsLabel)
+																.addGap(0,
+																		0,
+																		Short.MAX_VALUE)))
+								.addContainerGap()));
+		layout.setVerticalGroup(layout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						layout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										layout.createParallelGroup(
+												javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(
+														buttonsPanel,
+														javax.swing.GroupLayout.PREFERRED_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.PREFERRED_SIZE)
+												.addGroup(
+														layout.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING,
+																false)
+																.addComponent(
+																		gameNameLabelPanel,
+																		javax.swing.GroupLayout.Alignment.LEADING,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE)
+																.addComponent(
+																		gameDescriptionFieldPanel,
+																		javax.swing.GroupLayout.Alignment.LEADING,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		javax.swing.GroupLayout.DEFAULT_SIZE,
+																		Short.MAX_VALUE)))
+								.addGap(30, 30, 30)
+								.addComponent(requirementListsPanel,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										Short.MAX_VALUE)
+								.addGap(18, 18, 18)
+								.addComponent(optionsPanel,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(18, 18, 18)
+								.addComponent(loggedInAsLabel)
+								.addContainerGap()));
+	}// </editor-fold>
+
+	private void singleRightArrowButtonActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		ArrayList<String> reqsToMove = new ArrayList<>();
+
+		int[] selected = this.backlogRequirementsList.getSelectedIndices();
+
+		for (int i : selected) {
+			reqsToMove.add(this.backlogRequirementsListModel.get(i));
+		}
+
+		for (String req : reqsToMove) {
+			this.backlogRequirementsListModel.removeElement(req);
+			this.thisGameRequirementsListModel.addElement(req);
+		}
+
+		this.changedSinceOpened = true;
+		this.runErrorChecks();
 	}
 
-	private final String defaultCalendarText = "Click Calendar to set date";
+	private void singleLeftArrowButtonActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		ArrayList<String> reqsToMove = new ArrayList<>();
 
-	private String selectedDeckType;
-	private boolean calendarOpen = false;
-	private List<Integer> gameRequirementIDsList;
-	private List<PlanningPokerUser> userList;
-	private Mailer mailer;
-	private InstantMessenger im;
-	private boolean viewHasBeenEdited = false;
+		int[] selected = this.thisGameRequirementsList.getSelectedIndices();
 
-	private DateFormat dateFormat;
-	private Date date;
-	private DefaultListModel<Requirement> listModelForThisGame;
-	private DefaultListModel<Requirement> listModelForBacklog;
-	private DefaultListModel<Requirement> listModelForReseting;
-	private JList<Requirement> backlogRequirementList;
-	private JList<Requirement> thisGameRequirementList;
-	private JSpinner endTime;
-	private String enteredName;
-	private JButton btnCreateGame;
-	private JLabel lblGameCreated;
-	private JButton btn_removeFromGame;
-	private JButton btn_addToGame;
-	private JButton btn_removeAll;
-	private JTextField sessionName;
-	private JLabel createGameErrorText;
-	private JPanel titlePanel;
-	private JPanel namePane;
-	private JLabel lblName;
-	private JPanel createGamePane;
-	private JButton btnResetGame;
-	//private JButton btnExport;
-	private JCheckBox startNow;
-	private JLabel label;
-	private JPanel settingsPanel;
-	private JPanel configPanel;
-	private JLabel lblConfigureGameSettings;
-	private JPanel calendarOverview;
-	private JPanel calendar;
-	private JLabel lblEndDate;
-	private JTextField endDateText;
-	private JButton calendarButton_2;
-	private JPanel endPanel;
-	private JCheckBox deadline;
-	private JLabel lblrequired2;
-	private JPanel calendarHandler;
-	private JPanel calendarPanel;
-	private JPanel cardPanel;
-	private JPanel deckPanel;
-	private JPanel cardDeckPane;
-	private JLabel lblCardDeck;
-	private JTextField deckOverview;
-	private JPanel requirementsPanel;
-	private JPanel requirementsHeader;
-	private JLabel lblChooseRequirementsTo;
-	private JPanel requirementsSelector;
-	private JPanel projectRequirements;
-	private JPanel projectHeader;
-	private JLabel lblAllProjectRequirements;
-	private JPanel projectList;
-	private JScrollPane scroller;
-	private JPanel addRemPanel;
-	private JPanel topSpacer;
-	private JPanel buttonsPanel;
-	private JPanel topmostButton;
-	private JButton btn_addAll;
-	private JPanel topButton;
-	private JPanel bottomButton;
-	private JPanel bottommostButton;
-	private JPanel bottomSpacer;
-	private JPanel gameRequirements;
-	private JPanel gameHeader;
-	private JLabel lblRequirementsToEstimate;
-	private JPanel gameList;
-	private JScrollPane scroller_2;
-	private JTextPane txtpnLoggedInAs;
-	private JComboBox<Deck> deckType;
-	private GridBagConstraints constraints14;
-	
-	public boolean isViewHasBeenEdited() {
-		// TODO Auto-generated method stub
-		return viewHasBeenEdited;
+		for (int i : selected) {
+			reqsToMove.add(this.thisGameRequirementsListModel.get(i));
+		}
+
+		for (String req : reqsToMove) {
+			this.thisGameRequirementsListModel.removeElement(req);
+			this.backlogRequirementsListModel.addElement(req);
+		}
+
+		this.changedSinceOpened = true;
+		this.runErrorChecks();
 	}
+
+	private void doubleRightArrowButtonActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		while (!this.backlogRequirementsListModel.isEmpty()) {
+			String req = this.backlogRequirementsListModel.remove(0);
+			this.thisGameRequirementsListModel.addElement(req);
+		}
+
+		this.changedSinceOpened = true;
+		this.runErrorChecks();
+	}
+
+	private void doubleLeftArrowButtonActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		while (!this.thisGameRequirementsListModel.isEmpty()) {
+			String req = this.thisGameRequirementsListModel.remove(0);
+			this.backlogRequirementsListModel.addElement(req);
+		}
+
+		this.changedSinceOpened = true;
+		this.runErrorChecks();
+	}
+
+	/**
+	 * This method is called when the user clicks the "This game has a deadline"
+	 * checkbox.
+	 */
+	private void deadlineCheckboxActionPerformed(java.awt.event.ActionEvent evt) {
+		boolean checked = this.deadlineCheckbox.isSelected();
+
+		this.dateLabel.setEnabled(checked);
+		this.datePicker.setEnabled(checked);
+		this.timeLabel.setEnabled(checked);
+		this.timePicker.setEnabled(checked);
+
+		this.changedSinceOpened = true;
+		this.runErrorChecks();
+	}
+
+	private void createGameButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		this.createGameButtonClicked();
+	}
+
+	private void defaultSettingsButtonActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		this.defaultSettingsButtonClicked();
+	}
+
+	private void deckChoiceComboBoxActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		String selection = (String) ((JComboBox) evt.getSource())
+				.getSelectedItem();
+		this.deckChoiceClicked(selection);
+		this.changedSinceOpened = true;
+		this.runErrorChecks();
+	}
+
+	private void gameDescriptionFieldActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		// This method is not needed and for whatever reason I can't make
+		// NetBeans delete it.
+	}
+
+	private void datePickerActionPerformed(java.awt.event.ActionEvent evt) {
+		this.changedSinceOpened = true;
+		this.runErrorChecks();
+	}
+
+	private void backlogRequirementsListValueChanged(
+			javax.swing.event.ListSelectionEvent evt) {
+		this.runErrorChecks();
+	}
+
+	private void thisGameRequirementsListValueChanged(
+			javax.swing.event.ListSelectionEvent evt) {
+		this.runErrorChecks();
+	}
+
+	private void timePickerStateChanged(javax.swing.event.ChangeEvent evt) {
+		this.changedSinceOpened = true;
+		this.runErrorChecks();
+	}
+
+	private void gameNameFieldActionPerformed(java.awt.event.ActionEvent evt) {
+		// This method is not needed and for whatever reason I can't make
+		// NetBeans delete it.
+	}
+
+	private void openForVotingImmediatelyCheckboxActionPerformed(
+			java.awt.event.ActionEvent evt) {
+		// TODO add your handling code here:
+	}
+
+	// Variables declaration - do not modify
+	private javax.swing.JPanel arrowButtonsPanel;
+	private javax.swing.JLabel backlogRequirementsLabel;
+	private javax.swing.JList backlogRequirementsList;
+	private javax.swing.JPanel backlogRequirementsListPanel;
+	private javax.swing.JScrollPane backlogRequirementsListScrollPane;
+	private javax.swing.JPanel blankMiddlePanel;
+	private javax.swing.JPanel buttonsPanel;
+	private javax.swing.JLabel chooseDeckLabel;
+	private javax.swing.JButton createGameButton;
+	private javax.swing.JLabel dateLabel;
+	private org.jdesktop.swingx.JXDatePicker datePicker;
+	private javax.swing.JCheckBox deadlineCheckbox;
+	private javax.swing.JPanel deadlineOptionsPanel;
+	private javax.swing.JComboBox deckChoiceComboBox;
+	private javax.swing.JPanel deckOptionsPanel;
+	private javax.swing.JLabel deckValues;
+	private javax.swing.JLabel deckValuesLabel;
+	private javax.swing.JButton defaultSettingsButton;
+	private javax.swing.JButton doubleLeftArrowButton;
+	private javax.swing.JButton doubleRightArrowButton;
+	private javax.swing.JLabel errorTextLabel;
+	private javax.swing.JTextField gameDescriptionField;
+	private javax.swing.JPanel gameDescriptionFieldPanel;
+	private javax.swing.JTextField gameNameField;
+	private javax.swing.JPanel gameNameLabelPanel;
+	private javax.swing.JLabel loggedInAsLabel;
+	private javax.swing.JCheckBox openForVotingImmediatelyCheckbox;
+	private javax.swing.JPanel optionsPanel;
+	private javax.swing.JPanel requirementListsPanel;
+	private javax.swing.JButton singleLeftArrowButton;
+	private javax.swing.JButton singleRightArrowButton;
+	private javax.swing.JPanel thisGameReqsPanel;
+	private javax.swing.JLabel thisGameRequirementsLabel;
+	private javax.swing.JList thisGameRequirementsList;
+	private javax.swing.JScrollPane thisGameRequirementsListScrollPane;
+	private javax.swing.JLabel timeLabel;
+	private javax.swing.JSpinner timePicker;
+	private javax.swing.Box.Filler verticalSpaceFiller;
+	// End of variables declaration
 }

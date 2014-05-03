@@ -260,15 +260,16 @@ public class NewGameView extends javax.swing.JPanel {
             Thread.sleep(300);
         } catch (Exception e) {
         }
-        
-        // Send out notifications of the game starting.
-        mailer = new Mailer(game);
-        mailer.send();
-        im = new InstantMessenger(game);
-        im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());
 
         // Close the tab.
         MainView.getInstance().removeClosableTab();
+                        
+        // Send out notifications of the game starting. Do this after the tab has already closed, because it is slow.
+        mailer = new Mailer(game);
+        mailer.addEmailFromUsers(PlanningPokerUserModel.getInstance().getUsers());
+        mailer.send();
+        im = new InstantMessenger(game);
+        im.sendAllMessages(PlanningPokerUserModel.getInstance().getUsers());
     }
 
     /**
