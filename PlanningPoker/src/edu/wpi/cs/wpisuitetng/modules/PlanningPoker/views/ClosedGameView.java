@@ -326,6 +326,7 @@ public class ClosedGameView extends JPanel {
 	private void initComponents() {
 		final java.awt.GridBagConstraints gridBagConstraints;
 
+		submitButton.setToolTipText("Update this estimate in the Requirement Manager");
 		splitPane = new javax.swing.JSplitPane();
 		leftSplitPanel = new javax.swing.JPanel();
 		requirementsLabelPanel = new javax.swing.JPanel();
