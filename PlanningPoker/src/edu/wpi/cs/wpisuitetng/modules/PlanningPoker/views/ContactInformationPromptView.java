@@ -101,7 +101,7 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 		contactPrompLabel
 				.setText("<html>You must provide at least one point of contact to continue.</html>");
 
-		aimFieldPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("AIM"));
+		aimFieldPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Google Chat"));
 
 		
 		aimField.addKeyListener(new java.awt.event.KeyAdapter() {

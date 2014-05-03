@@ -66,7 +66,7 @@ public class GetDeckController implements ActionListener {
 	/**
 	 * Sends an HTTP request to retrieve all user emails
 	 */
-	public void retrieveUser() {
+	public void retrieveDeck() {
 		final Request request = Network.getInstance().makeRequest(
 				"planningpoker/deck", HttpMethod.GET);
 		request.addObserver(observer);

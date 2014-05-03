@@ -35,7 +35,10 @@ public class PlanningPokerUserEntityManager implements EntityManager<PlanningPok
 	private static final Logger logger = Logger
 			.getLogger(PlanningPokerUserEntityManager.class.getName());
 	
-	
+	/** A constructor for the user entity manager
+	 * 
+	 * @param data The database
+	 */
 	public PlanningPokerUserEntityManager(Data data){
 		this.data = data;
 	}
