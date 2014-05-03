@@ -152,11 +152,6 @@ public class MainView {
 			// the model), and then we can filter against that here.
 			else if (game.isLive() && !game.isFinished()) {
 				openGames.add(nodeToAdd);
-				
-				if (game.hasEndDate() && new Date().after(game.getEndDate().getTime())) {
-					MainView.getInstance().refreshGameTree();
-					return 0;
-				}
 			}
 
 			// Conditions for a game to be "Finished".
@@ -247,20 +242,6 @@ public class MainView {
 			// been received
 			while (GetPlanningPokerGamesController.waitingOnRequest) {
 				continue;
-			}
-
-			/*
-			 * If a game has a deadline, it is only closed when the first get
-			 * request after the deadline has passed is sent. Send a second
-			 * request so that the local game is updated if the game has a
-			 * deadline
-			 */
-			if (selectedGame.hasEndDate() && selectedGame.isLive() && new Date().after(selectedGame.getEndDate().getTime())) {
-				GetPlanningPokerGamesController.getInstance()
-						.retrievePlanningPokerGames();
-				while (GetPlanningPokerGamesController.waitingOnRequest) {
-					continue;
-				}
 			}
 
 		} catch (Exception e) {
