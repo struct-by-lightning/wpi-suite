@@ -69,7 +69,7 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 		
 		createDeckButton.setHorizontalAlignment(SwingConstants.CENTER);
 		createDeckButton.setPreferredSize(new Dimension(500, 50));
-
+		
 		try {
 			final Image img = ImageIO.read(getClass().getResource("new_req.png"));
 			newGameButton.setIcon(new ImageIcon(img));
@@ -82,6 +82,11 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 
 		}
 
+		// Set tool tips
+		newGameButton.setToolTipText("Start a new planning poker game session");
+		prefButton.setToolTipText("View your planning poker preferences");
+		createDeckButton.setToolTipText("Create a new planning poker deck");
+		
 		/**
 		 *  the action listener for the New Game Button
 		 */
