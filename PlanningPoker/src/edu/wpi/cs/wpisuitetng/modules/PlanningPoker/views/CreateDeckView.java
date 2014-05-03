@@ -61,6 +61,7 @@ public class CreateDeckView extends javax.swing.JPanel {
         addValueErrorMessage.setForeground(Color.RED);
         
 
+        removeValuesBtn.setEnabled(false);
         checkAllFields();
         
         deckValuesList.setModel(deckValuesListModel);
@@ -74,10 +75,11 @@ public class CreateDeckView extends javax.swing.JPanel {
 
         deckNameField.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         deckNameField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                deckNameFieldKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                deckNameFieldKeyReleased(evt);
             }
         });
+
 
         javax.swing.GroupLayout deckNamePanelLayout = new javax.swing.GroupLayout(deckNamePanel);
         deckNamePanel.setLayout(deckNamePanelLayout);
@@ -100,8 +102,8 @@ public class CreateDeckView extends javax.swing.JPanel {
         newValueField.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         newValueField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         newValueField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                newValueFieldKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                newValueFieldKeyReleased(evt);
             }
         });
 
@@ -231,8 +233,9 @@ public class CreateDeckView extends javax.swing.JPanel {
     	deckValuesList.setModel(deckValuesListModel);
     	newValueField.setText("");
     	
-    	checkAllFields();
     	newValueField.requestFocusInWindow();
+    	addValueBtn.setEnabled(false);
+    	checkAllFields();
     	
     }                                           
 
@@ -240,37 +243,58 @@ public class CreateDeckView extends javax.swing.JPanel {
     	Deck deck = new Deck(deckNameField.getText(), deckValuesListModel);
     	
     	AddDeckController.getInstance().AddDeck(deck);
+    	
+    	MainView.getInstance().refreshGameTree();
+		MainView.getInstance().removeClosableTab();
     }                                             
 
     private void removeValuesBtnActionPerformed(java.awt.event.ActionEvent evt) {                                                
     	deckValuesListModel.removeElementAt(deckValuesList.getSelectedIndex());
     	checkAllFields();
+    	removeValuesBtn.setEnabled(false);
     }                                               
 
     private void deckValuesListMouseClicked(java.awt.event.MouseEvent evt) {                                            
     	checkAllFields();
+    	removeValuesBtn.setEnabled(true);
     }                                           
 
-    private void newValueFieldKeyTyped(java.awt.event.KeyEvent evt) {                                       
+    private void newValueFieldKeyReleased(java.awt.event.KeyEvent evt) {                                       
     	checkAllFields();
     }                                      
 
-    private void deckNameFieldKeyTyped(java.awt.event.KeyEvent evt) {                                       
+    private void deckNameFieldKeyReleased(java.awt.event.KeyEvent evt) {                                       
         checkAllFields();
+
     }   
     
     
     public void checkAllFields(){
+    	
+        if(deckNameField.getText().length() == 0){
+        	errorMessage.setText("Deck must have a name");
+        }
+        else{
+        	errorMessage.setText("");
+        }
+        
+    	if (newValueField.getText().matches("^\\d+$")) {
+    	    addValueBtn.setEnabled(true);
+    	}
+    	else{
+    		addValueBtn.setEnabled(false);
+    	}
+    	
     	if(deckValuesListModel.size() == 0){
     		removeValuesBtn.setEnabled(false);
     		createDeckBtn.setEnabled(false);
     		errorMessage.setText("<html>Cannot create a deck with no<br> values</html>");
     	}
     	else{
-    		removeValuesBtn.setEnabled(true);
     		createDeckBtn.setEnabled(true);
     		errorMessage.setText("");
     	}
+
 
     }
     
