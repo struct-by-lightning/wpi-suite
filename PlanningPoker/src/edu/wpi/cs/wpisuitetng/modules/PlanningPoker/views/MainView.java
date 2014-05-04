@@ -521,22 +521,23 @@ public class MainView {
 								.getLastPathComponent();
 						final String gameName = (String) node
 								.getUserObject();
-						
-						StringBuilder sb = new StringBuilder();
-						sb.append("<html>");
-						String[] sa = PlanningPokerGameModel.getPlanningPokerGame(gameName).getDescription().split(" ");
-						int lineLength = 0;
-						for(int i = 0; i < sa.length; i++) {
-							lineLength += sa[i].length();
-							sb.append(sa[i]);
-							sb.append(" ");
-							if(lineLength > 40) {
-								lineLength  = 0;
-								sb.append("<br>");
+						try {
+							StringBuilder sb = new StringBuilder();
+							sb.append("<html>");
+							String[] sa = PlanningPokerGameModel.getPlanningPokerGame(gameName).getDescription().split(" ");
+							int lineLength = 0;
+							for(int i = 0; i < sa.length; i++) {
+								lineLength += sa[i].length();
+								sb.append(sa[i]);
+								sb.append(" ");
+								if(lineLength > 40) {
+									lineLength  = 0;
+									sb.append("<br>");
+								}
 							}
-						}
-						sb.append("</html>");
-						gameTree.setToolTipText(sb.toString());
+							sb.append("</html>");
+							gameTree.setToolTipText(sb.toString());
+						} catch (NullPointerException n) {}
 					}
 				}
 			}
