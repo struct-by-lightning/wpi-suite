@@ -9,9 +9,13 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +41,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
+
+import com.sun.awt.AWTUtilities;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerVoteController;
@@ -310,10 +316,20 @@ public class OpenGameView extends JPanel {
 		textArea.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		textArea.setColumns(2);
 		textArea.setRows(1);
+		textArea.setOpaque(false);
+		
+		JPanel card = new CardImgPanel();
+		
+		card.setPreferredSize(new Dimension(120, 170));
+		card.setBorder(javax.swing.BorderFactory
+				.createLineBorder(new java.awt.Color(153, 153, 153)));
 
-		allCardsPanel.add(textArea, gridBagConstraints);
-
-		allCardsPanel.setBackground(new Color(232, 232, 232));
+		card.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		card.add(textArea, gbc);
+		
+		card.repaint();
+		allCardsPanel.add(card, gridBagConstraints);
 	}
 
 	/**
