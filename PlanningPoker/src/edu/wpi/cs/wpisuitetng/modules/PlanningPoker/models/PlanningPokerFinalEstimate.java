@@ -42,7 +42,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	public PlanningPokerFinalEstimate(String gameName, int requirementID) {
 		hasEstimate = false;
 		if(gameName != null){
-			this.gameName = gameName.replace(':', ';');
+			this.gameName = gameName;
 		}
 		
 		else{
@@ -59,7 +59,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	public String toJSON() {
 		// TODO Auto-generated method stub
 		final JsonObject deflated = new JsonObject();
-		deflated.addProperty("gameName", gameName);
+		deflated.addProperty("gameName", gameName.replace(':', ';').replace(',', '|'));
 		deflated.addProperty("requirementID", requirementID);
 		deflated.addProperty("estimate", estimate);
 		return deflated.toString();
@@ -146,9 +146,10 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 					"The serialized PlanningPokerFinalEstimate did not contain the required estimate field.");
 		}
 		
-		String gName = json.get("gameName").getAsString();
+		String gName = json.get("gameName").getAsString().replace(';', ':').replace('|', ',');
 		int reqId = 0;
 		int est = 0;
+		System.out.println("The From JSON is "+gName);
 		
 		try {
 			reqId = json.get("requirementID").getAsInt();
@@ -187,7 +188,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		for (JsonElement json : array) {
 			ppnes.add(fromJSON(json.getAsJsonObject()));
 		}
-
+		System.out.println("fromJsonArray: "+ppnes);
 		return ppnes.toArray(new PlanningPokerFinalEstimate[0]);
 	}
 	

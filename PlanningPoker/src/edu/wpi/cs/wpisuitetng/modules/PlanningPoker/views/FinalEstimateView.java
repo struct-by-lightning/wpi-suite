@@ -66,7 +66,7 @@ public class FinalEstimateView extends JPanel {
 	
 	public static void open(PlanningPokerGame game) {
 		final FinalEstimateView view = new FinalEstimateView(game);
-		MainView.getInstance().addCloseableTab("Final Estimates for: "+game.getGameName(), view);
+		MainView.getInstance().addCloseableTab("Update Final Estimates for: "+game.getGameName(), view);
 	}
 	
 	private FinalEstimateView(PlanningPokerGame game) {

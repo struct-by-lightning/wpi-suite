@@ -299,6 +299,7 @@ public class ClosedGameView extends JPanel {
 			final List<Integer> gameReqIds = new ArrayList<Integer>();
 			boolean gameHasEstimates = true;
 			for(PlanningPokerFinalEstimate ppfe : finalEsts) {
+				System.out.println("The final estimate game is: "+ppfe.getGameName() +"while the game name is: "+ game.getGameName());
 				if(ppfe.getGameName().equals(game.getGameName())) {
 					gameReqIds.add(ppfe.getRequirementID());
 					if(!ppfe.hasEstimate()) {
@@ -703,7 +704,7 @@ public class ClosedGameView extends JPanel {
 		rowSplitPanel.add(stats);
 
 		submitButton = new JButton("Submit");
-		updateButton = new JButton("Update All Estimates");
+		updateButton = new JButton("Open Final Estimate Updater");
 		updateButton.setFont(new java.awt.Font("Tahoma", 0, 28));
 		if(game.isArchived()) {
 			submitButton.setEnabled(false);
