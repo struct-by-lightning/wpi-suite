@@ -37,8 +37,8 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 	// initialize the main view toolbar buttons
 	private final JButton newGameButton = new JButton("<html>Create New Game</html>");
 	private final JPanel contentPanel = new JPanel();
-	private final JButton prefButton = new JButton("<html>Preferences</html>");
 	private final JButton createDeckButton = new JButton("<html>Create New Deck</html>");
+	private final JButton prefButton = new JButton("<html>Preferences</html>");
 	
 	public PlanningPokerButtonsPanel() {
 		super("");
@@ -109,8 +109,8 @@ public class PlanningPokerButtonsPanel extends ToolbarGroupView {
 		});
 
 		contentPanel.add(newGameButton);
-		contentPanel.add(prefButton);
 		contentPanel.add(createDeckButton);
+		contentPanel.add(prefButton);
 		contentPanel.setOpaque(true);
 
 		this.add(contentPanel);
