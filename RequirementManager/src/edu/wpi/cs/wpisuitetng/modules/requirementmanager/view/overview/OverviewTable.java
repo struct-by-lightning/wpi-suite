@@ -33,6 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementStatus;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.ExportButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.overview.OverviewTableTransferHandler;
 /**
  * @author justinhess
@@ -92,6 +93,34 @@ public class OverviewTable extends JTable
 				if ((e.getClickCount() == 2) && !isInEditMode)
 				{
 					ViewEventController.getInstance().editSelectedRequirement();
+				}
+				// Update the export button from here
+				if( ViewEventController.getInstance().getOverviewTable().getSelectedRows().length == 0) {
+					ExportButtonPanel.setExportButtonEnabled(false);
+					return;
+				} else {
+					ExportButtonPanel.setExportButtonEnabled(true);
+				}
+			}
+		});
+		
+		this.addMouseMotionListener(new MouseAdapter(){
+			public void mouseMoved(MouseEvent e){
+				// Update the export button from here
+				if( ViewEventController.getInstance().getOverviewTable().getSelectedRows().length == 0) {
+					ExportButtonPanel.setExportButtonEnabled(false);
+					return;
+				} else {
+					ExportButtonPanel.setExportButtonEnabled(true);
+				}
+			}
+			public void mouseDragged(MouseEvent e){
+				// Update the export button from here
+				if( ViewEventController.getInstance().getOverviewTable().getSelectedRows().length == 0) {
+					ExportButtonPanel.setExportButtonEnabled(false);
+					return;
+				} else {
+					ExportButtonPanel.setExportButtonEnabled(true);
 				}
 			}
 		});
