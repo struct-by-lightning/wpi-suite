@@ -418,6 +418,7 @@ public class PreferencesView extends JPanel {
 		return matcher.find();
 	}
 
+
 	private boolean isValidGoogleAccount() {
 		final String googleChatText = googleChatField.getText();
 		final Pattern VALID_GOOGLE_ADDRESS_REGEX = Pattern.compile(

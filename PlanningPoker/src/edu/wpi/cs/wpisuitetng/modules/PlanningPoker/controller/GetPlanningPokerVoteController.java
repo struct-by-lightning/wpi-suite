@@ -110,7 +110,7 @@ public class GetPlanningPokerVoteController implements ActionListener {
 		if(request.getResponse() != null && request.getResponse().getStatusCode() == 200) {
 			final PlanningPokerVote[] a = PlanningPokerVote
 					.fromJsonArray(request.getResponse().getBody());
-			PlanningPokerVote ret = new PlanningPokerVote(null, null, 0, 0);
+			PlanningPokerVote ret = new PlanningPokerVote(null, null, -1, 0);
 			for(PlanningPokerVote v : a) {
 				if(v.getID().equalsIgnoreCase(gameName + ":" + userName + ":" + requirementID)) {
 						ret = v;
