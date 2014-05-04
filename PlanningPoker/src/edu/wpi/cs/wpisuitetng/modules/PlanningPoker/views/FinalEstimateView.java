@@ -33,7 +33,9 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+
 import java.awt.Component;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
@@ -262,7 +264,7 @@ public class FinalEstimateView extends JPanel {
 					e1.printStackTrace();
 				}
 				GetRequirementsController.getInstance().retrieveRequirements();
-				gameDeadlineDateLabel.setText("Submitted the Final Estimate for "+req2set.getName());
+				submitOne.setText("Submitted the Final Estimate for "+req2set.getName());
         	}
         });
         
@@ -281,6 +283,8 @@ public class FinalEstimateView extends JPanel {
 				}
 				GetRequirementsController.getInstance().retrieveRequirements();
 				gameDeadlineDateLabel.setText("Submitted all Final Estimates for this game");
+		        // Close the tab.
+		        MainView.getInstance().removeClosableTab();
         	}
         });
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
