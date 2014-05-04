@@ -116,6 +116,7 @@ public class ClosedGameView extends JPanel {
 				.addListSelectionListener(new ListSelectionListener() {
 					@Override
 					public void valueChanged(ListSelectionEvent ev) {
+						Average = 0; // Quick fix for putting mean value in
 						System.out.println("***The listener has been activated***");
 						final JList list;
 						list = (JList) ev.getSource();
