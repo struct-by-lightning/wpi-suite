@@ -527,6 +527,7 @@ public class OpenGameView extends JPanel {
 	private void initComponents() {
 
 		splitPane = new javax.swing.JSplitPane();
+		splitPane.setDividerLocation(200); // Make the left column wider
 		leftSplitPanel = new javax.swing.JPanel();
 		requirementListScrollPane = new javax.swing.JScrollPane();
 		requirementList = new javax.swing.JList();

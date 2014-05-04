@@ -330,6 +330,7 @@ public class ClosedGameView extends JPanel {
 		final java.awt.GridBagConstraints gridBagConstraints;
 
 		splitPane = new javax.swing.JSplitPane();
+		splitPane.setDividerLocation(200); // Make the left column wider
 		leftSplitPanel = new javax.swing.JPanel();
 		requirementsLabelPanel = new javax.swing.JPanel();
 		requirementsLabel = new javax.swing.JLabel();
