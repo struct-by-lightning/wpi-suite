@@ -567,7 +567,7 @@ public class MainView {
 		createGameButton = new javax.swing.JButton();
 		mainComponent = new javax.swing.JTabbedPane();
 		overviewTabSplitPane = new javax.swing.JSplitPane();
-
+		overviewTabSplitPane.setDividerLocation(350);
 		infoPanel = new javax.swing.JPanel();
 		left = new javax.swing.JPanel();
 		whatIsTitle = new javax.swing.JLabel();
