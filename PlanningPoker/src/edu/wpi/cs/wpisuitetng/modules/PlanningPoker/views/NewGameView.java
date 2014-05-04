@@ -28,11 +28,14 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetDeckController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerGamesController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.GetPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.UpdatePlanningPokerGameController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.email.Mailer;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im.InstantMessenger;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
@@ -113,6 +116,12 @@ public class NewGameView extends javax.swing.JPanel {
             Thread.sleep(150);
         } catch (Exception e) {
         }
+        
+		GetDeckController.getInstance().retrieveDeck();
+		try {
+			Thread.sleep(150);
+		} catch (Exception e) {
+		}
 
         // Populate list of requirements associated with this game.
         this.thisGameRequirementsListModel = new DefaultListModel<>();
@@ -129,8 +138,11 @@ public class NewGameView extends javax.swing.JPanel {
             }
         }
 
-        // Populate list of deck types.
-        this.deckTypeComboBoxModel = new DefaultComboBoxModel<String>(new String[]{"Default", "No Deck"});
+		// Populate list of deck types.
+		this.deckTypeComboBoxModel = new DefaultComboBoxModel<>();
+		for (Deck d : DeckModel.getInstance().getDecks()) {
+			this.deckTypeComboBoxModel.addElement(d.getDeckName());
+		}
 
         // Run NetBeans-generated UI initialization code.
         initComponents();
@@ -335,7 +347,12 @@ public class NewGameView extends javax.swing.JPanel {
      * @param deckName The deck type the user chose.
      */
     private void deckChoiceClicked(String deckName) {
-        this.deckValues.setText(deckName.equals("Default") ? "[0, 1, 1, 2, 3, 5, 8]" : "N/A");
+		Deck selectedDeck = DeckModel.getInstance().getDeck(deckName);
+		if (selectedDeck.getDeckNumbers().isEmpty()) {
+			this.deckValues.setText("N/A");
+		} else {
+			this.deckValues.setText(selectedDeck.getDeckNumbers().toString());
+		}
     }
 
     /**
