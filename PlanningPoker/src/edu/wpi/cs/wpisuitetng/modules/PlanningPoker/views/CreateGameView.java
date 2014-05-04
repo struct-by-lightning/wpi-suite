@@ -11,6 +11,8 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,10 +24,13 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerDateModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -39,17 +44,11 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.im.InstantMessenger;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGameModel;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUserModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
-
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
-import java.awt.Color;
-import java.awt.Font;
 
 /**
  * An instance of this class is a JPanel containing the GUI for interacting with
@@ -208,7 +207,13 @@ public class CreateGameView extends javax.swing.JPanel {
 			createGameButtonEnabled = false;
 			errorText = "Name cannot be blank.";
 
-		} // What if the game name starts or ends with whitespace?
+		}
+		else if(PlanningPokerGameModel.getPlanningPokerGame(gameName) != null)
+		{
+			createGameButtonEnabled = false;
+			errorText = "A game already exists with that name.";
+		}
+		// What if the game name starts or ends with whitespace?
 		else {
 			String firstCharOfName = gameName.substring(0, 1);
 			String lastCharOfName = gameName.substring(gameName.length() - 1,
