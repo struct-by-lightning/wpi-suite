@@ -1,12 +1,12 @@
-/*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors: Struct-By-Lightning
- ******************************************************************************/
+ /*******************************************************************************
+  * Copyright (c) 2013 WPI-Suite
+  * All rights reserved. This program and the accompanying materials
+  * are made available under the terms of the Eclipse Public License v1.0
+  * which accompanies this distribution, and is available at
+  * http://www.eclipse.org/legal/epl-v10.html
+  * 
+  * Contributors: Struct-By-Lightning
+  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Color;
@@ -25,14 +25,11 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -60,12 +57,14 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
  * a planning poker game which is open for voting.
  * 
  * @version $Revision: 1.0 $
- * @author Austin Rose (atrose)
+ * @author Sam Mailand (sfmailand)
  */
 @SuppressWarnings("serial")
 public class OpenGameView extends JPanel {
 	private LinkedList<PlanningPokerVote> allVotes;
 	private String username;
+	
+	DefaultListModel<String> usersVotedListModel = new DefaultListModel<String>();
 
 	// TODO: The transition from this screen to the overview tab appears to be
 	// the only one which doesn't refresh the tree properly.
@@ -241,7 +240,8 @@ public class OpenGameView extends JPanel {
 	private void populateWithNoCardDeckPanel() {
 		final GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.insets = new Insets(0, 15, 0, 15);
-
+		
+		
 		textArea = new JTextArea();
 		textArea.setDocument(new LimitedDocument(textArea));
 		textArea.getDocument().addDocumentListener(new MyDocumentListener());
@@ -252,6 +252,7 @@ public class OpenGameView extends JPanel {
 		textArea.setColumns(2);
 		textArea.setRows(1);
 
+		
 		allCardsPanel.add(textArea, gridBagConstraints);
 
 		allCardsPanel.setBackground(new Color(232, 232, 232));
@@ -438,6 +439,9 @@ public class OpenGameView extends JPanel {
 		// Initially select the first item in the tree.
 		requirementList.setSelectedIndex(0);
 
+
+		
+		
 		// Show the name of the game.
 		gameNameLabel.setText(game.getGameName());
 
@@ -775,8 +779,14 @@ public class OpenGameView extends JPanel {
         );
         
         
+        
+        
+        
 		initListeners();
 	}// </editor-fold>//GEN-END:initComponents
+	
+	
+
 	
 	private void initListeners(){
 		allVotes = GetPlanningPokerVoteController.getInstance()
