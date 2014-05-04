@@ -325,7 +325,7 @@ public class PlanningPokerGameTest {
 		final PlanningPokerGame result = PlanningPokerGame.fromJSON(jsonString);
 
 		assertTrue(result.getGameName().equals("2014-05-28 11:08:15"));
-		assertEquals(null, result.getDescription()); // not currently used
+		assertEquals("test description", result.getDescription()); // not currently used
 		assertTrue(result.getDeckType().equals("fibonacci"));
 		assertTrue(result.getRequirementIds().contains(1));
 		assertTrue(result.getRequirementIds().contains(2));
@@ -412,7 +412,7 @@ public class PlanningPokerGameTest {
 				.fromJsonArray(jsonString);
 
 		assertTrue(result[0].getGameName().equals("2014-05-28 11:08:15"));
-		assertEquals(null, result[0].getDescription()); // not currently used
+		assertEquals("test description", result[0].getDescription()); // not currently used
 		assertTrue(result[0].getDeckType().equals("fibonacci"));
 		assertTrue(result[0].getRequirementIds().contains(1));
 		assertTrue(result[0].getRequirementIds().contains(2));

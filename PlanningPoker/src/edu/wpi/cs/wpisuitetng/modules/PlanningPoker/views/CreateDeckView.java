@@ -295,9 +295,11 @@ public class CreateDeckView extends javax.swing.JPanel {
     	removeValuesBtn.setEnabled(false);
     }                                               
 
-    private void deckValuesListMouseClicked(java.awt.event.MouseEvent evt) {                                            
-    	checkAllFields();
-    	removeValuesBtn.setEnabled(true);
+    private void deckValuesListMouseClicked(java.awt.event.MouseEvent evt) {  
+    	if (deckValuesList.getSelectedIndex() > -1) {
+	    	checkAllFields();
+	    	removeValuesBtn.setEnabled(true);
+    	}
     }                                           
 
     private void newValueFieldKeyReleased(java.awt.event.KeyEvent evt) {                                       
