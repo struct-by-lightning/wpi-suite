@@ -1,12 +1,12 @@
- /*******************************************************************************
-  * Copyright (c) 2013 WPI-Suite
-  * All rights reserved. This program and the accompanying materials
-  * are made available under the terms of the Eclipse Public License v1.0
-  * which accompanies this distribution, and is available at
-  * http://www.eclipse.org/legal/epl-v10.html
-  * 
-  * Contributors: Struct-By-Lightning
-  ******************************************************************************/
+/*******************************************************************************
+ * Copyright (c) 2013 WPI-Suite
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Struct-By-Lightning
+ ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
 import java.awt.Color;
@@ -63,7 +63,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 public class OpenGameView extends JPanel {
 	private LinkedList<PlanningPokerVote> allVotes;
 	private String username;
-	
+
 	DefaultListModel<String> usersVotedListModel = new DefaultListModel<String>();
 
 	// TODO: The transition from this screen to the overview tab appears to be
@@ -240,8 +240,7 @@ public class OpenGameView extends JPanel {
 	private void populateWithNoCardDeckPanel() {
 		final GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.insets = new Insets(0, 15, 0, 15);
-		
-		
+
 		textArea = new JTextArea();
 		textArea.setDocument(new LimitedDocument(textArea));
 		textArea.getDocument().addDocumentListener(new MyDocumentListener());
@@ -252,7 +251,6 @@ public class OpenGameView extends JPanel {
 		textArea.setColumns(2);
 		textArea.setRows(1);
 
-		
 		allCardsPanel.add(textArea, gridBagConstraints);
 
 		allCardsPanel.setBackground(new Color(232, 232, 232));
@@ -439,15 +437,13 @@ public class OpenGameView extends JPanel {
 		// Initially select the first item in the tree.
 		requirementList.setSelectedIndex(0);
 
-
-		
-		
 		// Show the name of the game.
 		gameNameLabel.setText(game.getGameName());
 
 		// Show the deadline of the game if there is one.
 		if (game.hasEndDate()) {
-			final SimpleDateFormat fmt = new SimpleDateFormat("'Closes' MMM dd, yyyy 'at' hh:mm a");
+			final SimpleDateFormat fmt = new SimpleDateFormat(
+					"'Closes' MMM dd, yyyy 'at' hh:mm a");
 			fmt.setCalendar(game.getEndDate());
 			final String dateFormatted = fmt
 					.format(game.getEndDate().getTime());
@@ -530,267 +526,464 @@ public class OpenGameView extends JPanel {
 	// desc="Generated Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
-        splitPane = new javax.swing.JSplitPane();
-        leftSplitPanel = new javax.swing.JPanel();
-        requirementListScrollPane = new javax.swing.JScrollPane();
-        requirementList = new javax.swing.JList();
-        requirementLabel = new javax.swing.JLabel();
-        rightSplitPanel = new javax.swing.JPanel();
-        gameTitlePanel = new javax.swing.JPanel();
-        gameNameLabel = new javax.swing.JLabel();
-        btnEndGame = new javax.swing.JButton();
-        gameDeadlineDateLabel = new javax.swing.JLabel();
-        requirementNamePanel = new javax.swing.JPanel();
-        requirementNameLabel = new javax.swing.JLabel();
-        requirementDescriptionScrollPane = new javax.swing.JScrollPane();
-        requirementDescriptionLabel = new javax.swing.JTextArea();
-        alreadyVotedPanel = new javax.swing.JPanel();
-        alreadyVotedScrollPane = new javax.swing.JScrollPane();
-        alreadyVotedList = new javax.swing.JList();
-        estimatePanel = new javax.swing.JPanel();
-        submitButton = new javax.swing.JButton();
-        estimateDisplayPanel = new javax.swing.JPanel();
-        estimateNumberLabel = new javax.swing.JLabel();
-        cardsScrollPane = new javax.swing.JScrollPane();
-        allCardsPanel = new javax.swing.JPanel();
+		splitPane = new javax.swing.JSplitPane();
+		leftSplitPanel = new javax.swing.JPanel();
+		requirementListScrollPane = new javax.swing.JScrollPane();
+		requirementList = new javax.swing.JList();
+		requirementLabel = new javax.swing.JLabel();
+		rightSplitPanel = new javax.swing.JPanel();
+		gameTitlePanel = new javax.swing.JPanel();
+		gameNameLabel = new javax.swing.JLabel();
+		btnEndGame = new javax.swing.JButton();
+		gameDeadlineDateLabel = new javax.swing.JLabel();
+		requirementNamePanel = new javax.swing.JPanel();
+		requirementNameLabel = new javax.swing.JLabel();
+		requirementDescriptionScrollPane = new javax.swing.JScrollPane();
+		requirementDescriptionLabel = new javax.swing.JTextArea();
+		alreadyVotedPanel = new javax.swing.JPanel();
+		alreadyVotedScrollPane = new javax.swing.JScrollPane();
+		alreadyVotedList = new javax.swing.JList();
+		estimatePanel = new javax.swing.JPanel();
+		submitButton = new javax.swing.JButton();
+		estimateDisplayPanel = new javax.swing.JPanel();
+		estimateNumberLabel = new javax.swing.JLabel();
+		cardsScrollPane = new javax.swing.JScrollPane();
+		allCardsPanel = new javax.swing.JPanel();
 
-        requirementListScrollPane.setViewportView(requirementList);
+		requirementListScrollPane.setViewportView(requirementList);
 
-        requirementLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        requirementLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        requirementLabel.setText("Requirements");
+		requirementLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+		requirementLabel
+				.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		requirementLabel.setText("Requirements");
 
-        javax.swing.GroupLayout leftSplitPanelLayout = new javax.swing.GroupLayout(leftSplitPanel);
-        leftSplitPanel.setLayout(leftSplitPanelLayout);
-        leftSplitPanelLayout.setHorizontalGroup(
-            leftSplitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(requirementListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
-            .addComponent(requirementLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        leftSplitPanelLayout.setVerticalGroup(
-            leftSplitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftSplitPanelLayout.createSequentialGroup()
-                .addComponent(requirementLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(requirementListScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE))
-        );
+		javax.swing.GroupLayout leftSplitPanelLayout = new javax.swing.GroupLayout(
+				leftSplitPanel);
+		leftSplitPanel.setLayout(leftSplitPanelLayout);
+		leftSplitPanelLayout.setHorizontalGroup(leftSplitPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addComponent(requirementListScrollPane,
+						javax.swing.GroupLayout.DEFAULT_SIZE, 91,
+						Short.MAX_VALUE)
+				.addComponent(requirementLabel,
+						javax.swing.GroupLayout.DEFAULT_SIZE,
+						javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+		leftSplitPanelLayout
+				.setVerticalGroup(leftSplitPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								javax.swing.GroupLayout.Alignment.TRAILING,
+								leftSplitPanelLayout
+										.createSequentialGroup()
+										.addComponent(requirementLabel)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												requirementListScrollPane,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												667, Short.MAX_VALUE)));
 
-        splitPane.setLeftComponent(leftSplitPanel);
+		splitPane.setLeftComponent(leftSplitPanel);
 
-        gameTitlePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		gameTitlePanel
+				.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        gameNameLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        gameNameLabel.setText("jLabel2");
+		gameNameLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+		gameNameLabel.setText("jLabel2");
 
-        btnEndGame.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        btnEndGame.setText("End Game");
+		btnEndGame.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+		btnEndGame.setText("End Game");
 
-        gameDeadlineDateLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        gameDeadlineDateLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        gameDeadlineDateLabel.setText("jLabel3");
+		gameDeadlineDateLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+		gameDeadlineDateLabel
+				.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+		gameDeadlineDateLabel.setText("jLabel3");
 
-        javax.swing.GroupLayout gameTitlePanelLayout = new javax.swing.GroupLayout(gameTitlePanel);
-        gameTitlePanel.setLayout(gameTitlePanelLayout);
-        gameTitlePanelLayout.setHorizontalGroup(
-            gameTitlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(gameTitlePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(gameNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(gameDeadlineDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEndGame, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        gameTitlePanelLayout.setVerticalGroup(
-            gameTitlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gameTitlePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(gameTitlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(gameDeadlineDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(gameTitlePanelLayout.createSequentialGroup()
-                        .addComponent(btnEndGame, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(4, 4, 4))
-                    .addComponent(gameNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+		javax.swing.GroupLayout gameTitlePanelLayout = new javax.swing.GroupLayout(
+				gameTitlePanel);
+		gameTitlePanel.setLayout(gameTitlePanelLayout);
+		gameTitlePanelLayout
+				.setHorizontalGroup(gameTitlePanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								gameTitlePanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(
+												gameNameLabel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												gameDeadlineDateLabel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												btnEndGame,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												120,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addContainerGap()));
+		gameTitlePanelLayout
+				.setVerticalGroup(gameTitlePanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								javax.swing.GroupLayout.Alignment.TRAILING,
+								gameTitlePanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												gameTitlePanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(
+																gameDeadlineDateLabel,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addGroup(
+																gameTitlePanelLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				btnEndGame,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				Short.MAX_VALUE)
+																		.addGap(4,
+																				4,
+																				4))
+														.addComponent(
+																gameNameLabel,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																34,
+																Short.MAX_VALUE))
+										.addContainerGap()));
 
-        requirementNamePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+		requirementNamePanel.setBorder(javax.swing.BorderFactory
+				.createEtchedBorder());
 
-        requirementNameLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        requirementNameLabel.setText("jLabel7");
+		requirementNameLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+		requirementNameLabel.setText("jLabel7");
 
-        javax.swing.GroupLayout requirementNamePanelLayout = new javax.swing.GroupLayout(requirementNamePanel);
-        requirementNamePanel.setLayout(requirementNamePanelLayout);
-        requirementNamePanelLayout.setHorizontalGroup(
-            requirementNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(requirementNamePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(requirementNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        requirementNamePanelLayout.setVerticalGroup(
-            requirementNamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(requirementNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+		javax.swing.GroupLayout requirementNamePanelLayout = new javax.swing.GroupLayout(
+				requirementNamePanel);
+		requirementNamePanel.setLayout(requirementNamePanelLayout);
+		requirementNamePanelLayout
+				.setHorizontalGroup(requirementNamePanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								requirementNamePanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(
+												requirementNameLabel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												Short.MAX_VALUE)
+										.addContainerGap()));
+		requirementNamePanelLayout.setVerticalGroup(requirementNamePanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addComponent(requirementNameLabel,
+						javax.swing.GroupLayout.PREFERRED_SIZE, 33,
+						javax.swing.GroupLayout.PREFERRED_SIZE));
 
-        requirementDescriptionLabel.setEditable(false);
-        requirementDescriptionLabel.setColumns(20);
-        requirementDescriptionLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        requirementDescriptionLabel.setLineWrap(true);
-        requirementDescriptionLabel.setRows(5);
-        requirementDescriptionLabel.setWrapStyleWord(true);
-        requirementDescriptionScrollPane.setViewportView(requirementDescriptionLabel);
+		requirementDescriptionLabel.setEditable(false);
+		requirementDescriptionLabel.setColumns(20);
+		requirementDescriptionLabel.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+		requirementDescriptionLabel.setLineWrap(true);
+		requirementDescriptionLabel.setRows(5);
+		requirementDescriptionLabel.setWrapStyleWord(true);
+		requirementDescriptionScrollPane
+				.setViewportView(requirementDescriptionLabel);
 
-        alreadyVotedPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Already Voted", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 16))); // NOI18N
+		alreadyVotedPanel.setBorder(javax.swing.BorderFactory
+				.createTitledBorder(
+						javax.swing.BorderFactory.createEtchedBorder(),
+						"Already Voted",
+						javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+						javax.swing.border.TitledBorder.DEFAULT_POSITION,
+						new java.awt.Font("Tahoma", 0, 16))); // NOI18N
 
-        alreadyVotedList.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        alreadyVotedList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        alreadyVotedScrollPane.setViewportView(alreadyVotedList);
+		alreadyVotedList.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+		alreadyVotedList
+				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		alreadyVotedScrollPane.setViewportView(alreadyVotedList);
 
-        javax.swing.GroupLayout alreadyVotedPanelLayout = new javax.swing.GroupLayout(alreadyVotedPanel);
-        alreadyVotedPanel.setLayout(alreadyVotedPanelLayout);
-        alreadyVotedPanelLayout.setHorizontalGroup(
-            alreadyVotedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(alreadyVotedPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(alreadyVotedScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        alreadyVotedPanelLayout.setVerticalGroup(
-            alreadyVotedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(alreadyVotedPanelLayout.createSequentialGroup()
-                .addComponent(alreadyVotedScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+		javax.swing.GroupLayout alreadyVotedPanelLayout = new javax.swing.GroupLayout(
+				alreadyVotedPanel);
+		alreadyVotedPanel.setLayout(alreadyVotedPanelLayout);
+		alreadyVotedPanelLayout
+				.setHorizontalGroup(alreadyVotedPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								alreadyVotedPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(
+												alreadyVotedScrollPane,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												220, Short.MAX_VALUE)
+										.addContainerGap()));
+		alreadyVotedPanelLayout
+				.setVerticalGroup(alreadyVotedPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								alreadyVotedPanelLayout
+										.createSequentialGroup()
+										.addComponent(
+												alreadyVotedScrollPane,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												261, Short.MAX_VALUE)
+										.addContainerGap()));
 
-        estimatePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Your Estimate", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 19))); // NOI18N
+		estimatePanel.setBorder(javax.swing.BorderFactory.createTitledBorder(
+				javax.swing.BorderFactory.createEtchedBorder(),
+				"Your Estimate",
+				javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
+				javax.swing.border.TitledBorder.DEFAULT_POSITION,
+				new java.awt.Font("Tahoma", 0, 19))); // NOI18N
 
-        submitButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        submitButton.setText("Submit");
+		submitButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+		submitButton.setText("Submit");
 
-        estimateDisplayPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		estimateDisplayPanel.setBorder(new javax.swing.border.SoftBevelBorder(
+				javax.swing.border.BevelBorder.RAISED));
 
-        estimateNumberLabel.setFont(new java.awt.Font("Tahoma", 0, 50)); // NOI18N
-        estimateNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        estimateNumberLabel.setText("8");
+		estimateNumberLabel.setFont(new java.awt.Font("Tahoma", 0, 50)); // NOI18N
+		estimateNumberLabel
+				.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+		estimateNumberLabel.setText("8");
 
-        javax.swing.GroupLayout estimateDisplayPanelLayout = new javax.swing.GroupLayout(estimateDisplayPanel);
-        estimateDisplayPanel.setLayout(estimateDisplayPanelLayout);
-        estimateDisplayPanelLayout.setHorizontalGroup(
-            estimateDisplayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(estimateDisplayPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(estimateNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        estimateDisplayPanelLayout.setVerticalGroup(
-            estimateDisplayPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(estimateDisplayPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(estimateNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+		javax.swing.GroupLayout estimateDisplayPanelLayout = new javax.swing.GroupLayout(
+				estimateDisplayPanel);
+		estimateDisplayPanel.setLayout(estimateDisplayPanelLayout);
+		estimateDisplayPanelLayout
+				.setHorizontalGroup(estimateDisplayPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								estimateDisplayPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(
+												estimateNumberLabel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												152, Short.MAX_VALUE)
+										.addContainerGap()));
+		estimateDisplayPanelLayout
+				.setVerticalGroup(estimateDisplayPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								estimateDisplayPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(
+												estimateNumberLabel,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												72, Short.MAX_VALUE)
+										.addContainerGap()));
 
-        javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(estimatePanel);
-        estimatePanel.setLayout(estimatePanelLayout);
-        estimatePanelLayout.setHorizontalGroup(
-            estimatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(estimatePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(estimatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(estimateDisplayPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        estimatePanelLayout.setVerticalGroup(
-            estimatePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, estimatePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(estimateDisplayPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
-        );
+		javax.swing.GroupLayout estimatePanelLayout = new javax.swing.GroupLayout(
+				estimatePanel);
+		estimatePanel.setLayout(estimatePanelLayout);
+		estimatePanelLayout
+				.setHorizontalGroup(estimatePanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								estimatePanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												estimatePanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(
+																estimateDisplayPanel,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addComponent(
+																submitButton,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))
+										.addContainerGap()));
+		estimatePanelLayout
+				.setVerticalGroup(estimatePanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								javax.swing.GroupLayout.Alignment.TRAILING,
+								estimatePanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(
+												estimateDisplayPanel,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addComponent(
+												submitButton,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												48,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addContainerGap(140, Short.MAX_VALUE)));
 
-        allCardsPanel.setBackground(new java.awt.Color(255, 255, 255));
-        allCardsPanel.setLayout(new java.awt.GridBagLayout());
-        cardsScrollPane.setViewportView(allCardsPanel);
+		allCardsPanel.setBackground(new java.awt.Color(255, 255, 255));
+		allCardsPanel.setLayout(new java.awt.GridBagLayout());
+		cardsScrollPane.setViewportView(allCardsPanel);
 
-        javax.swing.GroupLayout rightSplitPanelLayout = new javax.swing.GroupLayout(rightSplitPanel);
-        rightSplitPanel.setLayout(rightSplitPanelLayout);
-        rightSplitPanelLayout.setHorizontalGroup(
-            rightSplitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rightSplitPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(rightSplitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rightSplitPanelLayout.createSequentialGroup()
-                        .addComponent(estimatePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cardsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(rightSplitPanelLayout.createSequentialGroup()
-                        .addGroup(rightSplitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(requirementDescriptionScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
-                            .addComponent(requirementNamePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(alreadyVotedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(gameTitlePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        rightSplitPanelLayout.setVerticalGroup(
-            rightSplitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rightSplitPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(gameTitlePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(rightSplitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(rightSplitPanelLayout.createSequentialGroup()
-                        .addComponent(requirementNamePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(requirementDescriptionScrollPane))
-                    .addComponent(alreadyVotedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(rightSplitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(estimatePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cardsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+		javax.swing.GroupLayout rightSplitPanelLayout = new javax.swing.GroupLayout(
+				rightSplitPanel);
+		rightSplitPanel.setLayout(rightSplitPanelLayout);
+		rightSplitPanelLayout
+				.setHorizontalGroup(rightSplitPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								rightSplitPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												rightSplitPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																rightSplitPanelLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				estimatePanel,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				cardsScrollPane,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				0,
+																				Short.MAX_VALUE)
+																		.addContainerGap())
+														.addGroup(
+																rightSplitPanelLayout
+																		.createSequentialGroup()
+																		.addGroup(
+																				rightSplitPanelLayout
+																						.createParallelGroup(
+																								javax.swing.GroupLayout.Alignment.LEADING)
+																						.addComponent(
+																								requirementDescriptionScrollPane,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								570,
+																								Short.MAX_VALUE)
+																						.addComponent(
+																								requirementNamePanel,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								javax.swing.GroupLayout.DEFAULT_SIZE,
+																								Short.MAX_VALUE))
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				alreadyVotedPanel,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE))
+														.addComponent(
+																gameTitlePanel,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))));
+		rightSplitPanelLayout
+				.setVerticalGroup(rightSplitPanelLayout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(
+								rightSplitPanelLayout
+										.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(
+												gameTitlePanel,
+												javax.swing.GroupLayout.PREFERRED_SIZE,
+												javax.swing.GroupLayout.DEFAULT_SIZE,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												rightSplitPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addGroup(
+																rightSplitPanelLayout
+																		.createSequentialGroup()
+																		.addComponent(
+																				requirementNamePanel,
+																				javax.swing.GroupLayout.PREFERRED_SIZE,
+																				javax.swing.GroupLayout.DEFAULT_SIZE,
+																				javax.swing.GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(
+																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+																		.addComponent(
+																				requirementDescriptionScrollPane))
+														.addComponent(
+																alreadyVotedPanel,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE))
+										.addPreferredGap(
+												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+										.addGroup(
+												rightSplitPanelLayout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(
+																estimatePanel,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																Short.MAX_VALUE)
+														.addComponent(
+																cardsScrollPane,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																321,
+																Short.MAX_VALUE))
+										.addContainerGap()));
 
-        splitPane.setRightComponent(rightSplitPanel);
+		splitPane.setRightComponent(rightSplitPanel);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(splitPane)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(splitPane)
-                .addContainerGap())
-        );
-        
-        
-        
-        
-        
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		this.setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				javax.swing.GroupLayout.Alignment.TRAILING,
+				layout.createSequentialGroup().addContainerGap()
+						.addComponent(splitPane).addContainerGap()));
+		layout.setVerticalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				javax.swing.GroupLayout.Alignment.TRAILING,
+				layout.createSequentialGroup().addContainerGap()
+						.addComponent(splitPane).addContainerGap()));
+
 		initListeners();
 	}// </editor-fold>//GEN-END:initComponents
-	
-	
 
-	
-	private void initListeners(){
+	private void initListeners() {
 		allVotes = GetPlanningPokerVoteController.getInstance()
 				.retrievePlanningPokerVoteByGameAndUser(game.getGameName(),
 						username);
-
-
 
 		submitButton.addActionListener(new ActionListener() {
 			@Override
@@ -881,7 +1074,6 @@ public class OpenGameView extends JPanel {
 			}
 		});
 
-
 		/**
 		 * Disables endGame button if use is not the moderator of the game
 		 */
@@ -898,7 +1090,6 @@ public class OpenGameView extends JPanel {
 				endGameButtonPressed();
 			}
 		});
-
 
 	}
 
