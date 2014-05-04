@@ -55,7 +55,7 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
         this.finalEsts = finalEsts;
         
         tickIcon = new ImageIcon(getClass().getResource("accept.png"));
-        blankIcon = new ImageIcon(getClass().getResource("blank.png"));
+        blankIcon = new ImageIcon(getClass().getResource("help.png"));
     }
     
     /**
@@ -71,7 +71,7 @@ class RequirementVoteIconRenderer extends DefaultListCellRenderer {
 		this.allVotes = allVotes;
 		
         tickIcon = new ImageIcon(getClass().getResource("accept.png"));
-        blankIcon = new ImageIcon(getClass().getResource("blank.png"));
+        blankIcon = new ImageIcon(getClass().getResource("help.png"));
 	}
 
 	@Override

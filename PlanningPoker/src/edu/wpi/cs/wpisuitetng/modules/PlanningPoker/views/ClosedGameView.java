@@ -214,11 +214,14 @@ public class ClosedGameView extends JPanel {
 						
 						if(!ConfigManager.getConfig().getUserName().equals(game.getModerator())){
 							submitButton.setEnabled(false);
+							submitButton.setToolTipText(null);
 							updateButton.setEnabled(false);
 							submitButton.setText("Submit");
 						}
 						else if(!game.isArchived()){
 							submitButton.setEnabled(true);
+							// Add tooltips
+							submitButton.setToolTipText("Update this estimate in the Requirement Manager");
 						}
 					}
 					
@@ -327,6 +330,7 @@ public class ClosedGameView extends JPanel {
 		final java.awt.GridBagConstraints gridBagConstraints;
 
 		splitPane = new javax.swing.JSplitPane();
+		splitPane.setDividerLocation(200); // Make the left column wider
 		leftSplitPanel = new javax.swing.JPanel();
 		requirementsLabelPanel = new javax.swing.JPanel();
 		requirementsLabel = new javax.swing.JLabel();

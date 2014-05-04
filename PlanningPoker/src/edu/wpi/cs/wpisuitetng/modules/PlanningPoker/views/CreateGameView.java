@@ -198,7 +198,7 @@ public class CreateGameView extends javax.swing.JPanel {
 	 * whether any any text should be displayed.
 	 */
 	private void runErrorChecks() {
-		String errorText = "";
+		String errorText = " ";
 		boolean createGameButtonEnabled = true;
 
 		String gameName = this.gameNameField.getText();
@@ -266,6 +266,7 @@ public class CreateGameView extends javax.swing.JPanel {
 		this.defaultSettingsButton.setEnabled(this.changedSinceOpened);
 		this.errorTextLabel.setText(errorText);
 	}
+
 
 	/**
 	 * This method is called when the user clicks the "Create Game" button.
