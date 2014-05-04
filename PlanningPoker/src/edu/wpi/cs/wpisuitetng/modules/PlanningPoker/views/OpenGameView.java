@@ -141,7 +141,6 @@ public class OpenGameView extends JPanel {
 	// instant messenger
 	private InstantMessenger im;
 	private RequirementVoteIconRenderer requirementListRenderer;
-	private static boolean hasOpenedOnce = false;
 
 	/**
 	 * Constructor runs NetBeans generated UI initialization code and then
@@ -165,10 +164,10 @@ public class OpenGameView extends JPanel {
 		// Fill components with data from the planning poker game.
 		initForGame();
 
-		if (!hasOpenedOnce) {
+		/*if (!hasOpenedOnce) {
 			estimateNumberLabel.setText("?");
 			hasOpenedOnce = true;
-		}
+		}*/
 
 		if (!game.getDeckType().equals("No Deck")) {
 			submitButton.setEnabled(false);
