@@ -12,9 +12,12 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 
 import edu.wpi.cs.wpisuitetng.modules.RegularAbstractModel;
@@ -39,7 +42,7 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	public PlanningPokerFinalEstimate(String gameName, int requirementID) {
 		hasEstimate = false;
 		if(gameName != null){
-			this.gameName = gameName.replace(':', ';');
+			this.gameName = gameName;
 		}
 		
 		else{
@@ -55,7 +58,11 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	@Override
 	public String toJSON() {
 		// TODO Auto-generated method stub
-		return "{\"id\":\"" + gameName + ":" + requirementID + "\",\"final\":\"" + estimate + "\"}";
+		final JsonObject deflated = new JsonObject();
+		deflated.addProperty("gameName", gameName.replace(':', ';').replace(',', '|'));
+		deflated.addProperty("requirementID", requirementID);
+		deflated.addProperty("estimate", estimate);
+		return deflated.toString();
 	}
 
 	/* (non-Javadoc)
@@ -123,27 +130,47 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 	 * 
 	 * @return the object form of the JSON
 	 */
+	public static PlanningPokerFinalEstimate fromJSON(JsonObject json) {
+		if (!json.has("gameName")) {
+			throw new JsonParseException(
+					"The serialized PlanningPokerFinalEstimate did not contain the required gameName field.");
+		}
+
+		if (!json.has("requirementID")) {
+			throw new JsonParseException(
+					"The serialized PlanningPokerFinalEstimate did not contain the required requirementID field.");
+		}
+		
+		if (!json.has("estimate")) {
+			throw new JsonParseException(
+					"The serialized PlanningPokerFinalEstimate did not contain the required estimate field.");
+		}
+		
+		String gName = json.get("gameName").getAsString().replace(';', ':').replace('|', ',');
+		int reqId = 0;
+		int est = 0;
+		System.out.println("The From JSON is "+gName);
+		
+		try {
+			reqId = json.get("requirementID").getAsInt();
+		} catch (java.lang.ClassCastException e) {
+			System.out.println("requirementID field is false");
+		}
+		
+		try {
+			est = json.get("estimate").getAsInt();
+		} catch (java.lang.ClassCastException e) {
+			System.out.println("estimate field is false");
+		}
+		
+		PlanningPokerFinalEstimate ppfe =  new PlanningPokerFinalEstimate(gName, reqId);
+		ppfe.setEstimate(est);
+		return ppfe;
+		
+	}
+	
 	public static PlanningPokerFinalEstimate fromJSON(String json) {
-		final Scanner scTemp = new Scanner(json);
-		//System.out.println("This is the json" +json);
-		// skip the boilerplate
-		scTemp.useDelimiter("\\\"?[:,{}]\\\"?");
-		scTemp.next();
-		// get the gameName
-		final String retGameName = scTemp.next();
-		
-		// get the requirement ID
-		final Integer retRequirementID = Integer.parseInt(scTemp.next());
-		
-		scTemp.next();
-		// get and format the vote
-		final int retEstimate = Integer.parseInt(scTemp.next());
-		
-		final PlanningPokerFinalEstimate est = new PlanningPokerFinalEstimate(
-				retGameName, retRequirementID);
-		 est.setEstimate(retEstimate);
-		 //System.out.println("This is the final estimate that has been parsed:"+est);
-		 return est;
+		return fromJSON(new JsonParser().parse(json).getAsJsonObject());
 	}
 	
 	/**
@@ -159,9 +186,9 @@ public class PlanningPokerFinalEstimate extends RegularAbstractModel<PlanningPok
 		final List<PlanningPokerFinalEstimate> ppnes = new ArrayList<PlanningPokerFinalEstimate>();
 
 		for (JsonElement json : array) {
-			ppnes.add(fromJSON(json.toString()));
+			ppnes.add(fromJSON(json.getAsJsonObject()));
 		}
-
+		System.out.println("fromJsonArray: "+ppnes);
 		return ppnes.toArray(new PlanningPokerFinalEstimate[0]);
 	}
 	
