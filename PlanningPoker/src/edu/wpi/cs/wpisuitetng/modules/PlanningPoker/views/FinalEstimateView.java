@@ -33,6 +33,9 @@ import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerVote;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import java.awt.Component;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 /**
  * @author Friscis
@@ -85,6 +88,8 @@ public class FinalEstimateView extends JPanel {
 		gameDeadlineDateLabel = new javax.swing.JLabel();
 		
 		splitPane = new javax.swing.JSplitPane();
+		splitPane.setAlignmentY(Component.CENTER_ALIGNMENT);
+		splitPane.setAlignmentX(Component.CENTER_ALIGNMENT);
 		leftSplitPanel = new javax.swing.JPanel();
 		rightSplitPanel = new javax.swing.JPanel();
 		estimates = new JTable();
@@ -219,7 +224,7 @@ public class FinalEstimateView extends JPanel {
 								javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 						.addComponent(scroll,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE, Short.MAX_VALUE)
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addContainerGap()));
 
 		
@@ -227,8 +232,6 @@ public class FinalEstimateView extends JPanel {
 		estimates.setModel(estimateModel);
 		//rightSplitPanel.add(scroll);
 		leftSplitPanel.add(gameTitlePanel);
-		
-		this.add(splitPane);
 		
 		submitOne.setEnabled(false);
 		
@@ -280,7 +283,18 @@ public class FinalEstimateView extends JPanel {
 				gameDeadlineDateLabel.setText("Submitted all Final Estimates for this game");
         	}
         });
-        add(splitPane, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+		this.setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				javax.swing.GroupLayout.Alignment.TRAILING,
+				layout.createSequentialGroup().addContainerGap()
+						.addComponent(splitPane).addContainerGap()));
+		layout.setVerticalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				javax.swing.GroupLayout.Alignment.TRAILING,
+				layout.createSequentialGroup().addContainerGap()
+						.addComponent(splitPane).addContainerGap()));
 	}
 	
 }
