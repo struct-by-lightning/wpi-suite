@@ -48,7 +48,7 @@ public class ClosableTabComponent extends JPanel implements ActionListener {
 		setOpaque(false);
 		String iconPath = "";
 
-		if (typeOfPanelAdded instanceof CreateGameView || typeOfPanelAdded instanceof NewGameView) {
+		if (typeOfPanelAdded instanceof CreateGameView || typeOfPanelAdded instanceof NewGameView || typeOfPanelAdded instanceof CreateDeckView) {
 			iconPath = "add.png";
 		} else {
 			if (typeOfPanelAdded instanceof OpenGameView) {
