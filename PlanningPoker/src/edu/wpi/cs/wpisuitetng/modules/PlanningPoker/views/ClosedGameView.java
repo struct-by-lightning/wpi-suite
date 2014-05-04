@@ -212,6 +212,7 @@ public class ClosedGameView extends JPanel {
 							previousID = currentID;
 						}
 						
+
 						if(!ConfigManager.getConfig().getUserName().equals(game.getModerator())){
 							submitButton.setEnabled(false);
 							submitButton.setToolTipText(null);
@@ -220,6 +221,7 @@ public class ClosedGameView extends JPanel {
 						}
 						else if(!game.isArchived()){
 							submitButton.setEnabled(true);
+							submitButton.setText("Submit");
 							// Add tooltips
 							submitButton.setToolTipText("Update this estimate in the Requirement Manager");
 						}
