@@ -505,6 +505,42 @@ public class MainView {
 					}
 				}
 			}
+			public void mouseExited(MouseEvent e) {
+				gameTree.setToolTipText(null);
+			}
+		});
+			gameTree.addMouseMotionListener(new MouseAdapter() {
+			public void mouseMoved(MouseEvent e) {
+				final int selRow = gameTree.getRowForLocation(e.getX(),
+						e.getY());
+				final TreePath selPath = gameTree.getPathForLocation(e.getX(),
+						e.getY());
+				if (selRow != -1) {
+					if (games.size() > 0) {
+						final DefaultMutableTreeNode node = (DefaultMutableTreeNode) selPath
+								.getLastPathComponent();
+						final String gameName = (String) node
+								.getUserObject();
+						try {
+							StringBuilder sb = new StringBuilder();
+							sb.append("<html>");
+							String[] sa = PlanningPokerGameModel.getPlanningPokerGame(gameName).getDescription().split(" ");
+							int lineLength = 0;
+							for(int i = 0; i < sa.length; i++) {
+								lineLength += sa[i].length();
+								sb.append(sa[i]);
+								sb.append(" ");
+								if(lineLength > 40) {
+									lineLength  = 0;
+									sb.append("<br>");
+								}
+							}
+							sb.append("</html>");
+							gameTree.setToolTipText(sb.toString());
+						} catch (NullPointerException n) {}
+					}
+				}
+			}
 		});
 
 		// This listener updates the overview tab's tree of games before it is

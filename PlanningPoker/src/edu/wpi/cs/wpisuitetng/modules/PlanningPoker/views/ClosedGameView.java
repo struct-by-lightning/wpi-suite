@@ -212,6 +212,7 @@ public class ClosedGameView extends JPanel {
 							previousID = currentID;
 						}
 						
+
 						if(!ConfigManager.getConfig().getUserName().equals(game.getModerator())){
 							submitButton.setEnabled(false);
 							submitButton.setToolTipText(null);
@@ -220,6 +221,7 @@ public class ClosedGameView extends JPanel {
 						}
 						else if(!game.isArchived()){
 							submitButton.setEnabled(true);
+							submitButton.setText("Submit");
 							// Add tooltips
 							submitButton.setToolTipText("Update this estimate in the Requirement Manager");
 						}
@@ -299,6 +301,7 @@ public class ClosedGameView extends JPanel {
 			final List<Integer> gameReqIds = new ArrayList<Integer>();
 			boolean gameHasEstimates = true;
 			for(PlanningPokerFinalEstimate ppfe : finalEsts) {
+				System.out.println("The final estimate game is: "+ppfe.getGameName() +"while the game name is: "+ game.getGameName());
 				if(ppfe.getGameName().equals(game.getGameName())) {
 					gameReqIds.add(ppfe.getRequirementID());
 					if(!ppfe.hasEstimate()) {
@@ -703,7 +706,7 @@ public class ClosedGameView extends JPanel {
 		rowSplitPanel.add(stats);
 
 		submitButton = new JButton("Submit");
-		updateButton = new JButton("Update All Estimates");
+		updateButton = new JButton("Open Final Estimate Updater");
 		updateButton.setFont(new java.awt.Font("Tahoma", 0, 28));
 		if(game.isArchived()) {
 			submitButton.setEnabled(false);
@@ -712,29 +715,30 @@ public class ClosedGameView extends JPanel {
 		updateButton.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController
-						.getInstance().retrievePlanningPokerFinalEstimate();
-				System.out.println("These are the current final estimates:" + Arrays.asList(stuff));
-				for(PlanningPokerFinalEstimate ppfe : stuff) {
-					if(ppfe.getGameName().equals(game.getGameName())) {
-						Requirement req2set = RequirementModel.getInstance()
-								.getRequirement(ppfe.getRequirementID());
-						req2set.setEstimate(ppfe.getEstimate());
-						UpdateRequirementController.getInstance().updateRequirement(req2set);
-					}
-				}
-				game.setArchived(true);
-				submitButton.setEnabled(false);
-				updateButton.setEnabled(false);
-				estimateNumberBox.setEnabled(false);
-				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
-				try {
-					Thread.sleep(300);
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				GetRequirementsController.getInstance().retrieveRequirements();
+//				final PlanningPokerFinalEstimate[] stuff = GetPlanningPokerFinalEstimateController
+//						.getInstance().retrievePlanningPokerFinalEstimate();
+//				System.out.println("These are the current final estimates:" + Arrays.asList(stuff));
+//				for(PlanningPokerFinalEstimate ppfe : stuff) {
+//					if(ppfe.getGameName().equals(game.getGameName())) {
+//						Requirement req2set = RequirementModel.getInstance()
+//								.getRequirement(ppfe.getRequirementID());
+//						req2set.setEstimate(ppfe.getEstimate());
+//						UpdateRequirementController.getInstance().updateRequirement(req2set);
+//					}
+//				}
+//				game.setArchived(true);
+//				submitButton.setEnabled(false);
+//				updateButton.setEnabled(false);
+//				estimateNumberBox.setEnabled(false);
+//				UpdatePlanningPokerGameController.getInstance().updatePlanningPokerGame(game);
+//				try {
+//					Thread.sleep(300);
+//				} catch (InterruptedException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//				GetRequirementsController.getInstance().retrieveRequirements();
+				FinalEstimateView.open(game);
 			}
 		});
 		updateButton.setEnabled(false);
