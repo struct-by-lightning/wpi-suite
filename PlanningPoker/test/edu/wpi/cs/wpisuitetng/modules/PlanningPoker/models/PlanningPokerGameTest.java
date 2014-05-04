@@ -221,30 +221,6 @@ public class PlanningPokerGameTest {
 	}
 
 	@Test
-	public final void testGetDeckValues() {
-		// TODO currently based on the mock data returned by the method
-		final List<Integer> testIds = new ArrayList<Integer>() {
-			{
-				add(1);
-				add(2);
-				add(3);
-				add(4);
-				add(5);
-			}
-		};
-		final PlanningPokerGame test = new PlanningPokerGame(
-				"2014-05-28 11;08;15", "test description", "fibonacci",
-				testIds, false, false, new GregorianCalendar(2014, 3, 20),
-				new GregorianCalendar(2014, 5, 28), "ajthompson");
-
-		assertTrue(test.getDeckValues().contains(1));
-		assertTrue(test.getDeckValues().contains(2));
-		assertTrue(test.getDeckValues().contains(3));
-		assertTrue(test.getDeckValues().contains(5));
-		assertTrue(test.getDeckValues().contains(8));
-	}
-
-	@Test
 	public final void testHasEndDate() {
 		// TODO currently based on the mock data returned by the method
 		final List<Integer> testIds = new ArrayList<Integer>() {

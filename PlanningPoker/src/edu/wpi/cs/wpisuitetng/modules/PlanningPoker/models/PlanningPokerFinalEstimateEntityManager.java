@@ -58,8 +58,8 @@ public class PlanningPokerFinalEstimateEntityManager implements
 	public PlanningPokerFinalEstimate makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
 		final PlanningPokerFinalEstimate p = PlanningPokerFinalEstimate.fromJSON(content);
-
-		if (getEntity(s, p.getID())[0] == null) {
+		PlanningPokerFinalEstimate[] entities = getEntity(s, p.getID());
+		if (entities.length == 0 || entities[0] == null) {
 			save(s, p);
 		} else {
 			logger.log(Level.WARNING,

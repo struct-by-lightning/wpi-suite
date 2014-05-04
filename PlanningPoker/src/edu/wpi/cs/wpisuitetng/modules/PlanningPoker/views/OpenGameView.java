@@ -875,6 +875,7 @@ public class OpenGameView extends JPanel {
 							MainView.getInstance().removeClosableTab();
 						} else { // answered no, disable all buttons
 							submitButton.setEnabled(false);
+							btnEndGame.setToolTipText(null);
 							btnEndGame.setEnabled(false);
 						}
 					}
@@ -889,6 +890,7 @@ public class OpenGameView extends JPanel {
 		 */
 		if (!ConfigManager.getConfig().getUserName()
 				.equals(game.getModerator())) {
+			btnEndGame.setToolTipText(null);
 			btnEndGame.setEnabled(false);
 		}
 		/**
