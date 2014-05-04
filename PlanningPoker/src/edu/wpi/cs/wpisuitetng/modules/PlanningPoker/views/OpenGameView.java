@@ -399,9 +399,13 @@ public class OpenGameView extends JPanel {
 								requirements.get(
 										requirementList.getSelectedIndex())
 										.getId());
-
+				
 				if (voteNumber != Integer.MIN_VALUE) {
 					estimateNumberLabel.setText("" + voteNumber);
+				}
+				
+				if (voteNumber == -1) {
+					estimateNumberLabel.setText("?");
 				}
 
 				for (PlayingCardJPanel card : cards) {

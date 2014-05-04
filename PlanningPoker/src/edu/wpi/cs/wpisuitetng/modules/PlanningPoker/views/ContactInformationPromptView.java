@@ -16,6 +16,12 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.controller.AddPlanningPokerUserController;
 import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerUser;
 
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Font;
+
 /**
  * This singleton is a JPanel with the GUI needed for the main area of the view
  * which prompts a user for contact information before they are able to enter
@@ -87,7 +93,6 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 		emailFieldPanel = new javax.swing.JPanel();
 		emailField = new javax.swing.JTextField();
 		submitButton = new javax.swing.JButton();
-		errorLabel = new javax.swing.JLabel();
 		jPanel3 = new javax.swing.JPanel();
 		jPanel5 = new javax.swing.JPanel();
 		jLabel1 = new javax.swing.JLabel();
@@ -99,50 +104,59 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 
 		contactPrompLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 		contactPrompLabel
-				.setText("<html>You must provide at least one point of contact to continue.</html>");
+				.setText("<html>Please enter your notification information</html>");
 
-		aimFieldPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Google Chat"));
+		aimFieldPanel.setBorder(javax.swing.BorderFactory
+				.createTitledBorder("Google Chat"));
 
-		
 		aimField.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyTyped(java.awt.event.KeyEvent evt) {
-				aimFieldKeyTyped(evt);
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+				aimFieldKeyReleased(evt);
 			}
 		});
 
 		final javax.swing.GroupLayout aimFieldPanelLayout = new javax.swing.GroupLayout(
 				aimFieldPanel);
 		aimFieldPanel.setLayout(aimFieldPanelLayout);
-		aimFieldPanelLayout.setHorizontalGroup(aimFieldPanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				aimFieldPanelLayout.createSequentialGroup().addContainerGap()
-						.addComponent(aimField).addContainerGap()));
-		aimFieldPanelLayout.setVerticalGroup(aimFieldPanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				aimFieldPanelLayout.createSequentialGroup().addContainerGap()
-						.addComponent(aimField).addContainerGap()));
+		aimFieldPanelLayout.setHorizontalGroup(aimFieldPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						javax.swing.GroupLayout.Alignment.TRAILING,
+						aimFieldPanelLayout.createSequentialGroup()
+								.addContainerGap().addComponent(aimField)
+								.addContainerGap()));
+		aimFieldPanelLayout.setVerticalGroup(aimFieldPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						aimFieldPanelLayout.createSequentialGroup()
+								.addContainerGap().addComponent(aimField)
+								.addContainerGap()));
 
-		emailFieldPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Email"));
+		emailFieldPanel.setBorder(javax.swing.BorderFactory
+				.createTitledBorder("Email"));
 
 		emailField.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyTyped(java.awt.event.KeyEvent evt) {
-				emailFieldKeyTyped(evt);
+			public void keyReleased(java.awt.event.KeyEvent evt) {
+				emailFieldKeyReleased(evt);
 			}
 		});
 
 		final javax.swing.GroupLayout emailFieldPanelLayout = new javax.swing.GroupLayout(
 				emailFieldPanel);
 		emailFieldPanel.setLayout(emailFieldPanelLayout);
-		emailFieldPanelLayout.setHorizontalGroup(emailFieldPanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				emailFieldPanelLayout.createSequentialGroup().addContainerGap()
-						.addComponent(emailField).addContainerGap()));
-		emailFieldPanelLayout.setVerticalGroup(emailFieldPanelLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				emailFieldPanelLayout.createSequentialGroup().addContainerGap()
-						.addComponent(emailField).addContainerGap()));
+		emailFieldPanelLayout.setHorizontalGroup(emailFieldPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						javax.swing.GroupLayout.Alignment.TRAILING,
+						emailFieldPanelLayout.createSequentialGroup()
+								.addContainerGap().addComponent(emailField)
+								.addContainerGap()));
+		emailFieldPanelLayout.setVerticalGroup(emailFieldPanelLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(
+						emailFieldPanelLayout.createSequentialGroup()
+								.addContainerGap().addComponent(emailField)
+								.addContainerGap()));
 
 		submitButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 		submitButton.setText("Submit");
@@ -153,13 +167,20 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 			}
 		});
 
-		errorLabel.setText("* Fill in at least one field");
+		JButton noThanksButton = new JButton("No Thanks");
+		noThanksButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
 
-		final javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-		jPanel4.setLayout(jPanel4Layout);
+		noThanksButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				noThankButtonActionPerformed(evt);
+			}
+		});
+
+		final javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(
+				jPanel4);
 		jPanel4Layout
 				.setHorizontalGroup(jPanel4Layout
-						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.createParallelGroup(Alignment.LEADING)
 						.addGroup(
 								jPanel4Layout
 										.createSequentialGroup()
@@ -167,73 +188,83 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 										.addGroup(
 												jPanel4Layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.LEADING)
+																Alignment.LEADING)
 														.addComponent(
 																contactPrompLabel,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																547, Short.MAX_VALUE)
+																GroupLayout.DEFAULT_SIZE,
+																248,
+																Short.MAX_VALUE)
 														.addComponent(
 																aimFieldPanel,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																248,
 																Short.MAX_VALUE)
 														.addComponent(
 																emailFieldPanel,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
-																javax.swing.GroupLayout.DEFAULT_SIZE,
+																GroupLayout.DEFAULT_SIZE,
+																248,
 																Short.MAX_VALUE)
 														.addGroup(
 																jPanel4Layout
 																		.createSequentialGroup()
-																		.addComponent(submitButton)
+																		.addComponent(
+																				submitButton)
 																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-																		.addComponent(errorLabel)
-																		.addGap(0, 0,
-																				Short.MAX_VALUE)))
+																				ComponentPlacement.RELATED)
+																		.addComponent(
+																				noThanksButton,
+																				GroupLayout.PREFERRED_SIZE,
+																				101,
+																				GroupLayout.PREFERRED_SIZE)))
 										.addContainerGap()));
 		jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				jPanel4Layout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addComponent(contactPrompLabel, javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(18, 18, 18)
-						.addComponent(aimFieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(18, 18, 18)
-						.addComponent(emailFieldPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(18, 18, 18)
-						.addGroup(
-								jPanel4Layout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(submitButton).addComponent(errorLabel))
-						.addContainerGap(345, Short.MAX_VALUE)));
+				Alignment.LEADING)
+				.addGroup(
+						jPanel4Layout
+								.createSequentialGroup()
+								.addContainerGap()
+								.addComponent(contactPrompLabel)
+								.addGap(18)
+								.addComponent(aimFieldPanel,
+										GroupLayout.PREFERRED_SIZE,
+										GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(emailFieldPanel,
+										GroupLayout.PREFERRED_SIZE,
+										GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addGroup(
+										jPanel4Layout
+												.createParallelGroup(
+														Alignment.BASELINE)
+												.addComponent(submitButton)
+												.addComponent(noThanksButton))
+								.addContainerGap(27, Short.MAX_VALUE)));
+		jPanel4.setLayout(jPanel4Layout);
 
-		final javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+		final javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
+				jPanel2);
 		jPanel2.setLayout(jPanel2Layout);
 		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel2Layout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addContainerGap()));
+						.addComponent(jPanel4,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE).addContainerGap()));
 		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel2Layout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addContainerGap()));
+						.addComponent(jPanel4,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE).addContainerGap()));
 
 		jPanel1.add(jPanel2);
 
@@ -244,23 +275,32 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 		jLabel2.setText("<html> Planning Poker is a consensus-based tool for software developers to come together and estimate effort of development goals for the team. This is a great tool for agile teams to estimate the user stories they have for a given iteration.<br><br> The idea behind Planning Poker is that team discusses each user story and then goes into the game and then each user goes into the deck and selects the card that represents how effort he or she thinks the task will take. This process can be repeated for any number of user stories in the game.<br><br> During the game all estimates remain private until everyone has chose his or her card. After all estimates are in the Planning Poker game will calculate the Mean, Median, Mode, Minimum, Maximum, and Standard Deviation of the game. These values can be used for the team to continue the discussion and come to a consensus of what the groups estimate is for the user story.<br><br> </html>");
 		jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-		final javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+		final javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(
+				jPanel5);
 		jPanel5.setLayout(jPanel5Layout);
-		jPanel5Layout.setHorizontalGroup(jPanel5Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				jPanel5Layout
-						.createSequentialGroup()
-						.addContainerGap()
+		jPanel5Layout
+				.setHorizontalGroup(jPanel5Layout
+						.createParallelGroup(
+								javax.swing.GroupLayout.Alignment.LEADING)
 						.addGroup(
 								jPanel5Layout
-										.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-										.addComponent(jLabel1,
-												javax.swing.GroupLayout.DEFAULT_SIZE, 547,
-												Short.MAX_VALUE)
-										.addComponent(jLabel2,
-												javax.swing.GroupLayout.PREFERRED_SIZE, 0,
-												Short.MAX_VALUE)).addContainerGap()));
+										.createSequentialGroup()
+										.addContainerGap()
+										.addGroup(
+												jPanel5Layout
+														.createParallelGroup(
+																javax.swing.GroupLayout.Alignment.LEADING)
+														.addComponent(
+																jLabel1,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																547,
+																Short.MAX_VALUE)
+														.addComponent(
+																jLabel2,
+																javax.swing.GroupLayout.PREFERRED_SIZE,
+																0,
+																Short.MAX_VALUE))
+										.addContainerGap()));
 		jPanel5Layout.setVerticalGroup(jPanel5Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel5Layout
@@ -268,41 +308,45 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 						.addContainerGap()
 						.addComponent(jLabel1)
 						.addGap(18, 18, 18)
-						.addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+						.addComponent(jLabel2,
+								javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE,
 								javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(313, Short.MAX_VALUE)));
 
-		final javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+		final javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(
+				jPanel3);
 		jPanel3.setLayout(jPanel3Layout);
 		jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				jPanel3Layout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addContainerGap()));
+						.addComponent(jPanel5,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE).addContainerGap()));
 		jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				javax.swing.GroupLayout.Alignment.TRAILING,
 				jPanel3Layout
 						.createSequentialGroup()
 						.addContainerGap()
-						.addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addContainerGap()));
+						.addComponent(jPanel5,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								Short.MAX_VALUE).addContainerGap()));
 
 		jPanel1.add(jPanel3);
 
 		add(jPanel1, java.awt.BorderLayout.CENTER);
 	}// </editor-fold>
 
-	private void aimFieldKeyTyped(java.awt.event.KeyEvent evt) {
+	private void aimFieldKeyReleased(java.awt.event.KeyEvent evt) {
 		this.updateIfValid();
 	}
 
-	private void emailFieldKeyTyped(java.awt.event.KeyEvent evt) {
+	private void emailFieldKeyReleased(java.awt.event.KeyEvent evt) {
 		this.updateIfValid();
 	}
 
@@ -310,36 +354,48 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 		this.submitButtonPressed(emailField.getText(), aimField.getText());
 	}
 
+	private void noThankButtonActionPerformed(java.awt.event.ActionEvent evt) {
+		this.submitButtonPressed(emailField.getText(), aimField.getText());
+	}
+
 	private boolean updateIfValid() {
 		final String emailText = emailField.getText();
-		final String aimText = aimField.getText();
-		
+
 		final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern
 				.compile(
 						"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
 						Pattern.CASE_INSENSITIVE);
 		final Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailText);
-        
-		if (matcher.find() || aimText.length() != 0) {
+
+		if (matcher.find() || isValidGoogleAccount()) {
 			submitButton.setEnabled(true);
-			errorLabel.setVisible(false);
 			return true;
 		} else {
 			submitButton.setEnabled(false);
-			errorLabel.setVisible(true);
 			return false;
 		}
 	}
-	
-	private boolean isValidEmail(){
+
+	private boolean isValidGoogleAccount() {
+		final String googleChatText = aimField.getText();
+		final Pattern VALID_GOOGLE_ADDRESS_REGEX = Pattern.compile(
+				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@gmail.com$",
+				Pattern.CASE_INSENSITIVE);
+		final Matcher matcher = VALID_GOOGLE_ADDRESS_REGEX
+				.matcher(googleChatText);
+
+		return matcher.find();
+	}
+
+	private boolean isValidEmail() {
 		final String emailText = emailField.getText();
-		
+
 		final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern
 				.compile(
 						"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
 						Pattern.CASE_INSENSITIVE);
 		final Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailText);
-        
+
 		return matcher.find();
 	}
 
@@ -351,7 +407,6 @@ public class ContactInformationPromptView extends javax.swing.JPanel {
 	private javax.swing.JLabel contactPrompLabel;
 	private javax.swing.JTextField emailField;
 	private javax.swing.JPanel emailFieldPanel;
-	private javax.swing.JLabel errorLabel;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JPanel jPanel1;
