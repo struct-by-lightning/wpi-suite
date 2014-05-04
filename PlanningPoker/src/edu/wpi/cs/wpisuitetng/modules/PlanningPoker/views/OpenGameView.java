@@ -251,9 +251,46 @@ public class OpenGameView extends JPanel {
 		textArea.setColumns(2);
 		textArea.setRows(1);
 
-		allCardsPanel.add(textArea, gridBagConstraints);
+		PlayingCardJPanel card = new PlayingCardJPanel(
+				0, false);
+		////////////////////Bug is here!!!!
+		cards.add(card);
+		////////////////////
+		allCardsPanel.add(card, gridBagConstraints);
+		card.add(textArea);
+		card.repaint();
+		card.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent evt) {
+				PlayingCardJPanel clickedCard = (PlayingCardJPanel) evt
+						.getSource();
+				clickedCard.toggle();
+				updateEstimateTotal();// Vote value
 
-		allCardsPanel.setBackground(new Color(232, 232, 232));
+				// Requirement ID
+				// @TODO: Get selected requirement ID
+				int requirementID = requirements.get(
+						requirementList.getSelectedIndex()).getId();
+
+				// Game name
+				String gameName = game.getGameName();
+
+				// User name
+				String userName = ConfigManager.getConfig().getUserName();
+
+				// Vote
+				if (estimateNumberLabel.getText().equals("?")) {
+					submitButton.setEnabled(false);
+				} else {
+					submitButton.setEnabled(true);
+					ppv = new PlanningPokerVote(gameName, userName, Integer
+							.parseInt(estimateNumberLabel.getText()),
+							requirementID);
+				}
+			}
+		});
+		
+		allCardsPanel.add(card, gridBagConstraints);
 	}
 
 	/**
