@@ -12,9 +12,10 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import javax.swing.DefaultListModel;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,13 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.MockData;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.Iteration;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.IterationModel;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
  * @version $Revision: 1.0 $
@@ -60,17 +67,18 @@ public class DeckEntityManagerTest {
 		otherProject = new Project("other", "2");
 		mockSsid = "abc123";
 		adminSession = new Session(admin, testProject, mockSsid);
-		ArrayList<Integer> numsInDeck = new ArrayList<Integer>();
-		numsInDeck.add(1);
-		numsInDeck.add(2);
-		numsInDeck.add(3);
-		numsInDeck.add(4);
-		ArrayList<Integer> numsInDeck2 = new ArrayList<Integer>();
-		numsInDeck.add(2);
-		numsInDeck.add(5);
-		numsInDeck.add(7);
-		numsInDeck.add(20);
-		
+		DefaultListModel<Integer> numsInDeck = new DefaultListModel<Integer>();
+		numsInDeck.addElement(1);
+		numsInDeck.addElement(2);
+		numsInDeck.addElement(3);
+		numsInDeck.addElement(4);
+		DefaultListModel<Integer> numsInDeck2 = new DefaultListModel<Integer>();
+		numsInDeck.addElement(2);
+		numsInDeck.addElement(5);
+		numsInDeck.addElement(7);
+		numsInDeck.addElement(20);
+		newDeck = new Deck("deck", numsInDeck);
+		newDeck2 = new Deck("deck3", numsInDeck2);
 		existingUser = new User("joe", "joe", "1234", 2);
 		
 		defaultSession = new Session(existingUser, testProject, mockSsid);
@@ -81,6 +89,12 @@ public class DeckEntityManagerTest {
 		db.save(newDeck, testProject);
 		db.save(existingUser);
 		manager = new DeckEntityManager(db);
+		
+		Network.initNetwork(new MockNetwork());
+		Network.getInstance().setDefaultNetworkConfiguration(
+				new NetworkConfiguration("http://wpisuitetng"));
+		IterationModel.getInstance().setBacklog(new Iteration(1, "Backlog"));
+		RequirementModel.getInstance().emptyModel();
 	}
 
 	/**
@@ -134,7 +148,7 @@ public class DeckEntityManagerTest {
 		manager.deleteAll(adminSession);
 		// no exceptions
 	}
-//
+
 	/**
 	 * Method testCount.
 	
