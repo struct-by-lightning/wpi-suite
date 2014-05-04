@@ -41,7 +41,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventControlle
  */
 public class ExportButtonPanel extends ToolbarGroupView {
 	// initialize the main view toolbar buttons	
-	private final JButton exportButton = new JButton("<html>Export Requirements</html>");
+	private final static JButton exportButton = new JButton("<html>Export Requirements</html>");
 	private final JButton importButton = new JButton("<html>Import Requirements</html>");
 	private final JPanel contentPanel = new JPanel();
 		
@@ -55,6 +55,7 @@ public class ExportButtonPanel extends ToolbarGroupView {
 			//this.createButton.setPreferredSize(new Dimension(200, 200));
 			this.exportButton.setHorizontalAlignment(SwingConstants.CENTER);
 			this.importButton.setHorizontalAlignment(SwingConstants.CENTER);
+			this.exportButton.setEnabled(false);
 			
 			/**
 			 * Exports the list of selected requirements to a file when btnExport is
@@ -93,7 +94,8 @@ public class ExportButtonPanel extends ToolbarGroupView {
 			
 			try {
 			    Image img = ImageIO.read(getClass().getResource("export.png"));
-			    importButton.setIcon(new ImageIcon(img));			    
+			    importButton.setIcon(new ImageIcon(img));
+			    importButton.setToolTipText("Import requirements from a file");
 			} catch (IOException ex) {}
 			
 			/**
@@ -175,7 +177,8 @@ public class ExportButtonPanel extends ToolbarGroupView {
 			
 			try {
 			    Image img = ImageIO.read(getClass().getResource("import.png"));
-			    exportButton.setIcon(new ImageIcon(img));			    
+			    exportButton.setIcon(new ImageIcon(img));	
+			    exportButton.setToolTipText("Select requirements to export them to a file");
 			} catch (IOException ex) {}
 			
 			contentPanel.add(importButton);
@@ -190,10 +193,19 @@ public class ExportButtonPanel extends ToolbarGroupView {
 		
 		 * @return JButton Returns the export button
 		 */
-		public JButton getExportButton() {
+		public static JButton getExportButton() {
 			return exportButton;
 		}
 
+		/**
+		 * Enable / Disable the export button
+		
+		 * @return JButton Returns the export button
+		 */
+		public static void setExportButtonEnabled(boolean input) {
+			exportButton.setEnabled(input);
+		}
+		
 		/**
 		 * Method getImportButton.
 		
