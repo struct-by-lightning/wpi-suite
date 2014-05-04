@@ -103,8 +103,7 @@ public class PlanningPokerDeserializer implements JsonDeserializer<PlanningPoker
 		GregorianCalendar endDate = null;
 		String moderator = null;
 
-		if (deflated.has("description") && !deflated.get("description").isJsonNull()
-				&& !deflated.get("description").getAsString().equals("")) {
+		if (deflated.has("description") && !deflated.get("description").isJsonNull()) {
 			description = deflated.get("description").getAsString();
 		}
 
