@@ -199,8 +199,8 @@ public class ExportButtonPanel extends ToolbarGroupView {
 
 		/**
 		 * Enable / Disable the export button
-		
-		 * @return JButton Returns the export button
+		 *
+		 * @param input true: enable the button, false: disable the button
 		 */
 		public static void setExportButtonEnabled(boolean input) {
 			exportButton.setEnabled(input);
