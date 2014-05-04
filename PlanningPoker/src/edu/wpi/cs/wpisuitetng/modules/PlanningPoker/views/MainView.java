@@ -505,7 +505,12 @@ public class MainView {
 					}
 				}
 			}
-			public void mouseEntered(MouseEvent e) {
+			public void mouseExited(MouseEvent e) {
+				gameTree.setToolTipText(null);
+			}
+		});
+			gameTree.addMouseMotionListener(new MouseAdapter() {
+			public void mouseMoved(MouseEvent e) {
 				final int selRow = gameTree.getRowForLocation(e.getX(),
 						e.getY());
 				final TreePath selPath = gameTree.getPathForLocation(e.getX(),
