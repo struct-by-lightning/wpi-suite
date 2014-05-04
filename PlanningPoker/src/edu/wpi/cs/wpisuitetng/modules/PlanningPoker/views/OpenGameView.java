@@ -253,10 +253,9 @@ public class OpenGameView extends JPanel {
 		final Font bigFont = new Font(null, Font.PLAIN, 32);
 		textArea.setFont(bigFont);
 
-		textArea.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+		textArea.setBorder(BorderFactory.createLineBorder(Color.black, 2));
 		textArea.setColumns(2);
 		textArea.setRows(1);
-		textArea.setOpaque(false);
 		
 		JPanel card = new CardImgPanel();
 		
