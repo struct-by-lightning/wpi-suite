@@ -257,7 +257,7 @@ public class ClosedGameView extends JPanel {
 			updateButton.setEnabled(false);
 		}
 		if(game.isArchived()) {
-			updateButton.setEnabled(false);
+			updateButton.setEnabled(true);
 			submitButton.setEnabled(false);
 			estimateNumberBox.setEnabled(false);
 		}
@@ -294,7 +294,7 @@ public class ClosedGameView extends JPanel {
 	
 	private void enableUpdateButton(PlanningPokerFinalEstimate[] finalEsts) {
 		if(game.isArchived()) {
-			updateButton.setEnabled(false);
+			updateButton.setEnabled(true);
 			submitButton.setEnabled(false);
 			estimateNumberBox.setEnabled(false);
 		}
@@ -319,7 +319,7 @@ public class ClosedGameView extends JPanel {
 					updateButton.setEnabled(gameHasEstimates);
 				}
 				else {
-					updateButton.setEnabled(false);
+					
 					break;
 				}
 			}
@@ -709,8 +709,9 @@ public class ClosedGameView extends JPanel {
 		submitButton = new JButton("Submit");
 		updateButton = new JButton("Open Final Estimate Updater");
 		updateButton.setFont(new java.awt.Font("Tahoma", 0, 28));
+		updateButton.setEnabled(true);
 		if(game.isArchived()) {
-			submitButton.setEnabled(false);
+			submitButton.setEnabled(true);
 			estimateNumberBox.setEnabled(false);
 		}
 		updateButton.addActionListener(new ActionListener() {
@@ -742,7 +743,6 @@ public class ClosedGameView extends JPanel {
 				FinalEstimateView.open(game);
 			}
 		});
-		updateButton.setEnabled(false);
 		
 		final javax.swing.GroupLayout estimateSubmitPanelLayout = new javax.swing.GroupLayout(
 				estimateSubmitPanel);
