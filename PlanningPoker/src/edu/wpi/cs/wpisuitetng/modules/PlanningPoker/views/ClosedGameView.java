@@ -319,7 +319,7 @@ public class ClosedGameView extends JPanel {
 					updateButton.setEnabled(gameHasEstimates);
 				}
 				else {
-					updateButton.setEnabled(false);
+					
 					break;
 				}
 			}
