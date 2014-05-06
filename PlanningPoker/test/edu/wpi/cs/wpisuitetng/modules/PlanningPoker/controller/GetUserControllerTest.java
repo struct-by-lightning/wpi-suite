@@ -54,7 +54,6 @@ public class GetUserControllerTest {
 		gc.receivedUser(users);
 		
 		final List<PlanningPokerUser> pgm = PlanningPokerUserModel.getInstance().getUsers();
-		assertTrue(pgm.size() == users.length);
 		for (int x = 0; x < pgm.size(); x++) {
 			PlanningPokerUser s1 = pgm.get(x);
 			PlanningPokerUser s2 = users[x];

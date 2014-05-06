@@ -47,7 +47,6 @@ public class RequirementTest {
 
 	/**
 	 * Method setUp.
-	
 	 * @throws Exception */
 	@Before
 	public void setUp() throws Exception {

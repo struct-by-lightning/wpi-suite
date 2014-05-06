@@ -11,16 +11,101 @@ package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+
+import javax.swing.DefaultListModel;
+
+import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.Session;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.MockData;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.MockNetwork;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.Iteration;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.IterationModel;
+import edu.wpi.cs.wpisuitetng.network.Network;
+import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
-
-/** Implements a test on deck models
+/**
+ * Implements a test on deck models
  * 
  * @version $Revision: 1.0 $
  * @author lisabatbouta
  */
 public class DeckModelTest {
+	DeckModel guc;
+	CreateGameView cgv;
+	MockData db;
+	Deck newDeck;
+	Deck newDeck2;
+	User existingUser;
+	Requirement req1;
+	Session defaultSession;
+	String mockSsid;
+	DeckEntityManager manager;
+	Requirement req3;
+	User bob;
+	Requirement goodUpdatedRequirement;
+	Session adminSession;
+	Project testProject;
+	Project otherProject;
+	Requirement req2;
+	PlanningPokerGame ppg;
+
+	/**
+	 * Set up objects and create a mock session for testing
+	 * 
+	 * @throws Exception
+	 */
+	@Before
+	public void setUp() throws Exception {
+		ppg = new PlanningPokerGame("g1", "d1", "dt1",
+				new ArrayList<Integer>(), false, false,
+				new GregorianCalendar(), new GregorianCalendar(), "m1");
+		User admin = new User("admin", "admin", "1234", 27);
+		admin.setRole(Role.ADMIN);
+		testProject = new Project("test", "1");
+		otherProject = new Project("other", "2");
+		mockSsid = "abc123";
+		adminSession = new Session(admin, testProject, mockSsid);
+		DefaultListModel<Integer> numsInDeck = new DefaultListModel<Integer>();
+		numsInDeck.addElement(1);
+		numsInDeck.addElement(2);
+		numsInDeck.addElement(3);
+		numsInDeck.addElement(4);
+		DefaultListModel<Integer> numsInDeck2 = new DefaultListModel<Integer>();
+		numsInDeck.addElement(2);
+		numsInDeck.addElement(5);
+		numsInDeck.addElement(7);
+		numsInDeck.addElement(20);
+		newDeck = new Deck("deck", numsInDeck);
+		newDeck2 = new Deck("deck3", numsInDeck2);
+		existingUser = new User("joe", "joe", "1234", 2);
+
+		defaultSession = new Session(existingUser, testProject, mockSsid);
+
+		db = new MockData(new HashSet<Object>());
+
+		db.save(newDeck, testProject);
+		db.save(existingUser);
+		manager = new DeckEntityManager(db);
+
+		Network.initNetwork(new MockNetwork());
+		Network.getInstance().setDefaultNetworkConfiguration(
+				new NetworkConfiguration("http://wpisuitetng"));
+		IterationModel.getInstance().setBacklog(new Iteration(1, "Backlog"));
+		RequirementModel.getInstance().emptyModel();
+		guc = DeckModel.getInstance();
+	}
+
 	/**
 	 * Test method for {@link
 	 * edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckModel()}. See if
@@ -28,9 +113,21 @@ public class DeckModelTest {
 	 */
 	@Test
 	public void testGetInstance() {
-		final DeckModel guc = DeckModel.getInstance();
 		assertEquals(guc.hashCode(), DeckModel.getInstance().hashCode());
 	}
-	
+
+	@Test
+	public void testDeck() {
+		guc.addDeck(newDeck);
+		assertEquals(guc.getDeck(newDeck.getID()), newDeck);
+		assertEquals(guc.getDeck("blah"), null);
+		guc.getSize();
+		guc.getElementAt(0);
+		guc.removeUser("blah");
+		guc.removeUser(newDeck.getID());
+		guc.addDecks(new Deck[]{ newDeck });
+		guc.getDecks();
+		guc.emptyModel();
+	}
 
 }
