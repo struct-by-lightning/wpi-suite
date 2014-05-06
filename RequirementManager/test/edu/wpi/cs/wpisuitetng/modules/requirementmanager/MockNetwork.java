@@ -34,7 +34,7 @@ public class MockNetwork extends Network {
 			throw new NullPointerException("requestMethod may not be null");
 		}
 		
-		lastRequestMade = new MockRequest(new NetworkConfiguration("aaaaa.com"), path, requestMethod); 
+		lastRequestMade = new MockRequest(defaultNetworkConfiguration, path, requestMethod); 
 		
 		return lastRequestMade;
 	}

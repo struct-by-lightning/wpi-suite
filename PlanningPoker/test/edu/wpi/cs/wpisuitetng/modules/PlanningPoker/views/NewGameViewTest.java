@@ -1,19 +1,11 @@
-/*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Struct-By-Lightning
- ******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
+package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 
@@ -21,7 +13,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.Session;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
@@ -31,18 +26,19 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.Iteration;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.IterationModel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.overview.OverviewTable;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.overview.OverviewTreePanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 /**
- * Implements a test on deck models
- * 
- * @version $Revision: 1.0 $
- * @author lisabatbouta
+ * @version $Revision 1.0 $
+ * @author rbkillea
  */
-public class DeckModelTest {
-	DeckModel guc;
-	CreateGameView cgv;
+
+public class NewGameViewTest {
+	NewGameView ngv;
 	MockData db;
 	Deck newDeck;
 	Deck newDeck2;
@@ -70,6 +66,16 @@ public class DeckModelTest {
 		ppg = new PlanningPokerGame("g1", "d1", "dt1",
 				new ArrayList<Integer>(), false, false,
 				new GregorianCalendar(), new GregorianCalendar(), "m1");
+		ppg.setDeckType("");
+		List<Requirement> reqs = new ArrayList<Requirement>();
+		ViewEventController viewCon = ViewEventController.getInstance();
+		OverviewTreePanel ovTree = new OverviewTreePanel();
+		viewCon.setOverviewTree(ovTree);
+		OverviewTable ovTable = new OverviewTable(null, null);
+		viewCon.setOverviewTable(ovTable);
+		reqs.add(new Requirement(2, "A", "B"));
+		RequirementModel.getInstance().addRequirements(
+				reqs.toArray(new Requirement[0]));
 		User admin = new User("admin", "admin", "1234", 27);
 		admin.setRole(Role.ADMIN);
 		testProject = new Project("test", "1");
@@ -87,6 +93,7 @@ public class DeckModelTest {
 		numsInDeck.addElement(7);
 		numsInDeck.addElement(20);
 		newDeck = new Deck("deck", numsInDeck);
+		DeckModel.getInstance().addDeck(newDeck);
 		newDeck2 = new Deck("deck3", numsInDeck2);
 		existingUser = new User("joe", "joe", "1234", 2);
 
@@ -103,31 +110,11 @@ public class DeckModelTest {
 				new NetworkConfiguration("http://wpisuitetng"));
 		IterationModel.getInstance().setBacklog(new Iteration(1, "Backlog"));
 		RequirementModel.getInstance().emptyModel();
-		guc = DeckModel.getInstance();
-	}
-
-	/**
-	 * Test method for {@link
-	 * edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckModel()}. See if
-	 * each instance is the same.
-	 */
-	@Test
-	public void testGetInstance() {
-		assertEquals(guc.hashCode(), DeckModel.getInstance().hashCode());
+		NewGameView.open(ppg);
 	}
 
 	@Test
-	public void testDeck() {
-		guc.addDeck(newDeck);
-		assertEquals(guc.getDeck(newDeck.getID()), newDeck);
-		assertEquals(guc.getDeck("blah"), null);
-		guc.getSize();
-		guc.getElementAt(0);
-		guc.removeUser("blah");
-		guc.removeUser(newDeck.getID());
-		guc.addDecks(new Deck[]{ newDeck });
-		guc.getDecks();
-		guc.emptyModel();
+	public void testGetGame() {
+		//assert (ngv.getInstance().getGame().equals(ppg));
 	}
-
 }

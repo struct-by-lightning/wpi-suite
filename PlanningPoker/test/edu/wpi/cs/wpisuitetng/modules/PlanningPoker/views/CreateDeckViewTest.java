@@ -1,15 +1,6 @@
-/*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Struct-By-Lightning
- ******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models;
+package edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -21,7 +12,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.Session;
-import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.views.CreateGameView;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckModel;
+import edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.PlanningPokerGame;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
@@ -34,15 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.Itera
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
-/**
- * Implements a test on deck models
- * 
- * @version $Revision: 1.0 $
- * @author lisabatbouta
- */
-public class DeckModelTest {
-	DeckModel guc;
-	CreateGameView cgv;
+public class CreateDeckViewTest {
 	MockData db;
 	Deck newDeck;
 	Deck newDeck2;
@@ -51,7 +37,6 @@ public class DeckModelTest {
 	Session defaultSession;
 	String mockSsid;
 	DeckEntityManager manager;
-	Requirement req3;
 	User bob;
 	Requirement goodUpdatedRequirement;
 	Session adminSession;
@@ -103,31 +88,11 @@ public class DeckModelTest {
 				new NetworkConfiguration("http://wpisuitetng"));
 		IterationModel.getInstance().setBacklog(new Iteration(1, "Backlog"));
 		RequirementModel.getInstance().emptyModel();
-		guc = DeckModel.getInstance();
+		DeckModel.getInstance().addDeck(newDeck);
+		CreateDeckView.openNewTab();
 	}
-
-	/**
-	 * Test method for {@link
-	 * edu.wpi.cs.wpisuitetng.modules.PlanningPoker.models.DeckModel()}. See if
-	 * each instance is the same.
-	 */
 	@Test
-	public void testGetInstance() {
-		assertEquals(guc.hashCode(), DeckModel.getInstance().hashCode());
+	public void dummyTest() {
+		
 	}
-
-	@Test
-	public void testDeck() {
-		guc.addDeck(newDeck);
-		assertEquals(guc.getDeck(newDeck.getID()), newDeck);
-		assertEquals(guc.getDeck("blah"), null);
-		guc.getSize();
-		guc.getElementAt(0);
-		guc.removeUser("blah");
-		guc.removeUser(newDeck.getID());
-		guc.addDecks(new Deck[]{ newDeck });
-		guc.getDecks();
-		guc.emptyModel();
-	}
-
 }

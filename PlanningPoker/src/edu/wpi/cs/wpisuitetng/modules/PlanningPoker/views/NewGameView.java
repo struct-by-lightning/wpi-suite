@@ -348,7 +348,7 @@ public class NewGameView extends javax.swing.JPanel {
      */
     private void deckChoiceClicked(String deckName) {
 		Deck selectedDeck = DeckModel.getInstance().getDeck(deckName);
-		if (selectedDeck.getDeckNumbers().isEmpty()) {
+		if (selectedDeck==null || selectedDeck.getDeckNumbers().isEmpty()) {
 			this.deckValues.setText("N/A");
 		} else {
 			this.deckValues.setText(selectedDeck.getDeckNumbers().toString());

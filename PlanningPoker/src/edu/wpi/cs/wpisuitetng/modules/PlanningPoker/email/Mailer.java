@@ -174,9 +174,6 @@ public class Mailer {
 			text += "You can now view the results in Janeway!";
 		}
 
-		System.out.println(subject);
-		System.out.println(text);
-
 		try {
 			// testing
 			transport = session.getTransport("smtp");

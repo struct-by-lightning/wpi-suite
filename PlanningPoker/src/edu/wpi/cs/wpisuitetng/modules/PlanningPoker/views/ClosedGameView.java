@@ -236,7 +236,9 @@ public class ClosedGameView extends JPanel {
 		
 		final DefaultListModel<String> model = new DefaultListModel<String>();
 		for (Requirement r : requirements) {
-			model.addElement(r.getName());
+			if(r!= null) {
+				model.addElement(r.getName());
+			}
 		}
 		
 		requirementListRenderer = new RequirementVoteIconRenderer(requirements, finalEsts);
