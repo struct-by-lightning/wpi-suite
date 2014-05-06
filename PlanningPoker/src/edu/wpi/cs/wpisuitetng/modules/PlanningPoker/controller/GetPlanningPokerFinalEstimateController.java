@@ -61,16 +61,17 @@ public class GetPlanningPokerFinalEstimateController {
 		request.send(); // send the request
 
 		Object o = request.getResponse();
-		/*
-		 * For testing we can't do the while true, so I've changed it to a
-		 * *very* long delay
-		 */
-		o = request.getResponse();
-		try { // wait a small time between updates
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for(int i = 0; i < 1000; i++) { //enter a loop until you get a response or it times out
+			o = request.getResponse();
+			try { //wait a small time between updates
+				Thread.sleep(3);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(o != null) {
+				break;
+			}
 		}
 		if (o != null && request.getResponse() != null) {
 			System.out.println("response exists");
